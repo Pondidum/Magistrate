@@ -164,5 +164,75 @@ namespace Magistrate.Tests.Domain
 			user.AddRole(role);
 			user.Roles.ShouldBe(new[] { role });
 		}
+
+		[Fact]
+		public void When_adding_a_permission_already_included_by_a_role()
+		{
+			var user = User.Create(_getPermission, _getRole, "some-key", "some name");
+			var role = Add(Role.Create(_getPermission, "role-key", "role one", ""));
+			var permission = Add(Permission.Create("permission-key", "permission one", ""));
+
+			role.AddPermission(permission);
+			user.AddRole(role);
+			user.AddPermission(permission);
+
+			user.Roles.ShouldBe(new[] { role });
+			user.Includes.ShouldBeEmpty();
+			user.Revokes.ShouldBeEmpty();
+		}
+
+		[Fact]
+		public void When_revoking_a_permission_included_in_a_role()
+		{
+			var user = User.Create(_getPermission, _getRole, "some-key", "some name");
+			var role = Add(Role.Create(_getPermission, "role-key", "role one", ""));
+			var permission = Add(Permission.Create("permission-key", "permission one", ""));
+
+			role.AddPermission(permission);
+			user.AddRole(role);
+			user.RemovePermission(permission);
+
+			user.Roles.ShouldBe(new[] { role });
+			user.Includes.ShouldBeEmpty();
+			user.Revokes.ShouldBe(new[] { permission });
+		}
+
+		[Fact]
+		public void When_revoking_a_permission_included_in_a_role_and_is_included()
+		{
+			var user = User.Create(_getPermission, _getRole, "some-key", "some name");
+			var role = Add(Role.Create(_getPermission, "role-key", "role one", ""));
+			var permission = Add(Permission.Create("permission-key", "permission one", ""));
+
+			role.AddPermission(permission);
+
+			user.AddPermission(permission);
+			user.AddRole(role);
+			user.RemovePermission(permission);
+
+			user.Roles.ShouldBe(new[] { role });
+			user.Includes.ShouldBeEmpty();
+			user.Revokes.ShouldBe(new[] { permission });
+		}
+
+		[Fact]
+		public void When_a_user_has_a_revoke_and_gets_a_role_including_the_permission()
+		{
+			var user = User.Create(_getPermission, _getRole, "some-key", "some name");
+			var role = Add(Role.Create(_getPermission, "role-key", "role one", ""));
+			var permission = Add(Permission.Create("permission-key", "permission one", ""));
+
+			role.AddPermission(permission);
+
+			user.RemovePermission(permission);
+			user.AddRole(role);
+
+			user.Revokes.ShouldBe(new[] { permission });
+
+			user.AddPermission(permission);
+
+			user.Includes.ShouldBeEmpty();
+			user.Revokes.ShouldBeEmpty();
+		}
 	}
 }

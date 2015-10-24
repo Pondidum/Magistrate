@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Ledger;
 using Magistrate.Domain.Events;
 
@@ -17,9 +18,9 @@ namespace Magistrate.Domain
 		private readonly HashSet<Permission> _includes;
 		private readonly HashSet<Permission> _revokes;
 		private readonly HashSet<Role> _roles;
-		 
+
 		private readonly Func<Guid, Permission> _getPermission;
-		private readonly Func<Guid, Role> _getRole; 
+		private readonly Func<Guid, Role> _getRole;
 
 		public User(Func<Guid, Permission> getPermission, Func<Guid, Role> getRole)
 		{
@@ -102,14 +103,15 @@ namespace Magistrate.Domain
 		{
 			_revokes.RemoveWhere(r => r.ID == e.PermissionID);
 
-			_includes.Add(_getPermission(e.PermissionID));
+			if (_roles.Any(r => r.Permissions.Any(p => p.ID == e.PermissionID)) == false)
+				_includes.Add(_getPermission(e.PermissionID));
 		}
 
 		private void Handle(PermissionRemovedEvent e)
 		{
 			var removed = _includes.RemoveWhere(i => i.ID == e.PermissionID);
 
-			if (removed == 0)
+			if (removed == 0 || _roles.Any(r => r.Permissions.Any(p => p.ID == e.PermissionID)))
 				_revokes.Add(_getPermission(e.PermissionID));
 		}
 
