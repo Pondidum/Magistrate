@@ -4,11 +4,16 @@ using Magistrate.Domain.Events;
 
 namespace Magistrate.Domain
 {
-	public class Permission : AggregateRoot<Guid>
+	public class Permission : AggregateRoot<Guid>, IEquatable<Permission>
 	{
 		public string Key { get; private set; }
 		public string Name { get; private set; }
 		public string Description { get; private set; }
+
+		public static Permission Blank()
+		{
+			return new Permission();
+		}
 
 		public static Permission Create(string key, string name, string description)
 		{
@@ -77,6 +82,40 @@ namespace Magistrate.Domain
 		private void Handle(NameChangedEvent e)
 		{
 			Name = e.NewName;
+		}
+
+
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != this.GetType()) return false;
+
+			return Equals((Permission) obj);
+		}
+
+		public bool Equals(Permission other)
+		{
+			if (ReferenceEquals(null, other)) return false;
+			if (ReferenceEquals(this, other)) return true;
+
+			return Equals(ID, other.ID);
+		}
+
+		public override int GetHashCode()
+		{
+			return ID.GetHashCode();
+		}
+
+		public static bool operator ==(Permission left, Permission right)
+		{
+			return Equals(left, right);
+		}
+
+		public static bool operator !=(Permission left, Permission right)
+		{
+			return !Equals(left, right);
 		}
 	}
 }
