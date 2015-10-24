@@ -12,8 +12,10 @@ namespace Magistrate.Domain
 
 		public static Permission Create(string key, string name, string description)
 		{
-			var perm = new Permission();
+			ValidateKey(key);
+			ValidateName(name);
 
+			var perm = new Permission();
 			perm.ApplyEvent(new PermissionCreatedEvent
 			{
 				ID = Guid.NewGuid(),
@@ -25,8 +27,11 @@ namespace Magistrate.Domain
 			return perm;
 		}
 
+
 		public void ChangeName(string name)
 		{
+			ValidateName(name);
+
 			ApplyEvent(new NameChangedEvent
 			{
 				NewName = name
@@ -40,6 +45,21 @@ namespace Magistrate.Domain
 				NewDescription = description
 			});
 		}
+
+
+		private static void ValidateKey(string key)
+		{
+			if (string.IsNullOrWhiteSpace(key))
+				throw new ArgumentException("Key cannot be null or whitespace", nameof(key));
+		}
+
+		private static void ValidateName(string name)
+		{
+			if (string.IsNullOrWhiteSpace(name))
+				throw new ArgumentException("Name cannot be null or whitespace", nameof(name));
+		}
+
+
 
 		private void Handle(PermissionCreatedEvent e)
 		{
