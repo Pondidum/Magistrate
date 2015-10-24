@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Ledger;
 using Magistrate.Domain.Events;
 
@@ -9,12 +10,27 @@ namespace Magistrate.Domain
 		public string Key { get; private set; }
 		public string Name { get; private set; }
 
-		public static User Create(string key, string name)
+		public IEnumerable<Permission> Includes => _includes;
+		public IEnumerable<Permission> Revokes => _revokes;
+
+		private readonly HashSet<Permission> _includes;
+		private readonly HashSet<Permission> _revokes;
+
+		private readonly Func<Guid, Permission> _getPermission;
+
+		public User(Func<Guid, Permission> getPermission)
+		{
+			_getPermission = getPermission;
+			_includes = new HashSet<Permission>();
+			_revokes = new HashSet<Permission>();
+		}
+
+		public static User Create(Func<Guid, Permission> getPermission, string key, string name)
 		{
 			ValidateKey(key);
 			ValidateName(name);
 
-			var user = new User();
+			var user = new User(getPermission);
 			user.ApplyEvent(new UserCreatedEvent
 			{
 				ID = Guid.NewGuid(),
@@ -43,6 +59,16 @@ namespace Magistrate.Domain
 				throw new ArgumentException("Name cannot be null or whitespace", nameof(name));
 		}
 
+		public void AddPermission(Permission permission)
+		{
+			ApplyEvent(new PermissionAddedEvent { PermissionID = permission.ID });
+		}
+
+		public void RemovePermission(Permission permission)
+		{
+			ApplyEvent(new PermissionRemovedEvent { PermissionID = permission.ID });
+		}
+
 
 		private void Handle(UserCreatedEvent e)
 		{
@@ -56,5 +82,19 @@ namespace Magistrate.Domain
 			Name = e.NewName;
 		}
 
+		private void Handle(PermissionAddedEvent e)
+		{
+			_revokes.RemoveWhere(r => r.ID == e.PermissionID);
+
+			_includes.Add(_getPermission(e.PermissionID));
+		}
+
+		private void Handle(PermissionRemovedEvent e)
+		{
+			var removed = _includes.RemoveWhere(i => i.ID == e.PermissionID);
+
+			if (removed == 0)
+				_revokes.Add(_getPermission(e.PermissionID));
+		}
 	}
 }
