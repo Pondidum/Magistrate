@@ -12,25 +12,31 @@ namespace Magistrate.Domain
 
 		public IEnumerable<Permission> Includes => _includes;
 		public IEnumerable<Permission> Revokes => _revokes;
+		public IEnumerable<Role> Roles => _roles;
 
 		private readonly HashSet<Permission> _includes;
 		private readonly HashSet<Permission> _revokes;
-
+		private readonly HashSet<Role> _roles;
+		 
 		private readonly Func<Guid, Permission> _getPermission;
+		private readonly Func<Guid, Role> _getRole; 
 
-		public User(Func<Guid, Permission> getPermission)
+		public User(Func<Guid, Permission> getPermission, Func<Guid, Role> getRole)
 		{
 			_getPermission = getPermission;
+			_getRole = getRole;
+
 			_includes = new HashSet<Permission>();
 			_revokes = new HashSet<Permission>();
+			_roles = new HashSet<Role>();
 		}
 
-		public static User Create(Func<Guid, Permission> getPermission, string key, string name)
+		public static User Create(Func<Guid, Permission> getPermission, Func<Guid, Role> getRole, string key, string name)
 		{
 			ValidateKey(key);
 			ValidateName(name);
 
-			var user = new User(getPermission);
+			var user = new User(getPermission, getRole);
 			user.ApplyEvent(new UserCreatedEvent
 			{
 				ID = Guid.NewGuid(),
@@ -69,6 +75,16 @@ namespace Magistrate.Domain
 			ApplyEvent(new PermissionRemovedEvent { PermissionID = permission.ID });
 		}
 
+		public void AddRole(Role role)
+		{
+			ApplyEvent(new RoleAddedEvent { RoleID = role.ID });
+		}
+
+		public void RemoveRole(Role role)
+		{
+			ApplyEvent(new RoleRemovedEvent { RoleID = role.ID });
+		}
+
 
 		private void Handle(UserCreatedEvent e)
 		{
@@ -95,6 +111,16 @@ namespace Magistrate.Domain
 
 			if (removed == 0)
 				_revokes.Add(_getPermission(e.PermissionID));
+		}
+
+		private void Handle(RoleAddedEvent e)
+		{
+			_roles.Add(_getRole(e.RoleID));
+		}
+
+		private void Handle(RoleRemovedEvent e)
+		{
+			_roles.RemoveWhere(r => r.ID == e.RoleID);
 		}
 	}
 }

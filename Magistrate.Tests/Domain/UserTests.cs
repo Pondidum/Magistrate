@@ -12,10 +12,16 @@ namespace Magistrate.Tests.Domain
 		private readonly HashSet<Permission> _permissions;
 		private Func<Guid, Permission> _getPermission;
 
+		private readonly HashSet<Role> _roles;
+		private Func<Guid, Role> _getRole;
+
 		public UserTests()
 		{
 			_permissions = new HashSet<Permission>();
 			_getPermission = id => _permissions.First(p => p.ID == id);
+
+			_roles = new HashSet<Role>();
+			_getRole = id => _roles.First(p => p.ID == id);
 		}
 
 		private Permission Add(Permission permission)
@@ -24,12 +30,18 @@ namespace Magistrate.Tests.Domain
 			return permission;
 		}
 
+		private Role Add(Role role)
+		{
+			_roles.Add(role);
+			return role;
+		}
+
 
 		[Fact]
 		public void A_user_must_have_a_key()
 		{
 			Should.Throw<ArgumentException>(
-				() => User.Create(_getPermission, "", "No key user")).Message
+				() => User.Create(_getPermission, _getRole, "", "No key user")).Message
 				.ShouldContain("Key cannot be null or whitespace");
 		}
 
@@ -37,14 +49,14 @@ namespace Magistrate.Tests.Domain
 		public void A_user_must_have_a_name()
 		{
 			Should.Throw<ArgumentException>(
-				() => User.Create(_getPermission, "some-key", "")).Message
+				() => User.Create(_getPermission, _getRole, "some-key", "")).Message
 				.ShouldContain("Name cannot be null or whitespace");
 		}
 
 		[Fact]
 		public void A_user_gets_all_properties_assigned()
 		{
-			var user = User.Create(_getPermission, "some-key", "some name");
+			var user = User.Create(_getPermission, _getRole, "some-key", "some name");
 
 			user.ShouldSatisfyAllConditions(
 				() => user.ID.ShouldNotBe(Guid.Empty),
@@ -56,7 +68,7 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void A_users_name_cannot_be_removed()
 		{
-			var user = User.Create(_getPermission, "some-key", "some name");
+			var user = User.Create(_getPermission, _getRole, "some-key", "some name");
 
 			Should.Throw<ArgumentException>(
 				() => user.ChangeName("")).Message
@@ -66,7 +78,7 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void Changing_a_users_name_works()
 		{
-			var user = User.Create(_getPermission, "some-key", "some name");
+			var user = User.Create(_getPermission, _getRole, "some-key", "some name");
 
 			user.ChangeName("new name");
 			user.Name.ShouldBe("new name");
@@ -75,7 +87,7 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void Adding_a_permission_twice_only_keeps_one()
 		{
-			var user = User.Create(_getPermission, "some-key", "some name");
+			var user = User.Create(_getPermission, _getRole, "some-key", "some name");
 			var permission = Add(Permission.Create("perm-key", "perm_one", "some description"));
 
 			user.AddPermission(permission);
@@ -88,7 +100,7 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void Removing_a_permission_which_is_included_doesnt_add_a_revoke()
 		{
-			var user = User.Create(_getPermission, "some-key", "some name");
+			var user = User.Create(_getPermission, _getRole, "some-key", "some name");
 			var permission = Add(Permission.Create("perm-key", "perm_one", "some description"));
 
 			user.AddPermission(permission);
@@ -104,7 +116,7 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void Removing_a_permission_which_is_not_included_creates_a_revoke()
 		{
-			var user = User.Create(_getPermission, "some-key", "some name");
+			var user = User.Create(_getPermission, _getRole, "some-key", "some name");
 			var permission = Add(Permission.Create("perm-key", "perm_one", "some description"));
 
 			user.RemovePermission(permission);
@@ -116,7 +128,7 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void Adding_a_permission_which_is_revoked_removes_the_revoke_and_adds_an_include()
 		{
-			var user = User.Create(_getPermission, "some-key", "some name");
+			var user = User.Create(_getPermission, _getRole, "some-key", "some name");
 			var permission = Add(Permission.Create("perm-key", "perm_one", "some description"));
 
 			user.RemovePermission(permission);
@@ -127,6 +139,30 @@ namespace Magistrate.Tests.Domain
 
 			user.Includes.ShouldBe(new[] { permission });
 			user.Revokes.ShouldBeEmpty();
+		}
+
+		[Fact]
+		public void A_role_can_be_added_and_removed()
+		{
+			var user = User.Create(_getPermission, _getRole, "some-key", "some name");
+			var role = Add(Role.Create(_getPermission, "role-key", "role one", ""));
+
+			user.AddRole(role);
+			user.Roles.ShouldBe(new[] { role });
+
+			user.RemoveRole(role);
+			user.Roles.ShouldBeEmpty();
+		}
+
+		[Fact]
+		public void Adding_a_role_twice_only_keeps_one()
+		{
+			var user = User.Create(_getPermission, _getRole, "some-key", "some name");
+			var role = Add(Role.Create(_getPermission, "role-key", "role one", ""));
+
+			user.AddRole(role);
+			user.AddRole(role);
+			user.Roles.ShouldBe(new[] { role });
 		}
 	}
 }
