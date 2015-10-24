@@ -46,8 +46,10 @@
   <ItemGroup>
     <Compile Include="Domain\Events\DescriptionChangedEvent.cs" />
     <Compile Include="Domain\Events\NameChangedEvent.cs" />
+    <Compile Include="Domain\Events\RoleCreatedEvent.cs" />
     <Compile Include="Domain\Permission.cs" />
     <Compile Include="Domain\Events\PermissionCreatedEvent.cs" />
+    <Compile Include="Domain\Role.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
