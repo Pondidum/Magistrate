@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Ledger;
 using Magistrate.Domain.Events;
 
@@ -9,13 +10,24 @@ namespace Magistrate.Domain
 		public string Key { get; private set; }
 		public string Name { get; private set; } 
 		public string Description { get; private set; }
+		public IEnumerable<Permission> Permissions => _permissions;
 
-		public static Role Create(string key, string name, string description)
+
+		private readonly HashSet<Permission> _permissions;
+		private readonly Func<Guid, Permission> _getPermission;
+		 
+		private Role(Func<Guid, Permission> getPermission)
+		{
+			_getPermission = getPermission;
+            _permissions = new HashSet<Permission>();
+		}
+		 
+		public static Role Create(Func<Guid, Permission> getPermission, string key, string name, string description)
 		{
 			ValidateKey(key);
 			ValidateName(name);
 
-			var role = new Role();
+			var role = new Role(getPermission);
 			role.ApplyEvent(new RoleCreatedEvent
 			{
 				ID = Guid.NewGuid(),
@@ -45,6 +57,17 @@ namespace Magistrate.Domain
 			});
 		}
 
+		public void AddPermission(Permission permission)
+		{
+			ApplyEvent(new PermissionAddedEvent { PermissionID = permission.ID });
+		}
+
+		public void RemovePermission(Permission permission)
+		{
+			ApplyEvent(new PermissionRemovedEvent { PermissionID = permission.ID });
+		}
+
+
 
 		private static void ValidateKey(string key)
 		{
@@ -57,6 +80,8 @@ namespace Magistrate.Domain
 			if (string.IsNullOrWhiteSpace(name))
 				throw new ArgumentException("Name cannot be null or whitespace", nameof(name));
 		}
+
+
 
 		private void Handle(RoleCreatedEvent e)
 		{
@@ -74,6 +99,17 @@ namespace Magistrate.Domain
 		private void Handle(DescriptionChangedEvent e)
 		{
 			Description = e.NewDescription;
+		}
+
+		private void Handle(PermissionAddedEvent e)
+		{
+			var permission = _getPermission(e.PermissionID);
+			_permissions.Add(permission);
+		}
+
+		private void Handle(PermissionRemovedEvent e)
+		{
+			_permissions.RemoveWhere(p => p.ID == e.PermissionID);
 		}
 	}
 }
