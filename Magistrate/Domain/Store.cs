@@ -10,21 +10,21 @@ namespace Magistrate.Domain
 		private readonly AggregateStore<Guid> _store;
 		private readonly Projection _projections;
 
-		private readonly PermissionsReadModel _permissions;
+		public PermissionsReadModel Permissions { get; }
 
 		public Store(AggregateStore<Guid> store)
 		{
 			_store = store;
 			_projections = new Projection();
 
-			_permissions = new PermissionsReadModel();
+			Permissions = new PermissionsReadModel();
 
 			RegisterProjections();
 		}
 
 		private void RegisterProjections()
 		{
-			_projections.Register<Permission>(permission => _permissions.AllPermissions[permission.ID] = permission.Name);
+			_projections.Register<Permission>(Permissions.ProjectTo);
 		}
 
 		public void LoadExistingReadModels()
