@@ -2,7 +2,6 @@
 using Ledger;
 using Ledger.Stores;
 using Magistrate.Domain;
-using Newtonsoft.Json;
 using Shouldly;
 using Xunit;
 using Xunit.Abstractions;

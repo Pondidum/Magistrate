@@ -54,7 +54,10 @@
     <Compile Include="Domain\Events\UserCreatedEvent.cs" />
     <Compile Include="Domain\Permission.cs" />
     <Compile Include="Domain\Events\PermissionCreatedEvent.cs" />
+    <Compile Include="ReadModels\PermissionsReadModel.cs" />
+    <Compile Include="Infrastructure\Projection.cs" />
     <Compile Include="Domain\Role.cs" />
+    <Compile Include="Domain\Store.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
