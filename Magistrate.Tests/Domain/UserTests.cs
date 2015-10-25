@@ -93,8 +93,8 @@ namespace Magistrate.Tests.Domain
 			user.AddPermission(permission);
 			user.AddPermission(permission);
 
-			user.Includes.ShouldBe(new[] { permission });
-			user.Revokes.ShouldBeEmpty();
+			user.Permissions.Includes.ShouldBe(new[] { permission });
+			user.Permissions.Revokes.ShouldBeEmpty();
 		}
 
 		[Fact]
@@ -104,13 +104,13 @@ namespace Magistrate.Tests.Domain
 			var permission = Add(Permission.Create("perm-key", "perm_one", "some description"));
 
 			user.AddPermission(permission);
-			user.Includes.ShouldBe(new[] { permission });
-			user.Revokes.ShouldBeEmpty();
+			user.Permissions.Includes.ShouldBe(new[] { permission });
+			user.Permissions.Revokes.ShouldBeEmpty();
 
 			user.RemovePermission(permission);
 
-			user.Includes.ShouldBeEmpty();
-			user.Revokes.ShouldBeEmpty();
+			user.Permissions.Includes.ShouldBeEmpty();
+			user.Permissions.Revokes.ShouldBeEmpty();
 		}
 
 		[Fact]
@@ -121,8 +121,8 @@ namespace Magistrate.Tests.Domain
 
 			user.RemovePermission(permission);
 
-			user.Includes.ShouldBeEmpty();
-			user.Revokes.ShouldBe(new[] { permission });
+			user.Permissions.Includes.ShouldBeEmpty();
+			user.Permissions.Revokes.ShouldBe(new[] { permission });
 		}
 
 		[Fact]
@@ -132,13 +132,13 @@ namespace Magistrate.Tests.Domain
 			var permission = Add(Permission.Create("perm-key", "perm_one", "some description"));
 
 			user.RemovePermission(permission);
-			user.Includes.ShouldBeEmpty();
-			user.Revokes.ShouldBe(new[] { permission });
+			user.Permissions.Includes.ShouldBeEmpty();
+			user.Permissions.Revokes.ShouldBe(new[] { permission });
 
 			user.AddPermission(permission);
 
-			user.Includes.ShouldBe(new[] { permission });
-			user.Revokes.ShouldBeEmpty();
+			user.Permissions.Includes.ShouldBe(new[] { permission });
+			user.Permissions.Revokes.ShouldBeEmpty();
 		}
 
 		[Fact]
@@ -148,10 +148,10 @@ namespace Magistrate.Tests.Domain
 			var role = Add(Role.Create(_getPermission, "role-key", "role one", ""));
 
 			user.AddRole(role);
-			user.Roles.ShouldBe(new[] { role });
+			user.Permissions.Roles.ShouldBe(new[] { role });
 
 			user.RemoveRole(role);
-			user.Roles.ShouldBeEmpty();
+			user.Permissions.Roles.ShouldBeEmpty();
 		}
 
 		[Fact]
@@ -162,7 +162,7 @@ namespace Magistrate.Tests.Domain
 
 			user.AddRole(role);
 			user.AddRole(role);
-			user.Roles.ShouldBe(new[] { role });
+			user.Permissions.Roles.ShouldBe(new[] { role });
 		}
 
 		[Fact]
@@ -176,9 +176,9 @@ namespace Magistrate.Tests.Domain
 			user.AddRole(role);
 			user.AddPermission(permission);
 
-			user.Roles.ShouldBe(new[] { role });
-			user.Includes.ShouldBeEmpty();
-			user.Revokes.ShouldBeEmpty();
+			user.Permissions.Roles.ShouldBe(new[] { role });
+			user.Permissions.Includes.ShouldBeEmpty();
+			user.Permissions.Revokes.ShouldBeEmpty();
 		}
 
 		[Fact]
@@ -192,9 +192,9 @@ namespace Magistrate.Tests.Domain
 			user.AddRole(role);
 			user.RemovePermission(permission);
 
-			user.Roles.ShouldBe(new[] { role });
-			user.Includes.ShouldBeEmpty();
-			user.Revokes.ShouldBe(new[] { permission });
+			user.Permissions.Roles.ShouldBe(new[] { role });
+			user.Permissions.Includes.ShouldBeEmpty();
+			user.Permissions.Revokes.ShouldBe(new[] { permission });
 		}
 
 		[Fact]
@@ -210,9 +210,9 @@ namespace Magistrate.Tests.Domain
 			user.AddRole(role);
 			user.RemovePermission(permission);
 
-			user.Roles.ShouldBe(new[] { role });
-			user.Includes.ShouldBeEmpty();
-			user.Revokes.ShouldBe(new[] { permission });
+			user.Permissions.Roles.ShouldBe(new[] { role });
+			user.Permissions.Includes.ShouldBeEmpty();
+			user.Permissions.Revokes.ShouldBe(new[] { permission });
 		}
 
 		[Fact]
@@ -227,12 +227,12 @@ namespace Magistrate.Tests.Domain
 			user.RemovePermission(permission);
 			user.AddRole(role);
 
-			user.Revokes.ShouldBe(new[] { permission });
+			user.Permissions.Revokes.ShouldBe(new[] { permission });
 
 			user.AddPermission(permission);
 
-			user.Includes.ShouldBeEmpty();
-			user.Revokes.ShouldBeEmpty();
+			user.Permissions.Includes.ShouldBeEmpty();
+			user.Permissions.Revokes.ShouldBeEmpty();
 		}
 	}
 }

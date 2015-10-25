@@ -11,9 +11,7 @@ namespace Magistrate.Domain
 		public string Key { get; private set; }
 		public string Name { get; private set; }
 
-		public IEnumerable<Permission> Includes => _includes;
-		public IEnumerable<Permission> Revokes => _revokes;
-		public IEnumerable<Role> Roles => _roles;
+		public PermissionInspector Permissions => new PermissionInspector(_roles,_includes, _revokes);
 
 		private readonly HashSet<Permission> _includes;
 		private readonly HashSet<Permission> _revokes;
@@ -54,18 +52,6 @@ namespace Magistrate.Domain
 			ApplyEvent(new NameChangedEvent { NewName = name });
 		}
 
-		private static void ValidateKey(string key)
-		{
-			if (string.IsNullOrWhiteSpace(key))
-				throw new ArgumentException("Key cannot be null or whitespace", nameof(key));
-		}
-
-		private static void ValidateName(string name)
-		{
-			if (string.IsNullOrWhiteSpace(name))
-				throw new ArgumentException("Name cannot be null or whitespace", nameof(name));
-		}
-
 		public void AddPermission(Permission permission)
 		{
 			ApplyEvent(new PermissionAddedEvent { PermissionID = permission.ID });
@@ -85,6 +71,21 @@ namespace Magistrate.Domain
 		{
 			ApplyEvent(new RoleRemovedEvent { RoleID = role.ID });
 		}
+
+
+
+		private static void ValidateKey(string key)
+		{
+			if (string.IsNullOrWhiteSpace(key))
+				throw new ArgumentException("Key cannot be null or whitespace", nameof(key));
+		}
+
+		private static void ValidateName(string name)
+		{
+			if (string.IsNullOrWhiteSpace(name))
+				throw new ArgumentException("Name cannot be null or whitespace", nameof(name));
+		}
+
 
 
 		private void Handle(UserCreatedEvent e)
