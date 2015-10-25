@@ -18,7 +18,7 @@ namespace Magistrate.Api
 		{
 			app.Route("/api/permissions/all").Get(async context =>
 			{
-				await context.WriteJson(_store.Permissions);
+				await context.WriteJson(_store.Permissions.AllPermissions);
 			});
 		}
 	}

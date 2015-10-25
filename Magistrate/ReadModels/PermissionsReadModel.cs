@@ -1,23 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Magistrate.Domain;
 
 namespace Magistrate.ReadModels
 {
 	public class PermissionsReadModel
 	{
-		public IEnumerable<KeyValuePair<Guid, string>> AllPermissions => _permissions;
-
-		private readonly Dictionary<Guid, string> _permissions;
+		public Dictionary<Guid, string> AllPermissions { get; }
 
 		public PermissionsReadModel()
 		{
-			_permissions = new Dictionary<Guid, string>();
+			AllPermissions = new Dictionary<Guid, string>();
 		}
 
 		public void ProjectTo(Permission permission)
 		{
-			_permissions[permission.ID] = permission.Name;
+			AllPermissions[permission.ID] = permission.Name;
 		}
 	}
 }
