@@ -79,6 +79,7 @@
     <Compile Include="Domain\Store.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadModels\RolesReadModel.cs" />
     <Compile Include="ReadModels\UsersReadModel.cs" />
   </ItemGroup>
   <ItemGroup>

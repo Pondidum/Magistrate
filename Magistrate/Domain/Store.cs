@@ -11,6 +11,7 @@ namespace Magistrate.Domain
 		private readonly Projection _projections;
 
 		public PermissionsReadModel Permissions { get; }
+		public RolesReadModel Roles { get; }
 		public UsersReadModel Users { get; }
 
 		public Store(AggregateStore<Guid> store)
@@ -19,6 +20,7 @@ namespace Magistrate.Domain
 			_projections = new Projection();
 
 			Permissions = new PermissionsReadModel();
+			Roles = new RolesReadModel();
 			Users = new UsersReadModel();
 
 			RegisterProjections();
@@ -27,6 +29,7 @@ namespace Magistrate.Domain
 		private void RegisterProjections()
 		{
 			_projections.Register<Permission>(Permissions.ProjectTo);
+			_projections.Register<Role>(Roles.ProjectTo);
 			_projections.Register<User>(Users.ProjectTo);
 		}
 
@@ -39,6 +42,12 @@ namespace Magistrate.Domain
 		{
 			_store.Save(permission);
 			_projections.Run(permission);
+		}
+
+		public void Save(Role role)
+		{
+			_store.Save(role);
+			_projections.Run(role);
 		}
 
 		public void Save(User user)
