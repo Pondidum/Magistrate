@@ -25,5 +25,10 @@ namespace Magistrate.ReadModels
 		{
 			return _permissions.FirstOrDefault(p => string.Equals(p.Key, key, StringComparison.OrdinalIgnoreCase));
 		}
+
+		public Permission ByID(Guid id)
+		{
+			return _permissions.FirstOrDefault(p => p.ID == id);
+		}
 	}
 }

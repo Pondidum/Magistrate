@@ -25,6 +25,15 @@ namespace Magistrate.Api
 				await context.WriteJson(_store.Permissions.AllPermissions);
 			});
 
+			app.Route("/api/permissions").Put(async context =>
+			{
+				var dto = context.ReadJson<CreatePermissionDto>();
+
+				_store.Save(Permission.Create(dto.Key, dto.Name, dto.Description));
+
+				await Task.Yield();
+			});
+
 			app.Route("/api/permissions/{permission-key}").Get(async context =>
 			{
 				var permission = GetPermission(context);
@@ -58,10 +67,97 @@ namespace Magistrate.Api
 				});
 			});
 
+			app.Route("/api/roles/all").Get(async context =>
+			{
+				await context.WriteJson(_store.Roles.AllRoles);
+			});
+
+			app.Route("/api/roles").Put(async context =>
+			{
+				var dto = context.ReadJson<CreateRoleDto>();
+
+				_store.Save(Role.Create(_store.Permissions.ByID, dto.Key, dto.Name, dto.Description));
+
+				await Task.Yield();
+			});
+
+			app.Route("/api/roles/{role-key}").Get(async context =>
+			{
+				var role = GetRole(context);
+
+				await NotFoundOrAction(context, role, () => context.WriteJson(role));
+			});
+
+			app.Route("/api/role/{role-key}/changeName").Put(async context =>
+			{
+				var role = GetRole(context);
+
+				await NotFoundOrAction(context, role, async () =>
+				{
+					role.ChangeName(ReadBody(context));
+					_store.Save(role);
+
+					await Task.Yield();
+				});
+			});
+
+			app.Route("/api/role/{role-key}/changeDescription").Put(async context =>
+			{
+				var role = GetRole(context);
+
+				await NotFoundOrAction(context, role, async () =>
+				{
+					role.ChangeDescription(ReadBody(context));
+					_store.Save(role);
+
+					await Task.Yield();
+				});
+			});
+
+			app.Route("/api/role/{role-key}/add/{permission-key}").Put(async context =>
+			{
+				var role = GetRole(context);
+				await NotFoundOrAction(context, role, async () =>
+				{
+					var permission = GetPermission(context);
+					await NotFoundOrAction(context, permission, async () =>
+					{
+						role.AddPermission(permission);
+						_store.Save(role);
+
+						await Task.Yield();
+					});
+				});
+			});
+
+			app.Route("/api/role/{role-key}/remove/{permission-key}").Put(async context =>
+			{
+				var role = GetRole(context);
+				await NotFoundOrAction(context, role, async () =>
+				{
+					var permission = GetPermission(context);
+					await NotFoundOrAction(context, permission, async () =>
+					{
+						role.RemovePermission(permission);
+						_store.Save(role);
+
+						await Task.Yield();
+					});
+				});
+			});
 
 			app.Route("/api/users/all").Get(async context =>
 			{
 				await context.WriteJson(_store.Users.AllUsers);
+			});
+
+			app.Route("/api/users").Put(async context =>
+			{
+				var dto = context.ReadJson<CreateUserDto>();
+
+				_store.Save(User.Create(_store.Permissions.ByID, _store.Roles.ByID, dto.Key, dto.Name));
+
+				await Task.Yield();
 			});
 
 			app.Route("/api/users/{user-key}").Get(async context =>
@@ -92,6 +188,12 @@ namespace Magistrate.Api
 			return _store.Permissions.ByKey(key);
 		}
 
+		private Role GetRole(IOwinContext context)
+		{
+			var key = context.GetRouteValue<string>("role-key");
+			return _store.Roles.ByKey(key);
+		}
+
 		private User GetUser(IOwinContext context)
 		{
 			var key = context.GetRouteValue<string>("user-key");
@@ -113,5 +215,27 @@ namespace Magistrate.Api
 			else
 				await action();
 		}
+
+		private class CreatePermissionDto
+		{
+			public string Key { get; set; }
+			public string Name { get; set; }
+			public string Description { get; set; }
+		}
+
+		private class CreateRoleDto
+		{
+			public string Key { get; set; }
+			public string Name { get; set; }
+			public string Description { get; set; }
+		}
+
+		private class CreateUserDto
+		{
+			public string Key { get; set; }
+			public string Name { get; set; }
+		}
+
 	}
+
 }
