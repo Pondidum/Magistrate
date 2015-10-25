@@ -167,6 +167,70 @@ namespace Magistrate.Api
 				await NotFoundOrAction(context, user, () => context.WriteJson(user));
 			});
 
+			app.Route("/api/user/{user-key}/addPermission/{permission-key}").Put(async context =>
+			{
+				var user = GetUser(context);
+				await NotFoundOrAction(context, user, async () =>
+				{
+					var permission = GetPermission(context);
+					await NotFoundOrAction(context, permission, async () =>
+					{
+						user.AddPermission(permission);
+						_store.Save(user);
+
+						await Task.Yield();
+					});
+				});
+			});
+
+			app.Route("/api/user/{user-key}/removePermission/{permission-key}").Put(async context =>
+			{
+				var user = GetUser(context);
+				await NotFoundOrAction(context, user, async () =>
+				{
+					var permission = GetPermission(context);
+					await NotFoundOrAction(context, permission, async () =>
+					{
+						user.RemovePermission(permission);
+						_store.Save(user);
+
+						await Task.Yield();
+					});
+				});
+			});
+
+			app.Route("/api/user/{user-key}/addRole/{role-key}").Put(async context =>
+			{
+				var user = GetUser(context);
+				await NotFoundOrAction(context, user, async () =>
+				{
+					var role = GetRole(context);
+					await NotFoundOrAction(context, role, async () =>
+					{
+						user.AddRole(role);
+						_store.Save(user);
+
+						await Task.Yield();
+					});
+				});
+			});
+
+			app.Route("/api/user/{user-key}/removeRole/{role-key}").Put(async context =>
+			{
+				var user = GetUser(context);
+				await NotFoundOrAction(context, user, async () =>
+				{
+					var role = GetRole(context);
+					await NotFoundOrAction(context, role, async () =>
+					{
+						user.RemoveRole(role);
+						_store.Save(user);
+
+						await Task.Yield();
+					});
+				});
+			});
+
 			app.Route("/api/user/{user-key}/can/{permission-key}").Get(async context =>
 			{
 				var user = GetUser(context);
