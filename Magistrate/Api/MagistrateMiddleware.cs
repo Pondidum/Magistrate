@@ -114,7 +114,7 @@ namespace Magistrate.Api
 				});
 			});
 
-			app.Route("/api/role/{role-key}/add/{permission-key}").Put(async context =>
+			app.Route("/api/role/{role-key}/addPermission/{permission-key}").Put(async context =>
 			{
 				var role = GetRole(context);
 				await NotFoundOrAction(context, role, async () =>
@@ -130,7 +130,7 @@ namespace Magistrate.Api
 				});
 			});
 
-			app.Route("/api/role/{role-key}/remove/{permission-key}").Put(async context =>
+			app.Route("/api/role/{role-key}/removePermission/{permission-key}").Put(async context =>
 			{
 				var role = GetRole(context);
 				await NotFoundOrAction(context, role, async () =>
