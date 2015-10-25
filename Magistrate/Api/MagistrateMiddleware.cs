@@ -36,16 +36,12 @@ namespace Magistrate.Api
 
 			app.Route("/api/permissions/{permission-key}").Get(async context =>
 			{
-				var permission = GetPermission(context);
-
-				await NotFoundOrAction(context, permission, () => context.WriteJson(permission));
+				await NotFoundOrAction(context, GetPermission, async permission =>  await context.WriteJson(permission));
 			});
 
 			app.Route("/api/permissions/{permission-key}/changeName").Put(async context =>
 			{
-				var permission = GetPermission(context);
-
-				await NotFoundOrAction(context, permission, async () =>
+				await NotFoundOrAction(context, GetPermission, async permission =>
 				{
 					permission.ChangeName(ReadBody(context));
 					_store.Save(permission);
@@ -56,9 +52,7 @@ namespace Magistrate.Api
 
 			app.Route("/api/permissions/{permission-key}/changeDescription").Put(async context =>
 			{
-				var permission = GetPermission(context);
-
-				await NotFoundOrAction(context, permission, async () =>
+				await NotFoundOrAction(context, GetPermission, async permission =>
 				{
 					permission.ChangeDescription(ReadBody(context));
 					_store.Save(permission);
@@ -83,16 +77,12 @@ namespace Magistrate.Api
 
 			app.Route("/api/roles/{role-key}").Get(async context =>
 			{
-				var role = GetRole(context);
-
-				await NotFoundOrAction(context, role, () => context.WriteJson(role));
+				await NotFoundOrAction(context, GetRole, async role => await context.WriteJson(role));
 			});
 
 			app.Route("/api/role/{role-key}/changeName").Put(async context =>
 			{
-				var role = GetRole(context);
-
-				await NotFoundOrAction(context, role, async () =>
+				await NotFoundOrAction(context, GetRole, async role =>
 				{
 					role.ChangeName(ReadBody(context));
 					_store.Save(role);
@@ -103,9 +93,7 @@ namespace Magistrate.Api
 
 			app.Route("/api/role/{role-key}/changeDescription").Put(async context =>
 			{
-				var role = GetRole(context);
-
-				await NotFoundOrAction(context, role, async () =>
+				await NotFoundOrAction(context, GetRole, async role =>
 				{
 					role.ChangeDescription(ReadBody(context));
 					_store.Save(role);
@@ -116,11 +104,9 @@ namespace Magistrate.Api
 
 			app.Route("/api/role/{role-key}/addPermission/{permission-key}").Put(async context =>
 			{
-				var role = GetRole(context);
-				await NotFoundOrAction(context, role, async () =>
+				await NotFoundOrAction(context, GetRole, async role =>
 				{
-					var permission = GetPermission(context);
-					await NotFoundOrAction(context, permission, async () =>
+					await NotFoundOrAction(context, GetPermission, async permission =>
 					{
 						role.AddPermission(permission);
 						_store.Save(role);
@@ -132,11 +118,9 @@ namespace Magistrate.Api
 
 			app.Route("/api/role/{role-key}/removePermission/{permission-key}").Put(async context =>
 			{
-				var role = GetRole(context);
-				await NotFoundOrAction(context, role, async () =>
+				await NotFoundOrAction(context, GetRole, async role =>
 				{
-					var permission = GetPermission(context);
-					await NotFoundOrAction(context, permission, async () =>
+					await NotFoundOrAction(context, GetPermission, async permission =>
 					{
 						role.RemovePermission(permission);
 						_store.Save(role);
@@ -162,18 +146,14 @@ namespace Magistrate.Api
 
 			app.Route("/api/users/{user-key}").Get(async context =>
 			{
-				var user = GetUser(context);
-
-				await NotFoundOrAction(context, user, () => context.WriteJson(user));
+				await NotFoundOrAction(context, GetUser, async user => await context.WriteJson(user));
 			});
 
 			app.Route("/api/user/{user-key}/addPermission/{permission-key}").Put(async context =>
 			{
-				var user = GetUser(context);
-				await NotFoundOrAction(context, user, async () =>
+				await NotFoundOrAction(context, GetUser, async user =>
 				{
-					var permission = GetPermission(context);
-					await NotFoundOrAction(context, permission, async () =>
+					await NotFoundOrAction(context, GetPermission, async permission =>
 					{
 						user.AddPermission(permission);
 						_store.Save(user);
@@ -185,11 +165,9 @@ namespace Magistrate.Api
 
 			app.Route("/api/user/{user-key}/removePermission/{permission-key}").Put(async context =>
 			{
-				var user = GetUser(context);
-				await NotFoundOrAction(context, user, async () =>
+				await NotFoundOrAction(context, GetUser, async user =>
 				{
-					var permission = GetPermission(context);
-					await NotFoundOrAction(context, permission, async () =>
+					await NotFoundOrAction(context, GetPermission, async permission =>
 					{
 						user.RemovePermission(permission);
 						_store.Save(user);
@@ -201,11 +179,9 @@ namespace Magistrate.Api
 
 			app.Route("/api/user/{user-key}/addRole/{role-key}").Put(async context =>
 			{
-				var user = GetUser(context);
-				await NotFoundOrAction(context, user, async () =>
+				await NotFoundOrAction(context, GetUser, async user =>
 				{
-					var role = GetRole(context);
-					await NotFoundOrAction(context, role, async () =>
+					await NotFoundOrAction(context, GetRole, async role =>
 					{
 						user.AddRole(role);
 						_store.Save(user);
@@ -217,11 +193,9 @@ namespace Magistrate.Api
 
 			app.Route("/api/user/{user-key}/removeRole/{role-key}").Put(async context =>
 			{
-				var user = GetUser(context);
-				await NotFoundOrAction(context, user, async () =>
+				await NotFoundOrAction(context, GetUser, async user =>
 				{
-					var role = GetRole(context);
-					await NotFoundOrAction(context, role, async () =>
+					await NotFoundOrAction(context, GetRole, async role =>
 					{
 						user.RemoveRole(role);
 						_store.Save(user);
@@ -233,13 +207,11 @@ namespace Magistrate.Api
 
 			app.Route("/api/user/{user-key}/can/{permission-key}").Get(async context =>
 			{
-				var user = GetUser(context);
-				await NotFoundOrAction(context, user, async () =>
+				await NotFoundOrAction(context, GetUser, async user =>
 				{
-					var perm = GetPermission(context);
-					await NotFoundOrAction(context, perm, async () =>
+					await NotFoundOrAction(context, GetPermission, async permission =>
 					{
-						await context.WriteJson(user.Permissions.Can(perm));
+						await context.WriteJson(user.Permissions.Can(permission));
 					});
 				});
 			});
@@ -272,12 +244,14 @@ namespace Magistrate.Api
 			}
 		}
 
-		private static async Task NotFoundOrAction<T>(IOwinContext context, T item, Func<Task> action)
+		private static async Task NotFoundOrAction<T>(IOwinContext context, Func<IOwinContext, T> getItem, Func<T, Task> action)
 		{
+			var item = getItem(context);
+
 			if (item == null)
 				context.Response.StatusCode = (int)HttpStatusCode.NotFound;
 			else
-				await action();
+				await action(item);
 		}
 
 		private class CreatePermissionDto
