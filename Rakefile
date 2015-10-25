@@ -26,7 +26,7 @@ end
 desc 'Set the assembly version number'
 asmver :version do |v|
 
-  v.file_path = "Core/Properties/AssemblyVersion.cs"
+  v.file_path = "#{project_name}/Properties/AssemblyVersion.cs"
   v.attributes assembly_version: project_version,
                assembly_file_version: project_version,
                assembly_description: "Build: #{ci_build}, Commit Sha: #{ci_commit}"
