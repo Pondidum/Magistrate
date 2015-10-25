@@ -57,6 +57,33 @@ namespace Magistrate.Api
 					await Task.Yield();
 				});
 			});
+
+
+			app.Route("/api/users/all").Get(async context =>
+			{
+				await context.WriteJson(_store.Users.AllUsers);
+			});
+
+			app.Route("/api/users/{user-key}").Get(async context =>
+			{
+				var user = GetUser(context);
+
+				await NotFoundOrAction(context, user, () => context.WriteJson(user));
+			});
+
+			app.Route("/api/user/{user-key}/can/{permission-key}").Get(async context =>
+			{
+				var user = GetUser(context);
+				await NotFoundOrAction(context, user, async () =>
+				{
+					var perm = GetPermission(context);
+					await NotFoundOrAction(context, perm, async () =>
+					{
+						await context.WriteJson(user.Permissions.Can(perm));
+					});
+				});
+			});
+
 		}
 
 		private Permission GetPermission(IOwinContext context)
@@ -65,7 +92,13 @@ namespace Magistrate.Api
 			return _store.Permissions.ByKey(key);
 		}
 
-		private string ReadBody(IOwinContext context)
+		private User GetUser(IOwinContext context)
+		{
+			var key = context.GetRouteValue<string>("user-key");
+			return _store.Users.ByKey(key);
+		}
+
+		private static string ReadBody(IOwinContext context)
 		{
 			using (var reader = new StreamReader(context.Request.Body))
 			{
@@ -80,13 +113,5 @@ namespace Magistrate.Api
 			else
 				await action();
 		}
-
-		//private static async Task RespondOrNotFound(IOwinContext context, Permission permission)
-		//{
-		//	if (permission == null)
-		//		context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-		//	else
-		//		await context.WriteJson(permission);
-		//}
 	}
 }

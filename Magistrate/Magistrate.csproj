@@ -71,6 +71,7 @@
     <Compile Include="Domain\Events\UserCreatedEvent.cs" />
     <Compile Include="Domain\Permission.cs" />
     <Compile Include="Domain\Events\PermissionCreatedEvent.cs" />
+    <Compile Include="Domain\PermissionInspector.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="ReadModels\PermissionsReadModel.cs" />
     <Compile Include="Infrastructure\Projection.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Domain\Store.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadModels\UsersReadModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
