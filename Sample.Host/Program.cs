@@ -2,7 +2,6 @@
 using System.Security.Claims;
 using Ledger.Stores;
 using Magistrate;
-using Magistrate.Api;
 using Microsoft.Owin.Hosting;
 
 namespace Sample.Host
@@ -11,31 +10,26 @@ namespace Sample.Host
 	{
 		static void Main(string[] args)
 		{
-			var config = new MagistrateConfiguration
-			{
-				EventStore = new InMemoryEventStore<Guid>(),
-				User = () =>
-				{
-					var current = ClaimsPrincipal.Current;
-
-					return new MagistrateUser
-					{
-						Name = current.Identity.Name,
-						Key = current.FindFirst("userID").Value
-					};
-				}
-			};
-
-			var magistrate = new MagistrateApi(config);
-
-
 			var host = WebApp.Start("http://localhost:4444", app =>
 			{
 				//add a login provider here
 				//app.Use<WindowsAuthentication>();
 
+				app.UseMagistrateApi(config =>
+				{
+					config.EventStore = new InMemoryEventStore<Guid>();
+					config.User = () =>
+					{
+						var current = ClaimsPrincipal.Current;
 
-				magistrate.Configure(app);
+						return new MagistrateUser
+						{
+							Name = current.Identity.Name,
+							Key = current.FindFirst("userID").Value
+						};
+					};
+				});
+
 			});
 
 			Console.WriteLine("Press any key to exit.");
