@@ -1,8 +1,8 @@
 ﻿using System;
-using Ledger;
+using System.Security.Claims;
 using Ledger.Stores;
+using Magistrate;
 using Magistrate.Api;
-using Magistrate.Domain;
 using Microsoft.Owin.Hosting;
 
 namespace Sample.Host
@@ -11,16 +11,30 @@ namespace Sample.Host
 	{
 		static void Main(string[] args)
 		{
-			var eventStore = new AggregateStore<Guid>(new InMemoryEventStore<Guid>());
-			var store = new Store(eventStore);
-			var magistrate = new MagistrateTopware(store);
-
-			var permission = Permission.Create("permission-one", "Permission One", "This does something, probably.");
-
-			store.Save(permission);
-
-            var host = WebApp.Start("http://localhost:4444", app =>
+			var config = new MagistrateConfiguration
 			{
+				EventStore = new InMemoryEventStore<Guid>(),
+				User = () =>
+				{
+					var current = ClaimsPrincipal.Current;
+
+					return new MagistrateUser
+					{
+						Name = current.Identity.Name,
+						Key = current.FindFirst("userID").Value
+					};
+				}
+			};
+
+			var magistrate = new MagistrateTopware(config);
+
+
+			var host = WebApp.Start("http://localhost:4444", app =>
+			{
+				//add a login provider here
+				//app.Use<WindowsAuthentication>();
+
+
 				magistrate.Configure(app);
 			});
 

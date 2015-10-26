@@ -1,4 +1,6 @@
-﻿using Magistrate.Domain;
+﻿using System;
+using Ledger;
+using Magistrate.Domain;
 using Owin;
 
 namespace Magistrate.Api
@@ -8,9 +10,12 @@ namespace Magistrate.Api
 		private readonly PermissionsController _permissions;
 		private readonly RolesController _roles;
 		private readonly UsersController _users;
-
-		public MagistrateTopware(Store store)
+		
+		public MagistrateTopware(MagistrateConfiguration config)
 		{
+			var aggregateStore = new AggregateStore<Guid>(config.EventStore);
+			var store = new Store(aggregateStore);
+
 			_permissions = new PermissionsController(store);
 			_roles = new RolesController(store);
 			_users = new UsersController(store);

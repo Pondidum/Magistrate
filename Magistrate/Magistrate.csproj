@@ -76,6 +76,8 @@
     <Compile Include="Domain\Permission.cs" />
     <Compile Include="Domain\Events\PermissionCreatedEvent.cs" />
     <Compile Include="Domain\PermissionInspector.cs" />
+    <Compile Include="MagistrateConfiguration.cs" />
+    <Compile Include="MagistrateUser.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="ReadModels\PermissionsReadModel.cs" />
     <Compile Include="Infrastructure\Projection.cs" />
