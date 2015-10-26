@@ -30,6 +30,10 @@ namespace Sample.Host
 					};
 				});
 
+				var ui = new MagistrateWebInterface();
+				
+				ui.Configure(app);
+
 			});
 
 			Console.WriteLine("Press any key to exit.");
