@@ -116,6 +116,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="content\libs\uniloc.js" />
     <None Include="App.config" />
     <Content Include="content\components\app.jsx" />
     <None Include="packages.config" />

@@ -27,7 +27,8 @@ namespace Sample.Host
 				StaticFileOptions = new StaticFileOptions
 				{
 					FileSystem = fs
-				}
+				},
+				Extensions = new[] { ".jsx" }
 			});
 
 			app.UseFileServer(new FileServerOptions
