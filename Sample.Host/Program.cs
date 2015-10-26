@@ -26,7 +26,7 @@ namespace Sample.Host
 				}
 			};
 
-			var magistrate = new MagistrateTopware(config);
+			var magistrate = new MagistrateApi(config);
 
 
 			var host = WebApp.Start("http://localhost:4444", app =>

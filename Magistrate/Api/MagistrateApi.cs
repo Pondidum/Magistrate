@@ -5,13 +5,13 @@ using Owin;
 
 namespace Magistrate.Api
 {
-	public class MagistrateTopware
+	public class MagistrateApi
 	{
 		private readonly PermissionsController _permissions;
 		private readonly RolesController _roles;
 		private readonly UsersController _users;
 		
-		public MagistrateTopware(MagistrateConfiguration config)
+		public MagistrateApi(MagistrateConfiguration config)
 		{
 			var aggregateStore = new AggregateStore<Guid>(config.EventStore);
 			var store = new Store(aggregateStore);

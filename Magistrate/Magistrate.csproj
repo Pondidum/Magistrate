@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\Controller.cs" />
-    <Compile Include="Api\MagistrateMiddleware.cs" />
+    <Compile Include="Api\MagistrateApi.cs" />
     <Compile Include="Api\PermissionsController.cs" />
     <Compile Include="Api\RolesController.cs" />
     <Compile Include="Api\UsersController.cs" />
