@@ -6,6 +6,28 @@ var App = React.createClass({
     permissions: 'GET /permissions'
   }),
 
+  getInitialState() {
+    return {
+      location: this.getLocation()
+    };
+  },
+
+  getLocation() {
+    var location = window.location.hash.replace(/^#\/?|\/$/g, '');
+
+    return this.router.lookup(location);
+  },
+
+  navigated() {
+    this.setState({
+      location: this.getLocation()
+    })
+  },
+
+  componentDidMount() {
+    window.addEventListener('hashchange', this.navigated, false);
+  },
+
   render() {
 
     var userLink = "#" +  this.router.generate('users');
