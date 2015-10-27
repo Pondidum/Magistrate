@@ -34,7 +34,7 @@ var App = React.createClass({
 
     switch (this.state.location.name) {
       case 'users':
-        content = (<h1>Users</h1>);
+        content = (<UsersView />);
         break;
       case 'roles':
         content = (<h1>Roles</h1>);
