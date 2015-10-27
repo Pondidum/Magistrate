@@ -32,29 +32,26 @@ var UsersView = React.createClass({
 
     var users = this.state.users.map(function(user, index) {
       return (
-        <tr key={index}>
-          <td>{user.name}</td>
-          <td>
-            <a className="btn btn-default" href="#" role="button">Menu</a>
-          </td>
-        </tr>
+        <div key={index} className="col-md-3">
+          <div className="panel panel-default">
+            <div className="panel-heading">
+              <h3 className="panel-title">{user.name}<span className="glyphicon glyphicon-remove-circle pull-right"></span></h3>
+            </div>
+            <div className="panel-body">
+              <div>Permissions: 15</div>
+              <div>Roles: 3</div>
+            </div>
+          </div>
+        </div>
       );
     });
 
     return (
       <div>
         <FilterBar />
-        <table className="table">
-          <thead>
-            <tr>
-              <th className="col-md-10">Name</th>
-              <th className="col-md-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
+        <div className="row">
             {users}
-          </tbody>
-        </table>
+        </div>
       </div>
     );
   }
