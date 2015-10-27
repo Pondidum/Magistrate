@@ -46,7 +46,7 @@ var App = React.createClass({
 
     return (
       <div className="row">
-        <MainMenu router={this.router} />
+        <MainMenu router={this.router} selected={this.state.location.name} />
         <div className="col-md-9">
           {content}
         </div>
