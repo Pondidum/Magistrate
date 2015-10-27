@@ -13,7 +13,7 @@ var App = React.createClass({
   },
 
   getLocation() {
-    var location = window.location.hash.replace(/^#\/?|\/$/g, '');
+    var location = window.location.hash.replace(/^#\/?|\/$/g, '') || "users";
 
     return this.router.lookup(location);
   },
@@ -30,10 +30,26 @@ var App = React.createClass({
 
   render() {
 
+    var content;
+
+    switch (this.state.location.name) {
+      case 'users':
+        content = (<h1>Users</h1>);
+        break;
+      case 'roles':
+        content = (<h1>Roles</h1>);
+        break;
+      case 'permissions':
+        content = (<h1>Permissions</h1>);
+        break;
+    }
+
     return (
       <div className="row">
         <MainMenu router={this.router} />
-        <div className="col-md-9">Content</div>
+        <div className="col-md-9">
+          {content}
+        </div>
       </div>
     );
   }
