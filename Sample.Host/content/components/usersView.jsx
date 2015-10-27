@@ -43,7 +43,7 @@ var UsersView = React.createClass({
 
     return (
       <div>
-        <h1>Users</h1>
+        <FilterBar />
         <table className="table">
           <thead>
             <tr>
