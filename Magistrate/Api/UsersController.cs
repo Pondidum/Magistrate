@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Magistrate.Api.Responses;
 using Magistrate.Domain;
 using Microsoft.Owin;
 using Owin;
@@ -27,7 +29,7 @@ namespace Magistrate.Api
 
 		private async Task GetAll(IOwinContext context)
 		{
-			await context.WriteJson(Store.Users.AllUsers);
+			await context.WriteJson(Store.Users.AllUsers.Select(UserResponse.From));
 		}
 
 		private async Task CreateUser(IOwinContext context)

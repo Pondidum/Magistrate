@@ -63,6 +63,7 @@
     <Compile Include="Api\Controller.cs" />
     <Compile Include="Api\MagistrateApi.cs" />
     <Compile Include="Api\PermissionsController.cs" />
+    <Compile Include="Api\Responses\UserResponse.cs" />
     <Compile Include="Api\RolesController.cs" />
     <Compile Include="Api\UsersController.cs" />
     <Compile Include="Domain\Events\DescriptionChangedEvent.cs" />

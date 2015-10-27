@@ -7,7 +7,7 @@ namespace Magistrate.ReadModels
 {
 	public class UsersReadModel
 	{
-		public Dictionary<string, string> AllUsers => _users.ToDictionary(p => p.Key, p => p.Name);
+		public IEnumerable<User> AllUsers => _users;
 
 		private readonly HashSet<User> _users;
 
