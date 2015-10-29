@@ -52,9 +52,7 @@ var UsersView = React.createClass({
     return (
       <div>
         <div className="row" style={{ marginBottom: "1em" }}>
-          <div className="col-md-7">
-            <h4>Actions</h4>
-          </div>
+          <ActionsBar className="col-md-7" />
           <FilterBar filterChanged={this.filterChanged} className="pull-right col-md-5" />
         </div>
         <div className="row">
