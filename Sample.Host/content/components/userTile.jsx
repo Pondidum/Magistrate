@@ -7,9 +7,13 @@ var UserTile = React.createClass({
   },
 
   onClick() {
+    var newState = !this.state.checked;
+
     this.setState({
-      checked: !this.state.checked
+      checked: newState
     });
+
+    this.props.onChange(newState);
   },
 
   render() {

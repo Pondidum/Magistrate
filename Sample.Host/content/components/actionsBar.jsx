@@ -2,7 +2,7 @@ var ActionsBar = React.createClass({
 
   render() {
 
-    var disabled = this.props.hasUsers
+    var disabled = this.props.hasSelection
       ? ""
       : " disabled";
 

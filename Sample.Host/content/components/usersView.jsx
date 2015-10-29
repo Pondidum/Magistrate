@@ -3,7 +3,8 @@ var UsersView = React.createClass({
   getInitialState() {
     return {
       filter: "",
-      users: []
+      users: [],
+      selected: 0
     };
   },
 
@@ -35,8 +36,18 @@ var UsersView = React.createClass({
     });
   },
 
+  onUserSelection(selected) {
+    var newTotal = this.state.selected + (selected ? 1 : -1);
+
+    this.setState({
+      selected: newTotal
+    });
+  },
+
   render() {
 
+    var onUserSelection = this.onUserSelection;
+    var hasSelection = this.state.selected > 0;
     var filter = new RegExp(this.state.filter, "i");
 
     var users = this.state.users
@@ -45,15 +56,15 @@ var UsersView = React.createClass({
       })
       .map(function(user, index) {
         return (
-          <UserTile key={index} user={user} />
+          <UserTile key={index} user={user} onChange={onUserSelection} />
         );
       });
 
     return (
       <div>
         <div className="row" style={{ marginBottom: "1em" }}>
-          <ActionsBar className="col-md-7" />
-          <FilterBar filterChanged={this.filterChanged} className="pull-right col-md-5" />
+          <ActionsBar className="col-md-7" hasSelection={hasSelection} />
+          <FilterBar className="pull-right col-md-5" filterChanged={this.filterChanged} />
         </div>
         <div className="row">
             {users}
