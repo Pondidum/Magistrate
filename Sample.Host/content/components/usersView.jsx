@@ -76,7 +76,7 @@ var UsersView = React.createClass({
           <div className="col-md-7">
 
             <ul className="list-unstyled list-inline">
-              <li><a href="#" className="btn btn-primary">Create User</a></li>
+              <li><CreateUserDialog /></li>
               <li><a href="#" className={"btn btn-default" + noSelection} onClick={this.openPermissions}>Add Permission</a></li>
               <li><a href="#" className={"btn btn-default" + noSelection} onClick={this.openRoles}>Add Role</a></li>
             </ul>
