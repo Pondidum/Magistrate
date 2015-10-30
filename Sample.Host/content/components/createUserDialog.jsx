@@ -8,6 +8,7 @@ var CreateUserDialog = React.createClass({
   },
 
   onSubmit() {
+    this.refs.dialog.close();
     console.log("create.submit");
   },
 

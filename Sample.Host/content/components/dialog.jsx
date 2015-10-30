@@ -16,7 +16,6 @@ var Dialog = React.createClass({
   },
 
   accept() {
-    this.close();
     this.props.onSubmit();
   },
 
