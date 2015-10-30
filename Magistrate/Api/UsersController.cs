@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 using Magistrate.Api.Responses;
 using Magistrate.Domain;
@@ -35,10 +36,11 @@ namespace Magistrate.Api
 		private async Task CreateUser(IOwinContext context)
 		{
 			var dto = context.ReadJson<CreateUserDto>();
+			var user = User.Create(Store.Permissions.ByID, Store.Roles.ByID, dto.Key, dto.Name);
 
-			Store.Save(User.Create(Store.Permissions.ByID, Store.Roles.ByID, dto.Key, dto.Name));
+			Store.Save(user);
 
-			await Task.Yield();
+			await context.WriteJson(UserResponse.From(user));
 		}
 
 		private async Task GetUserDetails(IOwinContext context)

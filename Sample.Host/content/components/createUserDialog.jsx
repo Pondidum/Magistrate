@@ -9,7 +9,27 @@ var CreateUserDialog = React.createClass({
 
   onSubmit() {
     this.refs.dialog.close();
-    console.log("create.submit");
+
+    var json = JSON.stringify({
+      key: this.state.key,
+      name: this.state.name
+    });
+
+    $.ajax({
+      url: "/api/users",
+      method: "PUT",
+      dataType: 'json',
+      data: json,
+      cache: false,
+      success: function(data) {
+        this.refs.dialog.close();
+        this.props.onUserCreated(data);
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+
   },
 
   getInitialState() {

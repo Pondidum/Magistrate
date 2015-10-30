@@ -36,6 +36,14 @@ var UsersView = React.createClass({
     });
   },
 
+  onUserCreated(user) {
+    var newCollection = this.state.users.concat([user]);
+
+    this.setState({
+      users: newCollection
+    });
+  },
+
   onUserSelection(selected) {
     var newTotal = this.state.selected + (selected ? 1 : -1);
 
@@ -76,7 +84,7 @@ var UsersView = React.createClass({
           <div className="col-md-7">
 
             <ul className="list-unstyled list-inline">
-              <li><CreateUserDialog /></li>
+              <li><CreateUserDialog onUserCreated={this.onUserCreated} /></li>
               <li><a href="#" className={"btn btn-default" + noSelection} onClick={this.openPermissions}>Add Permission</a></li>
               <li><a href="#" className={"btn btn-default" + noSelection} onClick={this.openRoles}>Add Role</a></li>
             </ul>
