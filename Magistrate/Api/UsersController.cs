@@ -20,11 +20,11 @@ namespace Magistrate.Api
 			app.Route("/api/users/all").Get(GetAll);
 			app.Route("/api/users").Put(CreateUser);
 			app.Route("/api/users/{user-key}").Get(GetUserDetails);
-			app.Route("/api/user/{user-key}/addPermission/{permission-key}").Put(AddPermission);
-			app.Route("/api/user/{user-key}/removePermission/{permission-key}").Put(RemovePermission);
-			app.Route("/api/user/{user-key}/addRole/{role-key}").Put(AddRole);
-			app.Route("/api/user/{user-key}/removeRole/{role-key}").Put(RemoveRole);
-			app.Route("/api/user/{user-key}/can/{permission-key}").Get(CheckPermission);
+			app.Route("/api/users/{user-key}/addPermission/{permission-key}").Put(AddPermission);
+			app.Route("/api/users/{user-key}/removePermission/{permission-key}").Put(RemovePermission);
+			app.Route("/api/users/{user-key}/addRole/{role-key}").Put(AddRole);
+			app.Route("/api/users/{user-key}/removeRole/{role-key}").Put(RemoveRole);
+			app.Route("/api/users/{user-key}/can/{permission-key}").Get(CheckPermission);
 		}
 
 		private async Task GetAll(IOwinContext context)

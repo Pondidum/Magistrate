@@ -14,15 +14,18 @@ var CreateUserDialog = React.createClass({
   getInitialState() {
     return {
       key: '',
-      name: ''
+      name: '',
+      keyTaken: false,
     };
   },
 
   validateKey() {
-    let length = this.state.key.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
+    var key = this.state.key;
+
+    if (key == null || key == '')
+      return 'error';
+
+    return 'success';
   },
 
   onKeyChanged() {
@@ -32,10 +35,12 @@ var CreateUserDialog = React.createClass({
   },
 
   validateName() {
-    let length = this.state.name.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
+    var name = this.state.name;
+
+    if (name == null || name == '')
+      return 'error';
+
+    return 'success';
   },
 
   onNameChanged() {
@@ -45,6 +50,11 @@ var CreateUserDialog = React.createClass({
   },
 
   render() {
+
+    var keyHelp = this.state.keyTaken
+      ? "This key is already in use"
+      : "Unique identifier for the User";
+
     return (
       <a href="#" className="btn btn-primary" onClick={this.showDialog}>
         Create User
@@ -54,7 +64,7 @@ var CreateUserDialog = React.createClass({
             value={this.state.key}
             placeholder="e.g. 'BD659BC8-D5CE-43BC-A581-D41C534A3BE6'"
             label="Key"
-            help="Unique identifier for the User"
+            help={keyHelp}
             bsStyle={this.validateKey()}
             hasFeedback
             standalone
