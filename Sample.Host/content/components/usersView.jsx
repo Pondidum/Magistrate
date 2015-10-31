@@ -55,7 +55,7 @@ var UsersView = React.createClass({
   render() {
 
     var onUserSelection = this.onUserSelection;
-    var noSelection = this.state.selected <= 0 ? " disabled" : "";
+    var noSelection = this.state.selected <= 0;
     var filter = new RegExp(this.state.filter, "i");
 
     var users = this.state.users

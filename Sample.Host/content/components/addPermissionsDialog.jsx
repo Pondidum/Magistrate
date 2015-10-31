@@ -10,7 +10,7 @@ var AddPermissionsDialog = React.createClass({
     var noSelection = this.props.noSelection;
 
     return (
-      <a href="#" className={"btn btn-default" + noSelection} onClick={this.showDialog}>
+      <a href="#" className={"btn btn-default" + (noSelection ? " disabled" : "")} onClick={this.showDialog}>
         Add Permission
         <Dialog title="Select Permissions" onSubmit={() => console.log("permissionsDialog.submit") } ref="dialog">
           <p>List of all Permissions</p>

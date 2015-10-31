@@ -10,7 +10,7 @@ var AddRolesDialog = React.createClass({
     var noSelection = this.props.noSelection;
 
     return (
-      <a href="#" className={"btn btn-default" + noSelection} onClick={this.showDialog}>
+      <a href="#" className={"btn btn-default" + (noSelection ? " disabled" : "")} onClick={this.showDialog}>
         Add Role
         <Dialog title="Select Roles" onSubmit={() => console.log("rolesDialog.submit") } ref="dialog">
           <p>List of all Roles</p>
