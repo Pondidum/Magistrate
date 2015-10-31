@@ -52,16 +52,6 @@ var UsersView = React.createClass({
     });
   },
 
-  openPermissions(e) {
-    e.preventDefault();
-    this.refs.permissionsDialog.open()
-  },
-
-  openRoles(e) {
-    e.preventDefault();
-    this.refs.rolesDialog.open();
-  },
-
   render() {
 
     var onUserSelection = this.onUserSelection;
@@ -85,13 +75,9 @@ var UsersView = React.createClass({
 
             <ul className="list-unstyled list-inline">
               <li><CreateUserDialog onUserCreated={this.onUserCreated} /></li>
-              <li><a href="#" className={"btn btn-default" + noSelection} onClick={this.openPermissions}>Add Permission</a></li>
+              <li><AddPermissionsDialog noSelection={noSelection} /></li>
               <li><AddRolesDialog noSelection={noSelection} /></li>
             </ul>
-
-            <Dialog title="Select Permissions" onSubmit={() => console.log("permissionsDialog.submit") } ref="permissionsDialog">
-              <p>List of all Permissions</p>
-            </Dialog>
 
           </div>
           <FilterBar className="pull-right col-md-5" filterChanged={this.filterChanged} />
