@@ -1,10 +1,14 @@
 var Modal = ReactBootstrap.Modal;
 var Button = ReactBootstrap.Button;
+var ProgressBar = ReactBootstrap.ProgressBar;
 
 var Dialog = React.createClass({
 
   getInitialState() {
-    return { showModal: this.props.intialState };
+    return {
+      showModal: false,
+      showAsync: false
+    };
   },
 
   close() {
@@ -15,14 +19,27 @@ var Dialog = React.createClass({
     this.setState({ showModal: true });
   },
 
+  asyncStart() {
+    this.setState({ showAsync: true });
+  },
+
+  asyncStop() {
+    this.setState({ showAsync: false });
+  },
+
   accept() {
     this.props.onSubmit();
   },
 
   render() {
+
+    var async = this.state.showAsync
+      ? (<img src="/img/loading.gif" style={{ marginRight: "1em" }} />)
+      : null;
+
     return (
       <div className="static-modal">
-        <Modal show={this.state.showModal} onHide={this.close}>
+        <Modal show={this.state.showModal} onHide={this.close} bsSize="large">
           <Modal.Header closeButton>
             <Modal.Title>{this.props.title}</Modal.Title>
           </Modal.Header>
@@ -32,8 +49,9 @@ var Dialog = React.createClass({
           </Modal.Body>
 
           <Modal.Footer>
-            <Button onClick={this.close}>Cancel</Button>
+            {async}
             <Button onClick={this.accept} bsStyle="primary">Add</Button>
+            <Button onClick={this.close}>Cancel</Button>
           </Modal.Footer>
 
         </Modal>

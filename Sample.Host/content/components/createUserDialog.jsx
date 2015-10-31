@@ -8,7 +8,10 @@ var CreateUserDialog = React.createClass({
   },
 
   onSubmit() {
-    this.refs.dialog.close();
+
+    var dialog = this.refs.dialog;
+
+    dialog.asyncStart();
 
     var json = JSON.stringify({
       key: this.state.key,
@@ -22,10 +25,18 @@ var CreateUserDialog = React.createClass({
       data: json,
       cache: false,
       success: function(data) {
-        this.refs.dialog.close();
-        this.props.onUserCreated(data);
+        dialog.asyncStop();
+
+        if (data.success) {
+          this.props.onUserCreated(data.user);
+          dialog.close();
+        } else {
+          this.setState({ keyTaken: true });
+        }
+
       }.bind(this),
       error: function(xhr, status, err) {
+        dialog.asyncStop();
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
@@ -43,7 +54,7 @@ var CreateUserDialog = React.createClass({
   validateKey() {
     var key = this.state.key;
 
-    if (key == null || key == '')
+    if (key == null || key == '' || this.state.keyTaken)
       return 'error';
 
     return 'success';
