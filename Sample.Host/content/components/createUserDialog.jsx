@@ -100,6 +100,7 @@ var CreateUserDialog = React.createClass({
             bsStyle={this.validateKey()}
             hasFeedback
             standalone
+            autoFocus
             ref="key"
             onChange={this.onKeyChanged} />
           <Input
