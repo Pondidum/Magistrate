@@ -29,8 +29,9 @@ var UserTile = React.createClass({
             <h3 className="panel-title">{user.name}<span className="glyphicon glyphicon-remove-circle pull-right"></span></h3>
           </div>
           <div className="panel-body">
-            <div>Permissions: 15</div>
-            <div>Roles: 3</div>
+            <div>Roles: {user.roles.lenth || 0}</div>
+            <div>Includes: {user.includes.lenth || 0}</div>
+            <div>Revokes: {user.revokes.lenth || 0}</div>
           </div>
         </div>
       </div>
