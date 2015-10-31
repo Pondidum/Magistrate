@@ -86,15 +86,11 @@ var UsersView = React.createClass({
             <ul className="list-unstyled list-inline">
               <li><CreateUserDialog onUserCreated={this.onUserCreated} /></li>
               <li><a href="#" className={"btn btn-default" + noSelection} onClick={this.openPermissions}>Add Permission</a></li>
-              <li><a href="#" className={"btn btn-default" + noSelection} onClick={this.openRoles}>Add Role</a></li>
+              <li><AddRolesDialog noSelection={noSelection} /></li>
             </ul>
 
             <Dialog title="Select Permissions" onSubmit={() => console.log("permissionsDialog.submit") } ref="permissionsDialog">
               <p>List of all Permissions</p>
-            </Dialog>
-
-            <Dialog title="Select Roles" onSubmit={() => console.log("rolesDialog.submit") } ref="rolesDialog">
-              <p>List of all Roles</p>
             </Dialog>
 
           </div>
