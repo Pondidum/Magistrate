@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Ledger;
+using Magistrate.Domain.Rules;
 using Magistrate.Infrastructure;
 using Magistrate.ReadModels;
 
@@ -9,6 +12,7 @@ namespace Magistrate.Domain
 	{
 		private readonly AggregateStore<Guid> _store;
 		private readonly Projection _projections;
+		private readonly List<IRule<User>> _userRules;
 
 		public PermissionsReadModel Permissions { get; }
 		public RolesReadModel Roles { get; }
@@ -24,6 +28,11 @@ namespace Magistrate.Domain
 			Users = new UsersReadModel();
 
 			RegisterProjections();
+
+			_userRules = new List<IRule<User>>
+			{
+				new UniqueUserKeyRule(Users.AllUsers)
+			};
 		}
 
 		private void RegisterProjections()
@@ -50,10 +59,20 @@ namespace Magistrate.Domain
 			_projections.Run(role);
 		}
 
-		public void Save(User user)
+		public SaveResult Save(User user)
 		{
+			var violatedRules = _userRules
+				.Where(r => r.IsSatisfiedBy(user) == false)
+				.Select(r => r.GetMessage(user))
+				.ToList();
+
+			if (violatedRules.Any())
+				return SaveResult.Fail(violatedRules);
+
 			_store.Save(user);
 			_projections.Run(user);
+
+			return SaveResult.Pass();
 		}
 	}
 }
