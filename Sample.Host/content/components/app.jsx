@@ -2,6 +2,7 @@ var App = React.createClass({
 
   router: unirouter({
     users: 'GET /users',
+    singleuser: 'GET /users/:key',
     roles: 'GET /roles',
     permissions: 'GET /permissions'
   }),
@@ -35,6 +36,9 @@ var App = React.createClass({
     switch (this.state.location.name) {
       case 'users':
         content = (<ManageUsersView />);
+        break;
+      case 'singleuser':
+        content = (<UserView id={this.state.location.options.key} />);
         break;
       case 'roles':
         content = (<h1>Roles</h1>);
