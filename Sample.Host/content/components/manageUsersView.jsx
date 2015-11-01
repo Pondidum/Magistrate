@@ -55,6 +55,7 @@ var ManageUsersView = React.createClass({
   render() {
 
     var onUserSelection = this.onUserSelection;
+    var navigate = this.props.navigate;
     var noSelection = this.state.selected <= 0;
     var filter = new RegExp(this.state.filter, "i");
 
@@ -64,7 +65,7 @@ var ManageUsersView = React.createClass({
       })
       .map(function(user, index) {
         return (
-          <UserTile key={index} user={user} onChange={onUserSelection} />
+          <UserTile key={index} user={user} onChange={onUserSelection} navigate={navigate} />
         );
       });
 

@@ -2,7 +2,19 @@ var UserView = React.createClass({
 
   render() {
     return (
-      <h1>{this.props.id}</h1>
+      <div>
+        <h1>{this.props.id}</h1>
+
+        <h4>Roles</h4>
+        <hr />
+        <div className="row"></div>
+
+        <h4>Permissions</h4>
+        <hr />
+        <div className="row"></div>
+
+
+      </div>
     );
   }
 

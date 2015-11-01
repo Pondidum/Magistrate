@@ -25,6 +25,10 @@ var App = React.createClass({
     })
   },
 
+  navigate(routeName, options) {
+    window.location.hash = this.router.generate(routeName, options);
+  },
+
   componentDidMount() {
     window.addEventListener('hashchange', this.navigated, false);
   },
@@ -35,7 +39,7 @@ var App = React.createClass({
 
     switch (this.state.location.name) {
       case 'users':
-        content = (<ManageUsersView />);
+        content = (<ManageUsersView navigate={this.navigate} />);
         break;
       case 'singleuser':
         content = (<UserView id={this.state.location.options.key} />);
@@ -50,7 +54,7 @@ var App = React.createClass({
 
     return (
       <div className="row">
-        <MainMenu router={this.router} selected={this.state.location.name} />
+        <MainMenu navigate={this.navigate} selected={this.state.location.name} />
         <div className="col-md-9">
           {content}
         </div>
