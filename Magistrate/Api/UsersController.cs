@@ -20,8 +20,10 @@ namespace Magistrate.Api
 		public void Configure(IAppBuilder app)
 		{
 			app.Route("/api/users/all").Get(GetAll);
+			app.Route("/api/users/active").Get(GetActive);
 			app.Route("/api/users").Put(CreateUser);
 			app.Route("/api/users/{user-key}").Get(GetUserDetails);
+			app.Route("/api/users/{user-key}").Delete(DeactivateUser);
 			app.Route("/api/users/{user-key}/addPermission/{permission-key}").Put(AddPermission);
 			app.Route("/api/users/{user-key}/removePermission/{permission-key}").Put(RemovePermission);
 			app.Route("/api/users/{user-key}/addRole/{role-key}").Put(AddRole);
@@ -31,9 +33,12 @@ namespace Magistrate.Api
 
 		private async Task GetAll(IOwinContext context)
 		{
-			var s = JsonConvert.DefaultSettings;
-
 			await context.JsonResponse(Store.Users.AllUsers.Select(UserResponse.From));
+		}
+
+		private async Task GetActive(IOwinContext context)
+		{
+			await context.JsonResponse(Store.Users.ActiveUsers.Select(UserResponse.From));
 		}
 
 		private async Task CreateUser(IOwinContext context)
@@ -49,6 +54,16 @@ namespace Magistrate.Api
 		private async Task GetUserDetails(IOwinContext context)
 		{
 			await NotFoundOrAction(context, GetUser, async user => await context.JsonResponse(user));
+		}
+
+		private async Task DeactivateUser(IOwinContext context)
+		{
+			await NotFoundOrAction(context, GetUser, async user =>
+			{
+				user.Deactivate();
+
+				await Task.Yield();
+			});
 		}
 
 		private async Task AddPermission(IOwinContext context)

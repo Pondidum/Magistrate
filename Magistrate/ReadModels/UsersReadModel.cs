@@ -7,6 +7,7 @@ namespace Magistrate.ReadModels
 {
 	public class UsersReadModel
 	{
+		public IEnumerable<User> ActiveUsers => _users.Where(u => u.IsActive);
 		public IEnumerable<User> AllUsers => _users;
 
 		private readonly HashSet<User> _users;

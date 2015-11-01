@@ -76,6 +76,7 @@
     <Compile Include="Domain\Events\RoleCreatedEvent.cs" />
     <Compile Include="Domain\Events\RoleRemovedEvent.cs" />
     <Compile Include="Domain\Events\UserCreatedEvent.cs" />
+    <Compile Include="Domain\Events\UserDeactivatedEvent.cs" />
     <Compile Include="Domain\Rules\IRule.cs" />
     <Compile Include="Domain\Permission.cs" />
     <Compile Include="Domain\Events\PermissionCreatedEvent.cs" />
