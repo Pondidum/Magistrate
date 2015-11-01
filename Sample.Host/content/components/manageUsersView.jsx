@@ -1,4 +1,4 @@
-var UsersView = React.createClass({
+var ManageUsersView = React.createClass({
 
   getInitialState() {
     return {
