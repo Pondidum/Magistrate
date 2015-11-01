@@ -15,7 +15,7 @@ var ManageUsersView = React.createClass({
   getUsers() {
 
     $.ajax({
-      url: "/api/users/all",
+      url: "/api/users/active",
       dataType: 'json',
       cache: false,
       success: function(data) {
@@ -44,6 +44,18 @@ var ManageUsersView = React.createClass({
     });
   },
 
+  onUserRemoved(user) {
+
+    var newCollection = this.state.users.filter(function(u) {
+      return u.key !== user.key
+    });
+
+    this.setState({
+      users: newCollection
+    });
+
+  },
+
   onUserSelection(selected) {
     var newTotal = this.state.selected + (selected ? 1 : -1);
 
@@ -54,8 +66,8 @@ var ManageUsersView = React.createClass({
 
   render() {
 
+    var self = this;
     var onUserSelection = this.onUserSelection;
-    var navigate = this.props.navigate;
     var noSelection = this.state.selected <= 0;
     var filter = new RegExp(this.state.filter, "i");
 
@@ -65,7 +77,7 @@ var ManageUsersView = React.createClass({
       })
       .map(function(user, index) {
         return (
-          <UserTile key={index} user={user} onChange={onUserSelection} navigate={navigate} />
+          <UserTile key={index} user={user} onChange={onUserSelection} onUserRemoved={self.onUserRemoved} navigate={self.navigate} />
         );
       });
 

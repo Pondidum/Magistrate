@@ -21,6 +21,24 @@ var UserTile = React.createClass({
     this.props.navigate("singleuser", { key: this.props.user.key});
   },
 
+  deleteUser(e) {
+    e.preventDefault();
+
+    var user = this.props.user;
+
+    $.ajax({
+      url: "/api/users/" + user.key,
+      method: 'DELETE',
+      cache: false,
+      success: function(data) {
+        this.props.onUserRemoved(user);
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+
   render() {
     var user = this.props.user;
     var checked = this.state.checked;
@@ -35,7 +53,10 @@ var UserTile = React.createClass({
               <a onClick={this.navigateToDetails} href="#">
                 {user.name}
               </a>
-              <span className="glyphicon glyphicon-remove-circle pull-right"></span></h3>
+              <a className="pull-right danger" onClick={this.deleteUser} href="#">
+                <span className="glyphicon glyphicon-remove-circle"></span>
+              </a>
+            </h3>
           </div>
           <div className="panel-body">
             <div>Roles: {user.roles.length}</div>
