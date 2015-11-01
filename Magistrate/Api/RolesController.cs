@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Magistrate.Domain;
+using Magistrate.Infrastructure;
 using Microsoft.Owin;
 using Owin;
 using Owin.Routing;
@@ -26,7 +27,7 @@ namespace Magistrate.Api
 
 		private async Task GetAll(IOwinContext context)
 		{
-			await context.WriteJson(Store.Roles.AllRoles);
+			await context.JsonResponse(Store.Roles.AllRoles);
 		}
 
 		private async Task CreateRole(IOwinContext context)
@@ -38,7 +39,7 @@ namespace Magistrate.Api
 
 		private async Task GetRoleDetails(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetRole, async role => await context.WriteJson(role));
+			await NotFoundOrAction(context, GetRole, async role => await context.JsonResponse(role));
 		}
 
 		private async Task ChangeName(IOwinContext context)

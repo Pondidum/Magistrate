@@ -81,6 +81,7 @@
     <Compile Include="Domain\PermissionInspector.cs" />
     <Compile Include="Domain\SaveResult.cs" />
     <Compile Include="Domain\Rules\UniqueUserKeyRule.cs" />
+    <Compile Include="Infrastructure\Extensions.cs" />
     <Compile Include="MagistrateConfiguration.cs" />
     <Compile Include="MagistrateExtensions.cs" />
     <Compile Include="MagistrateUser.cs" />

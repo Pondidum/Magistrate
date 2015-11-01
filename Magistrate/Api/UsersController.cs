@@ -2,7 +2,9 @@
 using System.Threading.Tasks;
 using Magistrate.Api.Responses;
 using Magistrate.Domain;
+using Magistrate.Infrastructure;
 using Microsoft.Owin;
+using Newtonsoft.Json;
 using Owin;
 using Owin.Routing;
 
@@ -29,7 +31,7 @@ namespace Magistrate.Api
 
 		private async Task GetAll(IOwinContext context)
 		{
-			await context.WriteJson(Store.Users.AllUsers.Select(UserResponse.From));
+			await context.JsonResponse(Store.Users.AllUsers.Select(UserResponse.From));
 		}
 
 		private async Task CreateUser(IOwinContext context)
@@ -39,12 +41,12 @@ namespace Magistrate.Api
 
 			var result = Store.Save(user);
 
-			await context.WriteJson(UserCreateResponse.From(result, user));
+			await context.JsonResponse(UserCreateResponse.From(result, user));
 		}
 
 		private async Task GetUserDetails(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetUser, async user => await context.WriteJson(user));
+			await NotFoundOrAction(context, GetUser, async user => await context.JsonResponse(user));
 		}
 
 		private async Task AddPermission(IOwinContext context)
@@ -109,7 +111,7 @@ namespace Magistrate.Api
 			{
 				await NotFoundOrAction(context, GetPermission, async permission =>
 				{
-					await context.WriteJson(user.Permissions.Can(permission));
+					await context.JsonResponse(user.Permissions.Can(permission));
 				});
 			});
 		}

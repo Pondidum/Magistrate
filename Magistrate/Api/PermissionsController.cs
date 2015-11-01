@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Magistrate.Domain;
+using Magistrate.Infrastructure;
 using Microsoft.Owin;
 using Owin;
 using Owin.Routing;
@@ -24,7 +25,7 @@ namespace Magistrate.Api
 
 		private async Task GetAll(IOwinContext context)
 		{
-			await context.WriteJson(Store.Permissions.AllPermissions);
+			await context.JsonResponse(Store.Permissions.AllPermissions);
 		}
 		private async Task CreatePermission(IOwinContext context)
 		{
@@ -35,7 +36,7 @@ namespace Magistrate.Api
 
 		private async Task GetPermissionDetails(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetPermission, async permission => await context.WriteJson(permission));
+			await NotFoundOrAction(context, GetPermission, async permission => await context.JsonResponse(permission));
 		}
 
 		private async Task ChangeName(IOwinContext context)
