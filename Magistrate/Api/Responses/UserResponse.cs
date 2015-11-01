@@ -14,13 +14,13 @@ namespace Magistrate.Api.Responses
 		public string Name { get; set; }
 
 		[JsonProperty("includes")]
-		public Dictionary<string, string> Includes { get; set; }
+		public IEnumerable<Pair> Includes { get; set; }
 
 		[JsonProperty("revokes")]
-		public Dictionary<string, string> Revokes { get; set; }
+		public IEnumerable<Pair> Revokes { get; set; }
 
 		[JsonProperty("roles")]
-		public Dictionary<string, string> Roles { get; set; }  
+		public IEnumerable<Pair> Roles { get; set; }
 
 		public static UserResponse From(User user)
 		{
@@ -28,9 +28,9 @@ namespace Magistrate.Api.Responses
 			{
 				Key = user.Key,
 				Name = user.Name,
-				Includes = user.Permissions.Includes.ToDictionary(p => p.Key, p => p.Name),
-				Revokes = user.Permissions.Revokes.ToDictionary(p => p.Key, p => p.Name),
-				Roles = user.Permissions.Roles.ToDictionary(p => p.Key, p => p.Name)
+				Includes = user.Permissions.Includes.Select(p => new Pair { Key = p.Key, Name = p.Name }),
+				Revokes = user.Permissions.Revokes.Select(p => new Pair { Key = p.Key, Name = p.Name }),
+				Roles = user.Permissions.Roles.Select(p => new Pair { Key = p.Key, Name = p.Name })
 			};
 		}
 	}

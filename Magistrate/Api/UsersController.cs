@@ -31,6 +31,8 @@ namespace Magistrate.Api
 
 		private async Task GetAll(IOwinContext context)
 		{
+			var s = JsonConvert.DefaultSettings;
+
 			await context.JsonResponse(Store.Users.AllUsers.Select(UserResponse.From));
 		}
 
