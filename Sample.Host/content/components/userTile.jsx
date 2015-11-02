@@ -23,17 +23,26 @@ var UserTile = React.createClass({
 
   deleteUser(e) {
     e.preventDefault();
+    this.refs.deleteDialog.open();
+  },
 
+  onSubmit() {
+    var dialog = this.refs.deleteDialog;
     var user = this.props.user;
+
+    dialog.asyncStart();
 
     $.ajax({
       url: "/api/users/" + user.key,
       method: 'DELETE',
       cache: false,
       success: function(data) {
+        dialog.asyncStop();
+        dialog.close();
         this.props.onUserRemoved(user);
       }.bind(this),
       error: function(xhr, status, err) {
+        dialog.asyncStop();
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
@@ -57,6 +66,9 @@ var UserTile = React.createClass({
                 <span className="glyphicon glyphicon-remove-circle"></span>
               </a>
             </h3>
+            <Dialog title="Confirm User Delete" acceptText="Delete" acceptStyle="danger" onSubmit={this.onSubmit} size="medium" ref="deleteDialog">
+              <p>Are you sure you want to delete the user <strong>{user.name}</strong>?</p>
+            </Dialog>
           </div>
           <div className="panel-body">
             <div>Roles: {user.roles.length}</div>
