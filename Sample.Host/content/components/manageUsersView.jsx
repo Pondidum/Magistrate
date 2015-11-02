@@ -77,7 +77,7 @@ var ManageUsersView = React.createClass({
       })
       .map(function(user, index) {
         return (
-          <UserTile key={index} user={user} onChange={onUserSelection} onUserRemoved={self.onUserRemoved} navigate={self.navigate} />
+          <UserTile key={index} user={user} onChange={onUserSelection} onUserRemoved={self.onUserRemoved} navigate={self.props.navigate} />
         );
       });
 
