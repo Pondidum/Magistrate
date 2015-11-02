@@ -53,7 +53,7 @@ namespace Magistrate.Api
 
 		private async Task GetUserDetails(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetUser, async user => await context.JsonResponse(user));
+			await NotFoundOrAction(context, GetUser, async user => await context.JsonResponse(UserResponse.From(user)));
 		}
 
 		private async Task DeactivateUser(IOwinContext context)

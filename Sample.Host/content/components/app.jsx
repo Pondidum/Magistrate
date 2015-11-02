@@ -36,25 +36,41 @@ var App = React.createClass({
   render() {
 
     var content;
+    var selected = '';
 
     switch (this.state.location.name) {
-      case 'users':
-        content = (<ManageUsersView navigate={this.navigate} />);
-        break;
+
       case 'singleuser':
-        content = (<UserView id={this.state.location.options.key} />);
+        var key = this.state.location.options.key;
+
+        content = (<SingleUserView id={key} key={key} />);
+        selected = 'users';
+
         break;
+
+      case 'users':
+
+        content = (<UserOverview navigate={this.navigate} />);
+        selected = 'users';
+
+        break;
+
       case 'roles':
         content = (<h1>Roles</h1>);
+        selected = 'roles';
+
         break;
+
       case 'permissions':
         content = (<h1>Permissions</h1>);
+        selected = 'permissions';
+
         break;
     }
 
     return (
       <div className="row">
-        <MainMenu navigate={this.navigate} selected={this.state.location.name} />
+        <MainMenu navigate={this.navigate} selected={selected} />
         <div className="col-md-9">
           {content}
         </div>
