@@ -37,9 +37,13 @@ var Dialog = React.createClass({
       ? (<img src="/img/loading.gif" style={{ marginRight: "1em" }} />)
       : null;
 
+    var acceptStyle = this.props.acceptStyle || "primary";
+    var acceptText = this.props.acceptText || "Add";
+    var size = this.props.size || "large";
+
     return (
       <div className="static-modal">
-        <Modal show={this.state.showModal} onHide={this.close} bsSize="large">
+        <Modal show={this.state.showModal} onHide={this.close} bsSize={size}>
           <Modal.Header closeButton>
             <Modal.Title>{this.props.title}</Modal.Title>
           </Modal.Header>
@@ -50,7 +54,7 @@ var Dialog = React.createClass({
 
           <Modal.Footer>
             {async}
-            <Button onClick={this.accept} bsStyle="primary">Add</Button>
+            <Button onClick={this.accept} bsStyle={acceptStyle}>{acceptText}</Button>
             <Button onClick={this.close}>Cancel</Button>
           </Modal.Footer>
 
