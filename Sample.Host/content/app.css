@@ -2,3 +2,9 @@
 #container {
   margin-top: 5em;
 }
+
+.role-pill > a {
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc;
+}

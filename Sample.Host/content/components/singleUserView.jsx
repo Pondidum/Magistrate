@@ -2,7 +2,7 @@ var SingleUserView = React.createClass({
 
   getInitialState() {
     return {
-      user: {}
+      user: null
     };
   },
 
@@ -31,13 +31,22 @@ var SingleUserView = React.createClass({
 
     var user = this.state.user;
 
+    if (user == null)
+      return (<h1>Unknown user {this.props.id}</h1>);
+
+    var roles = user.roles.map(function(role, index) {
+      return (<li key={index} className="role-pill"><a href="#">{role.name}</a></li>);
+    });
+
     return (
       <div>
-        <h1>{user.name}</h1>
+        <h1>{user.name}<small className="pull-right">{user.key}</small></h1>
 
         <h4>Roles</h4>
         <hr />
-        <div className="row"></div>
+        <ul className="nav nav-pills">
+          {roles}
+        </ul>
 
         <h4>Permissions</h4>
         <hr />
