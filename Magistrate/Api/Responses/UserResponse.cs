@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Magistrate.Domain;
 
 namespace Magistrate.Api.Responses
@@ -10,22 +9,29 @@ namespace Magistrate.Api.Responses
 		public string Name { get; set; }
 		public bool IsActive { get; set; }
 
-		public IEnumerable<Pair> Permissions { get; set; }
-		public IEnumerable<Pair> Includes { get; set; }
-		public IEnumerable<Pair> Revokes { get; set; }
-		public IEnumerable<Pair> Roles { get; set; }
+		public PermissionInspector Permissions { get; set; }
+		public IEnumerable<RoleResponse> Roles { get; set; } 
+	}
 
-		public static UserResponse From(User user)
-		{
-			return new UserResponse
-			{
-				Key = user.Key,
-				Name = user.Name,
-				Permissions = user.Permissions.All.Select(p => new Pair { Key = p.Key, Name = p.Name }),
-				Includes = user.Permissions.Includes.Select(p => new Pair { Key = p.Key, Name = p.Name }),
-				Revokes = user.Permissions.Revokes.Select(p => new Pair { Key = p.Key, Name = p.Name }),
-				Roles = user.Permissions.Roles.Select(p => new Pair { Key = p.Key, Name = p.Name })
-			};
-		}
+	public class PermissionInspectorResponse
+	{
+		public IEnumerable<PermissionResponse> All { get; set; }
+		public IEnumerable<PermissionResponse> Includes { get; set; }
+		public IEnumerable<PermissionResponse> Revokes { get; set; }
+	}
+
+	public class RoleResponse
+	{
+		public string Key { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public IEnumerable<PermissionResponse> Permissions { get; set; }
+	}
+
+	public class PermissionResponse
+	{
+		public string Key { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
 	}
 }

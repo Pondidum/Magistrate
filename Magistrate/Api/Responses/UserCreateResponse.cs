@@ -17,8 +17,8 @@ namespace Magistrate.Api.Responses
 				Messages = result.Messages
 			};
 
-			if (result.Success)
-				response.User = UserResponse.From(user);
+			//if (result.Success)
+			//	response.User = UserResponse.From(user);
 
 			return response;
 		}

@@ -148,10 +148,8 @@ namespace Magistrate.Tests.Domain
 			var role = Add(Role.Create(_getPermission, "role-key", "role one", ""));
 
 			user.AddRole(role);
-			user.Permissions.Roles.ShouldBe(new[] { role });
 
 			user.RemoveRole(role);
-			user.Permissions.Roles.ShouldBeEmpty();
 		}
 
 		[Fact]
@@ -162,7 +160,6 @@ namespace Magistrate.Tests.Domain
 
 			user.AddRole(role);
 			user.AddRole(role);
-			user.Permissions.Roles.ShouldBe(new[] { role });
 		}
 
 		[Fact]
@@ -176,7 +173,6 @@ namespace Magistrate.Tests.Domain
 			user.AddRole(role);
 			user.AddPermission(permission);
 
-			user.Permissions.Roles.ShouldBe(new[] { role });
 			user.Permissions.Includes.ShouldBeEmpty();
 			user.Permissions.Revokes.ShouldBeEmpty();
 		}
@@ -192,7 +188,6 @@ namespace Magistrate.Tests.Domain
 			user.AddRole(role);
 			user.RemovePermission(permission);
 
-			user.Permissions.Roles.ShouldBe(new[] { role });
 			user.Permissions.Includes.ShouldBeEmpty();
 			user.Permissions.Revokes.ShouldBe(new[] { permission });
 		}
@@ -210,7 +205,6 @@ namespace Magistrate.Tests.Domain
 			user.AddRole(role);
 			user.RemovePermission(permission);
 
-			user.Permissions.Roles.ShouldBe(new[] { role });
 			user.Permissions.Includes.ShouldBeEmpty();
 			user.Permissions.Revokes.ShouldBe(new[] { permission });
 		}

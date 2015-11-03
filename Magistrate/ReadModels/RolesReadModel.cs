@@ -7,7 +7,7 @@ namespace Magistrate.ReadModels
 {
 	public class RolesReadModel
 	{
-		public Dictionary<string, string> AllRoles => _roles.ToDictionary(p => p.Key, p => p.Name);
+		public IEnumerable<Role> AllRoles => _roles;
 
 		private readonly HashSet<Role> _roles;
 

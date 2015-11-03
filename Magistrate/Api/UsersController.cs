@@ -33,12 +33,12 @@ namespace Magistrate.Api
 
 		private async Task GetAll(IOwinContext context)
 		{
-			await context.JsonResponse(Store.Users.AllUsers.Select(UserResponse.From));
+			await context.JsonResponse(Store.Users.AllUsers);
 		}
 
 		private async Task GetActive(IOwinContext context)
 		{
-			await context.JsonResponse(Store.Users.ActiveUsers.Select(UserResponse.From));
+			await context.JsonResponse(Store.Users.ActiveUsers);
 		}
 
 		private async Task CreateUser(IOwinContext context)
@@ -53,7 +53,7 @@ namespace Magistrate.Api
 
 		private async Task GetUserDetails(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetUser, async user => await context.JsonResponse(UserResponse.From(user)));
+			await NotFoundOrAction(context, GetUser, async user => await context.JsonResponse(user));
 		}
 
 		private async Task DeactivateUser(IOwinContext context)

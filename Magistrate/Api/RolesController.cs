@@ -19,10 +19,10 @@ namespace Magistrate.Api
 			app.Route("/api/roles/all").Get(GetAll);
 			app.Route("/api/roles").Put(CreateRole);
 			app.Route("/api/roles/{role-key}").Get(GetRoleDetails);
-			app.Route("/api/role/{role-key}/changeName").Put(ChangeName);
-			app.Route("/api/role/{role-key}/changeDescription").Put(ChangeDescription);
-			app.Route("/api/role/{role-key}/addPermission/{permission-key}").Put(AddPermission);
-			app.Route("/api/role/{role-key}/removePermission/{permission-key}").Put(RemovePermission);
+			app.Route("/api/roles/{role-key}/changeName").Put(ChangeName);
+			app.Route("/api/roles/{role-key}/changeDescription").Put(ChangeDescription);
+			app.Route("/api/roles/{role-key}/addPermission/{permission-key}").Put(AddPermission);
+			app.Route("/api/roles/{role-key}/removePermission/{permission-key}").Put(RemovePermission);
 		}
 
 		private async Task GetAll(IOwinContext context)
