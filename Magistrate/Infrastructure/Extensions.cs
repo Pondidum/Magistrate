@@ -1,12 +1,19 @@
 ﻿using System.Text;
 using System.Threading.Tasks;
+using Magistrate.Domain;
 using Microsoft.Owin;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Magistrate.Infrastructure
 {
 	public static class Extensions
 	{
+		private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+		{
+			ContractResolver = new CamelCasePropertyNamesContractResolver()
+		};
+
 		/// <summary>
 		/// Writes given value as JSON string.
 		/// </summary>
@@ -14,7 +21,7 @@ namespace Magistrate.Infrastructure
 		/// <param name="value">The value to serialize.</param>
 		public static async Task JsonResponse(this IOwinContext context, object value)
 		{
-			var json = JsonConvert.SerializeObject(value);
+			var json = JsonConvert.SerializeObject(value, Settings);
 			const string contentType = "application/json";
 
 			context.Response.Headers.Set("Content-Type", contentType);
