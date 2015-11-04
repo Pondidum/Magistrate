@@ -38,19 +38,27 @@ var SingleUserView = React.createClass({
       return (<li key={index} className="role-pill"><a href="#">{role.name}</a></li>);
     });
 
+    var permissions = user.permissions.all.map(function(permission, index) {
+      return (<li key={index} className="permission-pill"><a href="#">{permission.name}</a></li>);
+    });
+
     return (
       <div>
         <h1>{user.name}<small className="pull-right">{user.key}</small></h1>
 
-        <h4>Roles</h4>
-        <hr />
+        <div className="page-header">
+          <h4>Roles</h4>
+        </div>
         <ul className="nav nav-pills">
           {roles}
         </ul>
 
-        <h4>Permissions</h4>
-        <hr />
-        <div className="row"></div>
+        <div className="page-header">
+          <h4>Permissions</h4>
+        </div>
+        <ul className="nav nav-pills">
+          {permissions}
+        </ul>
 
 
       </div>

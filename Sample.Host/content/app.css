@@ -8,3 +8,9 @@
   border-style: solid;
   border-color: #ccc;
 }
+
+.permission-pill > a {
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc;
+}

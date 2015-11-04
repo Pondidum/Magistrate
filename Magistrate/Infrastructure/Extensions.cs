@@ -24,7 +24,7 @@ namespace Magistrate.Infrastructure
 		/// </summary>
 		/// <param name="context">The OWIN context.</param>
 		/// <param name="value">The value to serialize.</param>
-		private static async Task JsonResponse(this IOwinContext context, object value)
+		public static async Task JsonResponse(this IOwinContext context, object value)
 		{
 			var json = JsonConvert.SerializeObject(value, Settings);
 			const string contentType = "application/json";

@@ -72,8 +72,8 @@ var UserTile = React.createClass({
           </div>
           <div className="panel-body">
             <div>Roles: {user.roles.length}</div>
-            <div>Includes: {user.includes.length}</div>
-            <div>Revokes: {user.revokes.length}</div>
+            <div>Includes: {user.permissions.includes.length}</div>
+            <div>Revokes: {user.permissions.revokes.length}</div>
           </div>
         </div>
       </div>

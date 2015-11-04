@@ -13,6 +13,7 @@ namespace Magistrate.Domain
 		public bool IsActive { get; private set; }
 
 		public PermissionInspector Permissions => new PermissionInspector(_roles,_includes, _revokes);
+		public IEnumerable<Role> Roles => _roles;
 
 		private readonly HashSet<Permission> _includes;
 		private readonly HashSet<Permission> _revokes;
