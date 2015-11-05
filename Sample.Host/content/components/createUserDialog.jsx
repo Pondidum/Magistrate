@@ -90,7 +90,7 @@ var CreateUserDialog = React.createClass({
     return (
       <a href="#" className="btn btn-primary" onClick={this.showDialog}>
         Create User
-        <Dialog title="Create User" onSubmit={this.onSubmit} acceptText="Delete" ref="dialog">
+        <Dialog title="Create User" onSubmit={this.onSubmit} acceptText="Create" ref="dialog">
           <Input
             type="text"
             value={this.state.key}
