@@ -20,12 +20,19 @@ namespace Sample.Host
 					config.EventStore = new InMemoryEventStore<Guid>();
 					config.User = () =>
 					{
-						var current = ClaimsPrincipal.Current;
+						//e.g. take user from ClaimsPrincipal:
+
+						//var current = ClaimsPrincipal.Current;
+						//return new MagistrateUser
+						//{
+						//	Name = current.Identity.Name,
+						//	Key = current.Identity.Name.ToLower().Replace(" ", "")
+						//};
 
 						return new MagistrateUser
 						{
-							Name = current.Identity.Name,
-							Key = current.FindFirst("userID").Value
+							Name = "Andy Dote",
+							Key = "andy-dote"
 						};
 					};
 				});
