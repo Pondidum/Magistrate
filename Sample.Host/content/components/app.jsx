@@ -56,7 +56,7 @@ var App = React.createClass({
         break;
 
       case 'roles':
-        content = (<h1>Roles</h1>);
+        content = (<RoleOverview navigate={this.navigate} />);
         selected = 'roles';
 
         break;
