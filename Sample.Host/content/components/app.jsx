@@ -62,7 +62,7 @@ var App = React.createClass({
         break;
 
       case 'permissions':
-        content = (<h1>Permissions</h1>);
+        content = (<PermissionOverview navigate={this.navigate} />);
         selected = 'permissions';
 
         break;
