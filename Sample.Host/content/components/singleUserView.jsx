@@ -39,7 +39,7 @@ var SingleUserView = React.createClass({
     });
 
     var permissions = user.permissions.all.map(function(permission, index) {
-      return (<li key={index} className="permission-pill"><a href="#">{permission.name}</a></li>);
+      return (<PermissionTile key={index} permission={permission} />);
     });
 
     return (
