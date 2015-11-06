@@ -83,20 +83,13 @@ var UserOverview = React.createClass({
 
     return (
       <div>
-        <div className="row" style={{ marginBottom: "1em" }}>
-          <div className="col-md-7">
-
-            <ul className="list-unstyled list-inline">
-              <li><CreateUserDialog onUserCreated={this.onUserCreated} /></li>
-              <li><AddPermissionsDialog noSelection={noSelection} /></li>
-              <li><AddRolesDialog noSelection={noSelection} /></li>
-            </ul>
-
-          </div>
-          <FilterBar className="pull-right col-md-5" filterChanged={this.filterChanged} />
-        </div>
+        <OverviewActionBar filterChanged={this.filterChanged}>
+          <li><CreateUserDialog onUserCreated={this.onUserCreated} /></li>
+          <li><AddPermissionsDialog noSelection={noSelection} /></li>
+          <li><AddRolesDialog noSelection={noSelection} /></li>
+        </OverviewActionBar>
         <div className="row">
-            {users}
+          {users}
         </div>
       </div>
     );

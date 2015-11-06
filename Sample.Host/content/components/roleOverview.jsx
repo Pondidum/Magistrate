@@ -51,15 +51,7 @@ var RoleOverview = React.createClass({
 
     return (
       <div>
-        <div className="row" style={{ marginBottom: "1em" }}>
-          <div className="col-md-7">
-
-            <ul className="list-unstyled list-inline">
-            </ul>
-
-          </div>
-          <FilterBar className="pull-right col-md-5" filterChanged={this.filterChanged} />
-        </div>
+        <OverviewActionBar filterChanged={this.filterChanged} />
         <div className="row">
             {roles}
         </div>
