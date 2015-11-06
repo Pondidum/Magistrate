@@ -45,18 +45,7 @@ var PermissionOverview = React.createClass({
       })
       .map(function(permission, index) {
         return (
-          <div key={index} className="col-md-3">
-            <div className="panel panel-default">
-              <div className="panel-heading">
-                <h3 className="panel-title">
-                  {permission.name}
-                </h3>
-              </div>
-              <div className="panel-body">
-                <p>{permission.description}</p>
-              </div>
-            </div>
-          </div>
+          <PermissionTile key={index} permission={permission} />
         );
       });
 
