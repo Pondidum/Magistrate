@@ -35,6 +35,14 @@ var PermissionOverview = React.createClass({
     });
   },
 
+  onUserCreated(permission) {
+    var newCollection = this.state.permissions.concat([permission]);
+
+    this.setState({
+      permissions: newCollection
+    });
+  },
+
   render() {
 
     var filter = new RegExp(this.state.filter, "i");
@@ -51,7 +59,9 @@ var PermissionOverview = React.createClass({
 
     return (
       <div>
-        <OverviewActionBar filterChanged={this.filterChanged} />
+        <OverviewActionBar filterChanged={this.filterChanged}>
+          <li><CreatePermissionDialog onPermissionCreated={this.onPermissionCreated} /></li>
+        </OverviewActionBar>
         <div className="row">
             {permissions}
         </div>
