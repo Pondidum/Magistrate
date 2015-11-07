@@ -6,7 +6,7 @@ using Magistrate.Domain.Events;
 
 namespace Magistrate.Domain
 {
-	public class User : AggregateRoot<Guid>
+	public class User : AggregateRoot<Guid>, IKeyed
 	{
 		public string Key { get; private set; }
 		public string Name { get; private set; }

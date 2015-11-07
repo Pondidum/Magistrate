@@ -5,23 +5,23 @@ using Magistrate.Domain.Events;
 
 namespace Magistrate.Domain
 {
-	public class Role : AggregateRoot<Guid>
+	public class Role : AggregateRoot<Guid>, IKeyed
 	{
 		public string Key { get; private set; }
-		public string Name { get; private set; } 
+		public string Name { get; private set; }
 		public string Description { get; private set; }
 		public IEnumerable<Permission> Permissions => _permissions;
 
 
 		private readonly HashSet<Permission> _permissions;
 		private readonly Func<Guid, Permission> _getPermission;
-		 
+
 		private Role(Func<Guid, Permission> getPermission)
 		{
 			_getPermission = getPermission;
             _permissions = new HashSet<Permission>();
 		}
-		 
+
 		public static Role Create(Func<Guid, Permission> getPermission, string key, string name, string description)
 		{
 			ValidateKey(key);

@@ -84,12 +84,13 @@
     <Compile Include="Domain\Events\RoleRemovedEvent.cs" />
     <Compile Include="Domain\Events\UserCreatedEvent.cs" />
     <Compile Include="Domain\Events\UserDeactivatedEvent.cs" />
+    <Compile Include="Domain\IKeyed.cs" />
     <Compile Include="Domain\Rules\IRule.cs" />
     <Compile Include="Domain\Permission.cs" />
     <Compile Include="Domain\Events\PermissionCreatedEvent.cs" />
     <Compile Include="Domain\PermissionInspector.cs" />
+    <Compile Include="Domain\Rules\UniqueKeyRule.cs" />
     <Compile Include="Domain\SaveResult.cs" />
-    <Compile Include="Domain\Rules\UniqueUserKeyRule.cs" />
     <Compile Include="Infrastructure\Extensions.cs" />
     <Compile Include="MagistrateConfiguration.cs" />
     <Compile Include="MagistrateExtensions.cs" />
