@@ -35,7 +35,7 @@ var PermissionOverview = React.createClass({
     });
   },
 
-  onUserCreated(permission) {
+  onPermissionCreated(permission) {
     var newCollection = this.state.permissions.concat([permission]);
 
     this.setState({

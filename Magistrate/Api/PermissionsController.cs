@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Magistrate.Api.Responses;
 using Magistrate.Domain;
 using Magistrate.Infrastructure;
 using Microsoft.Owin;
@@ -30,8 +31,11 @@ namespace Magistrate.Api
 		private async Task CreatePermission(IOwinContext context)
 		{
 			var dto = context.ReadJson<CreatePermissionDto>();
-			Store.Save(Permission.Create(dto.Key, dto.Name, dto.Description));
-			await Task.Yield();
+			var permission = Permission.Create(dto.Key, dto.Name, dto.Description);
+
+			var result  = Store.Save(permission);
+
+			await context.JsonResponse(PermissionCreateResponse.From(result, permission));
 		}
 
 		private async Task GetPermissionDetails(IOwinContext context)

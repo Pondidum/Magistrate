@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AutoMapper;
 using Magistrate.Domain;
 
 namespace Magistrate.Api.Responses
@@ -17,8 +18,8 @@ namespace Magistrate.Api.Responses
 				Messages = result.Messages
 			};
 
-			//if (result.Success)
-			//	response.User = UserResponse.From(user);
+			if (result.Success)
+				response.User = Mapper.Map<UserResponse>(user);
 
 			return response;
 		}

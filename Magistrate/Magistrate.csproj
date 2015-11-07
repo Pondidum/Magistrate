@@ -68,6 +68,7 @@
     <Compile Include="Api\MagistrateApi.cs" />
     <Compile Include="Api\MagistrateUserMiddleware.cs" />
     <Compile Include="Api\PermissionsController.cs" />
+    <Compile Include="Api\Responses\PermissionCreateResponse.cs" />
     <Compile Include="Api\Responses\PermissionInspectorResponse.cs" />
     <Compile Include="Api\Responses\PermissionResponse.cs" />
     <Compile Include="Api\Responses\RoleResponse.cs" />
