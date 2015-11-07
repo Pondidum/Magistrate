@@ -1,6 +1,6 @@
 var Input = ReactBootstrap.Input;
 
-var CreatePermissionDialog = React.createClass({
+var CreateRoleDialog = React.createClass({
 
   showDialog(e) {
     e.preventDefault();
@@ -20,7 +20,7 @@ var CreatePermissionDialog = React.createClass({
     });
 
     $.ajax({
-      url: "/api/permissions",
+      url: "/api/roles",
       method: "PUT",
       dataType: 'json',
       data: json,
@@ -29,7 +29,7 @@ var CreatePermissionDialog = React.createClass({
         dialog.asyncStop();
 
         if (data.success) {
-          this.props.onPermissionCreated(data.permission);
+          this.props.onRoleCreated(data.role);
           dialog.close();
         } else {
           this.setState({ keyTaken: true });
@@ -38,7 +38,7 @@ var CreatePermissionDialog = React.createClass({
       }.bind(this),
       error: function(xhr, status, err) {
         dialog.asyncStop();
-        console.error("/api/permissions", status, err.toString());
+        console.error("/api/roles", status, err.toString());
       }.bind(this)
     });
 
@@ -93,16 +93,16 @@ var CreatePermissionDialog = React.createClass({
 
     var keyHelp = this.state.keyTaken
       ? "This key is already in use"
-      : "Unique identifier for the Permission";
+      : "Unique identifier for the Role";
 
     return (
       <a href="#" className="btn btn-primary" onClick={this.showDialog}>
-        Create Permission
-        <Dialog title="Create Permission" onSubmit={this.onSubmit} acceptText="Create" ref="dialog">
+        Create Role
+        <Dialog title="Create Role" onSubmit={this.onSubmit} acceptText="Create" ref="dialog">
           <Input
             type="text"
             value={this.state.key}
-            placeholder="e.g. 'some-permission'"
+            placeholder="e.g. 'some-role'"
             label="Key"
             help={keyHelp}
             bsStyle={this.validateKey()}
@@ -114,9 +114,9 @@ var CreatePermissionDialog = React.createClass({
           <Input
             type="text"
             value={this.state.name}
-            placeholder="Some Permission"
+            placeholder="Reviewer"
             label="Name"
-            help="Name of the permission"
+            help="Name of the role"
             bsStyle={this.validateName()}
             hasFeedback
             standalone
@@ -125,9 +125,9 @@ var CreatePermissionDialog = React.createClass({
           <Input
             type="textarea"
             value={this.state.description}
-            placeholder="Allows users to ..."
+            placeholder="Includes all the permissions to do ..."
             label="Description"
-            help="A description of the permission"
+            help="A description of the role"
             standalone
             ref="description"
             onChange={this.onDescriptionChanged} />

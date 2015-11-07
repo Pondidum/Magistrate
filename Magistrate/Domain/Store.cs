@@ -13,6 +13,7 @@ namespace Magistrate.Domain
 		private readonly AggregateStore<Guid> _store;
 		private readonly Projection _projections;
 		private readonly List<IRule<User>> _userRules;
+		private readonly List<IRule<Role>> _roleRules;
 		private readonly List<IRule<Permission>> _permissionRules;
 
 		public PermissionsReadModel Permissions { get; }
@@ -33,6 +34,11 @@ namespace Magistrate.Domain
 			_userRules = new List<IRule<User>>
 			{
 				new UniqueKeyRule<User>(Users.AllUsers)
+			};
+
+			_roleRules = new List<IRule<Role>>
+			{
+				new UniqueKeyRule<Role>(Roles.AllRoles)
 			};
 
 			_permissionRules = new List<IRule<Permission>>
@@ -70,10 +76,20 @@ namespace Magistrate.Domain
 			return SaveResult.Pass();
 		}
 
-		public void Save(Role role)
+		public SaveResult Save(Role role)
 		{
+			var violatedRules = _roleRules
+				.Where(r => r.IsSatisfiedBy(role) == false)
+				.Select(r => r.GetMessage(role))
+				.ToList();
+
+			if (violatedRules.Any())
+				return SaveResult.Fail(violatedRules);
+
 			_store.Save(role);
 			_projections.Run(role);
+
+			return SaveResult.Pass();
 		}
 
 		public SaveResult Save(User user)

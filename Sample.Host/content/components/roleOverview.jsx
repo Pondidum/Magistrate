@@ -35,6 +35,14 @@ var RoleOverview = React.createClass({
     });
   },
 
+  onRoleCreated(role) {
+    var newCollection = this.state.roles.concat([role]);
+
+    this.setState({
+      roles: newCollection
+    });
+  },
+
   render() {
 
     var filter = new RegExp(this.state.filter, "i");
@@ -51,7 +59,9 @@ var RoleOverview = React.createClass({
 
     return (
       <div>
-        <OverviewActionBar filterChanged={this.filterChanged} />
+        <OverviewActionBar filterChanged={this.filterChanged}>
+          <li><CreateRoleDialog onRoleCreated={this.onRoleCreated} /></li>
+        </OverviewActionBar>
         <div className="row">
             {roles}
         </div>

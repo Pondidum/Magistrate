@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Magistrate.Api.Responses;
 using Magistrate.Domain;
 using Magistrate.Infrastructure;
 using Microsoft.Owin;
@@ -33,8 +34,11 @@ namespace Magistrate.Api
 		private async Task CreateRole(IOwinContext context)
 		{
 			var dto = context.ReadJson<CreateRoleDto>();
-			Store.Save(Role.Create(Store.Permissions.ByID, dto.Key, dto.Name, dto.Description));
-			await Task.Yield();
+			var role = Role.Create(Store.Permissions.ByID, dto.Key, dto.Name, dto.Description);
+
+			var result = Store.Save(role);
+
+			await context.JsonResponse(RoleCreateResponse.From(result, role));
 		}
 
 		private async Task GetRoleDetails(IOwinContext context)

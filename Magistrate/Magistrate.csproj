@@ -71,6 +71,7 @@
     <Compile Include="Api\Responses\PermissionCreateResponse.cs" />
     <Compile Include="Api\Responses\PermissionInspectorResponse.cs" />
     <Compile Include="Api\Responses\PermissionResponse.cs" />
+    <Compile Include="Api\Responses\RoleCreateResponse.cs" />
     <Compile Include="Api\Responses\RoleResponse.cs" />
     <Compile Include="Api\Responses\UserCreateResponse.cs" />
     <Compile Include="Api\Responses\UserResponse.cs" />
