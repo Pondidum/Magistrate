@@ -2,7 +2,7 @@
 
 namespace Magistrate.Domain.Events
 {
-	public class DescriptionChangedEvent : DomainEvent
+	public class DescriptionChangedEvent : UserLoggedEvent
 	{
 		public string NewDescription { get; set; }
 	}

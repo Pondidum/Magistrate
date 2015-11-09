@@ -2,7 +2,7 @@
 
 namespace Magistrate.Domain.Events
 {
-	public class UserDeactivatedEvent : DomainEvent
+	public class UserDeactivatedEvent : UserLoggedEvent
 	{
 	}
 }

@@ -3,7 +3,7 @@ using Ledger;
 
 namespace Magistrate.Domain.Events
 {
-	public class UserCreatedEvent : DomainEvent
+	public class UserCreatedEvent : UserLoggedEvent
 	{
 		public Guid ID { get; set; }
 		public string Key { get; set; }
