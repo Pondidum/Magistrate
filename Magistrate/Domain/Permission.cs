@@ -15,7 +15,7 @@ namespace Magistrate.Domain
 			return new Permission();
 		}
 
-		public static Permission Create(string key, string name, string description)
+		public static Permission Create(MagistrateUser user, string key, string name, string description)
 		{
 			ValidateKey(key);
 			ValidateName(name);
@@ -24,6 +24,7 @@ namespace Magistrate.Domain
 			perm.ApplyEvent(new PermissionCreatedEvent
 			{
 				ID = Guid.NewGuid(),
+				User = user,
 				Key = key,
 				Name = name,
 				Description = description
@@ -33,7 +34,7 @@ namespace Magistrate.Domain
 		}
 
 
-		public void ChangeName(string name)
+		public void ChangeName(MagistrateUser user, string name)
 		{
 			ValidateName(name);
 
@@ -43,7 +44,7 @@ namespace Magistrate.Domain
 			});
 		}
 
-		public void ChangeDescription(string description)
+		public void ChangeDescription(MagistrateUser user, string description)
 		{
 			ApplyEvent(new DescriptionChangedEvent
 			{

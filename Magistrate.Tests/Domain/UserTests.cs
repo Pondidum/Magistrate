@@ -92,7 +92,7 @@ namespace Magistrate.Tests.Domain
 		public void Adding_a_permission_twice_only_keeps_one()
 		{
 			var user = User.Create(_getPermission, _getRole, _currentUser, "some-key", "some name");
-			var permission = Add(Permission.Create("perm-key", "perm_one", "some description"));
+			var permission = Add(Permission.Create(_currentUser, "perm-key", "perm_one", "some description"));
 
 			user.AddPermission(_currentUser, permission);
 			user.AddPermission(_currentUser, permission);
@@ -105,7 +105,7 @@ namespace Magistrate.Tests.Domain
 		public void Removing_a_permission_which_is_included_doesnt_add_a_revoke()
 		{
 			var user = User.Create(_getPermission, _getRole, _currentUser, "some-key", "some name");
-			var permission = Add(Permission.Create("perm-key", "perm_one", "some description"));
+			var permission = Add(Permission.Create(_currentUser, "perm-key", "perm_one", "some description"));
 
 			user.AddPermission(_currentUser, permission);
 			user.Permissions.Includes.ShouldBe(new[] { permission });
@@ -121,7 +121,7 @@ namespace Magistrate.Tests.Domain
 		public void Removing_a_permission_which_is_not_included_creates_a_revoke()
 		{
 			var user = User.Create(_getPermission, _getRole, _currentUser, "some-key", "some name");
-			var permission = Add(Permission.Create("perm-key", "perm_one", "some description"));
+			var permission = Add(Permission.Create(_currentUser, "perm-key", "perm_one", "some description"));
 
 			user.RemovePermission(_currentUser, permission);
 
@@ -133,7 +133,7 @@ namespace Magistrate.Tests.Domain
 		public void Adding_a_permission_which_is_revoked_removes_the_revoke_and_adds_an_include()
 		{
 			var user = User.Create(_getPermission, _getRole, _currentUser, "some-key", "some name");
-			var permission = Add(Permission.Create("perm-key", "perm_one", "some description"));
+			var permission = Add(Permission.Create(_currentUser, "perm-key", "perm_one", "some description"));
 
 			user.RemovePermission(_currentUser, permission);
 			user.Permissions.Includes.ShouldBeEmpty();
@@ -171,7 +171,7 @@ namespace Magistrate.Tests.Domain
 		{
 			var user = User.Create(_getPermission, _getRole, _currentUser, "some-key", "some name");
 			var role = Add(Role.Create(_getPermission, _currentUser, "role-key", "role one", ""));
-			var permission = Add(Permission.Create("permission-key", "permission one", ""));
+			var permission = Add(Permission.Create(_currentUser, "permission-key", "permission one", ""));
 
 			role.AddPermission(_currentUser, permission);
 			user.AddRole(_currentUser, role);
@@ -186,7 +186,7 @@ namespace Magistrate.Tests.Domain
 		{
 			var user = User.Create(_getPermission, _getRole, _currentUser, "some-key", "some name");
 			var role = Add(Role.Create(_getPermission, _currentUser, "role-key", "role one", ""));
-			var permission = Add(Permission.Create("permission-key", "permission one", ""));
+			var permission = Add(Permission.Create(_currentUser, "permission-key", "permission one", ""));
 
 			role.AddPermission(_currentUser, permission);
 			user.AddRole(_currentUser, role);
@@ -201,7 +201,7 @@ namespace Magistrate.Tests.Domain
 		{
 			var user = User.Create(_getPermission, _getRole, _currentUser, "some-key", "some name");
 			var role = Add(Role.Create(_getPermission, _currentUser, "role-key", "role one", ""));
-			var permission = Add(Permission.Create("permission-key", "permission one", ""));
+			var permission = Add(Permission.Create(_currentUser, "permission-key", "permission one", ""));
 
 			role.AddPermission(_currentUser, permission);
 
@@ -218,7 +218,7 @@ namespace Magistrate.Tests.Domain
 		{
 			var user = User.Create(_getPermission, _getRole, _currentUser, "some-key", "some name");
 			var role = Add(Role.Create(_getPermission, _currentUser, "role-key", "role one", ""));
-			var permission = Add(Permission.Create("permission-key", "permission one", ""));
+			var permission = Add(Permission.Create(_currentUser, "permission-key", "permission one", ""));
 
 			role.AddPermission(_currentUser, permission);
 

@@ -95,7 +95,7 @@ namespace Magistrate.Tests.Domain
 		public void A_permission_can_be_added_and_removed()
 		{
 			var role = Role.Create(_getPermission, _currentUser, "some-key", "some name", "some description");
-			var permission = Add(Permission.Create("key", "permission_one", ""));
+			var permission = Add(Permission.Create(_currentUser, "key", "permission_one", ""));
 
 			role.AddPermission(_currentUser, permission);
 			role.Permissions.ShouldBe(new[] { permission });

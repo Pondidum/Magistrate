@@ -16,7 +16,7 @@ namespace Magistrate.Tests.Domain
 		{
 			var currentUser = new MagistrateUser { Name = "Test User", Key = "test-user" };
 			var all = new HashSet<Permission>();
-			_permission = Permission.Create("perm_one", "perm one", "");
+			_permission = Permission.Create(currentUser, "perm_one", "perm one", "");
 			all.Add(_permission);
 
 			Func<Guid, Permission> get = id => all.FirstOrDefault(p => p.ID == id);

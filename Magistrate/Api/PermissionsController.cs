@@ -31,7 +31,7 @@ namespace Magistrate.Api
 		private async Task CreatePermission(IOwinContext context)
 		{
 			var dto = context.ReadJson<CreatePermissionDto>();
-			var permission = Permission.Create(dto.Key, dto.Name, dto.Description);
+			var permission = Permission.Create(context.GetUser(), dto.Key, dto.Name, dto.Description);
 
 			var result  = Store.Save(permission);
 
@@ -47,7 +47,7 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, GetPermission, async permission =>
 			{
-				permission.ChangeName(ReadBody(context));
+				permission.ChangeName(context.GetUser(), ReadBody(context));
 				Store.Save(permission);
 
 				await Task.Yield();
@@ -58,7 +58,7 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, GetPermission, async permission =>
 			{
-				permission.ChangeDescription(ReadBody(context));
+				permission.ChangeDescription(context.GetUser(), ReadBody(context));
 				Store.Save(permission);
 
 				await Task.Yield();
