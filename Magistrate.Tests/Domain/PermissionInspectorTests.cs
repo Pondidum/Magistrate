@@ -14,14 +14,15 @@ namespace Magistrate.Tests.Domain
 
 		public PermissionInspectorTests()
 		{
+			var currentUser = new MagistrateUser { Name = "Test User", Key = "test-user" };
 			var all = new HashSet<Permission>();
 			_permission = Permission.Create("perm_one", "perm one", "");
 			all.Add(_permission);
 
 			Func<Guid, Permission> get = id => all.FirstOrDefault(p => p.ID == id);
 
-			_role = Role.Create(get, "role_one", "role one", "");
-			_role.AddPermission(_permission);
+			_role = Role.Create(get, currentUser, "role_one", "role one", "");
+			_role.AddPermission(currentUser, _permission);
 
 		}
 

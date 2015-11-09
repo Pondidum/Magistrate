@@ -22,7 +22,7 @@ namespace Magistrate.Domain
             _permissions = new HashSet<Permission>();
 		}
 
-		public static Role Create(Func<Guid, Permission> getPermission, string key, string name, string description)
+		public static Role Create(Func<Guid, Permission> getPermission, MagistrateUser user, string key, string name, string description)
 		{
 			ValidateKey(key);
 			ValidateName(name);
@@ -31,6 +31,7 @@ namespace Magistrate.Domain
 			role.ApplyEvent(new RoleCreatedEvent
 			{
 				ID = Guid.NewGuid(),
+				User = user,
 				Key = key,
 				Name = name,
 				Description = description
@@ -39,32 +40,42 @@ namespace Magistrate.Domain
 			return role;
 		}
 
-		public void ChangeName(string name)
+		public void ChangeName(MagistrateUser user, string name)
 		{
 			ValidateName(name);
 
 			ApplyEvent(new NameChangedEvent
 			{
+				User = user,
 				NewName = name
 			});
 		}
 
-		public void ChangeDescription(string description)
+		public void ChangeDescription(MagistrateUser user, string description)
 		{
 			ApplyEvent(new DescriptionChangedEvent
 			{
+				User = user,
 				NewDescription = description
 			});
 		}
 
-		public void AddPermission(Permission permission)
+		public void AddPermission(MagistrateUser user, Permission permission)
 		{
-			ApplyEvent(new PermissionAddedEvent { PermissionID = permission.ID });
+			ApplyEvent(new PermissionAddedEvent
+			{
+				User = user,
+				PermissionID = permission.ID
+			});
 		}
 
-		public void RemovePermission(Permission permission)
+		public void RemovePermission(MagistrateUser user, Permission permission)
 		{
-			ApplyEvent(new PermissionRemovedEvent { PermissionID = permission.ID });
+			ApplyEvent(new PermissionRemovedEvent
+			{
+				User = user,
+				PermissionID = permission.ID
+			});
 		}
 
 

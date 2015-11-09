@@ -34,7 +34,7 @@ namespace Magistrate.Api
 		private async Task CreateRole(IOwinContext context)
 		{
 			var dto = context.ReadJson<CreateRoleDto>();
-			var role = Role.Create(Store.Permissions.ByID, dto.Key, dto.Name, dto.Description);
+			var role = Role.Create(Store.Permissions.ByID, context.GetUser(), dto.Key, dto.Name, dto.Description);
 
 			var result = Store.Save(role);
 
@@ -50,7 +50,7 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, GetRole, async role =>
 			{
-				role.ChangeName(ReadBody(context));
+				role.ChangeName(context.GetUser(), ReadBody(context));
 				Store.Save(role);
 
 				await Task.Yield();
@@ -61,7 +61,7 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, GetRole, async role =>
 			{
-				role.ChangeDescription(ReadBody(context));
+				role.ChangeDescription(context.GetUser(), ReadBody(context));
 				Store.Save(role);
 
 				await Task.Yield();
@@ -74,7 +74,7 @@ namespace Magistrate.Api
 			{
 				await NotFoundOrAction(context, GetPermission, async permission =>
 				{
-					role.AddPermission(permission);
+					role.AddPermission(context.GetUser(), permission);
 					Store.Save(role);
 
 					await Task.Yield();
@@ -88,7 +88,7 @@ namespace Magistrate.Api
 			{
 				await NotFoundOrAction(context, GetPermission, async permission =>
 				{
-					role.RemovePermission(permission);
+					role.RemovePermission(context.GetUser(), permission);
 					Store.Save(role);
 
 					await Task.Yield();

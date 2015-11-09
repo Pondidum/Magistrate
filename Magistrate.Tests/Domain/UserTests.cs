@@ -149,7 +149,7 @@ namespace Magistrate.Tests.Domain
 		public void A_role_can_be_added_and_removed()
 		{
 			var user = User.Create(_getPermission, _getRole, _currentUser, "some-key", "some name");
-			var role = Add(Role.Create(_getPermission, "role-key", "role one", ""));
+			var role = Add(Role.Create(_getPermission, _currentUser, "role-key", "role one", ""));
 
 			user.AddRole(_currentUser, role);
 
@@ -160,7 +160,7 @@ namespace Magistrate.Tests.Domain
 		public void Adding_a_role_twice_only_keeps_one()
 		{
 			var user = User.Create(_getPermission, _getRole, _currentUser, "some-key", "some name");
-			var role = Add(Role.Create(_getPermission, "role-key", "role one", ""));
+			var role = Add(Role.Create(_getPermission, _currentUser, "role-key", "role one", ""));
 
 			user.AddRole(_currentUser, role);
 			user.AddRole(_currentUser, role);
@@ -170,10 +170,10 @@ namespace Magistrate.Tests.Domain
 		public void When_adding_a_permission_already_included_by_a_role()
 		{
 			var user = User.Create(_getPermission, _getRole, _currentUser, "some-key", "some name");
-			var role = Add(Role.Create(_getPermission, "role-key", "role one", ""));
+			var role = Add(Role.Create(_getPermission, _currentUser, "role-key", "role one", ""));
 			var permission = Add(Permission.Create("permission-key", "permission one", ""));
 
-			role.AddPermission(permission);
+			role.AddPermission(_currentUser, permission);
 			user.AddRole(_currentUser, role);
 			user.AddPermission(_currentUser, permission);
 
@@ -185,10 +185,10 @@ namespace Magistrate.Tests.Domain
 		public void When_revoking_a_permission_included_in_a_role()
 		{
 			var user = User.Create(_getPermission, _getRole, _currentUser, "some-key", "some name");
-			var role = Add(Role.Create(_getPermission, "role-key", "role one", ""));
+			var role = Add(Role.Create(_getPermission, _currentUser, "role-key", "role one", ""));
 			var permission = Add(Permission.Create("permission-key", "permission one", ""));
 
-			role.AddPermission(permission);
+			role.AddPermission(_currentUser, permission);
 			user.AddRole(_currentUser, role);
 			user.RemovePermission(_currentUser, permission);
 
@@ -200,10 +200,10 @@ namespace Magistrate.Tests.Domain
 		public void When_revoking_a_permission_included_in_a_role_and_is_included()
 		{
 			var user = User.Create(_getPermission, _getRole, _currentUser, "some-key", "some name");
-			var role = Add(Role.Create(_getPermission, "role-key", "role one", ""));
+			var role = Add(Role.Create(_getPermission, _currentUser, "role-key", "role one", ""));
 			var permission = Add(Permission.Create("permission-key", "permission one", ""));
 
-			role.AddPermission(permission);
+			role.AddPermission(_currentUser, permission);
 
 			user.AddPermission(_currentUser, permission);
 			user.AddRole(_currentUser, role);
@@ -217,10 +217,10 @@ namespace Magistrate.Tests.Domain
 		public void When_a_user_has_a_revoke_and_gets_a_role_including_the_permission()
 		{
 			var user = User.Create(_getPermission, _getRole, _currentUser, "some-key", "some name");
-			var role = Add(Role.Create(_getPermission, "role-key", "role one", ""));
+			var role = Add(Role.Create(_getPermission, _currentUser, "role-key", "role one", ""));
 			var permission = Add(Permission.Create("permission-key", "permission one", ""));
 
-			role.AddPermission(permission);
+			role.AddPermission(_currentUser, permission);
 
 			user.RemovePermission(_currentUser, permission);
 			user.AddRole(_currentUser, role);
