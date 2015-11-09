@@ -68,6 +68,8 @@ namespace Magistrate.Infrastructure
 			await JsonResponse(context, permissions.Map<PermissionResponse>());
 		}
 
+
+
 		public static IEnumerable<TResult> Map<TResult>(this IEnumerable source)
 		{
 			return source.Cast<object>().Select(Mapper.Map<TResult>);
@@ -76,6 +78,11 @@ namespace Magistrate.Infrastructure
 		public static TResult Map<TResult>(this object source)
 		{
 			return Mapper.Map<TResult>(source);
+		}
+
+		public static MagistrateUser GetUser(this IOwinContext context)
+		{
+			return context.Get<MagistrateUser>("user");
 		}
 	}
 }

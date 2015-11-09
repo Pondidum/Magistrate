@@ -12,7 +12,7 @@ namespace Magistrate.Domain
 		public string Name { get; private set; }
 		public bool IsActive { get; private set; }
 
-		public PermissionInspector Permissions => new PermissionInspector(_roles,_includes, _revokes);
+		public PermissionInspector Permissions => new PermissionInspector(_roles, _includes, _revokes);
 		public IEnumerable<Role> Roles => _roles;
 
 		private readonly HashSet<Permission> _includes;
@@ -34,7 +34,7 @@ namespace Magistrate.Domain
 			IsActive = true;
 		}
 
-		public static User Create(Func<Guid, Permission> getPermission, Func<Guid, Role> getRole, string key, string name)
+		public static User Create(Func<Guid, Permission> getPermission, Func<Guid, Role> getRole, MagistrateUser currentUser, string key, string name)
 		{
 			ValidateKey(key);
 			ValidateName(name);
@@ -43,6 +43,7 @@ namespace Magistrate.Domain
 			user.ApplyEvent(new UserCreatedEvent
 			{
 				ID = Guid.NewGuid(),
+				User = currentUser,
 				Key = key,
 				Name = name
 			});
@@ -50,35 +51,58 @@ namespace Magistrate.Domain
 			return user;
 		}
 
-		public void ChangeName(string name)
+		public void ChangeName(MagistrateUser currentUser, string name)
 		{
 			ValidateName(name);
-			ApplyEvent(new NameChangedEvent { NewName = name });
+			ApplyEvent(new NameChangedEvent
+			{
+				User = currentUser,
+				NewName = name
+			});
 		}
 
-		public void AddPermission(Permission permission)
+		public void AddPermission(MagistrateUser currentUser, Permission permission)
 		{
-			ApplyEvent(new PermissionAddedEvent { PermissionID = permission.ID });
+			ApplyEvent(new PermissionAddedEvent
+			{
+				User = currentUser,
+				PermissionID = permission.ID
+			});
 		}
 
-		public void RemovePermission(Permission permission)
+		public void RemovePermission(MagistrateUser currentUser, Permission permission)
 		{
-			ApplyEvent(new PermissionRemovedEvent { PermissionID = permission.ID });
+			ApplyEvent(new PermissionRemovedEvent
+			{
+				User = currentUser,
+				PermissionID = permission.ID
+			});
 		}
 
-		public void AddRole(Role role)
+		public void AddRole(MagistrateUser currentUser, Role role)
 		{
-			ApplyEvent(new RoleAddedEvent { RoleID = role.ID });
+			ApplyEvent(new RoleAddedEvent
+			{
+				User = currentUser,
+				RoleID = role.ID
+			});
 		}
 
-		public void RemoveRole(Role role)
+		public void RemoveRole(MagistrateUser currentUser, Role role)
 		{
-			ApplyEvent(new RoleRemovedEvent { RoleID = role.ID });
+			ApplyEvent(new RoleRemovedEvent
+			{
+				User = currentUser,
+				RoleID = role.ID
+			});
 		}
 
-		public void Deactivate()
+		public void Deactivate(MagistrateUser currentUser)
 		{
-			ApplyEvent(new UserDeactivatedEvent());
+			ApplyEvent(new UserDeactivatedEvent
+			{
+				User = currentUser
+			});
 		}
 
 

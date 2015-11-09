@@ -44,7 +44,7 @@ namespace Magistrate.Api
 		private async Task CreateUser(IOwinContext context)
 		{
 			var dto = context.ReadJson<CreateUserDto>();
-			var user = User.Create(Store.Permissions.ByID, Store.Roles.ByID, dto.Key, dto.Name);
+			var user = User.Create(Store.Permissions.ByID, Store.Roles.ByID, context.GetUser(), dto.Key, dto.Name);
 
 			var result = Store.Save(user);
 
@@ -60,7 +60,7 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, GetUser, async user =>
 			{
-				user.Deactivate();
+				user.Deactivate(context.GetUser());
 
 				await Task.Yield();
 			});
@@ -72,7 +72,7 @@ namespace Magistrate.Api
 			{
 				await NotFoundOrAction(context, GetPermission, async permission =>
 				{
-					user.AddPermission(permission);
+					user.AddPermission(context.GetUser(), permission);
 					Store.Save(user);
 
 					await Task.Yield();
@@ -86,7 +86,7 @@ namespace Magistrate.Api
 			{
 				await NotFoundOrAction(context, GetPermission, async permission =>
 				{
-					user.RemovePermission(permission);
+					user.RemovePermission(context.GetUser(), permission);
 					Store.Save(user);
 
 					await Task.Yield();
@@ -100,7 +100,7 @@ namespace Magistrate.Api
 			{
 				await NotFoundOrAction(context, GetRole, async role =>
 				{
-					user.AddRole(role);
+					user.AddRole(context.GetUser(), role);
 					Store.Save(user);
 
 					await Task.Yield();
@@ -114,7 +114,7 @@ namespace Magistrate.Api
 			{
 				await NotFoundOrAction(context, GetRole, async role =>
 				{
-					user.RemoveRole(role);
+					user.RemoveRole(context.GetUser(), role);
 					Store.Save(user);
 
 					await Task.Yield();

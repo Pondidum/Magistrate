@@ -13,7 +13,7 @@ namespace Magistrate.Api
 			_config = config;
 		}
 
-		public async override Task Invoke(IOwinContext context)
+		public override async Task Invoke(IOwinContext context)
 		{
 			context.Set("user", _config.User());
 
