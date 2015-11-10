@@ -9,8 +9,26 @@
   border-color: #ccc;
 }
 
-.permission-pill > a {
+.permission-pill {
   border-width: 1px;
   border-style: solid;
   border-color: #ccc;
+
+  border-radius: 4px;
+
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+}
+
+a.permission-delete {
+  color: #aaa;
+  border-left: 1px solid #ccc;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-right: -1em;
+}
+
+a.permission-delete:hover {
+  color:#a94442
 }

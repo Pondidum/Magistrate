@@ -39,7 +39,11 @@ var SingleUserView = React.createClass({
     });
 
     var permissions = user.permissions.all.map(function(permission, index) {
-      return (<PermissionTile key={index} permission={permission} />);
+      return (
+        <li key={index} className="col-sm-3 ">
+          <PermissionPill permission={permission} user={user} />
+        </li>
+      );
     });
 
     return (
@@ -56,7 +60,7 @@ var SingleUserView = React.createClass({
         <div className="page-header">
           <h4>Permissions</h4>
         </div>
-        <ul className="nav nav-pills">
+        <ul className="list-unstyled list-inline">
           {permissions}
         </ul>
 
