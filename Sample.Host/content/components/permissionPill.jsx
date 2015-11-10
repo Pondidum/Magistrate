@@ -3,13 +3,13 @@ var PermissionPill = React.createClass({
   render() {
 
     var permission = this.props.permission;
-    var user = this.props.user;
-    var onPermissionRemoved = this.props.onPermissionRemoved;
 
     return (
       <div className="permission-pill">
         <span>{permission.name}</span>
-        <RemovePermission permission={permission} user={user} onPermissionRemoved={onPermissionRemoved} />
+        <div className="pull-right">
+          {this.props.children}
+        </div>
       </div>
     );
   }
@@ -17,7 +17,16 @@ var PermissionPill = React.createClass({
 });
 
 
+
 var RemovePermission = React.createClass({
+
+  propTypes: {
+    permission: React.PropTypes.object.isRequired,
+    onPermissionRemoved: React.PropTypes.func.isRequired,
+    url: React.PropTypes.string.isRequired,
+    action: React.PropTypes.string.isRequired,
+    from: React.PropTypes.string.isRequired,
+  },
 
   showDialog(e) {
     e.preventDefault();
@@ -30,12 +39,10 @@ var RemovePermission = React.createClass({
     dialog.asyncStart();
 
     var permission = this.props.permission;
-    var user = this.props.user;
-    var url = "/api/users/" + user.key + "/removePermission/" + permission.key;
-    var onPermissionRemoved = this.props.onPermissionRemoved || function() {};
+    var onPermissionRemoved = this.props.onPermissionRemoved;
 
     $.ajax({
-      url: url,
+      url: this.props.url,
       method: "PUT",
       cache: false,
       success: function(data) {
@@ -45,7 +52,7 @@ var RemovePermission = React.createClass({
       }.bind(this),
       error: function(xhr, status, err) {
         dialog.asyncStop();
-        console.error(url, status, err.toString());
+        console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
 
@@ -54,14 +61,15 @@ var RemovePermission = React.createClass({
   render() {
 
     var permission = this.props.permission;
-    var user = this.props.user;
+    var action = this.props.action;
+    var from = this.props.from;
 
     return (
-      <a className="pull-right permission-delete" onClick={this.showDialog} href="#">
+      <a className="permission-delete" onClick={this.showDialog} href="#">
         <span className="glyphicon glyphicon-remove"></span>
 
-        <Dialog title="Remove Permission" onSubmit={this.onSubmit} acceptText="Remove" acceptStyle="danger" ref="dialog">
-          <p>Are you sure you wish to delete <strong>{permission.name}</strong> from the <strong>{user.name}</strong>?</p>
+        <Dialog title={action + " Permission"} onSubmit={this.onSubmit} acceptText={action} acceptStyle="danger" ref="dialog">
+          <p>Are you sure you wish to {action.toLowerCase()} the permission <strong>{permission.name}</strong> from <strong>{from}</strong>?</p>
         </Dialog>
       </a>
     );

@@ -27,9 +27,14 @@ var SingleUserView = React.createClass({
 
   },
 
+  onPermissionRemoved(permission) {
+    console.log("removed");
+  },
+
   render() {
 
     var user = this.state.user;
+    var onPermissionRemoved = this.onPermissionRemoved;
 
     if (user == null)
       return (<h1>Unknown user {this.props.id}</h1>);
@@ -41,7 +46,15 @@ var SingleUserView = React.createClass({
     var permissions = user.permissions.all.map(function(permission, index) {
       return (
         <li key={index} className="col-sm-3 ">
-          <PermissionPill permission={permission} user={user} />
+          <PermissionPill permission={permission}>
+            <RemovePermission
+              permission={permission}
+              onPermissionRemoved={onPermissionRemoved}
+              url={"/api/users/" + user.key + "/removePermission/" + permission.key}
+              action="Remove"
+              from={user.name}
+            />
+          </PermissionPill>
         </li>
       );
     });
