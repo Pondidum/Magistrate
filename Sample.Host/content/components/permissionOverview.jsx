@@ -43,8 +43,13 @@ var PermissionOverview = React.createClass({
     });
   },
 
+  onPermissionRemoved(permission) {
+    //?
+  },
+
   render() {
 
+    var onPermissionRemoved = this.onPermissionRemoved;
     var filter = new RegExp(this.state.filter, "i");
 
     var permissions = this.state.permissions
@@ -53,7 +58,17 @@ var PermissionOverview = React.createClass({
       })
       .map(function(permission, index) {
         return (
-          <PermissionTile key={index} permission={permission} />
+          <li key={index} className="col-sm-3 ">
+            <PermissionPill key={index} permission={permission}>
+              <RemovePermission
+                permission={permission}
+                onPermissionRemoved={onPermissionRemoved}
+                url={"/api/permissions/" + permission.key + "/removePermission/"}
+                action="Delete"
+                from="The System"
+              />
+            </PermissionPill>
+          </li>
         );
       });
 
@@ -63,7 +78,9 @@ var PermissionOverview = React.createClass({
           <li><CreatePermissionDialog onPermissionCreated={this.onPermissionCreated} /></li>
         </OverviewActionBar>
         <div className="row">
+          <ul className="list-unstyled list-inline">
             {permissions}
+          </ul>
         </div>
       </div>
     );
