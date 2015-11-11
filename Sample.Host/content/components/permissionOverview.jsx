@@ -44,7 +44,15 @@ var PermissionOverview = React.createClass({
   },
 
   onPermissionRemoved(permission) {
-    //?
+
+    var newCollection = this.state.permissions.filter(function(p) {
+      return p.key !== permission.key;
+    });
+
+    this.setState({
+      permissions: newCollection
+    });
+
   },
 
   render() {
