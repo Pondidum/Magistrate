@@ -9,6 +9,12 @@ namespace Magistrate.Domain
 		public string Key { get; private set; }
 		public string Name { get; private set; }
 		public string Description { get; private set; }
+		public bool IsActive { get; private set; }
+
+		private Permission()
+		{
+			IsActive = true;
+		}
 
 		public static Permission Blank()
 		{
@@ -40,6 +46,7 @@ namespace Magistrate.Domain
 
 			ApplyEvent(new NameChangedEvent
 			{
+				User = user,
 				NewName = name
 			});
 		}
@@ -48,10 +55,18 @@ namespace Magistrate.Domain
 		{
 			ApplyEvent(new DescriptionChangedEvent
 			{
+				User = user,
 				NewDescription = description
 			});
 		}
 
+		public void Delete(MagistrateUser user)
+		{
+			ApplyEvent(new PermissionDeletedEvent
+			{
+				User = user
+			});
+		}
 
 		private static void ValidateKey(string key)
 		{
@@ -85,6 +100,12 @@ namespace Magistrate.Domain
 			Name = e.NewName;
 		}
 
+		private void Handle(PermissionDeletedEvent e)
+		{
+			IsActive = false;
+		}
+
+
 
 
 		public override bool Equals(object obj)
@@ -93,7 +114,7 @@ namespace Magistrate.Domain
 			if (ReferenceEquals(this, obj)) return true;
 			if (obj.GetType() != this.GetType()) return false;
 
-			return Equals((Permission) obj);
+			return Equals((Permission)obj);
 		}
 
 		public bool Equals(Permission other)

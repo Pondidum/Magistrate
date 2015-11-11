@@ -80,6 +80,7 @@
     <Compile Include="Domain\Events\DescriptionChangedEvent.cs" />
     <Compile Include="Domain\Events\NameChangedEvent.cs" />
     <Compile Include="Domain\Events\PermissionAddedEvent.cs" />
+    <Compile Include="Domain\Events\PermissionDeletedEvent.cs" />
     <Compile Include="Domain\Events\PermissionRemovedEvent.cs" />
     <Compile Include="Domain\Events\RoleAddedEvent.cs" />
     <Compile Include="Domain\Events\RoleCreatedEvent.cs" />
