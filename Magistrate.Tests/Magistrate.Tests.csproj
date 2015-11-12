@@ -67,6 +67,7 @@
     <Compile Include="Domain\PermissionInspectorTests.cs" />
     <Compile Include="Domain\PermissionsTests.cs" />
     <Compile Include="Domain\RoleTests.cs" />
+    <Compile Include="Domain\Rules\UniqueKeyRuleTests.cs" />
     <Compile Include="Domain\UserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

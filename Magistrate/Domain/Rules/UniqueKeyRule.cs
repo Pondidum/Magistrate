@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ledger;
 
 namespace Magistrate.Domain.Rules
 {
-	public class UniqueKeyRule<T> : IRule<T> where T : IKeyed
+	public class UniqueKeyRule<T> : IRule<T> where T : AggregateRoot<Guid>, IKeyed
 	{
 		private readonly IEnumerable<T> _allItems;
 
@@ -15,7 +16,9 @@ namespace Magistrate.Domain.Rules
 
 		public bool IsSatisfiedBy(T target)
 		{
-			return _allItems.Any(item => item.Key.Equals(target.Key, StringComparison.OrdinalIgnoreCase)) == false;
+			return _allItems
+				.Where(item => item.ID != target.ID)
+				.Any(item => item.Key.Equals(target.Key, StringComparison.OrdinalIgnoreCase)) == false;
 		}
 
 		public string GetMessage(T target)
