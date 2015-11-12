@@ -64,7 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Acceptance\SystemTests.cs" />
+    <Compile Include="Acceptance\MagistrateSystemTests.cs" />
     <Compile Include="Domain\PermissionInspectorTests.cs" />
     <Compile Include="Domain\PermissionsTests.cs" />
     <Compile Include="Domain\RoleTests.cs" />
@@ -81,6 +81,7 @@
       <Name>Magistrate</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
