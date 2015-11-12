@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Microsoft.Owin.FileSystems;
+﻿using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
 using Microsoft.Owin.StaticFiles.ContentTypes;
 using Owin;
@@ -9,19 +8,9 @@ namespace Sample.Host
 {
 	public class MagistrateWebInterface
 	{
-		public MagistrateWebInterface()
-		{
-
-		}
-
 		public void Configure(IAppBuilder app)
 		{
-
-			var root = Debugger.IsAttached
-				? "../../content"
-				: "content";
-
-			var fs = new PhysicalFileSystem(root);
+			var fs = new PhysicalFileSystem("../../content");
 
 			app.UseBabel(new BabelFileOptions
 			{
