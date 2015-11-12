@@ -12,34 +12,30 @@ namespace Magistrate.Domain
 		public string Name { get; private set; }
 		public bool IsActive { get; private set; }
 
-		public PermissionInspector Permissions => new PermissionInspector(_roles, _includes, _revokes);
-		public IEnumerable<Role> Roles => _roles;
+		public IEnumerable<Guid> Includes => _includes;
+		public IEnumerable<Guid> Revokes => _revokes;
+		public IEnumerable<Guid> Roles => _roles;
 
-		private readonly HashSet<Permission> _includes;
-		private readonly HashSet<Permission> _revokes;
-		private readonly HashSet<Role> _roles;
 
-		private readonly Func<Guid, Permission> _getPermission;
-		private readonly Func<Guid, Role> _getRole;
+		private readonly HashSet<Guid> _includes;
+		private readonly HashSet<Guid> _revokes;
+		private readonly HashSet<Guid> _roles;
 
-		public User(Func<Guid, Permission> getPermission, Func<Guid, Role> getRole)
+		public User()
 		{
-			_getPermission = getPermission;
-			_getRole = getRole;
-
-			_includes = new HashSet<Permission>();
-			_revokes = new HashSet<Permission>();
-			_roles = new HashSet<Role>();
+			_includes = new HashSet<Guid>();
+			_revokes = new HashSet<Guid>();
+			_roles = new HashSet<Guid>();
 
 			IsActive = true;
 		}
 
-		public static User Create(Func<Guid, Permission> getPermission, Func<Guid, Role> getRole, MagistrateUser currentUser, string key, string name)
+		public static User Create(MagistrateUser currentUser, string key, string name)
 		{
 			ValidateKey(key);
 			ValidateName(name);
 
-			var user = new User(getPermission, getRole);
+			var user = new User();
 			user.ApplyEvent(new UserCreatedEvent
 			{
 				ID = Guid.NewGuid(),
@@ -135,28 +131,28 @@ namespace Magistrate.Domain
 
 		private void Handle(PermissionAddedEvent e)
 		{
-			_revokes.RemoveWhere(r => r.ID == e.PermissionID);
+			var hadRevoke = _revokes.Remove(e.PermissionID);
 
-			if (_roles.Any(r => r.Permissions.Any(p => p.ID == e.PermissionID)) == false)
-				_includes.Add(_getPermission(e.PermissionID));
+			if (hadRevoke == false)
+				_includes.Add(e.PermissionID);
 		}
 
 		private void Handle(PermissionRemovedEvent e)
 		{
-			var removed = _includes.RemoveWhere(i => i.ID == e.PermissionID);
+			var hadInclude = _includes.Remove(e.PermissionID);
 
-			if (removed == 0 || _roles.Any(r => r.Permissions.Any(p => p.ID == e.PermissionID)))
-				_revokes.Add(_getPermission(e.PermissionID));
+			if (hadInclude == false)
+				_revokes.Add(e.PermissionID);
 		}
 
 		private void Handle(RoleAddedEvent e)
 		{
-			_roles.Add(_getRole(e.RoleID));
+			_roles.Add(e.RoleID);
 		}
 
 		private void Handle(RoleRemovedEvent e)
 		{
-			_roles.RemoveWhere(r => r.ID == e.RoleID);
+			_roles.Remove(e.RoleID);
 		}
 
 		private void Handle(UserDeactivatedEvent e)

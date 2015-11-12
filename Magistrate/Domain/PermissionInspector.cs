@@ -15,7 +15,7 @@ namespace Magistrate.Domain
 			_revokes = revokes;
 
 			_all = new HashSet<Permission>();
-			_all.UnionWith(roles.SelectMany(r => r.Permissions));
+			//_all.UnionWith(roles.SelectMany(r => r.Permissions));
 			_all.UnionWith(_includes);
 			_all.ExceptWith(_revokes);
 		}

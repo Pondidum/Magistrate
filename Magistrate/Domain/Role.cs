@@ -12,26 +12,29 @@ namespace Magistrate.Domain
 		public string Description { get; private set; }
 		public bool IsActive { get; private set; }
 
-		public IEnumerable<Permission> Permissions => _permissions;
+		public IEnumerable<Guid> Permissions => _permissions;
 
 
-		private readonly HashSet<Permission> _permissions;
-		private readonly Func<Guid, Permission> _getPermission;
+		private readonly HashSet<Guid> _permissions;
 
-		private Role(Func<Guid, Permission> getPermission)
+		private Role()
 		{
-			_getPermission = getPermission;
-			_permissions = new HashSet<Permission>();
+			_permissions = new HashSet<Guid>();
 
 			IsActive = true;
 		}
 
-		public static Role Create(Func<Guid, Permission> getPermission, MagistrateUser user, string key, string name, string description)
+		public static Role Blank()
+		{
+			return new Role();
+		}
+
+		public static Role Create(MagistrateUser user, string key, string name, string description)
 		{
 			ValidateKey(key);
 			ValidateName(name);
 
-			var role = new Role(getPermission);
+			var role = new Role();
 			role.ApplyEvent(new RoleCreatedEvent
 			{
 				ID = Guid.NewGuid(),
@@ -126,13 +129,12 @@ namespace Magistrate.Domain
 
 		private void Handle(PermissionAddedEvent e)
 		{
-			var permission = _getPermission(e.PermissionID);
-			_permissions.Add(permission);
+			_permissions.Add(e.PermissionID);
 		}
 
 		private void Handle(PermissionRemovedEvent e)
 		{
-			_permissions.RemoveWhere(p => p.ID == e.PermissionID);
+			_permissions.Remove(e.PermissionID);
 		}
 
 		private void Handle(RoleDeletedEvent e)
