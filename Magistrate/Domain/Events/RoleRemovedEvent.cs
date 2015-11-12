@@ -1,5 +1,4 @@
 ﻿using System;
-using Ledger;
 
 namespace Magistrate.Domain.Events
 {
