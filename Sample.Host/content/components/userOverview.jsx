@@ -15,7 +15,7 @@ var UserOverview = React.createClass({
   getUsers() {
 
     $.ajax({
-      url: "/api/users/active",
+      url: "/api/users/all",
       dataType: 'json',
       cache: false,
       success: function(data) {
