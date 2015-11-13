@@ -87,13 +87,9 @@
     <Compile Include="MagistrateConfiguration.cs" />
     <Compile Include="MagistrateUser.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
-    <Compile Include="ReadModels\PermissionsReadModel.cs" />
-    <Compile Include="Infrastructure\Projection.cs" />
     <Compile Include="Domain\Role.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReadModels\RolesReadModel.cs" />
-    <Compile Include="ReadModels\UsersReadModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
