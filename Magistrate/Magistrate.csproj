@@ -71,7 +71,9 @@
     <Compile Include="Api\PermissionsController.cs" />
     <Compile Include="Api\Responses\PermissionResponse.cs" />
     <Compile Include="Api\Responses\RoleResponse.cs" />
+    <Compile Include="Api\Responses\UserResponse.cs" />
     <Compile Include="Api\RolesController.cs" />
+    <Compile Include="Api\UsersController.cs" />
     <Compile Include="Domain\Events\DescriptionChangedEvent.cs" />
     <Compile Include="Domain\Events\NameChangedEvent.cs" />
     <Compile Include="Domain\Events\PermissionAddedEvent.cs" />

@@ -12,7 +12,7 @@ namespace Magistrate.Api
 		private readonly MagistrateConfiguration _config;
 		private readonly PermissionsController _permissions;
 		private readonly RolesController _roles;
-		//private readonly UsersController _users;
+		private readonly UsersController _users;
 
 		public MagistrateApi(MagistrateConfiguration config)
 		{
@@ -22,15 +22,14 @@ namespace Magistrate.Api
 
 			_permissions = new PermissionsController(store);
 			_roles = new RolesController(store);
-			//_users = new UsersController(store);
+			_users = new UsersController(store);
 
 			ConfigureAutoMapper();
 		}
 
 		private void ConfigureAutoMapper()
 		{
-			//Mapper.CreateMap<User, UserResponse>();
-			//Mapper.CreateMap<PermissionInspector, PermissionInspectorResponse>();
+			Mapper.CreateMap<User, UserResponse>();
 			Mapper.CreateMap<Role, RoleResponse>();
 			Mapper.CreateMap<Permission, PermissionResponse>();
 		}
@@ -44,7 +43,7 @@ namespace Magistrate.Api
 
 			_permissions.Configure(app);
 			_roles.Configure(app);
-			//_users.Configure(app);
+			_users.Configure(app);
 		}
 	}
 }

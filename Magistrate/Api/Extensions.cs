@@ -53,9 +53,19 @@ namespace Magistrate.Api
 			await context.WriteJson(role.Map<RoleResponse>(), Settings);
 		}
 
-		public static async Task JsonResponse(this IOwinContext context, IEnumerable<Role> role)
+		public static async Task JsonResponse(this IOwinContext context, IEnumerable<Role> roles)
 		{
-			await context.WriteJson(role.Map<RoleResponse>(), Settings);
+			await context.WriteJson(roles.Map<RoleResponse>(), Settings);
+		}
+
+		public static async Task JsonResponse(this IOwinContext context, User user)
+		{
+			await context.WriteJson(user.Map<UserResponse>(), Settings);
+		}
+
+		public static async Task JsonResponse(this IOwinContext context, IEnumerable<User> users)
+		{
+			await context.WriteJson(users.Map<UserResponse>(), Settings);
 		}
 
 

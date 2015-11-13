@@ -1,10 +1,6 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Magistrate.Api.Responses;
+﻿using System.Threading.Tasks;
 using Magistrate.Domain;
-using Magistrate.Infrastructure;
 using Microsoft.Owin;
-using Newtonsoft.Json;
 using Owin;
 using Owin.Routing;
 
@@ -12,15 +8,14 @@ namespace Magistrate.Api
 {
 	public class UsersController : Controller
 	{
-		public UsersController(Store store)
-			: base(store)
+		public UsersController(MagistrateSystem system)
+			: base(system)
 		{
 		}
 
 		public void Configure(IAppBuilder app)
 		{
 			app.Route("/api/users/all").Get(GetAll);
-			app.Route("/api/users/active").Get(GetActive);
 			app.Route("/api/users").Put(CreateUser);
 			app.Route("/api/users/{user-key}").Get(GetUserDetails);
 			app.Route("/api/users/{user-key}").Delete(DeactivateUser);
@@ -28,27 +23,23 @@ namespace Magistrate.Api
 			app.Route("/api/users/{user-key}/removePermission/{permission-key}").Put(RemovePermission);
 			app.Route("/api/users/{user-key}/addRole/{role-key}").Put(AddRole);
 			app.Route("/api/users/{user-key}/removeRole/{role-key}").Put(RemoveRole);
-			app.Route("/api/users/{user-key}/can/{permission-key}").Get(CheckPermission);
+			//app.Route("/api/users/{user-key}/can/{permission-key}").Get(CheckPermission);
 		}
 
 		private async Task GetAll(IOwinContext context)
 		{
-			await context.JsonResponse(Store.Users.AllUsers);
-		}
-
-		private async Task GetActive(IOwinContext context)
-		{
-			await context.JsonResponse(Store.Users.ActiveUsers);
+			await context.JsonResponse(System.Users);
 		}
 
 		private async Task CreateUser(IOwinContext context)
 		{
 			var dto = context.ReadJson<CreateUserDto>();
-			var user = User.Create(Store.Permissions.ByID, Store.Roles.ByID, context.GetUser(), dto.Key, dto.Name);
+			var user = User.Create(context.GetUser(), dto.Key, dto.Name);
 
-			var result = Store.Save(user);
+			System.AddUser(context.GetUser(), user);
+			System.Save();
 
-			await context.JsonResponse(UserCreateResponse.From(result, user));
+			await context.JsonResponse(user);
 		}
 
 		private async Task GetUserDetails(IOwinContext context)
@@ -60,7 +51,8 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, GetUser, async user =>
 			{
-				user.Deactivate(context.GetUser());
+				System.RemoveUser(context.GetUser(), user);
+				System.Save();
 
 				await Task.Yield();
 			});
@@ -73,7 +65,7 @@ namespace Magistrate.Api
 				await NotFoundOrAction(context, GetPermission, async permission =>
 				{
 					user.AddPermission(context.GetUser(), permission);
-					Store.Save(user);
+					System.Save();
 
 					await Task.Yield();
 				});
@@ -87,7 +79,7 @@ namespace Magistrate.Api
 				await NotFoundOrAction(context, GetPermission, async permission =>
 				{
 					user.RemovePermission(context.GetUser(), permission);
-					Store.Save(user);
+					System.Save();
 
 					await Task.Yield();
 				});
@@ -101,7 +93,7 @@ namespace Magistrate.Api
 				await NotFoundOrAction(context, GetRole, async role =>
 				{
 					user.AddRole(context.GetUser(), role);
-					Store.Save(user);
+					System.Save();
 
 					await Task.Yield();
 				});
@@ -115,23 +107,23 @@ namespace Magistrate.Api
 				await NotFoundOrAction(context, GetRole, async role =>
 				{
 					user.RemoveRole(context.GetUser(), role);
-					Store.Save(user);
+					System.Save();
 
 					await Task.Yield();
 				});
 			});
 		}
 
-		private async Task CheckPermission(IOwinContext context)
-		{
-			await NotFoundOrAction(context, GetUser, async user =>
-			{
-				await NotFoundOrAction(context, GetPermission, async permission =>
-				{
-					await context.JsonResponse(user.Permissions.Can(permission));
-				});
-			});
-		}
+		//private async Task CheckPermission(IOwinContext context)
+		//{
+		//	await NotFoundOrAction(context, GetUser, async user =>
+		//	{
+		//		await NotFoundOrAction(context, GetPermission, async permission =>
+		//		{
+		//			await context.JsonResponse(user.Permissions.Can(permission));
+		//		});
+		//	});
+		//}
 
 		private class CreateUserDto
 		{
