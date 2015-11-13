@@ -111,5 +111,16 @@ namespace Magistrate.Tests.Acceptance
 
 			_system.Users.Single().Roles.ShouldBeEmpty();
 		}
+
+		[Fact]
+		public void Adding_two_permissions_with_the_same_key()
+		{
+			var perm1 = Permission.Create(CurrentUser, "01", "One", "");
+			var perm2 = Permission.Create(CurrentUser, "01", "Two", "");
+
+			_system.AddPermission(perm1);
+
+			Should.Throw<RuleViolationException>(() => _system.AddPermission(perm2));
+		}
 	}
 }

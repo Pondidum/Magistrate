@@ -82,6 +82,7 @@
     <Compile Include="Domain\Events\PermissionCreatedEvent.cs" />
     <Compile Include="Domain\PermissionInspector.cs" />
     <Compile Include="Domain\Rules\UniqueKeyRule.cs" />
+    <Compile Include="Domain\RuleViolationException.cs" />
     <Compile Include="Domain\SaveResult.cs" />
     <Compile Include="MagistrateConfiguration.cs" />
     <Compile Include="MagistrateUser.cs" />

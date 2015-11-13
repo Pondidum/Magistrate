@@ -4,6 +4,7 @@ using System.Linq;
 using Ledger;
 using Ledger.Infrastructure;
 using Magistrate.Domain.Events;
+using Magistrate.Domain.Rules;
 
 namespace Magistrate.Domain
 {
@@ -12,7 +13,7 @@ namespace Magistrate.Domain
 
 		public IEnumerable<Permission> Permissions => _permissions;
 		public IEnumerable<Role> Roles => _roles;
-		public IEnumerable<User> Users => _users; 
+		public IEnumerable<User> Users => _users;
 
 		private readonly HashSet<Permission> _permissions;
 		private readonly HashSet<Role> _roles;
@@ -28,8 +29,23 @@ namespace Magistrate.Domain
 			_users = new HashSet<User>();
 		}
 
+		private void CheckRules<T>(IEnumerable<T> collection, T target) where T : AggregateRoot<Guid>, IKeyed
+		{
+			var rules = new[] { new UniqueKeyRule<T>(collection) };
+
+			var violations = rules
+				.Where(r => r.IsSatisfiedBy(target) == false)
+				.Select(r => r.GetMessage(target))
+				.ToList();
+
+			if (violations.Any())
+				throw new RuleViolationException(violations);
+		}
+
 		public void AddPermission(Permission permission)
 		{
+			CheckRules(_permissions, permission);
+
 			_store.Save(permission);
 			ApplyEvent(new PermissionAddedEvent { PermissionID = permission.ID });
 		}
