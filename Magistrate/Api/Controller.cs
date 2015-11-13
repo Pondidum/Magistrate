@@ -10,11 +10,11 @@ namespace Magistrate.Api
 {
 	public class Controller
 	{
-		public Store Store { get; }
+		public MagistrateSystem System { get; }
 
-		public Controller(Store store)
+		public Controller(MagistrateSystem system)
 		{
-			Store = store;
+			System = system;
 		}
 
 		protected static async Task NotFoundOrAction<T>(IOwinContext context, Func<IOwinContext, T> getItem, Func<T, Task> action)
@@ -38,19 +38,19 @@ namespace Magistrate.Api
 		protected Permission GetPermission(IOwinContext context)
 		{
 			var key = context.GetRouteValue<string>("permission-key");
-			return Store.Permissions.ByKey(key);
+			return System.Permissions.ByKey(key);
 		}
 
 		protected Role GetRole(IOwinContext context)
 		{
 			var key = context.GetRouteValue<string>("role-key");
-			return Store.Roles.ByKey(key);
+			return System.Roles.ByKey(key);
 		}
 
 		protected User GetUser(IOwinContext context)
 		{
 			var key = context.GetRouteValue<string>("user-key");
-			return Store.Users.ByKey(key);
+			return System.Users.ByKey(key);
 		}
 
 	}

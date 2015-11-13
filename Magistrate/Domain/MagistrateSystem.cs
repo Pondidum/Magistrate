@@ -31,6 +31,15 @@ namespace Magistrate.Domain
 
 		public void Save()
 		{
+			foreach (var permission in _permissions)
+				_store.Save(permission);
+
+			foreach (var role in _roles)
+				_store.Save(role);
+
+			foreach (var user in _users)
+				_store.Save(user);
+
 			_store.Save(this);
 		}
 

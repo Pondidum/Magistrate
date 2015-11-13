@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using Magistrate.Api.Responses;
 using Magistrate.Domain;
-using Magistrate.Infrastructure;
 using Microsoft.Owin;
 using Owin;
 using Owin.Routing;
@@ -10,8 +9,8 @@ namespace Magistrate.Api
 {
 	public class PermissionsController : Controller
 	{
-		public PermissionsController(Store store)
-			: base(store)
+		public PermissionsController(MagistrateSystem system)
+			: base(system)
 		{
 		}
 
@@ -27,16 +26,18 @@ namespace Magistrate.Api
 
 		private async Task GetAll(IOwinContext context)
 		{
-			await context.JsonResponse(Store.Permissions.AllPermissions);
+			await context.JsonResponse(System.Permissions);
 		}
+
 		private async Task CreatePermission(IOwinContext context)
 		{
 			var dto = context.ReadJson<CreatePermissionDto>();
 			var permission = Permission.Create(context.GetUser(), dto.Key, dto.Name, dto.Description);
 
-			var result  = Store.Save(permission);
+			System.AddPermission(context.GetUser(), permission);
+			System.Save();
 
-			await context.JsonResponse(PermissionCreateResponse.From(result, permission));
+			await context.JsonResponse(permission);
 		}
 
 		private async Task GetPermissionDetails(IOwinContext context)
@@ -48,8 +49,8 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, GetPermission, async permission =>
 			{
-				permission.Delete(context.GetUser());
-				Store.Save(permission);
+				System.RemovePermission(context.GetUser(), permission);
+				System.Save();
 
 				await Task.Yield();
 			});
@@ -61,7 +62,7 @@ namespace Magistrate.Api
 			await NotFoundOrAction(context, GetPermission, async permission =>
 			{
 				permission.ChangeName(context.GetUser(), ReadBody(context));
-				Store.Save(permission);
+				System.Save();
 
 				await Task.Yield();
 			});
@@ -72,7 +73,7 @@ namespace Magistrate.Api
 			await NotFoundOrAction(context, GetPermission, async permission =>
 			{
 				permission.ChangeDescription(context.GetUser(), ReadBody(context));
-				Store.Save(permission);
+				System.Save();
 
 				await Task.Yield();
 			});
