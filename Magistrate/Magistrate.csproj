@@ -74,6 +74,7 @@
     <Compile Include="Domain\Events\UserAddedEvent.cs" />
     <Compile Include="Domain\Events\UserCreatedEvent.cs" />
     <Compile Include="Domain\Events\UserLoggedEvent.cs" />
+    <Compile Include="Domain\Events\UserRemovedEvent.cs" />
     <Compile Include="Domain\IKeyed.cs" />
     <Compile Include="Domain\MagistrateSystem.cs" />
     <Compile Include="Domain\Rules\IRule.cs" />
