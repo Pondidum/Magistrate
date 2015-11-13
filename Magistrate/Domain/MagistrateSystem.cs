@@ -75,6 +75,7 @@ namespace Magistrate.Domain
 			_permissions.Remove(permission);
 
 			_roles.ForEach(role => role.RemovePermission(e.User, permission));
+			_users.ForEach(user => user.RemovePermission(e.User, permission));
 		}
 
 		private void Handle(RoleAddedEvent e)

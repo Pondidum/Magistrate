@@ -75,5 +75,23 @@ namespace Magistrate.Tests.Acceptance
 
 			_system.Roles.Single().Permissions.ShouldBeEmpty();
 		}
+
+		[Fact]
+		public void When_removing_a_permission_it_gets_removed_from_users_too()
+		{
+			var permission = Permission.Create(CurrentUser, "first-permission", "First Permission", "");
+			var user = User.Create(CurrentUser, "first-user", "First User");
+			user.AddPermission(CurrentUser, permission);
+
+			_system.AddPermission(permission);
+			_system.AddUser(user);
+
+			_system.Permissions.ShouldBe(new[] { permission });
+			_system.Users.ShouldContain(u => u.ID == user.ID);
+
+			_system.RemovePermission(permission);
+
+			_system.Users.Single().Includes.ShouldBeEmpty();
+		}
 	}
 }
