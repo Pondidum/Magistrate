@@ -21,13 +21,18 @@ namespace Magistrate.Domain
 		private readonly HashSet<Guid> _revokes;
 		private readonly HashSet<Guid> _roles;
 
-		public User()
+		private User()
 		{
 			_includes = new HashSet<Guid>();
 			_revokes = new HashSet<Guid>();
 			_roles = new HashSet<Guid>();
 
 			IsActive = true;
+		}
+
+		public static User Blank()
+		{
+			return new User();
 		}
 
 		public static User Create(MagistrateUser currentUser, string key, string name)

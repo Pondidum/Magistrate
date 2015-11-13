@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Ledger;
 using Ledger.Stores;
 using Magistrate.Domain;
@@ -46,6 +47,18 @@ namespace Magistrate.Tests.Acceptance
 		}
 
 		[Fact]
+		public void When_adding_and_removing_users()
+		{
+			var user = User.Create(CurrentUser, "user1", "user");
+
+			_system.AddUser(user);
+			_system.Users.ShouldContain(u => u.Key == "user1");
+
+			_system.RemoveUser(user);
+			_system.Users.ShouldBeEmpty();
+		}
+
+		[Fact]
 		public void When_removing_a_permission_it_gets_removed_from_roles_too()
 		{
 			var permission = Permission.Create(CurrentUser, "first-permission", "First Permission", "");
@@ -60,7 +73,7 @@ namespace Magistrate.Tests.Acceptance
 
 			_system.RemovePermission(permission);
 
-			role.Permissions.ShouldBeEmpty();
+			_system.Roles.Single().Permissions.ShouldBeEmpty();
 		}
 	}
 }

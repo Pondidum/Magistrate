@@ -12,9 +12,11 @@ namespace Magistrate.Domain
 
 		public IEnumerable<Permission> Permissions => _permissions;
 		public IEnumerable<Role> Roles => _roles;
+		public IEnumerable<User> Users => _users; 
 
 		private readonly HashSet<Permission> _permissions;
 		private readonly HashSet<Role> _roles;
+		private readonly HashSet<User> _users;
 
 		private readonly AggregateStore<Guid> _store;
 
@@ -23,6 +25,7 @@ namespace Magistrate.Domain
 			_store = store;
 			_permissions = new HashSet<Permission>();
 			_roles = new HashSet<Role>();
+			_users = new HashSet<User>();
 		}
 
 		public void AddPermission(Permission permission)
@@ -45,6 +48,17 @@ namespace Magistrate.Domain
 		public void RemoveRole(Role role)
 		{
 			ApplyEvent(new RoleRemovedEvent { RoleID = role.ID });
+		}
+
+		public void AddUser(User user)
+		{
+			_store.Save(user);
+			ApplyEvent(new UserAddedEvent { UserID = user.ID });
+		}
+
+		public void RemoveUser(User user)
+		{
+			ApplyEvent(new UserRemovedEvent { UserID = user.ID });
 		}
 
 
@@ -71,6 +85,16 @@ namespace Magistrate.Domain
 		private void Handle(RoleRemovedEvent e)
 		{
 			_roles.RemoveWhere(r => r.ID == e.RoleID);
+		}
+
+		private void Handle(UserAddedEvent e)
+		{
+			_users.Add(_store.Load(e.UserID, User.Blank));
+		}
+
+		private void Handle(UserRemovedEvent e)
+		{
+			_users.RemoveWhere(u => u.ID == e.UserID);
 		}
 	}
 }
