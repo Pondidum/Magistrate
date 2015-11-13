@@ -120,7 +120,9 @@ namespace Magistrate.Tests.Acceptance
 
 			_system.AddPermission(perm1);
 
-			Should.Throw<RuleViolationException>(() => _system.AddPermission(perm2));
+			var ex = Should.Throw<RuleViolationException>(() => _system.AddPermission(perm2));
+
+			ex.Violations.Single().ShouldBe("There is already a Permission with the Key '01'");
 		}
 
 		[Fact]
@@ -131,7 +133,9 @@ namespace Magistrate.Tests.Acceptance
 
 			_system.AddRole(role1);
 
-			Should.Throw<RuleViolationException>(() => _system.AddRole(role2));
+			var ex = Should.Throw<RuleViolationException>(() => _system.AddRole(role2));
+
+			ex.Violations.Single().ShouldBe("There is already a Role with the Key '01'");
 		}
 
 		[Fact]
@@ -142,7 +146,9 @@ namespace Magistrate.Tests.Acceptance
 
 			_system.AddUser(user1);
 
-			Should.Throw<RuleViolationException>(() => _system.AddUser(user2));
+			var ex = Should.Throw<RuleViolationException>(() => _system.AddUser(user2));
+
+			ex.Violations.Single().ShouldBe("There is already a User with the Key '01'");
 		}
 	}
 }

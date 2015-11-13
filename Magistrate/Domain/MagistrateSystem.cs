@@ -39,7 +39,7 @@ namespace Magistrate.Domain
 				.ToList();
 
 			if (violations.Any())
-				throw new RuleViolationException(violations);
+				throw new RuleViolationException(target, violations);
 		}
 
 		public void AddPermission(Permission permission)

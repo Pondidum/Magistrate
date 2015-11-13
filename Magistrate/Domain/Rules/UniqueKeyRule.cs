@@ -23,7 +23,7 @@ namespace Magistrate.Domain.Rules
 
 		public string GetMessage(T target)
 		{
-			return $"There is already a User with the Key '{target.Key}'";
+			return $"There is already a {target.GetType().Name} with the Key '{target.Key}'";
 		}
 	}
 }
