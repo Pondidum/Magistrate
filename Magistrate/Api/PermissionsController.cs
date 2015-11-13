@@ -35,7 +35,6 @@ namespace Magistrate.Api
 			var permission = Permission.Create(context.GetUser(), dto.Key, dto.Name, dto.Description);
 
 			System.AddPermission(context.GetUser(), permission);
-			System.Save();
 
 			await context.JsonResponse(permission);
 		}
@@ -50,7 +49,6 @@ namespace Magistrate.Api
 			await NotFoundOrAction(context, GetPermission, async permission =>
 			{
 				System.RemovePermission(context.GetUser(), permission);
-				System.Save();
 
 				await Task.Yield();
 			});
@@ -62,7 +60,6 @@ namespace Magistrate.Api
 			await NotFoundOrAction(context, GetPermission, async permission =>
 			{
 				permission.ChangeName(context.GetUser(), ReadBody(context));
-				System.Save();
 
 				await Task.Yield();
 			});
@@ -73,7 +70,6 @@ namespace Magistrate.Api
 			await NotFoundOrAction(context, GetPermission, async permission =>
 			{
 				permission.ChangeDescription(context.GetUser(), ReadBody(context));
-				System.Save();
 
 				await Task.Yield();
 			});

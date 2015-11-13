@@ -73,6 +73,7 @@
     <Compile Include="Api\Responses\RoleResponse.cs" />
     <Compile Include="Api\Responses\UserResponse.cs" />
     <Compile Include="Api\RolesController.cs" />
+    <Compile Include="Api\SaveStoreMiddleware.cs" />
     <Compile Include="Api\UsersController.cs" />
     <Compile Include="Domain\Events\DescriptionChangedEvent.cs" />
     <Compile Include="Domain\Events\NameChangedEvent.cs" />

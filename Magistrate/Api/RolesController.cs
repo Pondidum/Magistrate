@@ -35,7 +35,6 @@ namespace Magistrate.Api
 			var role = Role.Create(context.GetUser(), dto.Key, dto.Name, dto.Description);
 
 			System.AddRole(context.GetUser(), role);
-			System.Save();
 
 			await context.JsonResponse(role);
 		}
@@ -50,7 +49,6 @@ namespace Magistrate.Api
 			await NotFoundOrAction(context, GetRole, async role =>
 			{
 				role.ChangeName(context.GetUser(), ReadBody(context));
-				System.Save();
 
 				await Task.Yield();
 			});
@@ -61,7 +59,6 @@ namespace Magistrate.Api
 			await NotFoundOrAction(context, GetRole, async role =>
 			{
 				role.ChangeDescription(context.GetUser(), ReadBody(context));
-				System.Save();
 
 				await Task.Yield();
 			});
@@ -74,7 +71,6 @@ namespace Magistrate.Api
 				await NotFoundOrAction(context, GetPermission, async permission =>
 				{
 					role.AddPermission(context.GetUser(), permission);
-					System.Save();
 
 					await Task.Yield();
 				});
@@ -88,7 +84,6 @@ namespace Magistrate.Api
 				await NotFoundOrAction(context, GetPermission, async permission =>
 				{
 					role.RemovePermission(context.GetUser(), permission);
-					System.Save();
 
 					await Task.Yield();
 				});
