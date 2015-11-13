@@ -48,6 +48,15 @@ namespace Magistrate.Api
 			await context.WriteJson(permissions.Map<PermissionResponse>(), Settings);
 		}
 
+		public static async Task JsonResponse(this IOwinContext context, Role role)
+		{
+			await context.WriteJson(role.Map<RoleResponse>(), Settings);
+		}
+
+		public static async Task JsonResponse(this IOwinContext context, IEnumerable<Role> role)
+		{
+			await context.WriteJson(role.Map<RoleResponse>(), Settings);
+		}
 
 
 		public static IEnumerable<TResult> Map<TResult>(this IEnumerable source)

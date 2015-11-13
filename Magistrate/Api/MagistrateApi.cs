@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using AutoMapper;
 using Ledger;
 using Magistrate.Api.Responses;
@@ -12,7 +11,7 @@ namespace Magistrate.Api
 	{
 		private readonly MagistrateConfiguration _config;
 		private readonly PermissionsController _permissions;
-		//private readonly RolesController _roles;
+		private readonly RolesController _roles;
 		//private readonly UsersController _users;
 
 		public MagistrateApi(MagistrateConfiguration config)
@@ -22,7 +21,7 @@ namespace Magistrate.Api
 			var store = new MagistrateSystem(aggregateStore);
 
 			_permissions = new PermissionsController(store);
-			//_roles = new RolesController(store);
+			_roles = new RolesController(store);
 			//_users = new UsersController(store);
 
 			ConfigureAutoMapper();
@@ -32,7 +31,7 @@ namespace Magistrate.Api
 		{
 			//Mapper.CreateMap<User, UserResponse>();
 			//Mapper.CreateMap<PermissionInspector, PermissionInspectorResponse>();
-			//Mapper.CreateMap<Role, RoleResponse>();
+			Mapper.CreateMap<Role, RoleResponse>();
 			Mapper.CreateMap<Permission, PermissionResponse>();
 		}
 
@@ -44,7 +43,7 @@ namespace Magistrate.Api
 				app.Use<MagistrateUserMiddleware>(_config);
 
 			_permissions.Configure(app);
-			//_roles.Configure(app);
+			_roles.Configure(app);
 			//_users.Configure(app);
 		}
 	}

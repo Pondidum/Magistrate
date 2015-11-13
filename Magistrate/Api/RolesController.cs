@@ -1,7 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Magistrate.Api.Responses;
 using Magistrate.Domain;
-using Magistrate.Infrastructure;
 using Microsoft.Owin;
 using Owin;
 using Owin.Routing;
@@ -10,8 +8,8 @@ namespace Magistrate.Api
 {
 	public class RolesController : Controller
 	{
-		public RolesController(Store store)
-			: base(store)
+		public RolesController(MagistrateSystem system)
+			: base(system)
 		{
 		}
 
@@ -28,17 +26,18 @@ namespace Magistrate.Api
 
 		private async Task GetAll(IOwinContext context)
 		{
-			await context.JsonResponse(Store.Roles.AllRoles);
+			await context.JsonResponse(System.Roles);
 		}
 
 		private async Task CreateRole(IOwinContext context)
 		{
 			var dto = context.ReadJson<CreateRoleDto>();
-			var role = Role.Create(Store.Permissions.ByID, context.GetUser(), dto.Key, dto.Name, dto.Description);
+			var role = Role.Create(context.GetUser(), dto.Key, dto.Name, dto.Description);
 
-			var result = Store.Save(role);
+			System.AddRole(context.GetUser(), role);
+			System.Save();
 
-			await context.JsonResponse(RoleCreateResponse.From(result, role));
+			await context.JsonResponse(role);
 		}
 
 		private async Task GetRoleDetails(IOwinContext context)
@@ -51,7 +50,7 @@ namespace Magistrate.Api
 			await NotFoundOrAction(context, GetRole, async role =>
 			{
 				role.ChangeName(context.GetUser(), ReadBody(context));
-				Store.Save(role);
+				System.Save();
 
 				await Task.Yield();
 			});
@@ -62,7 +61,7 @@ namespace Magistrate.Api
 			await NotFoundOrAction(context, GetRole, async role =>
 			{
 				role.ChangeDescription(context.GetUser(), ReadBody(context));
-				Store.Save(role);
+				System.Save();
 
 				await Task.Yield();
 			});
@@ -75,7 +74,7 @@ namespace Magistrate.Api
 				await NotFoundOrAction(context, GetPermission, async permission =>
 				{
 					role.AddPermission(context.GetUser(), permission);
-					Store.Save(role);
+					System.Save();
 
 					await Task.Yield();
 				});
@@ -89,7 +88,7 @@ namespace Magistrate.Api
 				await NotFoundOrAction(context, GetPermission, async permission =>
 				{
 					role.RemovePermission(context.GetUser(), permission);
-					Store.Save(role);
+					System.Save();
 
 					await Task.Yield();
 				});
