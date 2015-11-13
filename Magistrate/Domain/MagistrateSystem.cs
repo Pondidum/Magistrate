@@ -57,6 +57,8 @@ namespace Magistrate.Domain
 
 		public void AddRole(Role role)
 		{
+			CheckRules(_roles, role);
+
 			_store.Save(role);
 			ApplyEvent(new RoleAddedEvent { RoleID = role.ID });
 		}

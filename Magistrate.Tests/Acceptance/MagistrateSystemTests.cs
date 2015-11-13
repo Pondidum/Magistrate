@@ -122,5 +122,16 @@ namespace Magistrate.Tests.Acceptance
 
 			Should.Throw<RuleViolationException>(() => _system.AddPermission(perm2));
 		}
+
+		[Fact]
+		public void Adding_two_roles_with_the_same_key()
+		{
+			var role1 = Role.Create(CurrentUser, "01", "One", "");
+			var role2 = Role.Create(CurrentUser, "01", "Two", "");
+
+			_system.AddRole(role1);
+
+			Should.Throw<RuleViolationException>(() => _system.AddRole(role2));
+		}
 	}
 }
