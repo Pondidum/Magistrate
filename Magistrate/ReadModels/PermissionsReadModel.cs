@@ -18,10 +18,7 @@ namespace Magistrate.ReadModels
 
 		public void ProjectTo(Permission permission)
 		{
-			if (permission.IsActive)
-				_permissions.Add(permission);
-			else
-				_permissions.Remove(permission);
+			_permissions.Add(permission);
 		}
 
 		public Permission ByKey(string key)

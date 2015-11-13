@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Ledger;
 using Magistrate.Domain.Events;
 
@@ -10,7 +9,6 @@ namespace Magistrate.Domain
 	{
 		public string Key { get; private set; }
 		public string Name { get; private set; }
-		public bool IsActive { get; private set; }
 
 		public IEnumerable<Guid> Includes => _includes;
 		public IEnumerable<Guid> Revokes => _revokes;
@@ -26,8 +24,6 @@ namespace Magistrate.Domain
 			_includes = new HashSet<Guid>();
 			_revokes = new HashSet<Guid>();
 			_roles = new HashSet<Guid>();
-
-			IsActive = true;
 		}
 
 		public static User Blank()
@@ -98,14 +94,6 @@ namespace Magistrate.Domain
 			});
 		}
 
-		public void Deactivate(MagistrateUser currentUser)
-		{
-			ApplyEvent(new UserDeactivatedEvent
-			{
-				User = currentUser
-			});
-		}
-
 
 
 		private static void ValidateKey(string key)
@@ -159,11 +147,5 @@ namespace Magistrate.Domain
 		{
 			_roles.Remove(e.RoleID);
 		}
-
-		private void Handle(UserDeactivatedEvent e)
-		{
-			IsActive = false;
-		}
-
 	}
 }

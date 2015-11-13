@@ -10,7 +10,6 @@ namespace Magistrate.Domain
 		public string Key { get; private set; }
 		public string Name { get; private set; }
 		public string Description { get; private set; }
-		public bool IsActive { get; private set; }
 
 		public IEnumerable<Guid> Permissions => _permissions;
 
@@ -20,8 +19,6 @@ namespace Magistrate.Domain
 		private Role()
 		{
 			_permissions = new HashSet<Guid>();
-
-			IsActive = true;
 		}
 
 		public static Role Blank()
@@ -85,14 +82,6 @@ namespace Magistrate.Domain
 			});
 		}
 
-		public void Delete(MagistrateUser user)
-		{
-			ApplyEvent(new RoleDeletedEvent
-			{
-				User = user
-			});
-		}
-
 
 
 		private static void ValidateKey(string key)
@@ -136,11 +125,5 @@ namespace Magistrate.Domain
 		{
 			_permissions.Remove(e.PermissionID);
 		}
-
-		private void Handle(RoleDeletedEvent e)
-		{
-			IsActive = false;
-		}
-
 	}
 }

@@ -67,15 +67,12 @@
     <Compile Include="Domain\Events\DescriptionChangedEvent.cs" />
     <Compile Include="Domain\Events\NameChangedEvent.cs" />
     <Compile Include="Domain\Events\PermissionAddedEvent.cs" />
-    <Compile Include="Domain\Events\PermissionDeletedEvent.cs" />
     <Compile Include="Domain\Events\PermissionRemovedEvent.cs" />
     <Compile Include="Domain\Events\RoleAddedEvent.cs" />
     <Compile Include="Domain\Events\RoleCreatedEvent.cs" />
-    <Compile Include="Domain\Events\RoleDeletedEvent.cs" />
     <Compile Include="Domain\Events\RoleRemovedEvent.cs" />
     <Compile Include="Domain\Events\UserAddedEvent.cs" />
     <Compile Include="Domain\Events\UserCreatedEvent.cs" />
-    <Compile Include="Domain\Events\UserDeactivatedEvent.cs" />
     <Compile Include="Domain\Events\UserLoggedEvent.cs" />
     <Compile Include="Domain\IKeyed.cs" />
     <Compile Include="Domain\MagistrateSystem.cs" />
