@@ -85,7 +85,10 @@ namespace Magistrate.Domain
 
 		private void Handle(RoleRemovedEvent e)
 		{
-			_roles.RemoveWhere(r => r.ID == e.RoleID);
+			var role = _roles.Single(r => r.ID == e.RoleID);
+			_roles.Remove(role);
+
+			_users.ForEach(user => user.RemoveRole(e.User, role));
 		}
 
 		private void Handle(UserAddedEvent e)

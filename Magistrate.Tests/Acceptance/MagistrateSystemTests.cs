@@ -93,5 +93,23 @@ namespace Magistrate.Tests.Acceptance
 
 			_system.Users.Single().Includes.ShouldBeEmpty();
 		}
+
+		[Fact]
+		public void When_removing_a_role_it_gets_removed_from_users()
+		{
+			var role = Role.Create(CurrentUser, "first-role", "First Role", "");
+			var user = User.Create(CurrentUser, "first-user", "First User");
+			user.AddRole(CurrentUser, role);
+
+			_system.AddRole(role);
+			_system.AddUser(user);
+
+			_system.Roles.Single().ID.ShouldBe(role.ID);
+			_system.Users.Single().ID.ShouldBe(user.ID);
+
+			_system.RemoveRole(role);
+
+			_system.Users.Single().Roles.ShouldBeEmpty();
+		}
 	}
 }
