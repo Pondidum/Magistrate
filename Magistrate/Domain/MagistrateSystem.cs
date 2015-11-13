@@ -70,6 +70,8 @@ namespace Magistrate.Domain
 
 		public void AddUser(User user)
 		{
+			CheckRules(_users, user);
+
 			_store.Save(user);
 			ApplyEvent(new UserAddedEvent { UserID = user.ID });
 		}
