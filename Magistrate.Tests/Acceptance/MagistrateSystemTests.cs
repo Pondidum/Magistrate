@@ -3,35 +3,35 @@ using System.Linq;
 using Ledger;
 using Ledger.Stores;
 using Magistrate.Domain;
+using Magistrate.Domain.Events;
 using Shouldly;
 using Xunit;
 
 namespace Magistrate.Tests.Acceptance
 {
-	public class MagistrateSystemTests
+	public class MagistrateSystemTests : IDisposable
 	{
 		private static readonly MagistrateUser CurrentUser = new MagistrateUser();
+
+		private readonly InMemoryEventStore<Guid> _eventStore;
 		private readonly MagistrateSystem _system;
 
 		public MagistrateSystemTests()
 		{
-			var store = new AggregateStore<Guid>(new InMemoryEventStore<Guid>());
-			_system = new MagistrateSystem(store);
+			_eventStore = new InMemoryEventStore<Guid>();
+			_system = new MagistrateSystem(new AggregateStore<Guid>(_eventStore));
 		}
 
 		[Fact]
 		public void When_adding_and_removing_permission()
 		{
-			var store = new AggregateStore<Guid>(new InMemoryEventStore<Guid>());
-			var system = new MagistrateSystem(store);
-
 			var permission = Permission.Create(CurrentUser, "first", "First Permission", "");
 
-			system.AddPermission(permission);
-			system.Permissions.ShouldContain(p => p.Key == "first");
+			_system.AddPermission(CurrentUser, permission);
+			_system.Permissions.ShouldContain(p => p.Key == "first");
 
-			system.RemovePermission(permission);
-			system.Permissions.ShouldBeEmpty();
+			_system.RemovePermission(CurrentUser, permission);
+			_system.Permissions.ShouldBeEmpty();
 		}
 
 		[Fact]
@@ -39,10 +39,10 @@ namespace Magistrate.Tests.Acceptance
 		{
 			var role = Role.Create(CurrentUser, "first", "First Permission", "");
 
-			_system.AddRole(role);
+			_system.AddRole(CurrentUser, role);
 			_system.Roles.ShouldContain(r => r.Key == "first");
 
-			_system.RemoveRole(role);
+			_system.RemoveRole(CurrentUser, role);
 			_system.Roles.ShouldBeEmpty();
 		}
 
@@ -51,10 +51,10 @@ namespace Magistrate.Tests.Acceptance
 		{
 			var user = User.Create(CurrentUser, "user1", "user");
 
-			_system.AddUser(user);
+			_system.AddUser(CurrentUser, user);
 			_system.Users.ShouldContain(u => u.Key == "user1");
 
-			_system.RemoveUser(user);
+			_system.RemoveUser(CurrentUser, user);
 			_system.Users.ShouldBeEmpty();
 		}
 
@@ -65,13 +65,13 @@ namespace Magistrate.Tests.Acceptance
 			var role = Role.Create(CurrentUser, "first-role", "First Role", "");
 			role.AddPermission(CurrentUser, permission);
 
-			_system.AddPermission(permission);
-			_system.AddRole(role);
+			_system.AddPermission(CurrentUser, permission);
+			_system.AddRole(CurrentUser, role);
 
 			_system.Permissions.ShouldBe(new[] { permission });
 			_system.Roles.ShouldContain(r => r.ID == role.ID);
 
-			_system.RemovePermission(permission);
+			_system.RemovePermission(CurrentUser, permission);
 
 			_system.Roles.Single().Permissions.ShouldBeEmpty();
 		}
@@ -83,13 +83,13 @@ namespace Magistrate.Tests.Acceptance
 			var user = User.Create(CurrentUser, "first-user", "First User");
 			user.AddPermission(CurrentUser, permission);
 
-			_system.AddPermission(permission);
-			_system.AddUser(user);
+			_system.AddPermission(CurrentUser, permission);
+			_system.AddUser(CurrentUser, user);
 
 			_system.Permissions.ShouldBe(new[] { permission });
 			_system.Users.ShouldContain(u => u.ID == user.ID);
 
-			_system.RemovePermission(permission);
+			_system.RemovePermission(CurrentUser, permission);
 
 			_system.Users.Single().Includes.ShouldBeEmpty();
 		}
@@ -101,13 +101,13 @@ namespace Magistrate.Tests.Acceptance
 			var user = User.Create(CurrentUser, "first-user", "First User");
 			user.AddRole(CurrentUser, role);
 
-			_system.AddRole(role);
-			_system.AddUser(user);
+			_system.AddRole(CurrentUser, role);
+			_system.AddUser(CurrentUser, user);
 
 			_system.Roles.Single().ID.ShouldBe(role.ID);
 			_system.Users.Single().ID.ShouldBe(user.ID);
 
-			_system.RemoveRole(role);
+			_system.RemoveRole(CurrentUser, role);
 
 			_system.Users.Single().Roles.ShouldBeEmpty();
 		}
@@ -118,9 +118,9 @@ namespace Magistrate.Tests.Acceptance
 			var perm1 = Permission.Create(CurrentUser, "01", "One", "");
 			var perm2 = Permission.Create(CurrentUser, "01", "Two", "");
 
-			_system.AddPermission(perm1);
+			_system.AddPermission(CurrentUser, perm1);
 
-			var ex = Should.Throw<RuleViolationException>(() => _system.AddPermission(perm2));
+			var ex = Should.Throw<RuleViolationException>(() => _system.AddPermission(CurrentUser, perm2));
 
 			ex.Violations.Single().ShouldBe("There is already a Permission with the Key '01'");
 		}
@@ -131,9 +131,9 @@ namespace Magistrate.Tests.Acceptance
 			var role1 = Role.Create(CurrentUser, "01", "One", "");
 			var role2 = Role.Create(CurrentUser, "01", "Two", "");
 
-			_system.AddRole(role1);
+			_system.AddRole(CurrentUser, role1);
 
-			var ex = Should.Throw<RuleViolationException>(() => _system.AddRole(role2));
+			var ex = Should.Throw<RuleViolationException>(() => _system.AddRole(CurrentUser, role2));
 
 			ex.Violations.Single().ShouldBe("There is already a Role with the Key '01'");
 		}
@@ -144,11 +144,21 @@ namespace Magistrate.Tests.Acceptance
 			var user1 = User.Create(CurrentUser, "01", "One");
 			var user2 = User.Create(CurrentUser, "01", "Two");
 
-			_system.AddUser(user1);
+			_system.AddUser(CurrentUser, user1);
 
-			var ex = Should.Throw<RuleViolationException>(() => _system.AddUser(user2));
+			var ex = Should.Throw<RuleViolationException>(() => _system.AddUser(CurrentUser, user2));
 
 			ex.Violations.Single().ShouldBe("There is already a User with the Key '01'");
+		}
+
+		public void Dispose()
+		{
+			_system.Save();
+
+			_eventStore
+				.AllEvents
+				.Cast<UserLoggedEvent>()
+				.ShouldAllBe(e => e.User != null);
 		}
 	}
 }

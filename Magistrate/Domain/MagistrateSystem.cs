@@ -29,6 +29,11 @@ namespace Magistrate.Domain
 			_users = new HashSet<User>();
 		}
 
+		public void Save()
+		{
+			_store.Save(this);
+		}
+
 		private void CheckRules<T>(IEnumerable<T> collection, T target) where T : AggregateRoot<Guid>, IKeyed
 		{
 			var rules = new[] { new UniqueKeyRule<T>(collection) };
@@ -42,43 +47,43 @@ namespace Magistrate.Domain
 				throw new RuleViolationException(target, violations);
 		}
 
-		public void AddPermission(Permission permission)
+		public void AddPermission(MagistrateUser currentUser, Permission permission)
 		{
 			CheckRules(_permissions, permission);
 
 			_store.Save(permission);
-			ApplyEvent(new PermissionAddedEvent { PermissionID = permission.ID });
+			ApplyEvent(new PermissionAddedEvent { User = currentUser, PermissionID = permission.ID });
 		}
 
-		public void RemovePermission(Permission permission)
+		public void RemovePermission(MagistrateUser currentUser, Permission permission)
 		{
-			ApplyEvent(new PermissionRemovedEvent { PermissionID = permission.ID });
+			ApplyEvent(new PermissionRemovedEvent { User = currentUser, PermissionID = permission.ID });
 		}
 
-		public void AddRole(Role role)
+		public void AddRole(MagistrateUser currentUser, Role role)
 		{
 			CheckRules(_roles, role);
 
 			_store.Save(role);
-			ApplyEvent(new RoleAddedEvent { RoleID = role.ID });
+			ApplyEvent(new RoleAddedEvent { User = currentUser, RoleID = role.ID });
 		}
 
-		public void RemoveRole(Role role)
+		public void RemoveRole(MagistrateUser currentUser, Role role)
 		{
-			ApplyEvent(new RoleRemovedEvent { RoleID = role.ID });
+			ApplyEvent(new RoleRemovedEvent { User = currentUser, RoleID = role.ID });
 		}
 
-		public void AddUser(User user)
+		public void AddUser(MagistrateUser currentUser, User user)
 		{
 			CheckRules(_users, user);
 
 			_store.Save(user);
-			ApplyEvent(new UserAddedEvent { UserID = user.ID });
+			ApplyEvent(new UserAddedEvent { User = currentUser, UserID = user.ID });
 		}
 
-		public void RemoveUser(User user)
+		public void RemoveUser(MagistrateUser currentUser, User user)
 		{
-			ApplyEvent(new UserRemovedEvent { UserID = user.ID });
+			ApplyEvent(new UserRemovedEvent { User = currentUser, UserID = user.ID });
 		}
 
 
