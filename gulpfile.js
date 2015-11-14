@@ -21,9 +21,6 @@ var config = {
 
 gulp.task("default", [ "restore", "version", "compile", "test" ]);
 
-gulp.task("ci", []);
-
-
 gulp.task('restore', function() {
   return gulp
     .src(config.name + '.sln', { read: false })
