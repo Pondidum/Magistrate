@@ -5,6 +5,8 @@ var fs = require("fs");
 var assemblyInfo = require('gulp-dotnet-assembly-info');
 var rename = require('gulp-rename');
 var msbuild = require('gulp-msbuild');
+var xunit =require('gulp-xunit-runner');
+var debug = require('gulp-debug');
 
 var project = JSON.parse(fs.readFileSync("./package.json"));
 
@@ -17,9 +19,7 @@ var config = {
   output: "./build/deploy"
 }
 
-gulp.task("default", [ "restore", "version", "compile" ], function() {
-  console.log(config.name, config.version);
-});
+gulp.task("default", [ "restore", "version", "compile", "test" ]);
 
 gulp.task("ci", []);
 
@@ -52,5 +52,16 @@ gulp.task('compile', [ "restore", "version" ], function() {
       errorOnFail: true,
       stdout: true,
       verbosity: "minimal"
+    }));
+});
+
+gulp.task('test', [ "compile" ], function() {
+  return gulp
+    .src(['**/bin/*/*.Tests.dll'], { read: false })
+    .pipe(xunit({
+      executable: './tools/xunit/xunit.console.exe',
+      options: {
+        quiet: true
+      }
     }));
 });
