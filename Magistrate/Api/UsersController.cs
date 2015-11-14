@@ -19,10 +19,10 @@ namespace Magistrate.Api
 			app.Route("/api/users").Put(CreateUser);
 			app.Route("/api/users/{user-key}").Get(GetUserDetails);
 			app.Route("/api/users/{user-key}").Delete(DeactivateUser);
-			app.Route("/api/users/{user-key}/addPermission/{permission-key}").Put(AddPermission);
-			app.Route("/api/users/{user-key}/removePermission/{permission-key}").Put(RemovePermission);
-			app.Route("/api/users/{user-key}/addRole/{role-key}").Put(AddRole);
-			app.Route("/api/users/{user-key}/removeRole/{role-key}").Put(RemoveRole);
+			app.Route("/api/users/{user-key}/permission/{permission-key}").Put(AddPermission);
+			app.Route("/api/users/{user-key}/permission/{permission-key}").Delete(RemovePermission);
+			app.Route("/api/users/{user-key}/role/{role-key}").Put(AddRole);
+			app.Route("/api/users/{user-key}/role/{role-key}").Delete(RemoveRole);
 			//app.Route("/api/users/{user-key}/can/{permission-key}").Get(CheckPermission);
 		}
 

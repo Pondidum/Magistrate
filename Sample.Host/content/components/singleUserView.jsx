@@ -50,7 +50,7 @@ var SingleUserView = React.createClass({
             <RemovePermission
               permission={permission}
               onPermissionRemoved={onPermissionRemoved}
-              url={"/api/users/" + user.key + "/removePermission/" + permission.key}
+              url={"/api/users/" + user.key + "/permission/" + permission.key}
               action="Remove"
               from={user.name}
             />

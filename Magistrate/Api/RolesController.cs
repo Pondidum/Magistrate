@@ -20,8 +20,8 @@ namespace Magistrate.Api
 			app.Route("/api/roles/{role-key}").Get(GetRoleDetails);
 			app.Route("/api/roles/{role-key}/changeName").Put(ChangeName);
 			app.Route("/api/roles/{role-key}/changeDescription").Put(ChangeDescription);
-			app.Route("/api/roles/{role-key}/addPermission/{permission-key}").Put(AddPermission);
-			app.Route("/api/roles/{role-key}/removePermission/{permission-key}").Put(RemovePermission);
+			app.Route("/api/roles/{role-key}/permission/{permission-key}").Put(AddPermission);
+			app.Route("/api/roles/{role-key}/permission/{permission-key}").Delete(RemovePermission);
 		}
 
 		private async Task GetAll(IOwinContext context)

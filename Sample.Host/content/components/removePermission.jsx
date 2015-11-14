@@ -23,7 +23,7 @@ var RemovePermission = React.createClass({
 
     $.ajax({
       url: this.props.url,
-      method: "PUT",
+      method: "DELETE",
       cache: false,
       success: function(data) {
         dialog.asyncStop();

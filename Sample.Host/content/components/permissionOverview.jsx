@@ -71,7 +71,7 @@ var PermissionOverview = React.createClass({
               <RemovePermission
                 permission={permission}
                 onPermissionRemoved={onPermissionRemoved}
-                url={"/api/permissions/" + permission.key + "/removePermission/"}
+                url={"/api/permissions/" + permission.key}
                 action="Delete"
                 from="The System"
               />
