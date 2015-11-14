@@ -4,6 +4,7 @@
   "dependencies": {
     "gulp": "^3.9.0",
     "gulp-dotnet-assembly-info": "^0.1.11",
+    "gulp-msbuild": "^0.2.13",
     "gulp-rename": "^1.2.2",
     "gulp-shell": "^0.5.1",
     "yargs": "^3.29.0"

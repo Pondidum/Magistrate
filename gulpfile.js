@@ -4,6 +4,7 @@ var args = require('yargs').argv;
 var fs = require("fs");
 var assemblyInfo = require('gulp-dotnet-assembly-info');
 var rename = require('gulp-rename');
+var msbuild = require('gulp-msbuild');
 
 var project = JSON.parse(fs.readFileSync("./package.json"));
 
@@ -16,7 +17,7 @@ var config = {
   output: "./build/deploy"
 }
 
-gulp.task("default", [ "restore", "version" ], function() {
+gulp.task("default", [ "restore", "version", "compile" ], function() {
   console.log(config.name, config.version);
 });
 
@@ -39,4 +40,17 @@ gulp.task('version', function() {
       description: "Build: " +  config.buildNumber + ", Sha: " + config.commit
     }))
     .pipe(gulp.dest('./' + config.name + '/Properties'));
+});
+
+gulp.task('compile', [ "restore", "version" ], function() {
+  return gulp
+    .src(config.name + ".sln")
+    .pipe(msbuild({
+      targets: [ "Clean", "Rebuild" ],
+      configuration: config.mode,
+      toolsVersion: 14.0,
+      errorOnFail: true,
+      stdout: true,
+      verbosity: "minimal"
+    }));
 });
