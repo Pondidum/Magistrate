@@ -19,3 +19,4 @@ packages
 build
 
 *.sublime-workspace
+node_modules
