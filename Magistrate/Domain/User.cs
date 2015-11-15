@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Ledger;
+using Ledger.Infrastructure;
 using Magistrate.Domain.Events;
 
 namespace Magistrate.Domain
@@ -59,34 +60,40 @@ namespace Magistrate.Domain
 		}
 
 		public void AddInclude(MagistrateUser currentUser, Permission permission)
-		{ }
+		{
+			ApplyEvent(new IncludeAddedEvent
+			{
+				User = currentUser,
+				PermissionID = permission.ID
+			});
+		}
 
 		public void RemoveInclude(MagistrateUser currentUser, Permission permission)
-		{ }
+		{
+			ApplyEvent(new IncludeRemovedEvent
+			{
+				User = currentUser,
+				PermissionID = permission.ID
+			});
+		}
 
 		public void AddRevoke(MagistrateUser currentUser, Permission permission)
-		{ }
+		{
+			ApplyEvent(new RevokeAddedEvent
+			{
+				User = currentUser,
+				PermissionID = permission.ID
+			});
+		}
 
 		public void RemoveRevoke(MagistrateUser currentUser, Permission permission)
-		{ }
-
-		//public void AddPermission(MagistrateUser currentUser, Permission permission)
-		//{
-		//	ApplyEvent(new PermissionAddedEvent
-		//	{
-		//		User = currentUser,
-		//		PermissionID = permission.ID
-		//	});
-		//}
-
-		//public void RemovePermission(MagistrateUser currentUser, Permission permission)
-		//{
-		//	ApplyEvent(new PermissionRemovedEvent
-		//	{
-		//		User = currentUser,
-		//		PermissionID = permission.ID
-		//	});
-		//}
+		{
+			ApplyEvent(new RevokeRemovedEvent
+			{
+				User = currentUser,
+				PermissionID = permission.ID
+			});
+		}
 
 		public void AddRole(MagistrateUser currentUser, Role role)
 		{
@@ -134,22 +141,6 @@ namespace Magistrate.Domain
 			Name = e.NewName;
 		}
 
-		//private void Handle(PermissionAddedEvent e)
-		//{
-		//	var hadRevoke = _revokes.Remove(e.PermissionID);
-
-		//	if (hadRevoke == false)
-		//		_includes.Add(e.PermissionID);
-		//}
-
-		//private void Handle(PermissionRemovedEvent e)
-		//{
-		//	var hadInclude = _includes.Remove(e.PermissionID);
-
-		//	if (hadInclude == false)
-		//		_revokes.Add(e.PermissionID);
-		//}
-
 		private void Handle(RoleAddedEvent e)
 		{
 			_roles.Add(e.RoleID);
@@ -159,5 +150,27 @@ namespace Magistrate.Domain
 		{
 			_roles.Remove(e.RoleID);
 		}
+
+		private void Handle(IncludeAddedEvent e)
+		{
+			_includes.Add(e.PermissionID);
+		}
+
+		private void Handle(IncludeRemovedEvent e)
+		{
+			_includes.Remove(e.PermissionID);
+		}
+
+		private void Handle(RevokeAddedEvent e)
+		{
+			_revokes.Add(e.PermissionID);
+		}
+
+		private void Handle(RevokeRemovedEvent e)
+		{
+			_revokes.Remove(e.PermissionID);
+		}
+
+
 	}
 }
