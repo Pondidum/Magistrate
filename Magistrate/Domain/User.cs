@@ -153,6 +153,7 @@ namespace Magistrate.Domain
 
 		private void Handle(IncludeAddedEvent e)
 		{
+			_revokes.Remove(e.PermissionID);
 			_includes.Add(e.PermissionID);
 		}
 
