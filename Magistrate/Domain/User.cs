@@ -163,14 +163,15 @@ namespace Magistrate.Domain
 
 		private void Handle(RevokeAddedEvent e)
 		{
-			_revokes.Add(e.PermissionID);
+			if (_includes.Contains(e.PermissionID))
+				_includes.Remove(e.PermissionID);
+			else
+				_revokes.Add(e.PermissionID);
 		}
 
 		private void Handle(RevokeRemovedEvent e)
 		{
 			_revokes.Remove(e.PermissionID);
 		}
-
-
 	}
 }
