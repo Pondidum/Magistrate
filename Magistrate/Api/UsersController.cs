@@ -17,12 +17,19 @@ namespace Magistrate.Api
 		{
 			app.Route("/api/users/all").Get(GetAll);
 			app.Route("/api/users").Put(CreateUser);
+
 			app.Route("/api/users/{user-key}").Get(GetUserDetails);
 			app.Route("/api/users/{user-key}").Delete(DeactivateUser);
-			app.Route("/api/users/{user-key}/permission/{permission-key}").Put(AddPermission);
-			app.Route("/api/users/{user-key}/permission/{permission-key}").Delete(RemovePermission);
+
+			app.Route("/api/users/{user-key}/include/{permission-key}").Put(AddInclude);
+			app.Route("/api/users/{user-key}/include/{permission-key}").Delete(RemoveInclude);
+
+			app.Route("/api/users/{user-key}/revoke/{permission-key}").Put(AddRevoke);
+			app.Route("/api/users/{user-key}/revoke/{permission-key}").Delete(RemoveRevoke);
+
 			app.Route("/api/users/{user-key}/role/{role-key}").Put(AddRole);
 			app.Route("/api/users/{user-key}/role/{role-key}").Delete(RemoveRole);
+			
 			//app.Route("/api/users/{user-key}/can/{permission-key}").Get(CheckPermission);
 		}
 
@@ -56,26 +63,52 @@ namespace Magistrate.Api
 			});
 		}
 
-		private async Task AddPermission(IOwinContext context)
+		private async Task AddInclude(IOwinContext context)
 		{
 			await NotFoundOrAction(context, GetUser, async user =>
 			{
 				await NotFoundOrAction(context, GetPermission, async permission =>
 				{
-					user.AddPermission(context.GetUser(), permission);
+					user.AddInclude(context.GetUser(), permission);
 
 					await Task.Yield();
 				});
 			});
 		}
 
-		private async Task RemovePermission(IOwinContext context)
+		private async Task RemoveInclude(IOwinContext context)
 		{
 			await NotFoundOrAction(context, GetUser, async user =>
 			{
 				await NotFoundOrAction(context, GetPermission, async permission =>
 				{
-					user.RemovePermission(context.GetUser(), permission);
+					user.RemoveInclude(context.GetUser(), permission);
+
+					await Task.Yield();
+				});
+			});
+		}
+
+		private async Task AddRevoke(IOwinContext context)
+		{
+			await NotFoundOrAction(context, GetUser, async user =>
+			{
+				await NotFoundOrAction(context, GetPermission, async permission =>
+				{
+					user.AddRevoke(context.GetUser(), permission);
+
+					await Task.Yield();
+				});
+			});
+		}
+
+		private async Task RemoveRevoke(IOwinContext context)
+		{
+			await NotFoundOrAction(context, GetUser, async user =>
+			{
+				await NotFoundOrAction(context, GetPermission, async permission =>
+				{
+					user.RemoveRevoke(context.GetUser(), permission);
 
 					await Task.Yield();
 				});
