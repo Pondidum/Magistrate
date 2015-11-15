@@ -70,25 +70,39 @@
 ## User
 
 * when a user has no Roles or Permissions
-  * Adding a role adds a role
-  * Removing a role does nothing
-  * Including a permission adds to the includes collection
-  * Revoking a permission adds to the revokes collection
+  * AddRole adds a role
+  * RemoveRole does nothing
+  * AddInclude adds to the includes collection
+  * AddRevoke adds to the revokes collection
+  * RemoveInclude does nothing
+  * RemoveRevoke does nothing
 
 * when a user has one included Permissions
-  * including a different permission adds to the includes collection
-  * including the same permission does nothing
-  * revoking a different permission adds to the revokes collection
-  * revoking the same permission removes from the includes collection
+  * AddInclude a different permission adds to the includes collection
+  * AddInclude the same permission does nothing
+  * RemoveInclude a different permission does nothing
+  * RemoveInclude the same permission removes it from the includes collection
+  * AddRevoke a different permission adds to the revokes collection
+  * AddRevoke the same permission removes from the includes collection
+  * RemoveRevoke a different permission does nothing
+  * RemoveRevoke the same permission does nothing
 
 * when a user has one revoked permission
-  * including a different permission adds to the includes collection
-  * including the same permission removes from the revokes collection and adds to the includes collection
-  * revoking a different permission adds to the revokes collection
-  * revoking the same permission does nothing
+  * AddInclude a different permission adds to the includes collection
+  * AddInclude the same permission removes from the revokes collection and adds to the includes collection
+  * RemoveInclude a different permission does nothing
+  * RemoveInclude the same permission does nothing
+  * AddRevoke a different permission adds to the revokes collection
+  * AddRevoke the same permission does nothing
+  * RemoveRevoke a different permission does nothing
+  * RemoveRevoke the same permission removes from the revokes collection
 
 * when a user has one role with a permission
-  * including a different permission adds to the includes collection
-  * including the same permission does nothing
-  * revoking a different permission adds to the revokes collection
-  * revoking the same permission adds to the revokes collection
+  * AddInclude a different permission adds to the includes collection
+  * AddInclude the same permission does nothing
+  * RemoveInclude a different permission does nothing
+  * RemoveInclude the same permission does nothing
+  * AddRevoke a different permission adds to the revokes collection
+  * AddRevoke the same permission adds to the revokes collection
+  * RemoveRevoke a different permission does nothing
+  * RemoveRevoke the same permission does nothing

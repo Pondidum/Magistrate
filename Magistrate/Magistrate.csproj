@@ -64,17 +64,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\Controller.cs" />
-    <Compile Include="Api\JsonExceptionMiddleware.cs" />
-    <Compile Include="Api\MagistrateApi.cs" />
-    <Compile Include="Api\MagistrateUserMiddleware.cs" />
-    <Compile Include="Api\PermissionsController.cs" />
-    <Compile Include="Api\Responses\PermissionResponse.cs" />
-    <Compile Include="Api\Responses\RoleResponse.cs" />
-    <Compile Include="Api\Responses\UserResponse.cs" />
-    <Compile Include="Api\RolesController.cs" />
-    <Compile Include="Api\SaveStoreMiddleware.cs" />
-    <Compile Include="Api\UsersController.cs" />
     <Compile Include="Domain\Events\DescriptionChangedEvent.cs" />
     <Compile Include="Domain\Events\NameChangedEvent.cs" />
     <Compile Include="Domain\Events\PermissionAddedEvent.cs" />
@@ -95,9 +84,7 @@
     <Compile Include="Domain\Rules\UniqueKeyRule.cs" />
     <Compile Include="Domain\RuleViolationException.cs" />
     <Compile Include="Domain\SaveResult.cs" />
-    <Compile Include="Api\Extensions.cs" />
     <Compile Include="MagistrateConfiguration.cs" />
-    <Compile Include="MagistrateExtensions.cs" />
     <Compile Include="MagistrateUser.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Domain\Role.cs" />
