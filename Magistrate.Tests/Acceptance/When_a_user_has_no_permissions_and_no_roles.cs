@@ -1,36 +1,10 @@
-﻿using System;
-using Magistrate.Domain;
-using Shouldly;
+﻿using Shouldly;
 using Xunit;
 
 namespace Magistrate.Tests.Acceptance
 {
-	public class When_a_user_has_no_permissions_and_no_roles
+	public class When_a_user_has_no_permissions_and_no_roles : UserAcceptanceBase
 	{
-		private User User { get; }
-		private Role TestRole { get; }
-		private Permission FirstPermission { get; }
-		private Permission SecondPermission { get; }
-
-		private Guid[] FirstPermissionOnly { get; }
-		private Guid[] SecondPermissionOnly { get; }
-		private Guid[] BothPermissions { get; }
-
-		public When_a_user_has_no_permissions_and_no_roles()
-		{
-			User = User.Create(new MagistrateUser(), "user-01", "Andy");
-			TestRole = Role.Create(new MagistrateUser(), "role-01", "Team Leader", "Leads Teams.");
-
-			FirstPermission = Permission.Create(new MagistrateUser(), "permission-01", "First", "");
-			SecondPermission = Permission.Create(new MagistrateUser(), "permission-02", "Second", "");
-
-			FirstPermissionOnly = new[] { FirstPermission.ID };
-			SecondPermissionOnly = new[] { SecondPermission.ID };
-			BothPermissions = new[] { FirstPermission.ID, SecondPermission.ID };
-		}
-
-
-
 		[Fact]
 		public void AddRole_adds_a_role()
 		{

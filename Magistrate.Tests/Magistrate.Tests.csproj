@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Acceptance\UserAcceptanceBase.cs" />
     <Compile Include="Acceptance\When_a_user_has_one_included_permission.cs" />
     <Compile Include="Acceptance\When_a_user_has_no_permissions_and_no_roles.cs" />
     <Compile Include="Acceptance\When_a_user_has_one_revoked_permission.cs" />
