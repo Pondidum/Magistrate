@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AutoMapper;
 using Ledger;
 using Magistrate.Api.Responses;
@@ -33,6 +34,14 @@ namespace Magistrate.Api
 			Mapper.CreateMap<User, UserResponse>();
 			Mapper.CreateMap<Role, RoleResponse>();
 			Mapper.CreateMap<Permission, PermissionResponse>();
+
+			Mapper
+				.CreateMap<Guid, RoleResponse>()
+				.ConvertUsing(id => _system.Roles.Single(r => r.ID == id).Map<RoleResponse>());
+
+			Mapper
+				.CreateMap<Guid, PermissionResponse>()
+				.ConvertUsing(id => _system.Permissions.Single(r => r.ID == id).Map<PermissionResponse>());
 		}
 
 		public void Configure(IAppBuilder app)

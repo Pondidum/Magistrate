@@ -15,7 +15,7 @@ namespace Magistrate.Api.Responses
 
 		public UserResponse()
 		{
-			Roles =Enumerable.Empty<RoleResponse>();
+			Roles = Enumerable.Empty<RoleResponse>();
 		}
 	}
 }
