@@ -27,14 +27,36 @@ var SingleUserView = React.createClass({
 
   },
 
-  onPermissionRemoved(permission) {
-    console.log("removed");
+  onIncludeRemoved(permission) {
+    var user = this.state.user;
+    var newCollection = user.includes.filter(function(inc) {
+      return inc.id != permission.id;
+    });
+
+    user.includes = newCollection;
+
+    this.setState({
+      user: user
+    });
+  },
+
+  onRevokeRemoved(permission) {
+    var user = this.state.user;
+    var newCollection = user.revokes.filter(function(inc) {
+      return inc.id != permission.id;
+    });
+
+    user.revokes = newCollection;
+
+    this.setState({
+      user: user
+    });
   },
 
   render() {
 
     var user = this.state.user;
-    var onPermissionRemoved = this.onPermissionRemoved;
+    var self = this;
 
     if (user == null)
       return (<h1>Unknown user {this.props.id}</h1>);
@@ -43,14 +65,30 @@ var SingleUserView = React.createClass({
       return (<li key={index} className="role-pill"><a href="#">{role.name}</a></li>);
     });
 
-    var permissions = user.permissions.all.map(function(permission, index) {
+    var includes = user.includes.map(function(permission, index) {
       return (
         <li key={index} className="col-sm-3 ">
           <PermissionPill permission={permission}>
             <RemovePermission
               permission={permission}
-              onPermissionRemoved={onPermissionRemoved}
-              url={"/api/users/" + user.key + "/permission/" + permission.key}
+              onPermissionRemoved={self.onIncludeRemoved}
+              url={"/api/users/" + user.key + "/include/" + permission.key}
+              action="Remove"
+              from={user.name}
+            />
+          </PermissionPill>
+        </li>
+      );
+    });
+
+    var revokes = user.revokes.map(function(permission, index) {
+      return (
+        <li key={index} className="col-sm-3 ">
+          <PermissionPill permission={permission}>
+            <RemovePermission
+              permission={permission}
+              onPermissionRemoved={self.onRevokeRemoved}
+              url={"/api/users/" + user.key + "/revoke/" + permission.key}
               action="Remove"
               from={user.name}
             />
@@ -71,12 +109,18 @@ var SingleUserView = React.createClass({
         </ul>
 
         <div className="page-header">
-          <h4>Permissions</h4>
+          <h4>Includes</h4>
         </div>
-        <ul className="list-unstyled list-inline">
-          {permissions}
+        <ul className="list-unstyled list-inline row">
+          {includes}
         </ul>
 
+        <div className="page-header">
+          <h4>Revokes</h4>
+        </div>
+        <ul className="list-unstyled list-inline row">
+          {revokes}
+        </ul>
 
       </div>
     );
