@@ -2,7 +2,7 @@
 
 namespace Magistrate.Domain.Events
 {
-	public class RevokeRemovedEvent : UserLoggedEvent
+	public class UserIncludeRemovedEvent : UserLoggedEvent
 	{
 		public Guid PermissionID { get; set; }
 	}
