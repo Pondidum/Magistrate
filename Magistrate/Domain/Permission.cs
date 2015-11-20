@@ -47,7 +47,7 @@ namespace Magistrate.Domain
 
 		public void ChangeDescription(MagistrateUser user, string description)
 		{
-			ApplyEvent(new DescriptionChangedEvent
+			ApplyEvent(new PermissionDescriptionChangedEvent
 			{
 				User = user,
 				NewDescription = description
@@ -76,7 +76,7 @@ namespace Magistrate.Domain
 			Description = e.Description;
 		}
 
-		private void Handle(DescriptionChangedEvent e)
+		private void Handle(PermissionDescriptionChangedEvent e)
 		{
 			Description = e.NewDescription;
 		}

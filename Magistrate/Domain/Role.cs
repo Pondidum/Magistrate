@@ -57,7 +57,7 @@ namespace Magistrate.Domain
 
 		public void ChangeDescription(MagistrateUser user, string description)
 		{
-			ApplyEvent(new DescriptionChangedEvent
+			ApplyEvent(new RoleDescriptionChangedEvent
 			{
 				User = user,
 				NewDescription = description
@@ -111,7 +111,7 @@ namespace Magistrate.Domain
 			Name = e.NewName;
 		}
 
-		private void Handle(DescriptionChangedEvent e)
+		private void Handle(RoleDescriptionChangedEvent e)
 		{
 			Description = e.NewDescription;
 		}
