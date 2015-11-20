@@ -97,7 +97,7 @@ namespace Magistrate.Domain
 
 		public void AddRole(MagistrateUser currentUser, Role role)
 		{
-			ApplyEvent(new RoleAddedEvent
+			ApplyEvent(new UserRoleAddedEvent
 			{
 				User = currentUser,
 				RoleID = role.ID
@@ -106,7 +106,7 @@ namespace Magistrate.Domain
 
 		public void RemoveRole(MagistrateUser currentUser, Role role)
 		{
-			ApplyEvent(new RoleRemovedEvent
+			ApplyEvent(new UserRoleRemovedEvent
 			{
 				User = currentUser,
 				RoleID = role.ID
@@ -141,12 +141,12 @@ namespace Magistrate.Domain
 			Name = e.NewName;
 		}
 
-		private void Handle(RoleAddedEvent e)
+		private void Handle(UserRoleAddedEvent e)
 		{
 			_roles.Add(e.RoleID);
 		}
 
-		private void Handle(RoleRemovedEvent e)
+		private void Handle(UserRoleRemovedEvent e)
 		{
 			_roles.Remove(e.RoleID);
 		}

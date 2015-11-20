@@ -85,11 +85,11 @@
     <Compile Include="Domain\Events\RolePermissionRemovedEvent.cs" />
     <Compile Include="Domain\Events\UserRevokeAddedEvent.cs" />
     <Compile Include="Domain\Events\UserRevokeRemovedEvent.cs" />
-    <Compile Include="Domain\Events\RoleAddedEvent.cs" />
+    <Compile Include="Domain\Events\UserRoleAddedEvent.cs" />
     <Compile Include="Domain\Events\RoleCreatedEvent.cs" />
     <Compile Include="Domain\Events\RoleDescriptionChangedEvent.cs" />
     <Compile Include="Domain\Events\RoleNameChangedEvent.cs" />
-    <Compile Include="Domain\Events\RoleRemovedEvent.cs" />
+    <Compile Include="Domain\Events\UserRoleRemovedEvent.cs" />
     <Compile Include="Domain\Events\UserAddedEvent.cs" />
     <Compile Include="Domain\Events\UserCreatedEvent.cs" />
     <Compile Include="Domain\Events\UserLoggedEvent.cs" />
