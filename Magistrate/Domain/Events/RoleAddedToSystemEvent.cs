@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 
 namespace Magistrate.Domain.Events
 {
-	public class SystemRoleRemovedEvent : UserLoggedEvent
+	public class RoleAddedToSystemEvent : UserLoggedEvent
 	{
 		public Guid RoleID { get; set; }
 	}

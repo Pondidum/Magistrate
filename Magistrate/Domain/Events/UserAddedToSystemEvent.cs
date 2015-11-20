@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 
 namespace Magistrate.Domain.Events
 {
-	public class SystemUserRemovedEvent : UserLoggedEvent
+	public class UserAddedToSystemEvent : UserLoggedEvent
 	{
 		public Guid UserID { get; set; }
 	}

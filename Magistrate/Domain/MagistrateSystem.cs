@@ -61,12 +61,12 @@ namespace Magistrate.Domain
 			CheckRules(_permissions, permission);
 
 			_store.Save(permission);
-			ApplyEvent(new SystemPermissionAddedEvent { User = currentUser, PermissionID = permission.ID });
+			ApplyEvent(new PermissionAddedToSystemEvent { User = currentUser, PermissionID = permission.ID });
 		}
 
 		public void RemovePermission(MagistrateUser currentUser, Permission permission)
 		{
-			ApplyEvent(new SystemPermissionRemovedEvent { User = currentUser, PermissionID = permission.ID });
+			ApplyEvent(new PermissionRemovedFromSystemEvent { User = currentUser, PermissionID = permission.ID });
 		}
 
 		public void AddRole(MagistrateUser currentUser, Role role)
@@ -74,12 +74,12 @@ namespace Magistrate.Domain
 			CheckRules(_roles, role);
 
 			_store.Save(role);
-			ApplyEvent(new SystemRoleAddedEvent { User = currentUser, RoleID = role.ID });
+			ApplyEvent(new RoleAddedToSystemEvent { User = currentUser, RoleID = role.ID });
 		}
 
 		public void RemoveRole(MagistrateUser currentUser, Role role)
 		{
-			ApplyEvent(new SystemRoleRemovedEvent { User = currentUser, RoleID = role.ID });
+			ApplyEvent(new RoleRemovedFromSystemEvent { User = currentUser, RoleID = role.ID });
 		}
 
 		public void AddUser(MagistrateUser currentUser, User user)
@@ -87,23 +87,23 @@ namespace Magistrate.Domain
 			CheckRules(_users, user);
 
 			_store.Save(user);
-			ApplyEvent(new SystemUserAddedEvent { User = currentUser, UserID = user.ID });
+			ApplyEvent(new UserAddedToSystemEvent { User = currentUser, UserID = user.ID });
 		}
 
 		public void RemoveUser(MagistrateUser currentUser, User user)
 		{
-			ApplyEvent(new SystemUserRemovedEvent { User = currentUser, UserID = user.ID });
+			ApplyEvent(new UserRemovedFromSystemEvent { User = currentUser, UserID = user.ID });
 		}
 
 
 
 
-		private void Handle(SystemPermissionAddedEvent e)
+		private void Handle(PermissionAddedToSystemEvent e)
 		{
 			_permissions.Add(_store.Load(e.PermissionID, Permission.Blank));
 		}
 
-		private void Handle(SystemPermissionRemovedEvent e)
+		private void Handle(PermissionRemovedFromSystemEvent e)
 		{
 			var permission = _permissions.Single(p => p.ID == e.PermissionID);
 			_permissions.Remove(permission);
@@ -112,12 +112,12 @@ namespace Magistrate.Domain
 			//_users.ForEach(user => user.RemovePermission(e.User, permission));
 		}
 
-		private void Handle(SystemRoleAddedEvent e)
+		private void Handle(RoleAddedToSystemEvent e)
 		{
 			_roles.Add(_store.Load(e.RoleID, Role.Blank));
 		}
 
-		private void Handle(SystemRoleRemovedEvent e)
+		private void Handle(RoleRemovedFromSystemEvent e)
 		{
 			var role = _roles.Single(r => r.ID == e.RoleID);
 			_roles.Remove(role);
@@ -125,12 +125,12 @@ namespace Magistrate.Domain
 			_users.ForEach(user => user.RemoveRole(e.User, role));
 		}
 
-		private void Handle(SystemUserAddedEvent e)
+		private void Handle(UserAddedToSystemEvent e)
 		{
 			_users.Add(_store.Load(e.UserID, User.Blank));
 		}
 
-		private void Handle(SystemUserRemovedEvent e)
+		private void Handle(UserRemovedFromSystemEvent e)
 		{
 			_users.RemoveWhere(u => u.ID == e.UserID);
 		}

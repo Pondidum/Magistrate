@@ -2,7 +2,7 @@
 
 namespace Magistrate.Domain.Events
 {
-	public class SystemRoleAddedEvent : UserLoggedEvent
+	public class RoleRemovedFromUserEvent : UserLoggedEvent
 	{
 		public Guid RoleID { get; set; }
 	}
