@@ -52,7 +52,7 @@ namespace Magistrate.Domain
 		public void ChangeName(MagistrateUser currentUser, string name)
 		{
 			ValidateName(name);
-			ApplyEvent(new NameChangedEvent
+			ApplyEvent(new UserNameChangedEvent
 			{
 				User = currentUser,
 				NewName = name
@@ -136,7 +136,7 @@ namespace Magistrate.Domain
 			Name = e.Name;
 		}
 
-		private void Handle(NameChangedEvent e)
+		private void Handle(UserNameChangedEvent e)
 		{
 			Name = e.NewName;
 		}
