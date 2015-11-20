@@ -77,6 +77,10 @@
     <Compile Include="Api\SaveStoreMiddleware.cs" />
     <Compile Include="Api\UsersController.cs" />
     <Compile Include="Domain\Events\PermissionDescriptionChangedEvent.cs" />
+    <Compile Include="Domain\Events\SystemPermissionAddedEvent.cs" />
+    <Compile Include="Domain\Events\SystemPermissionRemovedEvent.cs" />
+    <Compile Include="Domain\Events\SystemRoleAddedEvent.cs" />
+    <Compile Include="Domain\Events\SystemRoleRemovedEvent.cs" />
     <Compile Include="Domain\Events\UserIncludeAddedEvent.cs" />
     <Compile Include="Domain\Events\UserIncludeRemovedEvent.cs" />
     <Compile Include="Domain\Events\UserNameChangedEvent.cs" />
@@ -90,10 +94,10 @@
     <Compile Include="Domain\Events\RoleDescriptionChangedEvent.cs" />
     <Compile Include="Domain\Events\RoleNameChangedEvent.cs" />
     <Compile Include="Domain\Events\UserRoleRemovedEvent.cs" />
-    <Compile Include="Domain\Events\UserAddedEvent.cs" />
+    <Compile Include="Domain\Events\SystemUserAddedEvent.cs" />
     <Compile Include="Domain\Events\UserCreatedEvent.cs" />
     <Compile Include="Domain\Events\UserLoggedEvent.cs" />
-    <Compile Include="Domain\Events\UserRemovedEvent.cs" />
+    <Compile Include="Domain\Events\SystemUserRemovedEvent.cs" />
     <Compile Include="Domain\IKeyed.cs" />
     <Compile Include="Domain\MagistrateSystem.cs" />
     <Compile Include="Domain\Rules\IRule.cs" />
