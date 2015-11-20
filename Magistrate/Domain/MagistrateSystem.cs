@@ -61,12 +61,12 @@ namespace Magistrate.Domain
 			CheckRules(_permissions, permission);
 
 			_store.Save(permission);
-			ApplyEvent(new PermissionAddedEvent { User = currentUser, PermissionID = permission.ID });
+			ApplyEvent(new RolePermissionAddedEvent { User = currentUser, PermissionID = permission.ID });
 		}
 
 		public void RemovePermission(MagistrateUser currentUser, Permission permission)
 		{
-			ApplyEvent(new PermissionRemovedEvent { User = currentUser, PermissionID = permission.ID });
+			ApplyEvent(new RolePermissionRemovedEvent { User = currentUser, PermissionID = permission.ID });
 		}
 
 		public void AddRole(MagistrateUser currentUser, Role role)
@@ -98,12 +98,12 @@ namespace Magistrate.Domain
 
 
 
-		private void Handle(PermissionAddedEvent e)
+		private void Handle(RolePermissionAddedEvent e)
 		{
 			_permissions.Add(_store.Load(e.PermissionID, Permission.Blank));
 		}
 
-		private void Handle(PermissionRemovedEvent e)
+		private void Handle(RolePermissionRemovedEvent e)
 		{
 			var permission = _permissions.Single(p => p.ID == e.PermissionID);
 			_permissions.Remove(permission);

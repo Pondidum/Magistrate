@@ -80,9 +80,9 @@
     <Compile Include="Domain\Events\UserIncludeAddedEvent.cs" />
     <Compile Include="Domain\Events\UserIncludeRemovedEvent.cs" />
     <Compile Include="Domain\Events\UserNameChangedEvent.cs" />
-    <Compile Include="Domain\Events\PermissionAddedEvent.cs" />
+    <Compile Include="Domain\Events\RolePermissionAddedEvent.cs" />
     <Compile Include="Domain\Events\PermissionNameChangedEvent.cs" />
-    <Compile Include="Domain\Events\PermissionRemovedEvent.cs" />
+    <Compile Include="Domain\Events\RolePermissionRemovedEvent.cs" />
     <Compile Include="Domain\Events\UserRevokeAddedEvent.cs" />
     <Compile Include="Domain\Events\UserRevokeRemovedEvent.cs" />
     <Compile Include="Domain\Events\RoleAddedEvent.cs" />

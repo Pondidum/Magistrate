@@ -66,7 +66,7 @@ namespace Magistrate.Domain
 
 		public void AddPermission(MagistrateUser user, Permission permission)
 		{
-			ApplyEvent(new PermissionAddedEvent
+			ApplyEvent(new RolePermissionAddedEvent
 			{
 				User = user,
 				PermissionID = permission.ID
@@ -75,7 +75,7 @@ namespace Magistrate.Domain
 
 		public void RemovePermission(MagistrateUser user, Permission permission)
 		{
-			ApplyEvent(new PermissionRemovedEvent
+			ApplyEvent(new RolePermissionRemovedEvent
 			{
 				User = user,
 				PermissionID = permission.ID
@@ -116,12 +116,12 @@ namespace Magistrate.Domain
 			Description = e.NewDescription;
 		}
 
-		private void Handle(PermissionAddedEvent e)
+		private void Handle(RolePermissionAddedEvent e)
 		{
 			_permissions.Add(e.PermissionID);
 		}
 
-		private void Handle(PermissionRemovedEvent e)
+		private void Handle(RolePermissionRemovedEvent e)
 		{
 			_permissions.Remove(e.PermissionID);
 		}
