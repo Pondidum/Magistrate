@@ -101,7 +101,7 @@ namespace Magistrate.Tests.Domain
 
 		private Permission Clone(Permission permission)
 		{
-			var store = new AggregateStore<Guid>(new InMemoryEventStore<Guid>());
+			var store = new AggregateStore<Guid>(new InMemoryEventStore());
 			store.Save(permission);
 
 			return store.Load(permission.ID, () => Permission.Blank());

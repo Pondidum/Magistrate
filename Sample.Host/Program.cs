@@ -17,7 +17,7 @@ namespace Sample.Host
 
 				app.UseMagistrateApi(config =>
 				{
-					config.EventStore = new InMemoryEventStore<Guid>();
+					config.EventStore = new InMemoryEventStore();
 					config.User = () =>
 					{
 						//e.g. take user from ClaimsPrincipal:
