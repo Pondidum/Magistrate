@@ -1,6 +1,4 @@
-﻿using Ledger;
-
-namespace Magistrate.Domain.Events
+﻿namespace Magistrate.Domain.Events.UserEvents
 {
 	public class UserNameChangedEvent : UserLoggedEvent
 	{

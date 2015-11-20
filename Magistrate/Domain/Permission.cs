@@ -1,6 +1,7 @@
 ﻿using System;
 using Ledger;
 using Magistrate.Domain.Events;
+using Magistrate.Domain.Events.PermissionEvents;
 
 namespace Magistrate.Domain
 {

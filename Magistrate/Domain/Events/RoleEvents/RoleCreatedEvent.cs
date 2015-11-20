@@ -1,7 +1,6 @@
 ﻿using System;
-using Ledger;
 
-namespace Magistrate.Domain.Events
+namespace Magistrate.Domain.Events.RoleEvents
 {
 	public class RoleCreatedEvent : UserLoggedEvent
 	{

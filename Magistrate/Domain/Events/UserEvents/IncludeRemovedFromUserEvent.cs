@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Magistrate.Domain.Events
+namespace Magistrate.Domain.Events.UserEvents
 {
 	public class IncludeRemovedFromUserEvent : UserLoggedEvent
 	{

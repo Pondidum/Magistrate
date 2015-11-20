@@ -1,4 +1,4 @@
-﻿namespace Magistrate.Domain.Events
+﻿namespace Magistrate.Domain.Events.PermissionEvents
 {
 	public class PermissionDescriptionChangedEvent : UserLoggedEvent
 	{

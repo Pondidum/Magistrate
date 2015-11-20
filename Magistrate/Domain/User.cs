@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Ledger;
 using Ledger.Infrastructure;
 using Magistrate.Domain.Events;
+using Magistrate.Domain.Events.UserEvents;
 
 namespace Magistrate.Domain
 {

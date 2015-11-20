@@ -4,6 +4,7 @@ using System.Linq;
 using Ledger;
 using Ledger.Infrastructure;
 using Magistrate.Domain.Events;
+using Magistrate.Domain.Events.SystemEvents;
 using Magistrate.Domain.Rules;
 
 namespace Magistrate.Domain

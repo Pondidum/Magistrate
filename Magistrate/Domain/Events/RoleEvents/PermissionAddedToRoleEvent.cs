@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Magistrate.Domain.Events
+namespace Magistrate.Domain.Events.RoleEvents
 {
 	public class PermissionAddedToRoleEvent : UserLoggedEvent
 	{
