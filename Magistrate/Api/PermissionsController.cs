@@ -21,7 +21,7 @@ namespace Magistrate.Api
 			app.Route("/api/permissions/all").Get(GetAll);
 			app.Route("/api/permissions").Put(CreatePermission);
 			app.Route("/api/permissions/{permission-key}").Get(GetPermissionDetails);
-			//app.Route("/api/permissions/{permission-key}").Delete(DeletePermission);
+			app.Route("/api/permissions/{permission-key}").Delete(DeletePermission);
 			app.Route("/api/permissions/{permission-key}/changeName").Put(ChangeName);
 			app.Route("/api/permissions/{permission-key}/changeDescription").Put(ChangeDescription);
 		}
@@ -49,15 +49,15 @@ namespace Magistrate.Api
 		   });
 		}
 
-		//private async Task DeletePermission(IOwinContext context)
-		//{
-		//	await NotFoundOrAction(context, PermissionKey, async key =>
-		//	{
-		//		System.RemovePermission(context.GetUser(), permission);
+		private async Task DeletePermission(IOwinContext context)
+		{
+			await NotFoundOrAction(context, PermissionKey, async key =>
+			{
+				System.OnPermission(key, permission =>  permission.Deactivate(context.GetUser()));
 
-		//		await Task.Yield();
-		//	});
-		//}
+				await Task.Yield();
+			});
+		}
 
 		private async Task ChangeName(IOwinContext context)
 		{

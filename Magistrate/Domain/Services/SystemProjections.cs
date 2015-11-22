@@ -59,27 +59,27 @@ namespace Magistrate.Domain.Services
 			projector.Add<RoleAddedToUserEvent>(e => _users[e.AggregateID].Roles.Add(_roles[e.RoleID]));
 			projector.Add<RoleRemovedFromUserEvent>(e => _users[e.AggregateID].Roles.Remove(_roles[e.RoleID]));
 
-			projector.Add<PermissionRemovedFromSystemEvent>(e =>
+			projector.Add<PermissionDeactivatedEvent>(e =>
 			{
-				var permission = _permissions[e.PermissionID];
+				var permission = _permissions[e.AggregateID];
 
-				_permissions.Remove(e.PermissionID);
+				_permissions.Remove(e.AggregateID);
 				_roles.Values.ForEach(r => r.Permissions.Remove(permission));
 				_users.Values.ForEach(u => u.Includes.Remove(permission));
 				_users.Values.ForEach(u => u.Revokes.Remove(permission));
 			});
 
-			projector.Add<RoleRemovedFromSystemEvent>(e =>
+			projector.Add<RoleDeactivatedEvent>(e =>
 			{
-				var role = _roles[e.RoleID];
+				var role = _roles[e.AggregateID];
 
-				_roles.Remove(e.RoleID);
+				_roles.Remove(e.AggregateID);
 				_users.Values.ForEach(u => u.Roles.Remove(role));
 			});
 
-			projector.Add<UserRemovedFromSystemEvent>(e =>
+			projector.Add<UserDeactivatedEvent>(e =>
 			{
-				_users.Remove(e.UserID);
+				_users.Remove(e.AggregateID);
 			});
 		}
 

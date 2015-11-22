@@ -23,19 +23,9 @@ namespace Magistrate.Domain
 			ApplyEvent(new PermissionAddedToSystemEvent { User = currentUser, PermissionID = permission.ID });
 		}
 
-		public void RemovePermission(MagistrateUser currentUser, Permission permission)
-		{
-			ApplyEvent(new PermissionRemovedFromSystemEvent { User = currentUser, PermissionID = permission.ID });
-		}
-
 		public void AddRole(MagistrateUser currentUser, Role role)
 		{
 			ApplyEvent(new RoleAddedToSystemEvent { User = currentUser, RoleID = role.ID });
-		}
-
-		public void RemoveRole(MagistrateUser currentUser, Role role)
-		{
-			ApplyEvent(new RoleRemovedFromSystemEvent { User = currentUser, RoleID = role.ID });
 		}
 
 		public void AddUser(MagistrateUser currentUser, User user)
@@ -43,22 +33,9 @@ namespace Magistrate.Domain
 			ApplyEvent(new UserAddedToSystemEvent { User = currentUser, UserID = user.ID });
 		}
 
-		public void RemoveUser(MagistrateUser currentUser, User user)
-		{
-			ApplyEvent(new UserRemovedFromSystemEvent { User = currentUser, UserID = user.ID });
-		}
-
-
-
-
 		private void Handle(PermissionAddedToSystemEvent e)
 		{
 			_permissions.Add(e.PermissionID);
-		}
-
-		private void Handle(PermissionRemovedFromSystemEvent e)
-		{
-			_permissions.Remove(e.PermissionID);
 		}
 
 		private void Handle(RoleAddedToSystemEvent e)
@@ -66,19 +43,9 @@ namespace Magistrate.Domain
 			_roles.Add(e.RoleID);
 		}
 
-		private void Handle(RoleRemovedFromSystemEvent e)
-		{
-			_roles.Remove(e.RoleID);
-		}
-
 		private void Handle(UserAddedToSystemEvent e)
 		{
 			_users.Add(e.UserID);
-		}
-
-		private void Handle(UserRemovedFromSystemEvent e)
-		{
-			_users.Remove(e.UserID);
 		}
 	}
 }

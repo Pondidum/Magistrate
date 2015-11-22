@@ -10,6 +10,12 @@ namespace Magistrate.Domain
 		public string Key { get; private set; }
 		public string Name { get; private set; }
 		public string Description { get; private set; }
+		public bool IsActive { get; private set; }
+
+		private Permission()
+		{
+			IsActive = true;
+		}
 
 		public static Permission Blank()
 		{
@@ -55,6 +61,14 @@ namespace Magistrate.Domain
 			});
 		}
 
+		public void Deactivate(MagistrateUser user)
+		{
+			ApplyEvent(new PermissionDeactivatedEvent
+			{
+				User = user
+			});
+		}
+
 		private static void ValidateKey(string key)
 		{
 			if (string.IsNullOrWhiteSpace(key))
@@ -86,6 +100,12 @@ namespace Magistrate.Domain
 		{
 			Name = e.NewName;
 		}
+
+		private void Handle(PermissionDeactivatedEvent e)
+		{
+			IsActive = false;
+		}
+
 
 
 
