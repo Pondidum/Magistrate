@@ -5,7 +5,7 @@ using Magistrate.Domain.Events.PermissionEvents;
 
 namespace Magistrate.Domain
 {
-	public class Permission : AggregateRoot<Guid>, IEquatable<Permission>, IKeyed
+	public class Permission : AggregateRoot<Guid>, IEquatable<Permission>, IKeyed, IIdentity
 	{
 		public string Key { get; private set; }
 		public string Name { get; private set; }

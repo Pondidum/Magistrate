@@ -1,6 +1,8 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Magistrate.Api.Responses;
 using Magistrate.Domain;
+using Magistrate.Domain.Services;
 using Microsoft.Owin;
 using Owin;
 using Owin.Routing;
@@ -9,7 +11,7 @@ namespace Magistrate.Api
 {
 	public class PermissionsController : Controller
 	{
-		public PermissionsController(MagistrateSystem system)
+		public PermissionsController(SystemFacade system)
 			: base(system)
 		{
 		}
@@ -19,7 +21,7 @@ namespace Magistrate.Api
 			app.Route("/api/permissions/all").Get(GetAll);
 			app.Route("/api/permissions").Put(CreatePermission);
 			app.Route("/api/permissions/{permission-key}").Get(GetPermissionDetails);
-			app.Route("/api/permissions/{permission-key}").Delete(DeletePermission);
+			//app.Route("/api/permissions/{permission-key}").Delete(DeletePermission);
 			app.Route("/api/permissions/{permission-key}/changeName").Put(ChangeName);
 			app.Route("/api/permissions/{permission-key}/changeDescription").Put(ChangeDescription);
 		}
@@ -32,45 +34,45 @@ namespace Magistrate.Api
 		private async Task CreatePermission(IOwinContext context)
 		{
 			var dto = context.ReadJson<CreatePermissionDto>();
-			var permission = Permission.Create(context.GetUser(), dto.Key, dto.Name, dto.Description);
 
-			System.AddPermission(context.GetUser(), permission);
+			var permission = System.CreatePermission(context.GetUser(), dto.Key, dto.Name, dto.Description);
 
 			await context.JsonResponse(permission);
 		}
 
 		private async Task GetPermissionDetails(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetPermission, async permission => await context.JsonResponse(permission));
+			await NotFoundOrAction(context, PermissionKey, async key =>
+		   {
+			   var permission = System.Permissions.First(p => p.Key == key);
+			   await context.JsonResponse(permission);
+		   });
 		}
 
-		private async Task DeletePermission(IOwinContext context)
-		{
-			await NotFoundOrAction(context, GetPermission, async permission =>
-			{
-				System.RemovePermission(context.GetUser(), permission);
+		//private async Task DeletePermission(IOwinContext context)
+		//{
+		//	await NotFoundOrAction(context, PermissionKey, async key =>
+		//	{
+		//		System.RemovePermission(context.GetUser(), permission);
 
-				await Task.Yield();
-			});
-
-		}
+		//		await Task.Yield();
+		//	});
+		//}
 
 		private async Task ChangeName(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetPermission, async permission =>
+			await NotFoundOrAction(context, PermissionKey, async key =>
 			{
-				permission.ChangeName(context.GetUser(), ReadBody(context));
-
+				System.OnPermission(key, permission => permission.ChangeName(context.GetUser(), ReadBody(context)));
 				await Task.Yield();
 			});
 		}
 
 		private async Task ChangeDescription(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetPermission, async permission =>
+			await NotFoundOrAction(context, PermissionKey, async key =>
 			{
-				permission.ChangeDescription(context.GetUser(), ReadBody(context));
-
+				System.OnPermission(key, permission => permission.ChangeDescription(context.GetUser(), ReadBody(context)));
 				await Task.Yield();
 			});
 		}

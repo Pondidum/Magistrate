@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Magistrate.Domain;
+using Magistrate.Domain.Services;
 using Microsoft.Owin;
 using Owin;
 using Owin.Routing;
@@ -8,7 +10,7 @@ namespace Magistrate.Api
 {
 	public class UsersController : Controller
 	{
-		public UsersController(MagistrateSystem system)
+		public UsersController(SystemFacade system)
 			: base(system)
 		{
 		}
@@ -19,7 +21,7 @@ namespace Magistrate.Api
 			app.Route("/api/users").Put(CreateUser);
 
 			app.Route("/api/users/{user-key}").Get(GetUserDetails);
-			app.Route("/api/users/{user-key}").Delete(DeactivateUser);
+			//app.Route("/api/users/{user-key}").Delete(DeactivateUser);
 
 			app.Route("/api/users/{user-key}/include/{permission-key}").Put(AddInclude);
 			app.Route("/api/users/{user-key}/include/{permission-key}").Delete(RemoveInclude);
@@ -41,36 +43,37 @@ namespace Magistrate.Api
 		private async Task CreateUser(IOwinContext context)
 		{
 			var dto = context.ReadJson<CreateUserDto>();
-			var user = User.Create(context.GetUser(), dto.Key, dto.Name);
-
-			System.AddUser(context.GetUser(), user);
+			var user = System.CreateUser(context.GetUser(), dto.Key, dto.Name);
 
 			await context.JsonResponse(user);
 		}
 
 		private async Task GetUserDetails(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetUser, async user => await context.JsonResponse(user));
-		}
-
-		private async Task DeactivateUser(IOwinContext context)
-		{
-			await NotFoundOrAction(context, GetUser, async user =>
+			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				System.RemoveUser(context.GetUser(), user);
-
-				await Task.Yield();
+				var user = System.Users.First(u => u.Key == key);
+				await context.JsonResponse(user);
 			});
 		}
 
+		//private async Task DeactivateUser(IOwinContext context)
+		//{
+		//	await NotFoundOrAction(context, UserKey, async key =>
+		//	{
+		//		System.RemoveUser(context.GetUser(), user);
+
+		//		await Task.Yield();
+		//	});
+		//}
+
 		private async Task AddInclude(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetUser, async user =>
+			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				await NotFoundOrAction(context, GetPermission, async permission =>
+				await NotFoundOrAction(context, PermissionKey, async permissionKey =>
 				{
-					user.AddInclude(context.GetUser(), permission);
-
+					System.OnUser(key, user => user.AddInclude(context.GetUser(), System.LoadPermission(permissionKey)));
 					await Task.Yield();
 				});
 			});
@@ -78,12 +81,11 @@ namespace Magistrate.Api
 
 		private async Task RemoveInclude(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetUser, async user =>
+			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				await NotFoundOrAction(context, GetPermission, async permission =>
+				await NotFoundOrAction(context, PermissionKey, async permissionKey =>
 				{
-					user.RemoveInclude(context.GetUser(), permission);
-
+					System.OnUser(key, user => user.RemoveInclude(context.GetUser(), System.LoadPermission(permissionKey)));
 					await Task.Yield();
 				});
 			});
@@ -91,12 +93,11 @@ namespace Magistrate.Api
 
 		private async Task AddRevoke(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetUser, async user =>
+			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				await NotFoundOrAction(context, GetPermission, async permission =>
+				await NotFoundOrAction(context, PermissionKey, async permissionKey =>
 				{
-					user.AddRevoke(context.GetUser(), permission);
-
+					System.OnUser(key, user => user.AddRevoke(context.GetUser(), System.LoadPermission(permissionKey)));
 					await Task.Yield();
 				});
 			});
@@ -104,12 +105,11 @@ namespace Magistrate.Api
 
 		private async Task RemoveRevoke(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetUser, async user =>
+			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				await NotFoundOrAction(context, GetPermission, async permission =>
+				await NotFoundOrAction(context, PermissionKey, async permissionKey =>
 				{
-					user.RemoveRevoke(context.GetUser(), permission);
-
+					System.OnUser(key, user => user.RemoveRevoke(context.GetUser(), System.LoadPermission(permissionKey)));
 					await Task.Yield();
 				});
 			});
@@ -117,12 +117,11 @@ namespace Magistrate.Api
 
 		private async Task AddRole(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetUser, async user =>
+			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				await NotFoundOrAction(context, GetRole, async role =>
+				await NotFoundOrAction(context, RoleKey, async roleKey =>
 				{
-					user.AddRole(context.GetUser(), role);
-
+					System.OnUser(key, user => user.AddRole(context.GetUser(), System.LoadRole(roleKey)));
 					await Task.Yield();
 				});
 			});
@@ -130,12 +129,11 @@ namespace Magistrate.Api
 
 		private async Task RemoveRole(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetUser, async user =>
+			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				await NotFoundOrAction(context, GetRole, async role =>
+				await NotFoundOrAction(context, RoleKey, async roleKey =>
 				{
-					user.RemoveRole(context.GetUser(), role);
-
+					System.OnUser(key, user => user.RemoveRole(context.GetUser(), System.LoadRole(roleKey)));
 					await Task.Yield();
 				});
 			});
@@ -143,7 +141,7 @@ namespace Magistrate.Api
 
 		//private async Task CheckPermission(IOwinContext context)
 		//{
-		//	await NotFoundOrAction(context, GetUser, async user =>
+		//	await NotFoundOrAction(context, GetUser, async key =>
 		//	{
 		//		await NotFoundOrAction(context, GetPermission, async permission =>
 		//		{

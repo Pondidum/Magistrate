@@ -1,0 +1,87 @@
+﻿using System;
+using System.Collections.Generic;
+using Ledger;
+using Ledger.Infrastructure;
+using Magistrate.Domain.Events.PermissionEvents;
+using Magistrate.Domain.Events.RoleEvents;
+using Magistrate.Domain.Events.SystemEvents;
+using Magistrate.Domain.Events.UserEvents;
+using Magistrate.Domain.ReadModels;
+
+namespace Magistrate.Domain.Services
+{
+	public class SystemProjections
+	{
+		public IEnumerable<UserReadModel> Users => _users.Values;
+		public IEnumerable<RoleReadModel> Roles => _roles.Values;
+		public IEnumerable<PermissionReadModel> Permissions => _permissions.Values;
+
+		private readonly Dictionary<Guid, UserReadModel> _users;
+		private readonly Dictionary<Guid, RoleReadModel> _roles;
+		private readonly Dictionary<Guid, PermissionReadModel> _permissions;
+
+		private readonly  Projector _projector;
+
+		public SystemProjections()
+		{
+			_projector = new Projector();
+
+			_users = new Dictionary<Guid, UserReadModel>();
+			_roles = new Dictionary<Guid, RoleReadModel>();
+			_permissions = new Dictionary<Guid, PermissionReadModel>();
+
+			RegisterProjections(_projector);
+		}
+
+		public void Project(IDomainEvent<Guid> @event)
+		{
+			_projector.Project(@event);
+		}
+
+		private void RegisterProjections(Projector projector)
+		{
+			projector.Add<PermissionCreatedEvent>(e => _permissions[e.AggregateID] = PermissionReadModel.From(e));
+			projector.Add<PermissionDescriptionChangedEvent>(e => _permissions[e.AggregateID].Description = e.NewDescription);
+			projector.Add<PermissionNameChangedEvent>(e => _permissions[e.AggregateID].Name = e.NewName);
+
+			projector.Add<RoleCreatedEvent>(e => _roles[e.AggregateID] = RoleReadModel.From(e));
+			projector.Add<RoleDescriptionChangedEvent>(e => _roles[e.AggregateID].Description = e.NewDescription);
+			projector.Add<RoleNameChangedEvent>(e => _roles[e.AggregateID].Name = e.NewName);
+			projector.Add<PermissionAddedToRoleEvent>(e => _roles[e.AggregateID].Permissions.Add(_permissions[e.PermissionID]));
+			projector.Add<PermissionRemovedFromRoleEvent>(e => _roles[e.AggregateID].Permissions.Remove(_permissions[e.PermissionID]));
+
+			projector.Add<UserCreatedEvent>(e => _users[e.AggregateID] = UserReadModel.From(e));
+			projector.Add<UserNameChangedEvent>(e => _users[e.AggregateID].Name = e.NewName);
+			projector.Add<IncludeAddedToUserEvent>(e => _users[e.AggregateID].Includes.Add(_permissions[e.PermissionID]));
+			projector.Add<IncludeRemovedFromUserEvent>(e => _users[e.AggregateID].Includes.Remove(_permissions[e.PermissionID]));
+			projector.Add<RevokeAddedToUserEvent>(e => _users[e.AggregateID].Revokes.Add(_permissions[e.PermissionID]));
+			projector.Add<RevokeRemovedFromUserEvent>(e => _users[e.AggregateID].Revokes.Remove(_permissions[e.PermissionID]));
+			projector.Add<RoleAddedToUserEvent>(e => _users[e.AggregateID].Roles.Add(_roles[e.RoleID]));
+			projector.Add<RoleRemovedFromUserEvent>(e => _users[e.AggregateID].Roles.Remove(_roles[e.RoleID]));
+
+			projector.Add<PermissionRemovedFromSystemEvent>(e =>
+			{
+				var permission = _permissions[e.PermissionID];
+
+				_permissions.Remove(e.PermissionID);
+				_roles.Values.ForEach(r => r.Permissions.Remove(permission));
+				_users.Values.ForEach(u => u.Includes.Remove(permission));
+				_users.Values.ForEach(u => u.Revokes.Remove(permission));
+			});
+
+			projector.Add<RoleRemovedFromSystemEvent>(e =>
+			{
+				var role = _roles[e.RoleID];
+
+				_roles.Remove(e.RoleID);
+				_users.Values.ForEach(u => u.Roles.Remove(role));
+			});
+
+			projector.Add<UserRemovedFromSystemEvent>(e =>
+			{
+				_users.Remove(e.UserID);
+			});
+		}
+
+	}
+}

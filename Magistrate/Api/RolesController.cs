@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Magistrate.Domain;
+using Magistrate.Domain.Services;
 using Microsoft.Owin;
 using Owin;
 using Owin.Routing;
@@ -8,7 +10,7 @@ namespace Magistrate.Api
 {
 	public class RolesController : Controller
 	{
-		public RolesController(MagistrateSystem system)
+		public RolesController(SystemFacade system)
 			: base(system)
 		{
 		}
@@ -32,45 +34,48 @@ namespace Magistrate.Api
 		private async Task CreateRole(IOwinContext context)
 		{
 			var dto = context.ReadJson<CreateRoleDto>();
-			var role = Role.Create(context.GetUser(), dto.Key, dto.Name, dto.Description);
-
-			System.AddRole(context.GetUser(), role);
+			var role = System.CreateRole(context.GetUser(), dto.Key, dto.Name, dto.Description);
 
 			await context.JsonResponse(role);
 		}
 
 		private async Task GetRoleDetails(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetRole, async role => await context.JsonResponse(role));
+			await NotFoundOrAction(context, RoleKey, async key =>
+			{
+				var role = System.Roles.First(r => r.Key == key);
+				await context.JsonResponse(role);
+			});
 		}
 
 		private async Task ChangeName(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetRole, async role =>
+			await NotFoundOrAction(context, RoleKey, async key =>
 			{
-				role.ChangeName(context.GetUser(), ReadBody(context));
-
+				System.OnRole(key, role => role.ChangeName(context.GetUser(), ReadBody(context)));
 				await Task.Yield();
 			});
 		}
 
 		private async Task ChangeDescription(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetRole, async role =>
+			await NotFoundOrAction(context, RoleKey, async key =>
 			{
-				role.ChangeDescription(context.GetUser(), ReadBody(context));
-
+				System.OnRole(key, role => role.ChangeDescription(context.GetUser(), ReadBody(context)));
 				await Task.Yield();
 			});
 		}
 
 		private async Task AddPermission(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetRole, async role =>
+			await NotFoundOrAction(context, RoleKey, async roleKey =>
 			{
-				await NotFoundOrAction(context, GetPermission, async permission =>
+				await NotFoundOrAction(context, PermissionKey, async permissionKey =>
 				{
-					role.AddPermission(context.GetUser(), permission);
+					System.OnRole(roleKey, role =>
+					{
+						role.AddPermission(context.GetUser(), System.LoadPermission(permissionKey));
+					});
 
 					await Task.Yield();
 				});
@@ -79,11 +84,14 @@ namespace Magistrate.Api
 
 		private async Task RemovePermission(IOwinContext context)
 		{
-			await NotFoundOrAction(context, GetRole, async role =>
+			await NotFoundOrAction(context, RoleKey, async roleKey =>
 			{
-				await NotFoundOrAction(context, GetPermission, async permission =>
+				await NotFoundOrAction(context, PermissionKey, async permissionKey =>
 				{
-					role.RemovePermission(context.GetUser(), permission);
+					System.OnRole(roleKey, role =>
+					{
+						role.RemovePermission(context.GetUser(), System.LoadPermission(permissionKey));
+					});
 
 					await Task.Yield();
 				});

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
-using Magistrate.Domain;
+using Magistrate.Domain.Services;
 using Microsoft.Owin;
 using Owin.Routing;
 
@@ -10,9 +10,9 @@ namespace Magistrate.Api
 {
 	public class Controller
 	{
-		public MagistrateSystem System { get; }
+		protected SystemFacade System { get; }
 
-		public Controller(MagistrateSystem system)
+		protected Controller(SystemFacade system)
 		{
 			System = system;
 		}
@@ -35,23 +35,19 @@ namespace Magistrate.Api
 			}
 		}
 
-		protected Permission GetPermission(IOwinContext context)
+		protected string PermissionKey(IOwinContext context)
 		{
-			var key = context.GetRouteValue<string>("permission-key");
-			return System.Permissions.ByKey(key);
+			return context.GetRouteValue<string>("permission-key");
 		}
 
-		protected Role GetRole(IOwinContext context)
+		protected string RoleKey(IOwinContext context)
 		{
-			var key = context.GetRouteValue<string>("role-key");
-			return System.Roles.ByKey(key);
+			return context.GetRouteValue<string>("role-key");
 		}
 
-		protected User GetUser(IOwinContext context)
+		protected string UserKey(IOwinContext context)
 		{
-			var key = context.GetRouteValue<string>("user-key");
-			return System.Users.ByKey(key);
+			return context.GetRouteValue<string>("user-key");
 		}
-
 	}
 }

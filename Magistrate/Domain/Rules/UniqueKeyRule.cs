@@ -5,7 +5,7 @@ using Ledger;
 
 namespace Magistrate.Domain.Rules
 {
-	public class UniqueKeyRule<T> : IRule<T> where T : AggregateRoot<Guid>, IKeyed
+	public class UniqueKeyRule<T> : IRule<T> where T : IKeyed, IIdentity
 	{
 		private readonly IEnumerable<T> _allItems;
 
