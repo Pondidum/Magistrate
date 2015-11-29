@@ -29,7 +29,7 @@ var PermissionOverview = React.createClass({
 
   },
 
-  filterChanged(value) {
+  onFilterChanged(value) {
     this.setState({
       filter: value
     });
@@ -85,11 +85,9 @@ var PermissionOverview = React.createClass({
         <OverviewActionBar filterChanged={this.filterChanged}>
           <li><CreatePermissionDialog onPermissionCreated={this.onPermissionCreated} /></li>
         </OverviewActionBar>
-        <div className="row">
-          <ul className="list-unstyled list-inline">
-            {permissions}
-          </ul>
-        </div>
+        <ContentArea filterChanged={this.onFilterChanged}>
+          {permissions}
+        </ContentArea>
       </div>
     );
 

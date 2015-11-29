@@ -29,7 +29,7 @@ var RoleOverview = React.createClass({
 
   },
 
-  filterChanged(value) {
+  onFilterChanged(value) {
     this.setState({
       filter: value
     });
@@ -62,9 +62,9 @@ var RoleOverview = React.createClass({
         <OverviewActionBar filterChanged={this.filterChanged}>
           <li><CreateRoleDialog onRoleCreated={this.onRoleCreated} /></li>
         </OverviewActionBar>
-        <div className="row">
-            {roles}
-        </div>
+        <ContentArea filterChanged={this.onFilterChanged}>
+          {roles}
+        </ContentArea>
       </div>
     );
 

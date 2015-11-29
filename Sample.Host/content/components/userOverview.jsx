@@ -88,12 +88,9 @@ var UserOverview = React.createClass({
           <li><AddPermissionsDialog noSelection={noSelection} /></li>
           <li><AddRolesDialog noSelection={noSelection} /></li>
         </OverviewActionBar>
-        <div className="col-sm-9">
-          <FilterBar filterChanged={this.onFilterChanged} />
-          <div className="row">
-            {users}
-          </div>
-        </div>
+        <ContentArea filterChanged={this.onFilterChanged}>
+          {users}
+        </ContentArea>
       </div>
     );
   }
