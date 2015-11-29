@@ -88,7 +88,7 @@ var CreateUserDialog = React.createClass({
       : "Unique identifier for the User";
 
     return (
-      <a href="#" className="btn btn-primary" onClick={this.showDialog}>
+      <a href="#" className="btn btn-raised btn-primary" onClick={this.showDialog}>
         Create User
         <Dialog title="Create User" onSubmit={this.onSubmit} acceptText="Create" ref="dialog">
           <Input

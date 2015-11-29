@@ -71,7 +71,7 @@ var App = React.createClass({
     return (
       <div className="row">
         <MainMenu navigate={this.navigate} selected={selected} />
-        <div className="col-md-9">
+        <div className="">
           {content}
         </div>
       </div>
