@@ -11,6 +11,11 @@ nav ul li.active {
   background-color: #00776C;
 }
 
+table.table div.checkbox {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .role-pill > a {
   border-width: 1px;
   border-style: solid;
