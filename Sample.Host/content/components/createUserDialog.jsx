@@ -27,8 +27,8 @@ var CreateUserDialog = React.createClass({
       success: function(data) {
         dialog.asyncStop();
 
-        if (data.success) {
-          this.props.onUserCreated(data.user);
+        if (data) {
+          this.props.onUserCreated(data);
           dialog.close();
         } else {
           this.setState({ keyTaken: true });
