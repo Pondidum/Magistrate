@@ -30,7 +30,7 @@ var UserOverview = React.createClass({
 
   },
 
-  filterChanged(value) {
+  onFilterChanged(value) {
     this.setState({
       filter: value
     });
@@ -89,9 +89,7 @@ var UserOverview = React.createClass({
           <li><AddRolesDialog noSelection={noSelection} /></li>
         </OverviewActionBar>
         <div className="col-sm-9">
-          <div className="row">
-            <FilterBar className="pull-right col-sm-5" filterChanged={this.props.filterChanged} />
-          </div>
+          <FilterBar filterChanged={this.onFilterChanged} />
           <div className="row">
             {users}
           </div>
