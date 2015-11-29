@@ -7,7 +7,7 @@ var FilterBar = React.createClass({
   render() {
 
     return (
-      <div className="row">
+      <div className="row filter-bar">
         <div className="col-sm-12">
           <input type="text" className="form-control" placeholder="filter..." onChange={this.onChange} ref="filter" />
         </div>

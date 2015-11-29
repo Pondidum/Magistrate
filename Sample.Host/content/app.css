@@ -32,3 +32,9 @@ a.permission-delete {
 a.permission-delete:hover {
   color:#a94442
 }
+
+
+.filter-bar {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
