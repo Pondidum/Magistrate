@@ -3,6 +3,10 @@
   margin-top: 5em;
 }
 
+nav ul li.active {
+  background-color: #00776C;
+}
+
 .role-pill > a {
   border-width: 1px;
   border-style: solid;
