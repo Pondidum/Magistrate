@@ -91,29 +91,29 @@ var CreateUserDialog = React.createClass({
       <a href="#" className="btn btn-raised btn-primary" onClick={this.showDialog}>
         Create User
         <Dialog title="Create User" onSubmit={this.onSubmit} acceptText="Create" ref="dialog">
-          <Input
-            type="text"
-            value={this.state.key}
-            placeholder="e.g. 'BD659BC8-D5CE-43BC-A581-D41C534A3BE6'"
-            label="Key"
-            help={keyHelp}
-            bsStyle={this.validateKey()}
-            hasFeedback
-            standalone
-            autoFocus
-            ref="key"
-            onChange={this.onKeyChanged} />
-          <Input
-            type="text"
-            value={this.state.name}
-            placeholder="Andy Dote"
-            label="Name"
-            help="Name of the user"
-            bsStyle={this.validateName()}
-            hasFeedback
-            standalone
-            ref="name"
-            onChange={this.onNameChanged} />
+          <form>
+            <Input
+              type="text"
+              value={this.state.key}
+              placeholder="e.g. 'BD659BC8-D5CE-43BC-A581-D41C534A3BE6'"
+              label="Key"
+              help={keyHelp}
+              bsStyle={this.validateKey()}
+              hasFeedback
+              autoFocus
+              ref="key"
+              onChange={this.onKeyChanged} />
+            <Input
+              type="text"
+              value={this.state.name}
+              placeholder="Andy Dote"
+              label="Name"
+              help="Name of the user"
+              bsStyle={this.validateName()}
+              hasFeedback
+              ref="name"
+              onChange={this.onNameChanged} />
+          </form>
         </Dialog>
       </a>
     );

@@ -99,38 +99,37 @@ var CreateRoleDialog = React.createClass({
       <a href="#" className="btn btn-primary" onClick={this.showDialog}>
         Create Role
         <Dialog title="Create Role" onSubmit={this.onSubmit} acceptText="Create" ref="dialog">
-          <Input
-            type="text"
-            value={this.state.key}
-            placeholder="e.g. 'some-role'"
-            label="Key"
-            help={keyHelp}
-            bsStyle={this.validateKey()}
-            hasFeedback
-            standalone
-            autoFocus
-            ref="key"
-            onChange={this.onKeyChanged} />
-          <Input
-            type="text"
-            value={this.state.name}
-            placeholder="Reviewer"
-            label="Name"
-            help="Name of the role"
-            bsStyle={this.validateName()}
-            hasFeedback
-            standalone
-            ref="name"
-            onChange={this.onNameChanged} />
-          <Input
-            type="textarea"
-            value={this.state.description}
-            placeholder="Includes all the permissions to do ..."
-            label="Description"
-            help="A description of the role"
-            standalone
-            ref="description"
-            onChange={this.onDescriptionChanged} />
+          <form>
+            <Input
+              type="text"
+              value={this.state.key}
+              placeholder="e.g. 'some-role'"
+              label="Key"
+              help={keyHelp}
+              bsStyle={this.validateKey()}
+              hasFeedback
+              autoFocus
+              ref="key"
+              onChange={this.onKeyChanged} />
+            <Input
+              type="text"
+              value={this.state.name}
+              placeholder="Reviewer"
+              label="Name"
+              help="Name of the role"
+              bsStyle={this.validateName()}
+              hasFeedback
+              ref="name"
+              onChange={this.onNameChanged} />
+            <Input
+              type="textarea"
+              value={this.state.description}
+              placeholder="Includes all the permissions to do ..."
+              label="Description"
+              help="A description of the role"
+              ref="description"
+              onChange={this.onDescriptionChanged} />
+          </form>
         </Dialog>
       </a>
     );

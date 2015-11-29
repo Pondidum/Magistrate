@@ -3,6 +3,10 @@
   margin-top: 5em;
 }
 
+.modal-header {
+  padding-bottom: 24px !important;
+}
+
 nav ul li.active {
   background-color: #00776C;
 }
