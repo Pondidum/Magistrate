@@ -13,8 +13,16 @@ namespace Sample.Host
 		{
 			var host = WebApp.Start("http://localhost:4444", app =>
 			{
+				Log.Logger = new LoggerConfiguration()
+					.MinimumLevel.Debug()
+					.WriteTo.ColoredConsole()
+					.CreateLogger();
+
+				app.Use(typeof(SerilogMiddleware));
+
 				//add a login provider here
 				//app.Use<WindowsAuthentication>();
+
 
 				app.UseMagistrateApi(config =>
 				{
@@ -37,13 +45,6 @@ namespace Sample.Host
 						};
 					};
 				});
-
-				Log.Logger = new LoggerConfiguration()
-					.MinimumLevel.Debug()
-					.WriteTo.ColoredConsole()
-					.CreateLogger();
-
-				app.Use(typeof(SerilogMiddleware));
 
 				var ui = new MagistrateWebInterface();
 				ui.Configure(app);
