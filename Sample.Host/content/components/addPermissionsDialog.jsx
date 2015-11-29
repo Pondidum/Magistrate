@@ -4,7 +4,8 @@ var AddPermissionsDialog = React.createClass({
 
   getInitialState() {
     return {
-      permissions: []
+      permissions: [],
+      selected: []
     };
   },
 
@@ -34,6 +35,19 @@ var AddPermissionsDialog = React.createClass({
 
   },
 
+  onSubmit() {
+
+    var refs = this.refs;
+    var dialog = refs.dialog;
+
+    dialog.asyncStart();
+
+    var selected = this.state.permissions.filter(function(perm) {
+      return refs[perm.key].checked;
+    });
+
+  },
+
   render() {
 
     var noSelection = this.props.noSelection;
@@ -44,7 +58,8 @@ var AddPermissionsDialog = React.createClass({
           <td>
             <div className="checkbox">
               <label>
-                <input type="checkbox" /><span className="checkbox-material"><span className="check"></span></span>
+                <input type="checkbox" ref={perm.key} />
+                <span className="checkbox-material"><span className="check"></span></span>
               </label>
             </div>
           </td>
@@ -57,7 +72,7 @@ var AddPermissionsDialog = React.createClass({
     return (
       <a href="#" className={"btn btn-raised btn-default" + (noSelection ? " disabled" : "")} onClick={this.showDialog}>
         Add Permission
-        <Dialog title="Select Permissions" onSubmit={() => console.log("permissionsDialog.submit") } ref="dialog">
+        <Dialog title="Select Permissions" onSubmit={this.onSubmit} ref="dialog">
           <table className="table table-hover">
             <thead>
               <tr>
