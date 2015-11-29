@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Ledger.Stores;
 using Magistrate;
 using Microsoft.Owin.Hosting;
+using Serilog;
 
 namespace Sample.Host
 {
@@ -37,8 +38,14 @@ namespace Sample.Host
 					};
 				});
 
+				Log.Logger = new LoggerConfiguration()
+					.MinimumLevel.Debug()
+					.WriteTo.ColoredConsole()
+					.CreateLogger();
+
+				app.Use(typeof(SerilogMiddleware));
+
 				var ui = new MagistrateWebInterface();
-				
 				ui.Configure(app);
 
 			});
