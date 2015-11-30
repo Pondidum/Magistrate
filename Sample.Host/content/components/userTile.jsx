@@ -55,7 +55,7 @@ var UserTile = React.createClass({
     var styleName = checked ? "panel panel-info" : "panel panel-default";
 
     return (
-      <div className="col-md-3" onClick={this.onClick}>
+      <div onClick={this.onClick}>
         <div className={styleName}>
           <div className="panel-heading">
             <h3 className="panel-title">
@@ -70,7 +70,7 @@ var UserTile = React.createClass({
               <p>Are you sure you want to delete the user <strong>{user.name}</strong>?</p>
             </Dialog>
           </div>
-          <div className="panel-body">
+          <div className="panel-body" style={{ height: "100px" }}>
             <div>Roles: {user.roles.length}</div>
             <div>Includes: {user.includes.length}</div>
             <div>Revokes: {user.revokes.length}</div>

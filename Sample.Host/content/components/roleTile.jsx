@@ -5,14 +5,14 @@ var RoleTile = React.createClass({
     var role = this.props.role;
 
     return (
-      <div className="col-md-3">
+      <div>
         <div className="panel panel-default">
           <div className="panel-heading">
             <h3 className="panel-title">
               {role.name}
             </h3>
           </div>
-          <div className="panel-body">
+          <div className="panel-body" style={{ height: "100px" }}>
             <p>{role.description}</p>
           </div>
         </div>

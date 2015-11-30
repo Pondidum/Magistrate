@@ -8,15 +8,21 @@ var ContentArea = React.createClass({
       );
     });
 
+    var children  = this.props.children.map(function(child, index) {
+      return (
+        <li key={index} className="col-md-3">{child}</li>
+      );
+    });
+
     return (
       <div>
         <div className="row">
           {actions}
           <FilterBar filterChanged={this.props.filterChanged} />
         </div>
-        <div className="row">
-          {this.props.children}
-        </div>
+        <ul className="list-unstyled list-inline">
+          {children}
+        </ul>
       </div>
     );
 

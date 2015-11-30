@@ -66,17 +66,15 @@ var PermissionOverview = React.createClass({
       })
       .map(function(permission, index) {
         return (
-          <li key={index} className="col-sm-3 ">
-            <PermissionPill key={index} permission={permission}>
-              <RemovePermission
-                permission={permission}
-                onPermissionRemoved={onPermissionRemoved}
-                url={"/api/permissions/" + permission.key}
-                action="Delete"
-                from="The System"
-              />
-            </PermissionPill>
-          </li>
+          <PermissionTile key={index} permission={permission}>
+            <RemovePermission
+              permission={permission}
+              onPermissionRemoved={onPermissionRemoved}
+              url={"/api/permissions/" + permission.key}
+              action="Delete"
+              from="The System"
+            />
+          </PermissionTile>
         );
       });
 

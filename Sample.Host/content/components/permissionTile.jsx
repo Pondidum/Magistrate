@@ -5,14 +5,14 @@ var PermissionTile = React.createClass({
     var permission = this.props.permission;
 
     return (
-      <div className="col-md-3">
+      <div>
         <div className="panel panel-default">
           <div className="panel-heading">
             <h3 className="panel-title">
               {permission.name}
             </h3>
           </div>
-          <div className="panel-body">
+          <div className="panel-body" style={{ height: "100px" }}>
             <p>{permission.description}</p>
           </div>
         </div>
