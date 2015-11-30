@@ -2,9 +2,18 @@ var ContentArea = React.createClass({
 
   render() {
 
+    var actions = this.props.actions.map(function(action, index) {
+      return (
+        <div key={index} className="col-sm-2">{action}</div>
+      );
+    });
+
     return (
-      <div className="col-sm-9">
-        <FilterBar filterChanged={this.props.filterChanged} />
+      <div>
+        <div className="row">
+          {actions}
+          <FilterBar filterChanged={this.props.filterChanged} />
+        </div>
         <div className="row">
           {this.props.children}
         </div>

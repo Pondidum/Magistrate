@@ -80,12 +80,11 @@ var PermissionOverview = React.createClass({
         );
       });
 
+    var create = (<CreatePermissionDialog onPermissionCreated={this.onPermissionCreated} />);
+
     return (
       <div>
-        <OverviewActionBar filterChanged={this.filterChanged}>
-          <li><CreatePermissionDialog onPermissionCreated={this.onPermissionCreated} /></li>
-        </OverviewActionBar>
-        <ContentArea filterChanged={this.onFilterChanged}>
+        <ContentArea filterChanged={this.onFilterChanged} actions={[create]}>
           {permissions}
         </ContentArea>
       </div>

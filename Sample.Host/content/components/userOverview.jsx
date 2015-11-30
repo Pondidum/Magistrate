@@ -81,14 +81,11 @@ var UserOverview = React.createClass({
         );
       });
 
+    var create = (<CreateUserDialog onUserCreated={this.onUserCreated} />);
+
     return (
       <div>
-        <OverviewActionBar filterChanged={this.filterChanged}>
-          <li><CreateUserDialog onUserCreated={this.onUserCreated} /></li>
-          <li><AddPermissionsDialog noSelection={noSelection} /></li>
-          <li><AddRolesDialog noSelection={noSelection} /></li>
-        </OverviewActionBar>
-        <ContentArea filterChanged={this.onFilterChanged}>
+        <ContentArea filterChanged={this.onFilterChanged} actions={[create]}>
           {users}
         </ContentArea>
       </div>

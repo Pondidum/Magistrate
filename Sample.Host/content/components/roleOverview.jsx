@@ -57,12 +57,11 @@ var RoleOverview = React.createClass({
         );
       });
 
+    var create = (<CreateRoleDialog onRoleCreated={this.onRoleCreated} />);
+
     return (
       <div>
-        <OverviewActionBar filterChanged={this.filterChanged}>
-          <li><CreateRoleDialog onRoleCreated={this.onRoleCreated} /></li>
-        </OverviewActionBar>
-        <ContentArea filterChanged={this.onFilterChanged}>
+        <ContentArea filterChanged={this.onFilterChanged} actions={[create]}>
           {roles}
         </ContentArea>
       </div>
