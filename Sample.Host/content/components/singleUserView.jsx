@@ -98,7 +98,7 @@ var SingleUserView = React.createClass({
     });
 
     return (
-      <div>
+      <div className="well">
         <h1>{user.name}<small className="pull-right">{user.key}</small></h1>
 
         <div className="page-header">
