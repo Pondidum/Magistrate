@@ -6,16 +6,6 @@ var UserTile = React.createClass({
     };
   },
 
-  onClick() {
-    var newState = !this.state.checked;
-
-    this.setState({
-      checked: newState
-    });
-
-    this.props.onChange(newState);
-  },
-
   navigateToDetails(e) {
     e.preventDefault();
     this.props.navigate("singleuser", { key: this.props.user.key});
@@ -55,7 +45,7 @@ var UserTile = React.createClass({
     var styleName = checked ? "panel panel-info" : "panel panel-default";
 
     return (
-      <div onClick={this.onClick}>
+      <div>
         <div className={styleName}>
           <div className="panel-heading">
             <h3 className="panel-title">

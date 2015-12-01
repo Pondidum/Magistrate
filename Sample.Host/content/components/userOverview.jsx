@@ -4,7 +4,6 @@ var UserOverview = React.createClass({
     return {
       filter: "",
       users: [],
-      selected: 0
     };
   },
 
@@ -56,18 +55,9 @@ var UserOverview = React.createClass({
 
   },
 
-  onUserSelection(selected) {
-    var newTotal = this.state.selected + (selected ? 1 : -1);
-
-    this.setState({
-      selected: newTotal
-    });
-  },
-
   render() {
 
     var self = this;
-    var onUserSelection = this.onUserSelection;
     var noSelection = this.state.selected <= 0;
     var filter = new RegExp(this.state.filter, "i");
 
@@ -77,7 +67,7 @@ var UserOverview = React.createClass({
       })
       .map(function(user, index) {
         return (
-          <UserTile key={index} user={user} onChange={onUserSelection} onUserRemoved={self.onUserRemoved} navigate={self.props.navigate} />
+          <UserTile key={index} user={user} onUserRemoved={self.onUserRemoved} navigate={self.props.navigate} />
         );
       });
 
