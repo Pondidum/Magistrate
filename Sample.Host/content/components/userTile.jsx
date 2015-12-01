@@ -6,7 +6,7 @@ var UserTile = React.createClass({
   },
 
   onDelete() {
-    this.props.onUserRemoved(this.props.user);
+    this.props.onRemove(this.props.user);
   },
 
   render() {

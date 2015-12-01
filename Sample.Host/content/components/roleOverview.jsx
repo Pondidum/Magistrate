@@ -57,7 +57,7 @@ var RoleOverview = React.createClass({
           <RoleTile
             key={index}
             role={role}
-            onRoleRemoved={self.onRoleRemoved}
+            onRemove={self.onRemove}
             navigate={self.props.navigate}
           />
         );

@@ -43,7 +43,7 @@ var PermissionOverview = React.createClass({
     });
   },
 
-  onPermissionRemoved(permission) {
+  onRemove(permission) {
 
     var newCollection = this.state.permissions.filter(function(p) {
       return p.key !== permission.key;
@@ -69,7 +69,7 @@ var PermissionOverview = React.createClass({
           <PermissionTile
             key={index}
             permission={permission}
-            onPermissionRemoved={self.onPermissionRemoved}
+            onRemove={self.onRemove}
             navigate={self.props.navigate}
           />
         );

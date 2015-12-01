@@ -2,7 +2,7 @@ var RemovePermission = React.createClass({
 
   propTypes: {
     permission: React.PropTypes.object.isRequired,
-    onPermissionRemoved: React.PropTypes.func.isRequired,
+    onRemove: React.PropTypes.func.isRequired,
     url: React.PropTypes.string.isRequired,
     action: React.PropTypes.string.isRequired,
     from: React.PropTypes.string.isRequired,
@@ -19,7 +19,7 @@ var RemovePermission = React.createClass({
     dialog.asyncStart();
 
     var permission = this.props.permission;
-    var onPermissionRemoved = this.props.onPermissionRemoved;
+    var onRemove = this.props.onRemove;
 
     $.ajax({
       url: this.props.url,
@@ -28,7 +28,7 @@ var RemovePermission = React.createClass({
       success: function(data) {
         dialog.asyncStop();
         dialog.close();
-        onPermissionRemoved(permission);
+        onRemove(permission);
       }.bind(this),
       error: function(xhr, status, err) {
         dialog.asyncStop();

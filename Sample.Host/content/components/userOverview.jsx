@@ -43,7 +43,7 @@ var UserOverview = React.createClass({
     });
   },
 
-  onUserRemoved(user) {
+  onRemove(user) {
 
     var newCollection = this.state.users.filter(function(u) {
       return u.key !== user.key
@@ -70,7 +70,7 @@ var UserOverview = React.createClass({
           <UserTile
             key={index}
             user={user}
-            onUserRemoved={self.onUserRemoved}
+            onRemove={self.onRemove}
             navigate={self.props.navigate}
           />
         );

@@ -5,7 +5,7 @@ var RoleTile = React.createClass({
   },
 
   onDelete() {
-    this.props.onRoleRemoved(this.props.role);
+    this.props.onRemove(this.props.role);
   },
 
   render() {

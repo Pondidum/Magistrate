@@ -5,7 +5,7 @@ var PermissionTile = React.createClass({
   },
 
   onDelete() {
-    this.props.onPermissionRemoved(this.props.permission);
+    this.props.onRemove(this.props.permission);
   },
 
   render() {

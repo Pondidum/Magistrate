@@ -71,7 +71,7 @@ var SingleUserView = React.createClass({
           <PermissionPill permission={permission}>
             <RemovePermission
               permission={permission}
-              onPermissionRemoved={self.onIncludeRemoved}
+              onRemove={self.onIncludeRemoved}
               url={"/api/users/" + user.key + "/include/" + permission.key}
               action="Remove"
               from={user.name}
@@ -87,7 +87,7 @@ var SingleUserView = React.createClass({
           <PermissionPill permission={permission}>
             <RemovePermission
               permission={permission}
-              onPermissionRemoved={self.onRevokeRemoved}
+              onRemove={self.onRevokeRemoved}
               url={"/api/users/" + user.key + "/revoke/" + permission.key}
               action="Remove"
               from={user.name}
