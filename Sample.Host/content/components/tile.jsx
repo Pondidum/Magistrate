@@ -9,7 +9,6 @@ var Tile = React.createClass({
     var dialog = this.refs.deleteDialog;
 
     dialog.asyncStart();
-
     $.ajax({
       url: this.props.deleteUrl,
       method: 'DELETE',
@@ -40,7 +39,7 @@ var Tile = React.createClass({
                 <span className="glyphicon glyphicon-remove-circle"></span>
               </a>
             </h3>
-            <Dialog title="Confirm Delete" acceptText="Delete" acceptStyle="danger" onSubmit={this.props.onDelete} size="medium" ref="deleteDialog">
+            <Dialog title="Confirm Delete" acceptText="Delete" acceptStyle="danger" onSubmit={this.onDelete} size="medium" ref="deleteDialog">
               {this.props.dialogContent}
             </Dialog>
           </div>

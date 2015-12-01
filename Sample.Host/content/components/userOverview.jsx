@@ -67,7 +67,12 @@ var UserOverview = React.createClass({
       })
       .map(function(user, index) {
         return (
-          <UserTile key={index} user={user} onUserRemoved={self.onUserRemoved} navigate={self.props.navigate} />
+          <UserTile
+            key={index}
+            user={user}
+            onUserRemoved={self.onUserRemoved}
+            navigate={self.props.navigate}
+          />
         );
       });
 

@@ -1,22 +1,30 @@
 var RoleTile = React.createClass({
 
+  navigateToDetails(e) {
+    e.preventDefault();
+  },
+
+  onDelete() {
+    this.props.onRoleRemoved(this.props.role);
+  },
+
   render() {
 
     var role = this.props.role;
 
+    var confirmation = (
+      <p>Are you sure you want to delete the role <strong>{role.name}</strong>?</p>
+    );
+
     return (
-      <div>
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">
-              {role.name}
-            </h3>
-          </div>
-          <div className="panel-body" style={{ height: "100px" }}>
-            <p>{role.description}</p>
-          </div>
-        </div>
-      </div>
+      <Tile
+        title={role.name}
+        navigateTo={this.navigateToDetails}
+        deleteUrl={"/api/roles/" + role.key}
+        onDelete={this.onDelete}
+        dialogContent={confirmation}>
+        <p>{role.description}</p>
+      </Tile>
     );
   }
 

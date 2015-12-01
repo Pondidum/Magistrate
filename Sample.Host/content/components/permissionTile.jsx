@@ -1,22 +1,30 @@
 var PermissionTile = React.createClass({
 
+  navigateToDetails(e) {
+    e.preventDefault();
+  },
+
+  onDelete() {
+    this.props.onPermissionRemoved(this.props.permission);
+  },
+
   render() {
 
     var permission = this.props.permission;
 
+    var confirmation = (
+      <p>Are you sure you want to delete the permission <strong>{permission.name}</strong>?</p>
+    );
+
     return (
-      <div>
-        <div className="panel panel-default">
-          <div className="panel-heading">
-            <h3 className="panel-title">
-              {permission.name}
-            </h3>
-          </div>
-          <div className="panel-body" style={{ height: "100px" }}>
-            <p>{permission.description}</p>
-          </div>
-        </div>
-      </div>
+      <Tile
+        title={permission.name}
+        navigateTo={this.navigateToDetails}
+        deleteUrl={"/api/permissions/" + permission.key}
+        onDelete={this.onDelete}
+        dialogContent={confirmation}>
+        <p>{permission.description}</p>
+      </Tile>
     );
   }
 

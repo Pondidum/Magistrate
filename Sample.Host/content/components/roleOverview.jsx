@@ -45,6 +45,7 @@ var RoleOverview = React.createClass({
 
   render() {
 
+    var self = this;
     var filter = new RegExp(this.state.filter, "i");
 
     var roles = this.state.roles
@@ -53,7 +54,12 @@ var RoleOverview = React.createClass({
       })
       .map(function(role, index) {
         return (
-          <RoleTile key={index} role={role} />
+          <RoleTile
+            key={index}
+            role={role}
+            onRoleRemoved={self.onRoleRemoved}
+            navigate={self.props.navigate}
+          />
         );
       });
 

@@ -57,7 +57,7 @@ var PermissionOverview = React.createClass({
 
   render() {
 
-    var onPermissionRemoved = this.onPermissionRemoved;
+    var self = this;
     var filter = new RegExp(this.state.filter, "i");
 
     var permissions = this.state.permissions
@@ -66,15 +66,12 @@ var PermissionOverview = React.createClass({
       })
       .map(function(permission, index) {
         return (
-          <PermissionTile key={index} permission={permission}>
-            <RemovePermission
-              permission={permission}
-              onPermissionRemoved={onPermissionRemoved}
-              url={"/api/permissions/" + permission.key}
-              action="Delete"
-              from="The System"
-            />
-          </PermissionTile>
+          <PermissionTile
+            key={index}
+            permission={permission}
+            onPermissionRemoved={self.onPermissionRemoved}
+            navigate={self.props.navigate}
+          />
         );
       });
 
