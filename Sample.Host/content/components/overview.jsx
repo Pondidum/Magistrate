@@ -66,22 +66,29 @@ var Overview = React.createClass({
       })
       .map(function(item, index) {
         return (
-          <self.props.tile
-            key={index}
-            content={item}
-            onRemove={self.onRemove}
-            navigate={self.props.navigate}
-          />
+          <li key={index} className="col-md-3">
+            <self.props.tile
+              content={item}
+              onRemove={self.onRemove}
+              navigate={self.props.navigate}
+            />
+          </li>
         );
       });
 
-    var create = (<self.props.create onCreate={this.onAdd} />);
-
     return (
       <div>
-        <ContentArea filterChanged={this.onFilterChanged} actions={[create]}>
-          {collection}
-        </ContentArea>
+        <div>
+          <div className="row">
+            <div className="col-sm-2">
+              <self.props.create onCreate={this.onAdd} />
+            </div>
+            <FilterBar filterChanged={this.onFilterChanged} />
+          </div>
+          <ul className="list-unstyled list-inline">
+            {collection}
+          </ul>
+        </div>
       </div>
     );
 
