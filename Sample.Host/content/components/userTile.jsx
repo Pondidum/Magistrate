@@ -1,72 +1,33 @@
 var UserTile = React.createClass({
 
-  getInitialState() {
-    return {
-      checked: false
-    };
-  },
-
   navigateToDetails(e) {
     e.preventDefault();
     this.props.navigate("singleuser", { key: this.props.user.key});
   },
 
-  deleteUser(e) {
-    e.preventDefault();
-    this.refs.deleteDialog.open();
-  },
-
-  onSubmit() {
-    var dialog = this.refs.deleteDialog;
-    var user = this.props.user;
-
-    dialog.asyncStart();
-
-    $.ajax({
-      url: "/api/users/" + user.key,
-      method: 'DELETE',
-      cache: false,
-      success: function(data) {
-        dialog.asyncStop();
-        dialog.close();
-        this.props.onUserRemoved(user);
-      }.bind(this),
-      error: function(xhr, status, err) {
-        dialog.asyncStop();
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
+  onDelete() {
+    this.props.onUserRemoved(this.props.user);
   },
 
   render() {
-    var user = this.props.user;
-    var checked = this.state.checked;
 
-    var styleName = checked ? "panel panel-info" : "panel panel-default";
+    var user = this.props.user;
+
+    var confirmation = (
+      <p>Are you sure you want to delete the user <strong>{user.name}</strong>?</p>
+    );
 
     return (
-      <div>
-        <div className={styleName}>
-          <div className="panel-heading">
-            <h3 className="panel-title">
-              <a onClick={this.navigateToDetails} href="#">
-                {user.name}
-              </a>
-              <a className="pull-right danger" onClick={this.deleteUser} href="#">
-                <span className="glyphicon glyphicon-remove-circle"></span>
-              </a>
-            </h3>
-            <Dialog title="Confirm User Delete" acceptText="Delete" acceptStyle="danger" onSubmit={this.onSubmit} size="medium" ref="deleteDialog">
-              <p>Are you sure you want to delete the user <strong>{user.name}</strong>?</p>
-            </Dialog>
-          </div>
-          <div className="panel-body" style={{ height: "100px" }}>
-            <div>Roles: {user.roles.length}</div>
-            <div>Includes: {user.includes.length}</div>
-            <div>Revokes: {user.revokes.length}</div>
-          </div>
-        </div>
-      </div>
+      <Tile
+        title={user.name}
+        navigateTo={this.navigateToDetails}
+        deleteUrl={"/api/users/" + user.key}
+        onDelete={this.onDelete}
+        dialogContent={confirmation}>
+        <div>Roles: {user.roles.length}</div>
+        <div>Includes: {user.includes.length}</div>
+        <div>Revokes: {user.revokes.length}</div>
+      </Tile>
     );
   }
-})
+});
