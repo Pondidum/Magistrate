@@ -5,12 +5,12 @@ var RoleTile = React.createClass({
   },
 
   onDelete() {
-    this.props.onRemove(this.props.role);
+    this.props.onRemove(this.props.content);
   },
 
   render() {
 
-    var role = this.props.role;
+    var role = this.props.content;
 
     var confirmation = (
       <p>Are you sure you want to delete the role <strong>{role.name}</strong>?</p>

@@ -61,7 +61,7 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				System.OnPermission(key, user => user.Deactivate(context.GetUser()));
+				System.OnUser(key, user => user.Deactivate(context.GetUser()));
 
 				await Task.Yield();
 			});

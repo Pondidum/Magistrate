@@ -5,12 +5,12 @@ var PermissionTile = React.createClass({
   },
 
   onDelete() {
-    this.props.onRemove(this.props.permission);
+    this.props.onRemove(this.props.content);
   },
 
   render() {
 
-    var permission = this.props.permission;
+    var permission = this.props.content;
 
     var confirmation = (
       <p>Are you sure you want to delete the permission <strong>{permission.name}</strong>?</p>
