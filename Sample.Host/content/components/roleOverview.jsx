@@ -35,7 +35,7 @@ var RoleOverview = React.createClass({
     });
   },
 
-  onRoleCreated(role) {
+  onCreate(role) {
     var newCollection = this.state.roles.concat([role]);
 
     this.setState({
@@ -63,7 +63,7 @@ var RoleOverview = React.createClass({
         );
       });
 
-    var create = (<CreateRoleDialog onRoleCreated={this.onRoleCreated} />);
+    var create = (<CreateRoleDialog onCreate={this.onCreate} />);
 
     return (
       <div>

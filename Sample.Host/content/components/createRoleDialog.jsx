@@ -29,7 +29,7 @@ var CreateRoleDialog = React.createClass({
         dialog.asyncStop();
 
         if (data) {
-          this.props.onRoleCreated(data);
+          this.props.onCreate(data);
           dialog.close();
         } else {
           this.setState({ keyTaken: true });

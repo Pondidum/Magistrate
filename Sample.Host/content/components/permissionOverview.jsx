@@ -35,7 +35,7 @@ var PermissionOverview = React.createClass({
     });
   },
 
-  onPermissionCreated(permission) {
+  onCreate(permission) {
     var newCollection = this.state.permissions.concat([permission]);
 
     this.setState({
@@ -75,7 +75,7 @@ var PermissionOverview = React.createClass({
         );
       });
 
-    var create = (<CreatePermissionDialog onPermissionCreated={this.onPermissionCreated} />);
+    var create = (<CreatePermissionDialog onCreate={this.onCreate} />);
 
     return (
       <div>

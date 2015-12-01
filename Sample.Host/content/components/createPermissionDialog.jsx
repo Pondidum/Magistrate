@@ -29,7 +29,7 @@ var CreatePermissionDialog = React.createClass({
         dialog.asyncStop();
 
         if (data) {
-          this.props.onPermissionCreated(data);
+          this.props.onCreate(data);
           dialog.close();
         } else {
           this.setState({ keyTaken: true });

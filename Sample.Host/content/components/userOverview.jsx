@@ -35,7 +35,7 @@ var UserOverview = React.createClass({
     });
   },
 
-  onUserCreated(user) {
+  onCreate(user) {
     var newCollection = this.state.users.concat([user]);
 
     this.setState({
@@ -76,7 +76,7 @@ var UserOverview = React.createClass({
         );
       });
 
-    var create = (<CreateUserDialog onUserCreated={this.onUserCreated} />);
+    var create = (<CreateUserDialog onCreate={this.onCreate} />);
 
     return (
       <div>
