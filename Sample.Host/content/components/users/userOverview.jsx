@@ -7,6 +7,7 @@ var UserOverview = React.createClass({
         url="/api/users/all"
         tile={UserTile}
         create={CreateUserDialog}
+        navigate={this.props.navigate}
       />
     );
 

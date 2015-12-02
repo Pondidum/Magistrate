@@ -32,7 +32,7 @@ var Tile = React.createClass({
         <div className="panel panel-default">
           <div className="panel-heading">
             <h3 className="panel-title">
-              <a onClick={this.navigateToDetails} href="#">
+              <a onClick={this.props.navigateTo} href="#">
                 {this.props.title}
               </a>
               <a className="pull-right danger" onClick={this.openDeleteDialog} href="#">
