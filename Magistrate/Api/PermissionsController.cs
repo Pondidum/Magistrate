@@ -1,7 +1,5 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Magistrate.Api.Responses;
-using Magistrate.Domain;
 using Magistrate.Domain.Services;
 using Microsoft.Owin;
 using Owin;
@@ -21,9 +19,8 @@ namespace Magistrate.Api
 			app.Route("/api/permissions/all").Get(GetAll);
 			app.Route("/api/permissions").Put(CreatePermission);
 			app.Route("/api/permissions/{permission-key}").Get(GetPermissionDetails);
+			app.Route("/api/permissions/{permission-key}").Put(UpdatePermissionDetails);
 			app.Route("/api/permissions/{permission-key}").Delete(DeletePermission);
-			app.Route("/api/permissions/{permission-key}/changeName").Put(ChangeName);
-			app.Route("/api/permissions/{permission-key}/changeDescription").Put(ChangeDescription);
 		}
 
 		private async Task GetAll(IOwinContext context)
@@ -53,33 +50,39 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, PermissionKey, async key =>
 			{
-				System.OnPermission(key, permission =>  permission.Deactivate(context.GetUser()));
+				System.OnPermission(key, permission => permission.Deactivate(context.GetUser()));
 
 				await Task.Yield();
 			});
 		}
 
-		private async Task ChangeName(IOwinContext context)
+		private async Task UpdatePermissionDetails(IOwinContext context)
 		{
 			await NotFoundOrAction(context, PermissionKey, async key =>
 			{
-				System.OnPermission(key, permission => permission.ChangeName(context.GetUser(), ReadBody(context)));
-				await Task.Yield();
-			});
-		}
+				var dto = context.ReadJson<EditPermissionDto>();
+				var user = context.GetUser();
 
-		private async Task ChangeDescription(IOwinContext context)
-		{
-			await NotFoundOrAction(context, PermissionKey, async key =>
-			{
-				System.OnPermission(key, permission => permission.ChangeDescription(context.GetUser(), ReadBody(context)));
+				System.OnPermission(key, permission =>
+				{
+					permission.ChangeName(user, dto.Name);
+					permission.ChangeDescription(user, dto.Description);
+				});
+
 				await Task.Yield();
+
 			});
 		}
 
 		private class CreatePermissionDto
 		{
 			public string Key { get; set; }
+			public string Name { get; set; }
+			public string Description { get; set; }
+		}
+
+		private class EditPermissionDto
+		{
 			public string Name { get; set; }
 			public string Description { get; set; }
 		}
