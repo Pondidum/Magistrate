@@ -11,6 +11,10 @@ var PermissionDialog = React.createClass({
     };
   },
 
+  resetValues() {
+    this.setState(this.getInitialState());
+  },
+
   getValue() {
     return this.state;
   },
@@ -44,12 +48,6 @@ var PermissionDialog = React.createClass({
     return 'success';
   },
 
-  onKeyChanged() {
-    this.setState({
-      key: this.refs.key.getValue()
-    });
-  },
-
   validateName() {
     var name = this.state.name;
 
@@ -57,18 +55,6 @@ var PermissionDialog = React.createClass({
       return 'error';
 
     return 'success';
-  },
-
-  onNameChanged() {
-    this.setState({
-      name: this.refs.name.getValue()
-    });
-  },
-
-  onDescriptionChanged() {
-    this.setState({
-      description: this.refs.description.getValue()
-    });
   },
 
   render() {
@@ -91,7 +77,7 @@ var PermissionDialog = React.createClass({
             hasFeedback
             autoFocus
             ref="key"
-            onChange={this.onKeyChanged}
+            onChange={() => { this.setState({ key: this.refs.key.getValue() }); }}
             disabled={this.props.disableKey}/>
           <Input
             type="text"
@@ -102,7 +88,7 @@ var PermissionDialog = React.createClass({
             bsStyle={this.validateName()}
             hasFeedback
             ref="name"
-            onChange={this.onNameChanged} />
+            onChange={() => { this.setState({ name: this.refs.name.getValue() }); }} />
           <Input
             type="textarea"
             value={this.state.description}
@@ -110,7 +96,7 @@ var PermissionDialog = React.createClass({
             label="Description"
             help="A description of the permission"
             ref="description"
-            onChange={this.onDescriptionChanged} />
+            onChange={() => { this.setState({ description: this.refs.description.getValue() }); }} />
         </form>
       </Dialog>
     );
