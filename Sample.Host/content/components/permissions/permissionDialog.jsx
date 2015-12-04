@@ -89,7 +89,8 @@ var PermissionDialog = React.createClass({
               hasFeedback
               autoFocus
               ref="key"
-              onChange={this.onKeyChanged} />
+              onChange={this.onKeyChanged}
+              disabled={this.props.disableKey}/>
             <Input
               type="text"
               value={this.state.name}

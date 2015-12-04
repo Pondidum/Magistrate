@@ -35,7 +35,7 @@ var EditPermissionDialog = React.createClass({
 
   render() {
     return (
-      <PermissionDialog onSubmit={this.onSubmit} ref="dialog" />
+      <PermissionDialog onSubmit={this.onSubmit} ref="dialog" disableKey />
     );
   }
 });
