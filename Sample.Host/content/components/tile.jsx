@@ -27,6 +27,13 @@ var Tile = React.createClass({
 
   render() {
 
+    var title;
+
+    if (this.props.navigateTo)
+      title = (<a onClick={this.props.navigateTo} href="#">{this.props.title}</a>);
+    else
+      title = (<span>{this.props.title}</span>);
+
     var deleteControl;
 
     if (this.props.deleteUrl) {
@@ -55,9 +62,7 @@ var Tile = React.createClass({
       <div className="panel panel-default">
         <div className="panel-heading">
           <h3 className="panel-title">
-            <a onClick={this.props.navigateTo} href="#">
-              {this.props.title}
-            </a>
+            {title}
             <ul className="tile-actions pull-right list-unstyled list-inline">
               {editControl}
               {deleteControl}
