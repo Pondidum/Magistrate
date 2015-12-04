@@ -42,7 +42,7 @@ var CreatePermissionDialog = React.createClass({
     return (
       <a className="btn btn-primary" onClick={() => { this.refs.dialog.open(); }}>
         Create Permission
-        <PermissionDialog onSubmit={this.onSubmit} ref="dialog" />
+        <PermissionDialog onSubmit={this.onSubmit} ref="dialog" acceptText="Create" />
       </a>
     )
   }

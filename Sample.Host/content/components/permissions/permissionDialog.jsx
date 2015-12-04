@@ -73,12 +73,13 @@ var PermissionDialog = React.createClass({
 
   render() {
 
+    var acceptText = this.props.acceptText;
     var keyHelp = this.state.keyTaken
       ? "This key is already in use"
       : "Unique identifier for the Permission";
 
     return (
-      <Dialog title="Create Permission" onSubmit={this.props.onSubmit} acceptText="Create" ref="dialog">
+      <Dialog title={acceptText + " Permission"} onSubmit={this.props.onSubmit} acceptText={acceptText} ref="dialog">
         <form>
           <Input
             type="text"
