@@ -1,5 +1,12 @@
 var EditPermissionDialog = React.createClass({
 
+  open(permission) {
+    var dialog = this.refs.dialog;
+
+    dialog.setValue(permission);
+    dialog.open();
+  },
+
   onSubmit() {
 
     var dialog = this.refs.dialog;
@@ -17,12 +24,11 @@ var EditPermissionDialog = React.createClass({
     $.ajax({
       url: url,
       method: "PUT",
-      dataType: 'json',
       data: json,
       cache: false,
-      success: function(data) {
+      success: function() {
         dialog.asyncStop();
-        this.props.onEdit(data);
+        this.props.onEdit(values);
         dialog.close();
       }.bind(this),
       error: function(xhr, status, err) {

@@ -1,7 +1,24 @@
 var PermissionTile = React.createClass({
 
+  getInitialState() {
+    return {
+      permission: null
+    };
+  },
+
+  getPermission() {
+    return this.state.permission || this.props.content;
+  },
+
   navigateToDetails(e) {
     e.preventDefault();
+    this.refs.editDialog.open(this.getPermission());
+  },
+
+  onEdit(permission) {
+    this.setState({
+      permission: permission
+    });
   },
 
   onDelete() {
@@ -10,7 +27,7 @@ var PermissionTile = React.createClass({
 
   render() {
 
-    var permission = this.props.content;
+    var permission = this.getPermission();
 
     var confirmation = (
       <p>Are you sure you want to delete the permission <strong>{permission.name}</strong>?</p>
@@ -24,6 +41,7 @@ var PermissionTile = React.createClass({
         onDelete={this.onDelete}
         dialogContent={confirmation}>
         <p>{permission.description}</p>
+        <EditPermissionDialog onEdit={this.onEdit} ref="editDialog" />
       </Tile>
     );
   }

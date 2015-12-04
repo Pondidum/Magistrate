@@ -15,8 +15,11 @@ var PermissionDialog = React.createClass({
     return this.state;
   },
 
-  showDialog(e) {
-    e.preventDefault();
+  setValue(value) {
+    this.setState(value);
+  },
+
+  open() {
     this.refs.dialog.open();
   },
 
@@ -75,43 +78,40 @@ var PermissionDialog = React.createClass({
       : "Unique identifier for the Permission";
 
     return (
-      <a href="#" className="btn btn-primary" onClick={this.showDialog}>
-        Create Permission
-        <Dialog title="Create Permission" onSubmit={this.props.onSubmit} acceptText="Create" ref="dialog">
-          <form>
-            <Input
-              type="text"
-              value={this.state.key}
-              placeholder="e.g. 'some-permission'"
-              label="Key"
-              help={keyHelp}
-              bsStyle={this.validateKey()}
-              hasFeedback
-              autoFocus
-              ref="key"
-              onChange={this.onKeyChanged}
-              disabled={this.props.disableKey}/>
-            <Input
-              type="text"
-              value={this.state.name}
-              placeholder="Some Permission"
-              label="Name"
-              help="Name of the permission"
-              bsStyle={this.validateName()}
-              hasFeedback
-              ref="name"
-              onChange={this.onNameChanged} />
-            <Input
-              type="textarea"
-              value={this.state.description}
-              placeholder="Allows users to ..."
-              label="Description"
-              help="A description of the permission"
-              ref="description"
-              onChange={this.onDescriptionChanged} />
-          </form>
-        </Dialog>
-      </a>
+      <Dialog title="Create Permission" onSubmit={this.props.onSubmit} acceptText="Create" ref="dialog">
+        <form>
+          <Input
+            type="text"
+            value={this.state.key}
+            placeholder="e.g. 'some-permission'"
+            label="Key"
+            help={keyHelp}
+            bsStyle={this.validateKey()}
+            hasFeedback
+            autoFocus
+            ref="key"
+            onChange={this.onKeyChanged}
+            disabled={this.props.disableKey}/>
+          <Input
+            type="text"
+            value={this.state.name}
+            placeholder="Some Permission"
+            label="Name"
+            help="Name of the permission"
+            bsStyle={this.validateName()}
+            hasFeedback
+            ref="name"
+            onChange={this.onNameChanged} />
+          <Input
+            type="textarea"
+            value={this.state.description}
+            placeholder="Allows users to ..."
+            label="Description"
+            help="A description of the permission"
+            ref="description"
+            onChange={this.onDescriptionChanged} />
+        </form>
+      </Dialog>
     );
   }
 });
