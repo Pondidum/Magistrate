@@ -10,15 +10,16 @@ var PermissionTile = React.createClass({
     return this.state.permission || this.props.content;
   },
 
-  navigateToDetails(e) {
+  editPermissionAction(e) {
     e.preventDefault();
-    this.refs.editDialog.open(this.getPermission());
-  },
 
-  onEdit(permission) {
-    this.setState({
-      permission: permission
-    });
+    var self = this;
+
+    this.refs.editDialog.open(
+      this.getPermission(),
+      (p) => { self.setState({ permission: p }); }
+    );
+
   },
 
   onDelete() {
@@ -36,12 +37,12 @@ var PermissionTile = React.createClass({
     return (
       <Tile
         title={permission.name}
-        navigateTo={this.navigateToDetails}
         deleteUrl={"/api/permissions/" + permission.key}
         onDelete={this.onDelete}
+        editAction={this.editPermissionAction}
         dialogContent={confirmation}>
         <p>{permission.description}</p>
-        <EditPermissionDialog onEdit={this.onEdit} ref="editDialog" />
+        <EditPermissionDialog ref="editDialog" />
       </Tile>
     );
   }

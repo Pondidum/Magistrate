@@ -1,8 +1,10 @@
 var EditPermissionDialog = React.createClass({
 
-  open(permission) {
-    var dialog = this.refs.dialog;
+  open(permission, callback) {
 
+    this.callback = callback;
+
+    var dialog = this.refs.dialog;
     dialog.setValue(permission);
     dialog.open();
   },
@@ -28,7 +30,7 @@ var EditPermissionDialog = React.createClass({
       cache: false,
       success: function() {
         dialog.asyncStop();
-        this.props.onEdit(values);
+        this.callback(values);
         dialog.close();
       }.bind(this),
       error: function(xhr, status, err) {
