@@ -9,6 +9,8 @@ namespace Magistrate.Domain.Services
 {
 	public class SystemFacade
 	{
+		private const string MagistrateStream = "Magistrate";
+
 		private readonly MagistrateSystem _system;
 
 		public IEnumerable<UserReadModel> Users => _projections.Users;
@@ -36,8 +38,8 @@ namespace Magistrate.Domain.Services
 
 			_system.AddUser(currentUser, user);
 
-			_store.Save(user);
-			_store.Save(_system);
+			_store.Save(MagistrateStream, user);
+			_store.Save(MagistrateStream, _system);
 
 			return Users.First(u => u.ID == user.ID);
 		}
@@ -51,8 +53,8 @@ namespace Magistrate.Domain.Services
 
 			_system.AddRole(currentUser, role);
 
-			_store.Save(role);
-			_store.Save(_system);
+			_store.Save(MagistrateStream, role);
+			_store.Save(MagistrateStream, _system);
 
 			return Roles.First(r => r.ID == role.ID);
 		}
@@ -66,8 +68,8 @@ namespace Magistrate.Domain.Services
 
 			_system.AddPermission(currentUser, permission);
 
-			_store.Save(permission);
-			_store.Save(_system);
+			_store.Save(MagistrateStream, permission);
+			_store.Save(MagistrateStream, _system);
 
 			return Permissions.First(p => p.ID == permission.ID);
 		}
@@ -78,7 +80,7 @@ namespace Magistrate.Domain.Services
 
 			action(permission);
 
-			_store.Save(permission);
+			_store.Save(MagistrateStream, permission);
 		}
 
 		public void OnRole(string key, Action<Role> action)
@@ -87,7 +89,7 @@ namespace Magistrate.Domain.Services
 
 			action(role);
 
-			_store.Save(role);
+			_store.Save(MagistrateStream, role);
 		}
 
 		public void OnUser(string key, Action<User> action)
@@ -96,25 +98,25 @@ namespace Magistrate.Domain.Services
 
 			action(user);
 
-			_store.Save(user);
+			_store.Save(MagistrateStream, user);
 		}
 
 		public Permission LoadPermission(string key)
 		{
 			var model = Permissions.First(p => p.Key == key);
-			return _store.Load(model.ID, Permission.Blank);
+			return _store.Load(MagistrateStream, model.ID, Permission.Blank);
 		}
 
 		public Role LoadRole(string key)
 		{
 			var model = Roles.First(r => r.Key == key);
-			return _store.Load(model.ID, Role.Blank);
+			return _store.Load(MagistrateStream, model.ID, Role.Blank);
 		}
 
 		public User LoadUser(string key)
 		{
 			var model = Users.First(r => r.Key == key);
-			return _store.Load(model.ID, User.Blank);
+			return _store.Load(MagistrateStream, model.ID, User.Blank);
 		}
 
 		private void CheckRules<T>(IEnumerable<T> collection, T target) where T : IKeyed, IIdentity
