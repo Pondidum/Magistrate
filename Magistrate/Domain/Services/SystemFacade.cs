@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Ledger;
+using Magistrate.Domain.Events.PermissionEvents;
+using Magistrate.Domain.Events.RoleEvents;
+using Magistrate.Domain.Events.UserEvents;
 using Magistrate.Domain.ReadModels;
 using Magistrate.Domain.Rules;
 
@@ -10,8 +13,6 @@ namespace Magistrate.Domain.Services
 	public class SystemFacade
 	{
 		private const string MagistrateStream = "Magistrate";
-
-		private readonly MagistrateSystem _system;
 
 		public IEnumerable<UserReadModel> Users => _projections.Users;
 		public IEnumerable<RoleReadModel> Roles => _projections.Roles;
@@ -26,7 +27,22 @@ namespace Magistrate.Domain.Services
 			var wrapped = new ProjectionEventStore(eventStore, _projections.Project);
 
 			_store = new AggregateStore<Guid>(wrapped);
-			_system = new MagistrateSystem();
+		}
+
+		public void Load()
+		{
+			var aggregates = _store.LoadAll(MagistrateStream, on =>
+			{
+				on.Event<PermissionCreatedEvent>(Permission.Blank);
+				on.Event<RoleCreatedEvent>(Role.Blank);
+				on.Event<UserCreatedEvent>(User.Blank);
+			}).ToList();
+
+			var permissions = aggregates.OfType<Permission>();
+			var roles = aggregates.OfType<Role>();
+			var users = aggregates.OfType<User>();
+			
+			_projections.Rebuild(permissions, roles, users);
 		}
 
 		public UserReadModel CreateUser(MagistrateUser currentUser, string key, string name)
@@ -36,10 +52,7 @@ namespace Magistrate.Domain.Services
 
 			CheckRules(Users, model);
 
-			_system.AddUser(currentUser, user);
-
 			_store.Save(MagistrateStream, user);
-			_store.Save(MagistrateStream, _system);
 
 			return Users.First(u => u.ID == user.ID);
 		}
@@ -51,10 +64,7 @@ namespace Magistrate.Domain.Services
 
 			CheckRules(Roles, model);
 
-			_system.AddRole(currentUser, role);
-
 			_store.Save(MagistrateStream, role);
-			_store.Save(MagistrateStream, _system);
 
 			return Roles.First(r => r.ID == role.ID);
 		}
@@ -66,10 +76,7 @@ namespace Magistrate.Domain.Services
 
 			CheckRules(Permissions, model);
 
-			_system.AddPermission(currentUser, permission);
-
 			_store.Save(MagistrateStream, permission);
-			_store.Save(MagistrateStream, _system);
 
 			return Permissions.First(p => p.ID == permission.ID);
 		}

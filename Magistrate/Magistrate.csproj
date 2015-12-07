@@ -99,7 +99,7 @@
     <Compile Include="Domain\Events\UserEvents\UserCreatedEvent.cs" />
     <Compile Include="Domain\Events\UserLoggedEvent.cs" />
     <Compile Include="Domain\IKeyed.cs" />
-    <Compile Include="Domain\MagistrateSystem.cs" />
+    <Compile Include="Domain\ReadModels\Extensions.cs" />
     <Compile Include="Domain\ReadModels\PermissionReadModel.cs" />
     <Compile Include="Domain\ReadModels\RoleReadModel.cs" />
     <Compile Include="Domain\ReadModels\UserReadModel.cs" />

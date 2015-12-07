@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Ledger;
 using Ledger.Infrastructure;
 using Magistrate.Domain.Events.PermissionEvents;
@@ -36,6 +37,13 @@ namespace Magistrate.Domain.Services
 		public void Project(IDomainEvent<Guid> @event)
 		{
 			_projector.Project(@event);
+		}
+
+		public void Rebuild(IEnumerable<Permission> permissions, IEnumerable<Role> roles, IEnumerable<User> users)
+		{
+			permissions.Select(PermissionReadModel.From).ForEach(p => _permissions[p.ID] = p);
+			roles.Select(r => RoleReadModel.From(r, _permissions)).ForEach(r => _roles[r.ID] = r);
+			users.Select(u => UserReadModel.From(u, _roles, _permissions)).ForEach(u => _users[u.ID] = u);
 		}
 
 		private void RegisterProjections(Projector projector)

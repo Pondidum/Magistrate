@@ -33,5 +33,21 @@ namespace Magistrate.Domain.ReadModels
 				IsActive = true
 			};
 		}
+
+		public static UserReadModel From(User u, Dictionary<Guid, RoleReadModel> roles, Dictionary<Guid, PermissionReadModel> permissions)
+		{
+			var model = new UserReadModel
+			{
+				ID = u.ID,
+				Key = u.Key,
+				Name = u.Name,
+				IsActive = true,
+				Includes = u.Includes.Select(id => permissions[id]).ToHashSet(),
+				Revokes = u.Revokes.Select(id => permissions[id]).ToHashSet(),
+				Roles = u.Roles.Select(id => roles[id]).ToHashSet()
+			};
+
+			return model;
+		}
 	}
 }

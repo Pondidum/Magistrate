@@ -24,6 +24,8 @@ namespace Magistrate.Api
 			_users = new UsersController(_system);
 
 			ConfigureAutoMapper();
+
+			_system.Load();
 		}
 
 		private void ConfigureAutoMapper()

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Security.Claims;
 using Ledger.Stores;
+using Ledger.Stores.Fs;
 using Magistrate;
 using Microsoft.Owin.Hosting;
 using Serilog;
@@ -23,10 +25,11 @@ namespace Sample.Host
 				//add a login provider here
 				//app.Use<WindowsAuthentication>();
 
+				Directory.CreateDirectory("store");
 
 				app.UseMagistrateApi(config =>
 				{
-					config.EventStore = new InMemoryEventStore();
+					config.EventStore = new FileEventStore("store");
 					config.User = () =>
 					{
 						//e.g. take user from ClaimsPrincipal:
