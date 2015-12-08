@@ -50,7 +50,9 @@ var InlineEditor = React.createClass({
         defaultValue={this.state.value}
         onKeyDown={this.onKeyDown}
         onBlur={this.cancelEdit}
-        ref="editor" />
+        onFocus={ (e) => { e.target.select(); } }
+        ref="editor"
+        autoFocus />
     )
   }
 
