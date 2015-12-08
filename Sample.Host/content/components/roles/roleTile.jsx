@@ -6,6 +6,11 @@ var RoleTile = React.createClass({
     };
   },
 
+  navigateToDetails(e) {
+    e.preventDefault();
+    this.props.navigate("singlerole", { key: this.props.content.key});
+  },
+
   getRole() {
     return this.state.role || this.props.content;
   },
@@ -37,9 +42,9 @@ var RoleTile = React.createClass({
     return (
       <Tile
         title={role.name}
+        navigateTo={this.navigateToDetails}
         deleteUrl={"/api/roles/" + role.key}
         onDelete={this.onDelete}
-        editAction={this.editRoleAction}
         dialogContent={confirmation}>
         <p>{role.description}</p>
         <EditRoleDialog ref="editDialog" />

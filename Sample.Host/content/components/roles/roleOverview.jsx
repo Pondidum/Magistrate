@@ -7,6 +7,7 @@ var RoleOverview = React.createClass({
         url="/api/roles/all"
         tile={RoleTile}
         create={CreateRoleDialog}
+        navigate={this.props.navigate}
       />
     );
 

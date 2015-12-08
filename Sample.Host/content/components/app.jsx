@@ -4,6 +4,7 @@ var App = React.createClass({
     users: 'GET /users',
     singleuser: 'GET /users/:key',
     roles: 'GET /roles',
+    singlerole: 'GET /roles/:key',
     permissions: 'GET /permissions'
   }),
 
@@ -45,6 +46,14 @@ var App = React.createClass({
 
         content = (<SingleUserView id={key} key={key} />);
         selected = 'users';
+
+        break;
+
+      case 'singlerole':
+        var key = this.state.location.options.key;
+
+        content = (<SingleRoleView id={key} key={key} />);
+        selected = 'roles';
 
         break;
 
