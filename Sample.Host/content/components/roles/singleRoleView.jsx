@@ -44,6 +44,33 @@ var SingleRoleView = React.createClass({
 
   },
 
+  onNameChanged(newName) {
+
+    var url = "/api/roles/" + this.props.id + "/name";
+    var json = JSON.stringify({
+      name: newName
+    });
+
+    $.ajax({
+      url: url,
+      cache: false,
+      method: "PUT",
+      data: json,
+      success: function() {
+
+        var role = this.state.role;
+        role.name = newName;
+
+        this.setState({ role: role });
+
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(url, status, err.toString());
+      }
+    });
+
+  },
+
   render() {
 
     var role = this.state.role;
@@ -70,7 +97,9 @@ var SingleRoleView = React.createClass({
 
     return (
       <div className="well">
-        <h1>{role.name}<small className="pull-right">{role.key}</small></h1>
+
+        <h1><InlineEditor initialValue={role.name} onChange={this.onNameChanged} /></h1>
+        <div>{role.description}</div>
 
         <div className="page-header">
           <h4>Permissions</h4>

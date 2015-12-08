@@ -20,8 +20,9 @@ namespace Magistrate.Api
 			app.Route("/api/roles/all").Get(GetAll);
 			app.Route("/api/roles").Put(CreateRole);
 			app.Route("/api/roles/{role-key}").Get(GetRoleDetails);
-			app.Route("/api/roles/{role-key}").Put(UpdateRoleDetails);
 			app.Route("/api/roles/{role-key}").Delete(DeleteRole);
+			app.Route("/api/roles/{role-key}/name").Put(UpdateRoleName);
+			app.Route("/api/roles/{role-key}/description").Put(UpdateRoleDescription);
 			app.Route("/api/roles/{role-key}/permission/{permission-key}").Put(AddPermission);
 			app.Route("/api/roles/{role-key}/permission/{permission-key}").Delete(RemovePermission);
 		}
@@ -52,27 +53,35 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, RoleKey, async key =>
 			{
-				System.OnPermission(key, role=> role.Deactivate(context.GetUser()));
+				System.OnPermission(key, role => role.Deactivate(context.GetUser()));
 
 				await Task.Yield();
 			});
 		}
 
-		private async Task UpdateRoleDetails(IOwinContext context)
+		private async Task UpdateRoleName(IOwinContext context)
 		{
 			await NotFoundOrAction(context, RoleKey, async key =>
 			{
 				var dto = context.ReadJson<EditRoleDto>();
 				var user = context.GetUser();
 
-				System.OnRole(key, role =>
-				{
-					role.ChangeName(user, dto.Name);
-					role.ChangeDescription(user, dto.Description);
-				});
+				System.OnRole(key, role => role.ChangeName(user, dto.Name));
 
 				await Task.Yield();
+			});
+		}
 
+		private async Task UpdateRoleDescription(IOwinContext context)
+		{
+			await NotFoundOrAction(context, RoleKey, async key =>
+			{
+				var dto = context.ReadJson<EditRoleDto>();
+				var user = context.GetUser();
+
+				System.OnRole(key, role => role.ChangeDescription(user, dto.Description));
+
+				await Task.Yield();
 			});
 		}
 
