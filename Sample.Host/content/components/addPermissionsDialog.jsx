@@ -27,9 +27,6 @@ var AddPermissionsDialog = React.createClass({
         this.setState({
           permissions: data || []
         });
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(url, status, err.toString());
       }.bind(this)
     });
 

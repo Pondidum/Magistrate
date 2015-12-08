@@ -39,8 +39,7 @@ var CreateRoleDialog = React.createClass({
       }.bind(this),
       error: function(xhr, status, err) {
         dialog.asyncStop();
-        console.error("/api/roles", status, err.toString());
-      }.bind(this)
+      }
     });
 
   },

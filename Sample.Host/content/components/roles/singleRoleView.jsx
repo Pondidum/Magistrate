@@ -21,10 +21,7 @@ var SingleRoleView = React.createClass({
         this.setState({
           role: data
         });
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(url, status, err.toString());
-      }
+      }.bind(this)
     });
 
   },
@@ -63,10 +60,7 @@ var SingleRoleView = React.createClass({
 
         this.setState({ role: role });
 
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(url, status, err.toString());
-      }
+      }.bind(this)
     });
 
   },

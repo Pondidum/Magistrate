@@ -32,6 +32,11 @@ var App = React.createClass({
 
   componentDidMount() {
     window.addEventListener('hashchange', this.navigated, false);
+
+    $(document).ajaxError(function(e, xhr, settings, err) {
+      console.error(settings.url, err.toString());
+    });
+
   },
 
   render() {

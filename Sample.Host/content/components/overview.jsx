@@ -21,9 +21,6 @@ var Overview = React.createClass({
         this.setState({
           collection: data || []
         });
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
 

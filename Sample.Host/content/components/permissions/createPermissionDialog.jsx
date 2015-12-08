@@ -39,8 +39,7 @@ var CreatePermissionDialog = React.createClass({
       }.bind(this),
       error: function(xhr, status, err) {
         dialog.asyncStop();
-        console.error("/api/permissions", status, err.toString());
-      }.bind(this)
+      }
     });
 
   },

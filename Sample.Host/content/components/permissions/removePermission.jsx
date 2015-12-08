@@ -32,8 +32,7 @@ var RemovePermission = React.createClass({
       }.bind(this),
       error: function(xhr, status, err) {
         dialog.asyncStop();
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
+      }
     });
 
   },

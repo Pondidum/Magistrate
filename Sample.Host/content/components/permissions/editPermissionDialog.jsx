@@ -35,8 +35,7 @@ var EditPermissionDialog = React.createClass({
       }.bind(this),
       error: function(xhr, status, err) {
         dialog.asyncStop();
-        console.error(url, status, err.toString());
-      }.bind(this)
+      }
     });
 
   },

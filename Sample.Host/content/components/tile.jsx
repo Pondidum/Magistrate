@@ -20,8 +20,7 @@ var Tile = React.createClass({
       }.bind(this),
       error: function(xhr, status, err) {
         dialog.asyncStop();
-        console.error(this.props.deleteUrl, status, err.toString());
-      }.bind(this)
+      }
     });
   },
 
