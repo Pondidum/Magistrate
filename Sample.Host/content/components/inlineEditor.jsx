@@ -13,15 +13,21 @@ var InlineEditor = React.createClass({
     });
   },
 
-  cancelEdit() {
+  cancelEdit(e) {
+
+    if (e)
+      e.preventDefault();
+
     this.setState({
       editing: false,
       value: this.props.initialValue
     });
+
   },
 
   acceptEdit() {
-    var newValue = this.refs.editor.value;
+    var newValue = this.refs.editor.value();
+    console.log("Accept", newValue);
 
     this.setState({
       editing: false,
@@ -45,14 +51,21 @@ var InlineEditor = React.createClass({
       return (<span onClick={this.startEdit}>{this.state.value}</span>);
 
     return (
-      <input
-        type="text"
-        defaultValue={this.state.value}
-        onKeyDown={this.onKeyDown}
-        onBlur={this.cancelEdit}
-        onFocus={ (e) => { e.target.select(); } }
-        ref="editor"
-        autoFocus />
+      <div className="input-group col-xs-12 col-sm-8">
+        <input
+          className="form-control"
+          type="text"
+          defaultValue={this.state.value}
+          onKeyDown={this.onKeyDown}
+          onFocus={ (e) => { e.target.select(); } }
+          onBlur={this.cancelEdit}
+          ref="editor"
+          autoFocus
+        />
+        <div className="input-group-addon">
+          <a href="#" onClick={this.cancelEdit}><span className="glyphicon glyphicon-remove" /></a>
+        </div>
+      </div>
     )
   }
 
