@@ -34,12 +34,14 @@ var PermissionTile = React.createClass({
       <p>Are you sure you want to delete the permission <strong>{permission.name}</strong>?</p>
     );
 
+    var editAction = this.props.showEdit ? this.editPermissionAction : null;
+
     return (
       <Tile
         title={permission.name}
-        deleteUrl={"/api/permissions/" + permission.key}
+        deleteUrl={this.props.deleteUrl}
         onDelete={this.onDelete}
-        editAction={this.editPermissionAction}
+        editAction={editAction}
         dialogContent={confirmation}>
         <p>{permission.description}</p>
         <EditPermissionDialog ref="editDialog" />

@@ -98,15 +98,12 @@ var SingleRoleView = React.createClass({
     var permissions = role.permissions.map(function(permission, index) {
       return (
         <li key={index} className="col-sm-3">
-          <PermissionPill permission={permission}>
-            <RemovePermission
-              permission={permission}
-              onRemove={self.onPermissionRemoved}
-              url={"/api/roles/" + role.key + "/permission/" + permission.key}
-              action="Remove"
-              from={role.name}
-            />
-          </PermissionPill>
+          <PermissionTile
+            content={permission}
+            onRemove={self.onPermissionRemoved}
+            deleteUrl={"/api/roles/" + role.key + "/permission/" + permission.key}
+            showEdit={false}
+          />
         </li>
       );
     });
