@@ -45,23 +45,29 @@ namespace Magistrate.Domain
 			return role;
 		}
 
-		public void ChangeName(MagistrateUser user, string name)
+		public void ChangeName(MagistrateUser user, string newName)
 		{
-			ValidateName(name);
+			ValidateName(newName);
+
+			if (Name == newName)
+				return;
 
 			ApplyEvent(new RoleNameChangedEvent
 			{
 				User = user,
-				NewName = name
+				NewName = newName
 			});
 		}
 
-		public void ChangeDescription(MagistrateUser user, string description)
+		public void ChangeDescription(MagistrateUser user, string newDescription)
 		{
+			if (Description == newDescription)
+				return;
+
 			ApplyEvent(new RoleDescriptionChangedEvent
 			{
 				User = user,
-				NewDescription = description
+				NewDescription = newDescription
 			});
 		}
 
