@@ -23,14 +23,14 @@ namespace Magistrate.Api
 			app.Route("/api/users/{user-key}").Get(GetUserDetails);
 			app.Route("/api/users/{user-key}").Delete(DeleteUser);
 
-			app.Route("/api/users/{user-key}/include/{permission-key}").Put(AddInclude);
-			app.Route("/api/users/{user-key}/include/{permission-key}").Delete(RemoveInclude);
+			app.Route("/api/users/{user-key}/includes/{permission-key}").Put(AddInclude);
+			app.Route("/api/users/{user-key}/includes/{permission-key}").Delete(RemoveInclude);
 
-			app.Route("/api/users/{user-key}/revoke/{permission-key}").Put(AddRevoke);
-			app.Route("/api/users/{user-key}/revoke/{permission-key}").Delete(RemoveRevoke);
+			app.Route("/api/users/{user-key}/revokes/{permission-key}").Put(AddRevoke);
+			app.Route("/api/users/{user-key}/revokes/{permission-key}").Delete(RemoveRevoke);
 
-			app.Route("/api/users/{user-key}/role/{role-key}").Put(AddRole);
-			app.Route("/api/users/{user-key}/role/{role-key}").Delete(RemoveRole);
+			app.Route("/api/users/{user-key}/roles/{role-key}").Put(AddRole);
+			app.Route("/api/users/{user-key}/roles/{role-key}").Delete(RemoveRole);
 			
 			//app.Route("/api/users/{user-key}/can/{permission-key}").Get(CheckPermission);
 		}

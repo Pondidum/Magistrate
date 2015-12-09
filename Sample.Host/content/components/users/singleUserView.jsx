@@ -65,15 +65,12 @@ var SingleUserView = React.createClass({
     var includes = user.includes.map(function(permission, index) {
       return (
         <li key={index} className="col-sm-3 ">
-          <PermissionPill permission={permission}>
-            <RemovePermission
-              permission={permission}
-              onRemove={self.onIncludeRemoved}
-              url={"/api/users/" + user.key + "/include/" + permission.key}
-              action="Remove"
-              from={user.name}
-            />
-          </PermissionPill>
+          <PermissionTile
+            content={permission}
+            onRemove={self.onIncludeRemoved}
+            deleteUrl={"/api/users/" + user.key + "/includes/" + permission.key}
+            showEdit={false}
+          />
         </li>
       );
     });
@@ -81,15 +78,12 @@ var SingleUserView = React.createClass({
     var revokes = user.revokes.map(function(permission, index) {
       return (
         <li key={index} className="col-sm-3 ">
-          <PermissionPill permission={permission}>
-            <RemovePermission
-              permission={permission}
-              onRemove={self.onRevokeRemoved}
-              url={"/api/users/" + user.key + "/revoke/" + permission.key}
-              action="Remove"
-              from={user.name}
-            />
-          </PermissionPill>
+          <PermissionTile
+            content={permission}
+            onRemove={self.onRevokeRemoved}
+            deleteUrl={"/api/users/" + user.key + "/revokes/" + permission.key}
+            showEdit={false}
+          />
         </li>
       );
     });
