@@ -28,7 +28,7 @@ var PermissionTile = React.createClass({
     var permission = this.getPermission();
 
     $.ajax({
-      url: this.props.deleteUrl,
+      url: this.props.url,
       method: 'DELETE',
       cache: false,
       data: JSON.stringify([ permission.key ]),

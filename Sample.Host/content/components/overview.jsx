@@ -14,7 +14,7 @@ var Overview = React.createClass({
   loadCollection() {
 
     $.ajax({
-      url: this.props.url,
+      url: this.props.url + "/all",
       dataType: 'json',
       cache: false,
       success: function(data) {
@@ -68,7 +68,7 @@ var Overview = React.createClass({
               content={item}
               onRemove={self.onRemove}
               navigate={self.props.navigate}
-              deleteUrl={self.props.deleteUrl}
+              url={self.props.url}
               showEdit={true}
             />
           </li>

@@ -11,7 +11,7 @@ var UserTile = React.createClass({
     var user = this.props.content;
 
     $.ajax({
-      url: this.props.deleteUrl,
+      url: this.props.url,
       method: 'DELETE',
       cache: false,
       data: JSON.stringify([ user.key ]),

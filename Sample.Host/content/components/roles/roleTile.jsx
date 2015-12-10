@@ -33,7 +33,7 @@ var RoleTile = React.createClass({
     var role = this.getRole();
 
     $.ajax({
-      url: this.props.deleteUrl,
+      url: this.props.url,
       method: 'DELETE',
       cache: false,
       data: JSON.stringify([ role.key ]),

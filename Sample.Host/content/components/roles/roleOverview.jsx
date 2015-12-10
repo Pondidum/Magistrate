@@ -4,8 +4,7 @@ var RoleOverview = React.createClass({
 
     return (
       <Overview
-        url="/api/roles/all"
-        deleteUrl="/api/roles"
+        url="/api/roles"
         tile={RoleTile}
         create={CreateRoleDialog}
         navigate={this.props.navigate}
