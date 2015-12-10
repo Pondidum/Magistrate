@@ -50,11 +50,13 @@ var PermissionGrid = React.createClass({
       );
     });
 
+    var name = this.props.name || "Permissions"
+
     return (
       <div>
 
         <div className="page-header">
-          <a href="#" onClick={this.showPermissionsDialog}>Change Permissions...</a>
+          <a href="#" onClick={this.showPermissionsDialog}>Change {name}...</a>
 
           <PermissionSelector
             initialValue={this.state.permissions}
