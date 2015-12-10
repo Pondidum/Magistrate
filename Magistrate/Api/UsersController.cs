@@ -23,14 +23,14 @@ namespace Magistrate.Api
 
 			app.Route("/api/users/{user-key}").Get(GetUserDetails);
 
-			app.Route("/api/users/{user-key}/includes/{permission-key}").Put(AddInclude);
-			app.Route("/api/users/{user-key}/includes/{permission-key}").Delete(RemoveInclude);
+			app.Route("/api/users/{user-key}/includes").Put(AddInclude);
+			app.Route("/api/users/{user-key}/includes").Delete(RemoveInclude);
 
-			app.Route("/api/users/{user-key}/revokes/{permission-key}").Put(AddRevoke);
-			app.Route("/api/users/{user-key}/revokes/{permission-key}").Delete(RemoveRevoke);
+			app.Route("/api/users/{user-key}/revokes").Put(AddRevoke);
+			app.Route("/api/users/{user-key}/revokes").Delete(RemoveRevoke);
 
-			app.Route("/api/users/{user-key}/roles/{role-key}").Put(AddRole);
-			app.Route("/api/users/{user-key}/roles/{role-key}").Delete(RemoveRole);
+			app.Route("/api/users/{user-key}/roles").Put(AddRole);
+			app.Route("/api/users/{user-key}/roles").Delete(RemoveRole);
 
 			//app.Route("/api/users/{user-key}/can/{permission-key}").Get(CheckPermission);
 		}
@@ -74,11 +74,15 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				await NotFoundOrAction(context, PermissionKey, async permissionKey =>
+				var dto = context.ReadJson<string[]>();
+				var currentUser = context.GetUser();
+
+				foreach (var permissionKey in dto)
 				{
-					System.OnUser(key, user => user.AddInclude(context.GetUser(), System.LoadPermission(permissionKey)));
-					await Task.Yield();
-				});
+					System.OnUser(key, user => user.AddInclude(currentUser, System.LoadPermission(permissionKey)));
+				}
+
+				await Task.Yield();
 			});
 		}
 
@@ -86,11 +90,15 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				await NotFoundOrAction(context, PermissionKey, async permissionKey =>
+				var dto = context.ReadJson<string[]>();
+				var currentUser = context.GetUser();
+
+				foreach (var permissionKey in dto)
 				{
-					System.OnUser(key, user => user.RemoveInclude(context.GetUser(), System.LoadPermission(permissionKey)));
-					await Task.Yield();
-				});
+					System.OnUser(key, user => user.RemoveInclude(currentUser, System.LoadPermission(permissionKey)));
+				}
+
+				await Task.Yield();
 			});
 		}
 
@@ -98,11 +106,15 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				await NotFoundOrAction(context, PermissionKey, async permissionKey =>
+				var dto = context.ReadJson<string[]>();
+				var currentUser = context.GetUser();
+
+				foreach (var permissionKey in dto)
 				{
-					System.OnUser(key, user => user.AddRevoke(context.GetUser(), System.LoadPermission(permissionKey)));
-					await Task.Yield();
-				});
+					System.OnUser(key, user => user.AddRevoke(currentUser, System.LoadPermission(permissionKey)));
+				}
+
+				await Task.Yield();
 			});
 		}
 
@@ -110,11 +122,15 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				await NotFoundOrAction(context, PermissionKey, async permissionKey =>
+				var dto = context.ReadJson<string[]>();
+				var currentUser = context.GetUser();
+
+				foreach (var permissionKey in dto)
 				{
-					System.OnUser(key, user => user.RemoveRevoke(context.GetUser(), System.LoadPermission(permissionKey)));
-					await Task.Yield();
-				});
+					System.OnUser(key, user => user.RemoveRevoke(currentUser, System.LoadPermission(permissionKey)));
+				}
+
+				await Task.Yield();
 			});
 		}
 
@@ -122,11 +138,15 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				await NotFoundOrAction(context, RoleKey, async roleKey =>
+				var dto = context.ReadJson<string[]>();
+				var currentUser = context.GetUser();
+
+				foreach (var roleKey in dto)
 				{
-					System.OnUser(key, user => user.AddRole(context.GetUser(), System.LoadRole(roleKey)));
-					await Task.Yield();
-				});
+					System.OnUser(key, user => user.RemoveRole(currentUser, System.LoadRole(roleKey)));
+				}
+
+				await Task.Yield();
 			});
 		}
 

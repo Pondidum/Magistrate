@@ -62,32 +62,6 @@ var SingleUserView = React.createClass({
       return (<li key={index} className="role-pill"><a href="#">{role.name}</a></li>);
     });
 
-    var includes = user.includes.map(function(permission, index) {
-      return (
-        <li key={index} className="col-sm-3 ">
-          <PermissionTile
-            content={permission}
-            onRemove={self.onIncludeRemoved}
-            deleteUrl={"/api/users/" + user.key + "/includes/"}
-            showEdit={false}
-          />
-        </li>
-      );
-    });
-
-    var revokes = user.revokes.map(function(permission, index) {
-      return (
-        <li key={index} className="col-sm-3 ">
-          <PermissionTile
-            content={permission}
-            onRemove={self.onRevokeRemoved}
-            deleteUrl={"/api/users/" + user.key + "/revokes/"}
-            showEdit={false}
-          />
-        </li>
-      );
-    });
-
     return (
       <div className="well">
         <h1>{user.name}<small className="pull-right">{user.key}</small></h1>
@@ -99,19 +73,17 @@ var SingleUserView = React.createClass({
           {roles}
         </ul>
 
-        <div className="page-header">
-          <h4>Includes</h4>
-        </div>
-        <ul className="list-unstyled list-inline row">
-          {includes}
-        </ul>
+        <PermissionGrid
+          permissions={user.includes}
+          navigate={this.props.navigate}
+          url={"/api/users/" + user.key + "/includes/"}
+        />
 
-        <div className="page-header">
-          <h4>Revokes</h4>
-        </div>
-        <ul className="list-unstyled list-inline row">
-          {revokes}
-        </ul>
+        <PermissionGrid
+          permissions={user.revokes}
+          navigate={this.props.navigate}
+          url={"/api/users/" + user.key + "/revokes/"}
+        />
 
       </div>
     );
