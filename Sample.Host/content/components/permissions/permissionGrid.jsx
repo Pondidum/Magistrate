@@ -15,6 +15,23 @@ var PermissionGrid = React.createClass({
     this.setState({ permissions: newCollection });
   },
 
+  onPermissionsChanged(added, removed) {
+
+    var current = this.state.permissions;
+
+    current = current.concat(added);
+    current = current.filter(function(permission) {
+      return removed.find(p => p.key == permission.key) == null;
+    });
+
+    this.setState({ permissions: current });
+  },
+
+  showPermissionsDialog(e) {
+    e.preventDefault();
+    this.refs.dialog.open();
+  },
+
   render() {
 
     var self = this;
@@ -40,7 +57,7 @@ var PermissionGrid = React.createClass({
           <a href="#" onClick={this.showPermissionsDialog}>Change Permissions...</a>
 
           <PermissionSelector
-            initialValue={permissions}
+            initialValue={this.state.permissions}
             url={self.props.url}
             onChange={this.onPermissionsChanged}
             ref="dialog"

@@ -94,7 +94,18 @@ var PermissionSelector = React.createClass({
     }
 
     async.series(actions, function(err, results) {
-      self.props.onChange();
+
+      var all = self.state.permissions;
+      var added = toAdd.map(function(key) {
+        return all.find(p => p.key == key);
+      });
+
+      var removed = toRemove.map(function(key) {
+        return all.find(p => p.key == key);
+      });
+
+      self.props.onChange(added, removed);
+
       dialog.asyncStop();
       dialog.close();
     });

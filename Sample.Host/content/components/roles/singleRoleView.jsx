@@ -26,25 +26,6 @@ var SingleRoleView = React.createClass({
 
   },
 
-  onPermissionsChanged() {
-    this.getRole();
-  },
-
-  onPermissionRemoved(permission) {
-
-    var role = this.state.role;
-    var newCollection = role.permissions.filter(function(perm) {
-      return perm.key != permission.key;
-    });
-
-    role.permissions = newCollection;
-
-    this.setState({
-      role: role
-    });
-
-  },
-
   onNameChanged(newName) {
 
     var json = JSON.stringify({
@@ -91,11 +72,6 @@ var SingleRoleView = React.createClass({
 
   },
 
-  showPermissionsDialog(e) {
-    e.preventDefault();
-    this.refs.dialog.open();
-  },
-
   render() {
 
     var role = this.state.role;
@@ -109,19 +85,6 @@ var SingleRoleView = React.createClass({
 
         <h1><InlineEditor initialValue={role.name} onChange={this.onNameChanged} /></h1>
         <div><InlineEditor initialValue={role.description} onChange={this.onDescriptionChanged} /></div>
-
-        <div className="page-header">
-          <a href="#" onClick={this.showPermissionsDialog}>Change Permissions...</a>
-
-          <PermissionSelector
-            initialValue={role.permissions}
-            url={"/api/roles/" + role.key + "/permissions/"}
-            onChange={this.onPermissionsChanged}
-            ref="dialog"
-          />
-
-        </div>
-
 
         <PermissionGrid
           permissions={role.permissions}
