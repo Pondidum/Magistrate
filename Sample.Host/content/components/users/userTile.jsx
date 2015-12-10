@@ -5,8 +5,23 @@ var UserTile = React.createClass({
     this.props.navigate("singleuser", { key: this.props.content.key});
   },
 
-  onDelete() {
-    this.props.onRemove(this.props.content);
+  onDelete(success, error) {
+
+    var self = this;
+    var user = this.props.content;
+
+    $.ajax({
+      url: this.props.deleteUrl,
+      method: 'DELETE',
+      cache: false,
+      data: JSON.stringify([ user.key ]),
+      success: function() {
+        success();
+        self.props.onRemove(user);
+      },
+      error: error
+    });
+
   },
 
   render() {
@@ -21,7 +36,6 @@ var UserTile = React.createClass({
       <Tile
         title={user.name}
         navigateTo={this.navigateToDetails}
-        deleteUrl={"/api/users/" + user.key}
         onDelete={this.onDelete}
         dialogContent={confirmation}>
         <div>Roles: {user.roles.length}</div>

@@ -5,23 +5,19 @@ var Tile = React.createClass({
       this.refs.deleteDialog.open();
   },
 
-  onDelete() {
-    var dialog = this.refs.deleteDialog;
+  handleDeleteSubmit() {
 
+    var dialog = this.refs.deleteDialog;
     dialog.asyncStart();
-    $.ajax({
-      url: this.props.deleteUrl,
-      method: 'DELETE',
-      cache: false,
-      success: function(data) {
-        dialog.asyncStop();
+
+    this.props.onDelete(
+      function() {
         dialog.close();
-        this.props.onDelete();
-      }.bind(this),
-      error: function(xhr, status, err) {
+      },
+      function() {
         dialog.asyncStop();
-      }
-    });
+      });
+
   },
 
   render() {
@@ -35,7 +31,7 @@ var Tile = React.createClass({
 
     var deleteControl;
 
-    if (this.props.deleteUrl) {
+    if (this.props.onDelete) {
       deleteControl = (
         <li>
           <a href="#" onClick={this.openDeleteDialog}>
@@ -67,7 +63,7 @@ var Tile = React.createClass({
               {deleteControl}
             </ul>
           </h3>
-          <Dialog title="Confirm Delete" acceptText="Delete" acceptStyle="danger" onSubmit={this.onDelete} size="medium" ref="deleteDialog">
+          <Dialog title="Confirm Delete" acceptText="Delete" acceptStyle="danger" onSubmit={this.handleDeleteSubmit} size="medium" ref="deleteDialog">
             {this.props.dialogContent}
           </Dialog>
         </div>

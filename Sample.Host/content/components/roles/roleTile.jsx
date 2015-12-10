@@ -27,8 +27,23 @@ var RoleTile = React.createClass({
 
   },
 
-  onDelete() {
-    this.props.onRemove(this.props.content);
+  onDelete(success, error) {
+
+    var self = this;
+    var role = this.getRole();
+
+    $.ajax({
+      url: this.props.deleteUrl,
+      method: 'DELETE',
+      cache: false,
+      data: JSON.stringify([ role.key ]),
+      success: function() {
+        success();
+        self.props.onRemove(role);
+      },
+      error: error
+    });
+
   },
 
   render() {
@@ -43,7 +58,6 @@ var RoleTile = React.createClass({
       <Tile
         title={role.name}
         navigateTo={this.navigateToDetails}
-        deleteUrl={"/api/roles/" + role.key}
         onDelete={this.onDelete}
         dialogContent={confirmation}>
         <p>{role.description}</p>

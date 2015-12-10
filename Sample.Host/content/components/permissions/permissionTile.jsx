@@ -22,8 +22,23 @@ var PermissionTile = React.createClass({
 
   },
 
-  onDelete() {
-    this.props.onRemove(this.props.content);
+  onDelete(success, error) {
+
+    var self = this;
+    var permission = this.getPermission();
+
+    $.ajax({
+      url: this.props.deleteUrl,
+      method: 'DELETE',
+      cache: false,
+      data: JSON.stringify([ permission.key ]),
+      success: function() {
+        success();
+        self.props.onRemove(permission);
+      },
+      error: error
+    });
+
   },
 
   render() {
@@ -39,7 +54,6 @@ var PermissionTile = React.createClass({
     return (
       <Tile
         title={permission.name}
-        deleteUrl={this.props.deleteUrl}
         onDelete={this.onDelete}
         editAction={editAction}
         dialogContent={confirmation}>

@@ -34,7 +34,7 @@ var SingleRoleView = React.createClass({
 
     var role = this.state.role;
     var newCollection = role.permissions.filter(function(perm) {
-      return perm.id != permission.id;
+      return perm.key != permission.key;
     });
 
     role.permissions = newCollection;
@@ -110,7 +110,7 @@ var SingleRoleView = React.createClass({
           <PermissionTile
             content={permission}
             onRemove={self.onPermissionRemoved}
-            deleteUrl={"/api/roles/" + role.key + "/permission/" + permission.key}
+            deleteUrl={"/api/roles/" + role.key + "/permissions/"}
             showEdit={false}
           />
         </li>

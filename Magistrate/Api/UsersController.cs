@@ -19,9 +19,9 @@ namespace Magistrate.Api
 		{
 			app.Route("/api/users/all").Get(GetAll);
 			app.Route("/api/users").Put(CreateUser);
+			app.Route("/api/users").Delete(DeleteUser);
 
 			app.Route("/api/users/{user-key}").Get(GetUserDetails);
-			app.Route("/api/users/{user-key}").Delete(DeleteUser);
 
 			app.Route("/api/users/{user-key}/includes/{permission-key}").Put(AddInclude);
 			app.Route("/api/users/{user-key}/includes/{permission-key}").Delete(RemoveInclude);
@@ -31,7 +31,7 @@ namespace Magistrate.Api
 
 			app.Route("/api/users/{user-key}/roles/{role-key}").Put(AddRole);
 			app.Route("/api/users/{user-key}/roles/{role-key}").Delete(RemoveRole);
-			
+
 			//app.Route("/api/users/{user-key}/can/{permission-key}").Get(CheckPermission);
 		}
 
@@ -59,12 +59,15 @@ namespace Magistrate.Api
 
 		private async Task DeleteUser(IOwinContext context)
 		{
-			await NotFoundOrAction(context, UserKey, async key =>
-			{
-				System.OnUser(key, user => user.Deactivate(context.GetUser()));
+			var dto = context.ReadJson<string[]>();
+			var currentUser = context.GetUser();
 
-				await Task.Yield();
-			});
+			foreach (var key in dto)
+			{
+				System.OnUser(key, user => user.Deactivate(currentUser));
+			}
+
+			await Task.Yield();
 		}
 
 		private async Task AddInclude(IOwinContext context)

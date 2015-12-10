@@ -68,7 +68,7 @@ var SingleUserView = React.createClass({
           <PermissionTile
             content={permission}
             onRemove={self.onIncludeRemoved}
-            deleteUrl={"/api/users/" + user.key + "/includes/" + permission.key}
+            deleteUrl={"/api/users/" + user.key + "/includes/"}
             showEdit={false}
           />
         </li>
@@ -81,7 +81,7 @@ var SingleUserView = React.createClass({
           <PermissionTile
             content={permission}
             onRemove={self.onRevokeRemoved}
-            deleteUrl={"/api/users/" + user.key + "/revokes/" + permission.key}
+            deleteUrl={"/api/users/" + user.key + "/revokes/"}
             showEdit={false}
           />
         </li>

@@ -19,8 +19,8 @@ namespace Magistrate.Api
 		{
 			app.Route("/api/roles/all").Get(GetAll);
 			app.Route("/api/roles").Put(CreateRole);
+			app.Route("/api/roles").Delete(DeleteRole);
 			app.Route("/api/roles/{role-key}").Get(GetRoleDetails);
-			app.Route("/api/roles/{role-key}").Delete(DeleteRole);
 			app.Route("/api/roles/{role-key}/name").Put(UpdateRoleName);
 			app.Route("/api/roles/{role-key}/description").Put(UpdateRoleDescription);
 			app.Route("/api/roles/{role-key}/permissions").Put(AddPermissions);
@@ -51,12 +51,15 @@ namespace Magistrate.Api
 
 		private async Task DeleteRole(IOwinContext context)
 		{
-			await NotFoundOrAction(context, RoleKey, async key =>
-			{
-				System.OnPermission(key, role => role.Deactivate(context.GetUser()));
+			var dto = context.ReadJson<string[]>();
+			var user = context.GetUser();
 
-				await Task.Yield();
-			});
+			foreach (var key in dto)
+			{
+				System.OnRole(key, role => role.Deactivate(user));
+			}
+
+			await Task.Yield();
 		}
 
 		private async Task UpdateRoleName(IOwinContext context)
