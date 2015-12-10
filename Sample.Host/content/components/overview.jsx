@@ -69,6 +69,7 @@ var Overview = React.createClass({
               onRemove={self.onRemove}
               navigate={self.props.navigate}
               deleteUrl={self.props.deleteUrl + "/" + item.key}
+              showEdit={true}
             />
           </li>
         );
