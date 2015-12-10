@@ -51,3 +51,8 @@ a.permission-delete:hover {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.editor-glyph {
+  font-size: medium;
+  margin-left: 0.5em;
+}

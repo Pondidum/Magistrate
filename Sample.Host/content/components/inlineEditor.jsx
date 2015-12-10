@@ -7,16 +7,16 @@ var InlineEditor = React.createClass({
     };
   },
 
-  startEdit() {
+  startEdit(e) {
+    if (e) e.preventDefault();
+
     this.setState({
       editing: true
     });
   },
 
   cancelEdit(e) {
-
-    if (e)
-      e.preventDefault();
+    if (e) e.preventDefault();
 
     this.setState({
       editing: false,
@@ -26,8 +26,7 @@ var InlineEditor = React.createClass({
   },
 
   acceptEdit() {
-    var newValue = this.refs.editor.value();
-    console.log("Accept", newValue);
+    var newValue = this.refs.editor.value;
 
     this.setState({
       editing: false,
@@ -48,7 +47,14 @@ var InlineEditor = React.createClass({
   render() {
 
     if (this.state.editing == false)
-      return (<span onClick={this.startEdit}>{this.state.value}</span>);
+      return (
+        <span>
+          {this.state.value}
+          <a href="#" onClick={this.startEdit}>
+            <span className="editor-glyph glyphicon glyphicon-pencil" />
+          </a>
+        </span>
+      );
 
     return (
       <div className="input-group col-xs-12 col-sm-8">
@@ -63,7 +69,7 @@ var InlineEditor = React.createClass({
           autoFocus
         />
         <div className="input-group-addon">
-          <a href="#" onClick={this.cancelEdit}><span className="glyphicon glyphicon-remove" /></a>
+          <a href="#" onClick={this.cancelEdit}><span className="editor-glyph glyphicon glyphicon-remove" /></a>
         </div>
       </div>
     )
