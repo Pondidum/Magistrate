@@ -52,7 +52,26 @@ a.permission-delete:hover {
   margin-bottom: 10px;
 }
 
+
+
+
+.inline-editor {
+  line-height: 1.5;
+}
+
 .editor-glyph {
   font-size: medium;
   margin-left: 0.5em;
+}
+
+.inline-editor > a {
+  display: none;
+}
+
+.inline-editor > span:hover + a {
+  display: inline;
+}
+
+.inline-editor:hover > a {
+  display: inline;
 }

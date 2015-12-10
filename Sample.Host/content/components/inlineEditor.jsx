@@ -48,12 +48,12 @@ var InlineEditor = React.createClass({
 
     if (this.state.editing == false)
       return (
-        <span>
-          {this.state.value}
+        <div className="inline-editor">
+          <span>{this.state.value}</span>
           <a href="#" onClick={this.startEdit}>
             <span className="editor-glyph glyphicon glyphicon-pencil" />
           </a>
-        </span>
+        </div>
       );
 
     return (
