@@ -41,9 +41,9 @@ namespace Magistrate.Domain.Services
 
 		public void Rebuild(IEnumerable<Permission> permissions, IEnumerable<Role> roles, IEnumerable<User> users)
 		{
-			permissions.Select(PermissionReadModel.From).ForEach(p => _permissions[p.ID] = p);
-			roles.Select(r => RoleReadModel.From(r, _permissions)).ForEach(r => _roles[r.ID] = r);
-			users.Select(u => UserReadModel.From(u, _roles, _permissions)).ForEach(u => _users[u.ID] = u);
+			_permissions.AddRange(permissions.Where(p => p.IsActive).Select(PermissionReadModel.From));
+			_roles.AddRange(roles.Where(r => r.IsActive).Select(r => RoleReadModel.From(r, _permissions)));
+			_users.AddRange(users.Where(u => u.IsActive).Select(u => UserReadModel.From(u, _roles, _permissions)));
 		}
 
 		private void RegisterProjections(Projector projector)

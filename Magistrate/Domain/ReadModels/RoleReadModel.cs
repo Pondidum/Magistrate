@@ -38,7 +38,7 @@ namespace Magistrate.Domain.ReadModels
 				Key = r.Key,
 				Name = r.Name,
 				Description = r.Description,
-				Permissions = r.Permissions.Select(id => permissions[id]).ToHashSet()
+				Permissions = r.Permissions.Join(permissions, g => g, rm => rm.Key, (g, rm) => rm.Value).ToHashSet()
 			};
 
 			return model;

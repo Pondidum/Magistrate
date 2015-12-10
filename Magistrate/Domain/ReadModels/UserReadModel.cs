@@ -42,9 +42,9 @@ namespace Magistrate.Domain.ReadModels
 				Key = u.Key,
 				Name = u.Name,
 				IsActive = true,
-				Includes = u.Includes.Select(id => permissions[id]).ToHashSet(),
-				Revokes = u.Revokes.Select(id => permissions[id]).ToHashSet(),
-				Roles = u.Roles.Select(id => roles[id]).ToHashSet()
+				Includes = u.Includes.Join(permissions, g => g, rm => rm.Key, (g, rm) => rm.Value).ToHashSet(),
+				Revokes = u.Revokes.Join(permissions, g => g, rm => rm.Key, (g, rm) => rm.Value).ToHashSet(),
+				Roles = u.Roles.Join(roles, g => g, rm => rm.Key, (g, rm) => rm.Value).ToHashSet(),
 			};
 
 			return model;
