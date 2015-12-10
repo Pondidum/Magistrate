@@ -177,10 +177,8 @@ namespace Magistrate.Domain
 
 		private void Handle(RevokeAddedToUserEvent e)
 		{
-			if (_includes.Contains(e.PermissionID))
-				_includes.Remove(e.PermissionID);
-			else
-				_revokes.Add(e.PermissionID);
+			_includes.Remove(e.PermissionID);
+			_revokes.Add(e.PermissionID);
 		}
 
 		private void Handle(RevokeRemovedFromUserEvent e)

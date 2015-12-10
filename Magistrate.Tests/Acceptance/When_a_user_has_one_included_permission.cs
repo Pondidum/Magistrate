@@ -61,7 +61,7 @@ namespace Magistrate.Tests.Acceptance
 			User.AddRevoke(new MagistrateUser(), FirstPermission);
 
 			User.Includes.ShouldBeEmpty();
-			User.Revokes.ShouldBeEmpty();
+			User.Revokes.ShouldBe(FirstPermissionOnly);
 		}
 
 		[Fact]

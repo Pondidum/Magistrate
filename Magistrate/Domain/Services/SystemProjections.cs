@@ -60,9 +60,25 @@ namespace Magistrate.Domain.Services
 
 			projector.Add<UserCreatedEvent>(e => _users[e.AggregateID] = UserReadModel.From(e));
 			projector.Add<UserNameChangedEvent>(e => _users[e.AggregateID].Name = e.NewName);
-			projector.Add<IncludeAddedToUserEvent>(e => _users[e.AggregateID].Includes.Add(_permissions[e.PermissionID]));
+			projector.Add<IncludeAddedToUserEvent>(e =>
+			{
+				var permission = _permissions[e.PermissionID];
+				var user = _users[e.AggregateID];
+
+				user.Includes.Add(permission);
+				user.Revokes.Remove(permission);
+			});
+
 			projector.Add<IncludeRemovedFromUserEvent>(e => _users[e.AggregateID].Includes.Remove(_permissions[e.PermissionID]));
-			projector.Add<RevokeAddedToUserEvent>(e => _users[e.AggregateID].Revokes.Add(_permissions[e.PermissionID]));
+			projector.Add<RevokeAddedToUserEvent>(e =>
+			{
+				var permission = _permissions[e.PermissionID];
+				var user = _users[e.AggregateID];
+
+				user.Includes.Remove(permission);
+				user.Revokes.Add(permission);
+			});
+
 			projector.Add<RevokeRemovedFromUserEvent>(e => _users[e.AggregateID].Revokes.Remove(_permissions[e.PermissionID]));
 			projector.Add<RoleAddedToUserEvent>(e => _users[e.AggregateID].Roles.Add(_roles[e.RoleID]));
 			projector.Add<RoleRemovedFromUserEvent>(e => _users[e.AggregateID].Roles.Remove(_roles[e.RoleID]));
