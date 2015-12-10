@@ -104,19 +104,6 @@ var SingleRoleView = React.createClass({
     if (role == null)
       return (<h1>Unknown role {this.props.id}</h1>);
 
-    var permissions = role.permissions.map(function(permission, index) {
-      return (
-        <li key={index} className="col-sm-3">
-          <PermissionTile
-            content={permission}
-            onRemove={self.onPermissionRemoved}
-            deleteUrl={"/api/roles/" + role.key + "/permissions/"}
-            showEdit={false}
-          />
-        </li>
-      );
-    });
-
     return (
       <div className="well">
 
@@ -136,9 +123,11 @@ var SingleRoleView = React.createClass({
         </div>
 
 
-        <ul className="nav nav-pills">
-          {permissions}
-        </ul>
+        <PermissionGrid
+          permissions={role.permissions}
+          navigate={this.props.navigate}
+          url={"/api/roles/" + role.key + "/permissions/"}
+        />
 
       </div>
     )
