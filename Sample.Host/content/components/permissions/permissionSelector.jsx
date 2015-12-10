@@ -40,20 +40,64 @@ var PermissionSelector = React.createClass({
   },
 
   onSubmit() {
+    var self = this;
+    var dialog = this.refs.dialog;
+    dialog.asyncStart();
+
     var initial = this.getInitialSelection();
     var selection = this.state.selection;
+
+    var toAdd = [];
+    var toRemove = [];
 
     for(key in selection) {
 
       if (selection[key] != initial[key]) {
 
         if (selection[key] == true)
-          console.log("add", key);
+          toAdd.push(key);
 
         if (selection[key] == false && initial[key] == true)
-          console.log("remove", key);
+          toRemove.push(key);
       }
     }
+
+    var actions = [];
+    var url = this.props.url;
+
+    if (toAdd.length > 0) {
+      actions.push(function(callback) {
+         $.ajax({
+           url: url,
+           cache: false,
+           method: "PUT",
+           data: JSON.stringify(toAdd),
+           success: function() {
+             callback();
+           }
+         });
+      });
+    }
+
+    if (toRemove.length > 0) {
+      actions.push(function(callback) {
+         $.ajax({
+           url: url,
+           cache: false,
+           method: "DELETE",
+           data: JSON.stringify(toRemove),
+           success: function() {
+             callback();
+           }
+         });
+      });
+    }
+
+    async.series(actions, function(err, results) {
+      self.props.onChange();
+      dialog.asyncStop();
+      dialog.close();
+    });
 
   },
 

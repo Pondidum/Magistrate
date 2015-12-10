@@ -26,6 +26,10 @@ var SingleRoleView = React.createClass({
 
   },
 
+  onPermissionsChanged() {
+    this.getRole();
+  },
+
   onPermissionRemoved(permission) {
 
     var role = this.state.role;
@@ -87,6 +91,11 @@ var SingleRoleView = React.createClass({
 
   },
 
+  showPermissionsDialog(e) {
+    e.preventDefault();
+    this.refs.dialog.open();
+  },
+
   render() {
 
     var role = this.state.role;
@@ -115,8 +124,18 @@ var SingleRoleView = React.createClass({
         <div><InlineEditor initialValue={role.description} onChange={this.onDescriptionChanged} /></div>
 
         <div className="page-header">
-          <h4>Permissions</h4>
+          <a href="#" onClick={this.showPermissionsDialog}>Change Permissions...</a>
+
+          <PermissionSelector
+            initialValue={role.permissions}
+            url={"/api/roles/" + role.key + "/permissions/"}
+            onChange={this.onPermissionsChanged}
+            ref="dialog"
+          />
+
         </div>
+
+
         <ul className="nav nav-pills">
           {permissions}
         </ul>

@@ -23,8 +23,8 @@ namespace Magistrate.Api
 			app.Route("/api/roles/{role-key}").Delete(DeleteRole);
 			app.Route("/api/roles/{role-key}/name").Put(UpdateRoleName);
 			app.Route("/api/roles/{role-key}/description").Put(UpdateRoleDescription);
-			app.Route("/api/roles/{role-key}/permissions/{permission-key}").Put(AddPermission);
-			app.Route("/api/roles/{role-key}/permissions/{permission-key}").Delete(RemovePermission);
+			app.Route("/api/roles/{role-key}/permissions").Put(AddPermissions);
+			app.Route("/api/roles/{role-key}/permissions").Delete(RemovePermissions);
 		}
 
 		private async Task GetAll(IOwinContext context)
@@ -85,35 +85,41 @@ namespace Magistrate.Api
 			});
 		}
 
-		private async Task AddPermission(IOwinContext context)
+		private async Task AddPermissions(IOwinContext context)
 		{
 			await NotFoundOrAction(context, RoleKey, async roleKey =>
 			{
-				await NotFoundOrAction(context, PermissionKey, async permissionKey =>
-				{
-					System.OnRole(roleKey, role =>
-					{
-						role.AddPermission(context.GetUser(), System.LoadPermission(permissionKey));
-					});
+				var dto = context.ReadJson<string[]>();
+				var user = context.GetUser();
 
-					await Task.Yield();
+				System.OnRole(roleKey, role =>
+				{
+					foreach (var permission in dto)
+					{
+						role.AddPermission(user, System.LoadPermission(permission));
+					}
 				});
+
+				await Task.Yield();
 			});
 		}
 
-		private async Task RemovePermission(IOwinContext context)
+		private async Task RemovePermissions(IOwinContext context)
 		{
 			await NotFoundOrAction(context, RoleKey, async roleKey =>
 			{
-				await NotFoundOrAction(context, PermissionKey, async permissionKey =>
-				{
-					System.OnRole(roleKey, role =>
-					{
-						role.RemovePermission(context.GetUser(), System.LoadPermission(permissionKey));
-					});
+				var dto = context.ReadJson<string[]>();
+				var user = context.GetUser();
 
-					await Task.Yield();
+				System.OnRole(roleKey, role =>
+				{
+					foreach (var permission in dto)
+					{
+						role.RemovePermission(user, System.LoadPermission(permission));
+					}
 				});
+
+				await Task.Yield();
 			});
 		}
 
@@ -126,7 +132,6 @@ namespace Magistrate.Api
 
 		private class EditRoleDto
 		{
-			public string Key { get; set; }
 			public string Name { get; set; }
 			public string Description { get; set; }
 		}
