@@ -57,8 +57,7 @@ var App = React.createClass({
       case 'singlerole':
         var key = this.state.location.options.key;
 
-        content = (
-          <SingleRoleView key={key} roleKey={key} url={"/api/roles/" + key} />);
+        content = (<SingleRoleView key={key} roleKey={key} url={"/api/roles/" + key} />);
         selected = 'roles';
 
         break;
@@ -71,7 +70,7 @@ var App = React.createClass({
         break;
 
       case 'roles':
-        content = (<RoleOverview navigate={this.navigate} />);
+        content = (<RoleOverview navigate={this.navigate} url="/api/roles" />);
         selected = 'roles';
 
         break;

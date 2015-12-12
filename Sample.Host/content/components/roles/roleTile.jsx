@@ -15,18 +15,6 @@ var RoleTile = React.createClass({
     return this.state.role || this.props.content;
   },
 
-  editRoleAction(e) {
-    e.preventDefault();
-
-    var self = this;
-
-    this.refs.editDialog.open(
-      this.getRole(),
-      (p) => { self.setState({ role: p }); }
-    );
-
-  },
-
   onDelete(success, error) {
 
     var self = this;
@@ -61,7 +49,6 @@ var RoleTile = React.createClass({
         onDelete={this.onDelete}
         dialogContent={confirmation}>
         <p>{role.description}</p>
-        <EditRoleDialog ref="editDialog" />
       </Tile>
     );
   }

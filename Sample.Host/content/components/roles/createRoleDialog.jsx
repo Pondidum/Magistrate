@@ -21,7 +21,7 @@ var CreateRoleDialog = React.createClass({
     dialog.asyncStart();
 
     $.ajax({
-      url: "/api/roles",
+      url: this.props.url,
       method: "PUT",
       dataType: 'json',
       data: json,

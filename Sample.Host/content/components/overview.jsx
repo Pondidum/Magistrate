@@ -80,7 +80,7 @@ var Overview = React.createClass({
         <div>
           <div className="row">
             <div className="col-sm-2">
-              <self.props.create onCreate={this.onAdd} />
+              <self.props.create onCreate={this.onAdd} url={self.props.url} />
             </div>
             <FilterBar filterChanged={this.onFilterChanged} />
           </div>
