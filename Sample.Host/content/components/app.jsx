@@ -57,7 +57,8 @@ var App = React.createClass({
       case 'singlerole':
         var key = this.state.location.options.key;
 
-        content = (<SingleRoleView roleKey={key} key={key} />);
+        content = (
+          <SingleRoleView key={key} roleKey={key} url={"/api/roles/" + key} />);
         selected = 'roles';
 
         break;

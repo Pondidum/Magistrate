@@ -12,10 +12,8 @@ var SingleRoleView = React.createClass({
 
   getRole() {
 
-    var url = "/api/roles/" + this.props.roleKey;
-
     $.ajax({
-      url: url,
+      url: this.props.url,
       cache: false,
       success: function(data) {
         this.setState({
@@ -33,7 +31,7 @@ var SingleRoleView = React.createClass({
     });
 
     $.ajax({
-      url: "/api/roles/" + this.props.roleKey + "/name",
+      url: this.props.url + "/name",
       cache: false,
       method: "PUT",
       data: json,
@@ -56,7 +54,7 @@ var SingleRoleView = React.createClass({
     });
 
     $.ajax({
-      url: "/api/roles/" + this.props.roleKey + "/description",
+      url: this.props.url + "/description",
       cache: false,
       method: "PUT",
       data: json,
@@ -89,7 +87,7 @@ var SingleRoleView = React.createClass({
         <PermissionGrid
           permissions={role.permissions}
           navigate={this.props.navigate}
-          url={"/api/roles/" + role.key + "/permissions/"}
+          url={this.props.url + "/permissions/"}
         />
 
       </div>
