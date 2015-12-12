@@ -19,7 +19,7 @@ var CreateUserDialog = React.createClass({
     });
 
     $.ajax({
-      url: "/api/users",
+      url: this.props.url,
       method: "PUT",
       dataType: 'json',
       data: json,

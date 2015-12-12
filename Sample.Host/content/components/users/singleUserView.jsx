@@ -13,7 +13,7 @@ var SingleUserView = React.createClass({
   getUser() {
 
     $.ajax({
-      url: "/api/users/" + this.props.userKey,
+      url: this.props.url,
       cache: false,
       success: function(data) {
         this.setState({
@@ -76,14 +76,14 @@ var SingleUserView = React.createClass({
         <PermissionGrid
           permissions={user.includes}
           navigate={this.props.navigate}
-          url={"/api/users/" + user.key + "/includes/"}
+          url={this.props.url + "/includes/"}
           name="Includes"
         />
 
         <PermissionGrid
           permissions={user.revokes}
           navigate={this.props.navigate}
-          url={"/api/users/" + user.key + "/revokes/"}
+          url={this.props.url + "/revokes/"}
           name="Revokes"
         />
 

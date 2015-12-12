@@ -49,7 +49,7 @@ var App = React.createClass({
       case 'singleuser':
         var key = this.state.location.options.key;
 
-        content = (<SingleUserView userKey={key} key={key} />);
+        content = (<SingleUserView key={key} userKey={key} url={"/api/users/" + key} />);
         selected = 'users';
 
         break;
@@ -64,7 +64,7 @@ var App = React.createClass({
 
       case 'users':
 
-        content = (<UserOverview navigate={this.navigate} />);
+        content = (<UserOverview navigate={this.navigate} url="/api/users" />);
         selected = 'users';
 
         break;
