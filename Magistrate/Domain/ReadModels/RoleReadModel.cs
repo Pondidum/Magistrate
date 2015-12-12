@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Magistrate.Domain.Events.RoleEvents;
+using Newtonsoft.Json;
 
 namespace Magistrate.Domain.ReadModels
 {
 	public class RoleReadModel : IKeyed, IIdentity
 	{
+		[JsonIgnore]
 		public Guid ID { get; set; }
 		public string Key { get; set; }
 		public string Name { get; set; }

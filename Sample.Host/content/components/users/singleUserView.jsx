@@ -27,7 +27,7 @@ var SingleUserView = React.createClass({
   onIncludeRemoved(permission) {
     var user = this.state.user;
     var newCollection = user.includes.filter(function(inc) {
-      return inc.id != permission.id;
+      return inc.key != permission.key;
     });
 
     user.includes = newCollection;
@@ -40,7 +40,7 @@ var SingleUserView = React.createClass({
   onRevokeRemoved(permission) {
     var user = this.state.user;
     var newCollection = user.revokes.filter(function(inc) {
-      return inc.id != permission.id;
+      return inc.key != permission.key;
     });
 
     user.revokes = newCollection;

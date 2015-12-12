@@ -1,10 +1,12 @@
 ﻿using System;
 using Magistrate.Domain.Events.PermissionEvents;
+using Newtonsoft.Json;
 
 namespace Magistrate.Domain.ReadModels
 {
 	public class PermissionReadModel : IKeyed, IIdentity
 	{
+		[JsonIgnore]
 		public Guid ID { get; set; }
 		public string Key { get; set; }
 		public string Name { get; set; }
