@@ -5,16 +5,16 @@ curl -s  -w "%{http_code}\r\n" -H 'Content-Type: application/json' -X PUT -d '{"
 curl -s  -w "%{http_code}\r\n" -H 'Content-Type: application/json' -X PUT -d '{"key":"delete-candidate","name":"Delete Candidate","description":"Allows the user to delete candidate"}' http://localhost:4444/api/permissions
 
 curl -s  -w "%{http_code}\r\n" -H 'Content-Type: application/json' -X PUT -d '{"key":"db-cleaner","name":"Database Cleaner","description":"Able to archive and restore candidates"}' http://localhost:4444/api/roles
-curl -s  -w "%{http_code}\r\n" -d "" -X PUT http://localhost:4444/api/roles/db-cleaner/permissions/archive-candidate
-curl -s  -w "%{http_code}\r\n" -d "" -X PUT http://localhost:4444/api/roles/db-cleaner/permissions/restore-candidate
+curl -s  -w "%{http_code}\r\n" -H 'Content-Type: application/json' -X PUT -d '["archive-candidate"]' http://localhost:4444/api/roles/db-cleaner/permissions
+curl -s  -w "%{http_code}\r\n" -H 'Content-Type: application/json' -X PUT -d '["restore-candidate"]' http://localhost:4444/api/roles/db-cleaner/permissions
 
 curl -s  -w "%{http_code}\r\n" -H 'Content-Type: application/json' -X PUT -d '{"key":"admin","name":"Administrator","description":"DO ALL THE THINGS!"}' http://localhost:4444/api/roles
-curl -s  -w "%{http_code}\r\n" -d "" -X PUT http://localhost:4444/api/roles/admin/permissions/archive-candidate
-curl -s  -w "%{http_code}\r\n" -d "" -X PUT http://localhost:4444/api/roles/admin/permissions/restore-candidate
-curl -s  -w "%{http_code}\r\n" -d "" -X PUT http://localhost:4444/api/roles/admin/permissions/create-candidate
-curl -s  -w "%{http_code}\r\n" -d "" -X PUT http://localhost:4444/api/roles/admin/permissions/delete-candidate
+curl -s  -w "%{http_code}\r\n" -H 'Content-Type: application/json' -X PUT -d '["archive-candidate"]' http://localhost:4444/api/roles/admin/permissions
+curl -s  -w "%{http_code}\r\n" -H 'Content-Type: application/json' -X PUT -d '["restore-candidate"]' http://localhost:4444/api/roles/admin/permissions
+curl -s  -w "%{http_code}\r\n" -H 'Content-Type: application/json' -X PUT -d '["create-candidate"]' http://localhost:4444/api/roles/admin/permissions
+curl -s  -w "%{http_code}\r\n" -H 'Content-Type: application/json' -X PUT -d '["delete-candidate"]' http://localhost:4444/api/roles/admin/permissions
 
 curl -s  -w "%{http_code}\r\n" -H 'Content-Type: application/json' -X PUT -d '{"key":"00001","name":"Andy Dote"}' http://localhost:4444/api/users
-curl -s  -w "%{http_code}\r\n" -d "" -X PUT http://localhost:4444/api/users/00001/roles/db-cleaner
-curl -s  -w "%{http_code}\r\n" -d "" -X PUT http://localhost:4444/api/users/00001/roles/admin
-curl -s  -w "%{http_code}\r\n" -d "" -X PUT http://localhost:4444/api/users/00001/includes/create-candidate
+curl -s  -w "%{http_code}\r\n" -H 'Content-Type: application/json' -X PUT -d '["db-cleaner"]' http://localhost:4444/api/users/00001/roles
+curl -s  -w "%{http_code}\r\n" -H 'Content-Type: application/json' -X PUT -d '["admin"]' http://localhost:4444/api/users/00001/roles
+curl -s  -w "%{http_code}\r\n" -H 'Content-Type: application/json' -X PUT -d '["create-candidate"]' http://localhost:4444/api/users/00001/includes
