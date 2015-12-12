@@ -20,16 +20,5 @@ namespace Magistrate.Domain.ReadModels
 				Description = e.Description
 			};
 		}
-
-		public static PermissionReadModel From(Permission p)
-		{
-			return new PermissionReadModel
-			{
-				ID = p.ID,
-				Key = p.Key,
-				Name = p.Name,
-				Description = p.Description
-			};
-		}
 	}
 }

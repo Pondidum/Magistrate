@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Ledger;
-using Ledger.Infrastructure;
 
 namespace Magistrate.Domain.Services
 {
@@ -22,9 +21,13 @@ namespace Magistrate.Domain.Services
 
 		public void Project(IDomainEvent<Guid> @event)
 		{
-			_handlers
-				.Where(pair => pair.Key == @event.GetType())
-				.ForEach(pair => pair.Value(@event));
+			var handlers = _handlers
+				.Where(pair => pair.Key == @event.GetType());
+
+			foreach (var handler in handlers)
+			{
+				handler.Value(@event);
+			}
 		}
 	}
 }

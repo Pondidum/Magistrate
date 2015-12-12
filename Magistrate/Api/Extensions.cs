@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Magistrate.Api.Responses;
-using Magistrate.Domain;
 using Magistrate.Domain.ReadModels;
 using Microsoft.Owin;
 using Newtonsoft.Json;
@@ -21,13 +21,7 @@ namespace Magistrate.Api
 			ContractResolver = new CamelCasePropertyNamesContractResolver()
 		};
 
-
-		public static T ByKey<T>(this IEnumerable<T> collection, string key)
-			where T : IKeyed
-		{
-			return collection.FirstOrDefault(item => item.Key.Equals(key, StringComparison.OrdinalIgnoreCase));
-		}
-
+		[DebuggerStepThrough]
 		public static MagistrateUser GetUser(this IOwinContext context)
 		{
 			return context.Get<MagistrateUser>("user");

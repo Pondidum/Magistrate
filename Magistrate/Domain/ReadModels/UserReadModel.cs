@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Magistrate.Domain.Events.UserEvents;
 
 namespace Magistrate.Domain.ReadModels
@@ -10,11 +9,10 @@ namespace Magistrate.Domain.ReadModels
 		public Guid ID { get; set; }
 		public string Key { get; set; }
 		public string Name { get; set; }
-		public bool IsActive { get; set; }
 
-		public HashSet<PermissionReadModel> Includes { get; set; }
-		public HashSet<PermissionReadModel> Revokes { get; set; }
-		public HashSet<RoleReadModel> Roles { get; set; }
+		public HashSet<PermissionReadModel> Includes { get; }
+		public HashSet<PermissionReadModel> Revokes { get; }
+		public HashSet<RoleReadModel> Roles { get; }
 
 		public UserReadModel()
 		{
@@ -30,24 +28,7 @@ namespace Magistrate.Domain.ReadModels
 				ID = e.ID,
 				Key = e.Key,
 				Name = e.Name,
-				IsActive = true
 			};
-		}
-
-		public static UserReadModel From(User u, Dictionary<Guid, RoleReadModel> roles, Dictionary<Guid, PermissionReadModel> permissions)
-		{
-			var model = new UserReadModel
-			{
-				ID = u.ID,
-				Key = u.Key,
-				Name = u.Name,
-				IsActive = true,
-				Includes = u.Includes.Join(permissions, g => g, rm => rm.Key, (g, rm) => rm.Value).ToHashSet(),
-				Revokes = u.Revokes.Join(permissions, g => g, rm => rm.Key, (g, rm) => rm.Value).ToHashSet(),
-				Roles = u.Roles.Join(roles, g => g, rm => rm.Key, (g, rm) => rm.Value).ToHashSet(),
-			};
-
-			return model;
 		}
 	}
 }

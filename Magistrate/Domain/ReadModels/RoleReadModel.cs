@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Magistrate.Domain.Events.RoleEvents;
 
 namespace Magistrate.Domain.ReadModels
@@ -28,20 +27,6 @@ namespace Magistrate.Domain.ReadModels
 				Name = e.Name,
 				Description = e.Description
 			};
-		}
-
-		public static RoleReadModel From(Role r, Dictionary<Guid, PermissionReadModel> permissions)
-		{
-			var model = new RoleReadModel
-			{
-				ID = r.ID,
-				Key = r.Key,
-				Name = r.Name,
-				Description = r.Description,
-				Permissions = r.Permissions.Join(permissions, g => g, rm => rm.Key, (g, rm) => rm.Value).ToHashSet()
-			};
-
-			return model;
 		}
 	}
 }
