@@ -12,7 +12,7 @@ var SingleRoleView = React.createClass({
 
   getRole() {
 
-    var url = "/api/roles/" + this.props.id;
+    var url = "/api/roles/" + this.props.roleKey;
 
     $.ajax({
       url: url,
@@ -33,7 +33,7 @@ var SingleRoleView = React.createClass({
     });
 
     $.ajax({
-      url: "/api/roles/" + this.props.id + "/name",
+      url: "/api/roles/" + this.props.roleKey + "/name",
       cache: false,
       method: "PUT",
       data: json,
@@ -56,7 +56,7 @@ var SingleRoleView = React.createClass({
     });
 
     $.ajax({
-      url: "/api/roles/" + this.props.id + "/description",
+      url: "/api/roles/" + this.props.roleKey + "/description",
       cache: false,
       method: "PUT",
       data: json,
@@ -78,7 +78,7 @@ var SingleRoleView = React.createClass({
     var self = this;
 
     if (role == null)
-      return (<h1>Unknown role {this.props.id}</h1>);
+      return (<h1>Unknown role {this.props.roleKey}</h1>);
 
     return (
       <div className="well">

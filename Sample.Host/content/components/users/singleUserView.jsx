@@ -13,7 +13,7 @@ var SingleUserView = React.createClass({
   getUser() {
 
     $.ajax({
-      url: "/api/users/" + this.props.id,
+      url: "/api/users/" + this.props.userKey,
       cache: false,
       success: function(data) {
         this.setState({
@@ -56,7 +56,7 @@ var SingleUserView = React.createClass({
     var self = this;
 
     if (user == null)
-      return (<h1>Unknown user {this.props.id}</h1>);
+      return (<h1>Unknown user {this.props.userKey}</h1>);
 
     var roles = user.roles.map(function(role, index) {
       return (<li key={index} className="role-pill"><a href="#">{role.name}</a></li>);

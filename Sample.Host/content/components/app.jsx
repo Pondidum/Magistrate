@@ -49,7 +49,7 @@ var App = React.createClass({
       case 'singleuser':
         var key = this.state.location.options.key;
 
-        content = (<SingleUserView id={key} key={key} />);
+        content = (<SingleUserView userKey={key} key={key} />);
         selected = 'users';
 
         break;
@@ -57,7 +57,7 @@ var App = React.createClass({
       case 'singlerole':
         var key = this.state.location.options.key;
 
-        content = (<SingleRoleView id={key} key={key} />);
+        content = (<SingleRoleView roleKey={key} key={key} />);
         selected = 'roles';
 
         break;
