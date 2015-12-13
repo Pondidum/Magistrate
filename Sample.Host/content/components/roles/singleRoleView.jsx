@@ -85,7 +85,7 @@ var SingleRoleView = React.createClass({
         <div><InlineEditor initialValue={role.description} onChange={this.onDescriptionChanged} /></div>
 
         <PermissionGrid
-          permissions={role.permissions}
+          collection={role.permissions}
           navigate={this.props.navigate}
           url={this.props.url + "/permissions/"}
         />

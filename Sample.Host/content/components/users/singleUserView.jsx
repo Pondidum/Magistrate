@@ -74,14 +74,14 @@ var SingleUserView = React.createClass({
         </ul>
 
         <PermissionGrid
-          permissions={user.includes}
+          collection={user.includes}
           navigate={this.props.navigate}
           url={this.props.url + "/includes/"}
           name="Includes"
         />
 
         <PermissionGrid
-          permissions={user.revokes}
+          collection={user.revokes}
           navigate={this.props.navigate}
           url={this.props.url + "/revokes/"}
           name="Revokes"
