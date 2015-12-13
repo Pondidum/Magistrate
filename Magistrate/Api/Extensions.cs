@@ -28,9 +28,9 @@ namespace Magistrate.Api
 		}
 
 
-		public static async Task JsonResponse(this IOwinContext context, Exception ex)
+		public static async Task JsonResponse(this IOwinContext context, object obj)
 		{
-			await context.WriteJson(ex, Settings);
+			await context.WriteJson(obj, Settings);
 		}
 
 		public static async Task JsonResponse(this IOwinContext context, PermissionReadModel permission)

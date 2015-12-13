@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Magistrate.Domain;
+using Magistrate.Domain.ReadModels;
 using Magistrate.Domain.Services;
 using Microsoft.Owin;
 using Owin;
@@ -32,7 +33,7 @@ namespace Magistrate.Api
 			app.Route("/api/users/{user-key}/roles").Put(AddRole);
 			app.Route("/api/users/{user-key}/roles").Delete(RemoveRole);
 
-			//app.Route("/api/users/{user-key}/can/{permission-key}").Get(CheckPermission);
+			app.Route("/api/users/{user-key}/check/{permission-key}").Get(CheckPermission);
 		}
 
 		private async Task GetAll(IOwinContext context)
@@ -162,16 +163,22 @@ namespace Magistrate.Api
 			});
 		}
 
-		//private async Task CheckPermission(IOwinContext context)
-		//{
-		//	await NotFoundOrAction(context, GetUser, async key =>
-		//	{
-		//		await NotFoundOrAction(context, GetPermission, async permission =>
-		//		{
-		//			await context.JsonResponse(user.Permissions.Can(permission));
-		//		});
-		//	});
-		//}
+		private async Task CheckPermission(IOwinContext context)
+		{
+			await NotFoundOrAction(context, UserKey, async userKey =>
+			{
+				await NotFoundOrAction(context, PermissionKey, async permissionKey =>
+				{
+					var user = System.Users.First(u => u.Key == userKey);
+					var result = new
+					{
+						Allowed = user.Can(permissionKey)
+					};
+
+					await context.JsonResponse(result);
+				});
+			});
+		}
 
 		private class CreateUserDto
 		{
