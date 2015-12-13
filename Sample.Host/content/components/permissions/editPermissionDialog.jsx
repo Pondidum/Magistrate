@@ -21,10 +21,8 @@ var EditPermissionDialog = React.createClass({
 
     dialog.asyncStart();
 
-    var url = "/api/permissions/" + values.key;
-
     $.ajax({
-      url: url,
+      url: this.props.url,
       method: "PUT",
       data: json,
       cache: false,

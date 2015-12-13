@@ -58,7 +58,7 @@ var PermissionTile = React.createClass({
         editAction={editAction}
         dialogContent={confirmation}>
         <p>{permission.description}</p>
-        <EditPermissionDialog ref="editDialog" />
+        <EditPermissionDialog url={this.props.url + "/" + permission.key} ref="editDialog" />
       </Tile>
     );
   }

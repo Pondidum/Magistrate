@@ -76,7 +76,7 @@ var App = React.createClass({
         break;
 
       case 'permissions':
-        content = (<PermissionOverview navigate={this.navigate} />);
+        content = (<PermissionOverview navigate={this.navigate} url="/api/permissions" />);
         selected = 'permissions';
 
         break;

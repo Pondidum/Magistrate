@@ -4,7 +4,7 @@ var PermissionOverview = React.createClass({
 
     return (
       <Overview
-        url="/api/permissions"
+        url={this.props.url}
         tile={PermissionTile}
         create={CreatePermissionDialog}
       />
