@@ -66,12 +66,12 @@ var SingleUserView = React.createClass({
       <div className="well">
         <h1>{user.name}<small className="pull-right">{user.key}</small></h1>
 
-        <div className="page-header">
-          <h4>Roles</h4>
-        </div>
-        <ul className="nav nav-pills">
-          {roles}
-        </ul>
+        <RoleGrid
+          collection={user.roles}
+          navigate={this.props.navigate}
+          url={this.props.url + "/roles/"}
+          name="Roles"
+        />
 
         <PermissionGrid
           collection={user.includes}

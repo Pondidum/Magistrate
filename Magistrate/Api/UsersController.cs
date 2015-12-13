@@ -143,7 +143,7 @@ namespace Magistrate.Api
 
 				foreach (var roleKey in dto)
 				{
-					System.OnUser(key, user => user.RemoveRole(currentUser, System.LoadRole(roleKey)));
+					System.OnUser(key, user => user.AddRole(currentUser, System.LoadRole(roleKey)));
 				}
 
 				await Task.Yield();
