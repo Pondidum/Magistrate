@@ -78,9 +78,6 @@
     <Compile Include="Domain\Events\PermissionEvents\PermissionDeactivatedEvent.cs" />
     <Compile Include="Domain\Events\PermissionEvents\PermissionDescriptionChangedEvent.cs" />
     <Compile Include="Domain\Events\RoleEvents\RoleDeactivatedEvent.cs" />
-    <Compile Include="Domain\Events\SystemEvents\PermissionAddedToSystemEvent.cs" />
-    <Compile Include="Domain\Events\SystemEvents\RoleAddedToSystemEvent.cs" />
-    <Compile Include="Domain\Events\SystemEvents\UserAddedToSystemEvent.cs" />
     <Compile Include="Domain\Events\UserEvents\IncludeAddedToUserEvent.cs" />
     <Compile Include="Domain\Events\UserEvents\IncludeRemovedFromUserEvent.cs" />
     <Compile Include="Domain\Events\UserEvents\UserDeactivatedEvent.cs" />
