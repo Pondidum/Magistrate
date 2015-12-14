@@ -1,7 +1,5 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Magistrate.Domain;
-using Magistrate.Domain.ReadModels;
 using Magistrate.Domain.Services;
 using Microsoft.Owin;
 using Owin;
@@ -23,6 +21,7 @@ namespace Magistrate.Api
 			app.Route("/api/users").Delete(DeleteUser);
 
 			app.Route("/api/users/{user-key}").Get(GetUserDetails);
+			app.Route("/api/users/{user-key}/name").Put(UpdateUserName);
 
 			app.Route("/api/users/{user-key}/includes").Put(AddInclude);
 			app.Route("/api/users/{user-key}/includes").Delete(RemoveInclude);
@@ -55,6 +54,19 @@ namespace Magistrate.Api
 			{
 				var user = System.Users.First(u => u.Key == key);
 				await context.JsonResponse(user);
+			});
+		}
+
+		private async Task UpdateUserName(IOwinContext context)
+		{
+			await NotFoundOrAction(context, UserKey, async key =>
+			{
+				var dto = context.ReadJson<EditUserDto>();
+				var currentUser = context.GetUser();
+
+				System.OnUser(key, user => user.ChangeName(currentUser, dto.Name));
+
+				await Task.Yield();
 			});
 		}
 
@@ -187,6 +199,11 @@ namespace Magistrate.Api
 		private class CreateUserDto
 		{
 			public string Key { get; set; }
+			public string Name { get; set; }
+		}
+
+		private class EditUserDto
+		{
 			public string Name { get; set; }
 		}
 	}

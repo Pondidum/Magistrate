@@ -24,6 +24,29 @@ var SingleUserView = React.createClass({
 
   },
 
+  onNameChanged(newName) {
+
+    var json = JSON.stringify({
+      name: newName
+    });
+
+    $.ajax({
+      url: this.props.url + "/name",
+      cache: false,
+      method: "PUT",
+      data: json,
+      success: function() {
+
+        var user = this.state.user;
+        user.name = newName;
+
+        this.setState({ user: user });
+
+      }.bind(this)
+    });
+
+  },
+
   onIncludeRemoved(permission) {
     var user = this.state.user;
     var newCollection = user.includes.filter(function(inc) {
@@ -60,7 +83,7 @@ var SingleUserView = React.createClass({
 
     return (
       <div className="well">
-        <h1>{user.name}<small className="pull-right">{user.key}</small></h1>
+        <h1><InlineEditor initialValue={user.name} onChange={this.onNameChanged} /><small className="pull-right">{user.key}</small></h1>
 
         <RoleGrid
           collection={user.roles}
