@@ -155,11 +155,15 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				await NotFoundOrAction(context, RoleKey, async roleKey =>
+				var dto = context.ReadJson<string[]>();
+				var currentUser = context.GetUser();
+
+				foreach (var roleKey in dto)
 				{
-					System.OnUser(key, user => user.RemoveRole(context.GetUser(), System.LoadRole(roleKey)));
-					await Task.Yield();
-				});
+					System.OnUser(key, user => user.RemoveRole(currentUser, System.LoadRole(roleKey)));
+				}
+
+				await Task.Yield();
 			});
 		}
 
