@@ -6,6 +6,11 @@ var PermissionTile = React.createClass({
     };
   },
 
+  navigateToDetails(e) {
+    e.preventDefault();
+    this.props.navigate("singlepermission", { key: this.props.content.key});
+  },
+
   getPermission() {
     return this.state.permission || this.props.content;
   },
@@ -54,8 +59,8 @@ var PermissionTile = React.createClass({
     return (
       <Tile
         title={permission.name}
+        navigateTo={this.navigateToDetails}
         onDelete={this.onDelete}
-        editAction={editAction}
         dialogContent={confirmation}>
         <p>{permission.description}</p>
         <EditPermissionDialog url={this.props.url + "/" + permission.key} ref="editDialog" />

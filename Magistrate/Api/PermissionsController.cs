@@ -20,7 +20,8 @@ namespace Magistrate.Api
 			app.Route("/api/permissions").Put(CreatePermission);
 			app.Route("/api/permissions/").Delete(DeletePermission);
 			app.Route("/api/permissions/{permission-key}").Get(GetPermissionDetails);
-			app.Route("/api/permissions/{permission-key}").Put(UpdatePermissionDetails);
+			app.Route("/api/permissions/{permission-key}/name").Put(UpdatePermissionName);
+			app.Route("/api/permissions/{permission-key}/description").Put(UpdatePermissionDescription);
 		}
 
 		private async Task GetAll(IOwinContext context)
@@ -59,21 +60,29 @@ namespace Magistrate.Api
 			await Task.Yield();
 		}
 
-		private async Task UpdatePermissionDetails(IOwinContext context)
+		private async Task UpdatePermissionName(IOwinContext context)
 		{
 			await NotFoundOrAction(context, PermissionKey, async key =>
 			{
 				var dto = context.ReadJson<EditPermissionDto>();
 				var user = context.GetUser();
 
-				System.OnPermission(key, permission =>
-				{
-					permission.ChangeName(user, dto.Name);
-					permission.ChangeDescription(user, dto.Description);
-				});
+				System.OnPermission(key, permission => permission.ChangeName(user, dto.Name));
 
 				await Task.Yield();
+			});
+		}
 
+		private async Task UpdatePermissionDescription(IOwinContext context)
+		{
+			await NotFoundOrAction(context, PermissionKey, async key =>
+			{
+				var dto = context.ReadJson<EditPermissionDto>();
+				var user = context.GetUser();
+
+				System.OnPermission(key, permission => permission.ChangeDescription(user, dto.Description));
+
+				await Task.Yield();
 			});
 		}
 

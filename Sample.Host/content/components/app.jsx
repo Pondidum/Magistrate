@@ -5,7 +5,8 @@ var App = React.createClass({
     singleuser: 'GET /users/:key',
     roles: 'GET /roles',
     singlerole: 'GET /roles/:key',
-    permissions: 'GET /permissions'
+    permissions: 'GET /permissions',
+    singlepermission: 'GET /permissions/:key'
   }),
 
   getInitialState() {
@@ -57,8 +58,16 @@ var App = React.createClass({
       case 'singlerole':
         var key = this.state.location.options.key;
 
-        content = (<SingleRoleView key={key} roleKey={key} url={"/api/roles/" + key} />);
+        content = (<SingleRoleView key={key} roleKey={key} url={"/api/roles/" + key} navigate={this.navigate} />);
         selected = 'roles';
+
+        break;
+
+      case 'singlepermission':
+        var key = this.state.location.options.key;
+
+        content = (<SinglePermissionView key={key} permissionKey={key} url={"/api/permissions/" + key} navigate={this.navigate} />);
+        selected = 'permissions';
 
         break;
 

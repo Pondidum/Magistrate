@@ -1,23 +1,23 @@
-var SingleRoleView = React.createClass({
+var SinglePermissionView = React.createClass({
 
   getInitialState() {
     return {
-      role: null
+      permission: null
     };
   },
 
   componentDidMount() {
-    this.getRole();
+    this.getPermission();
   },
 
-  getRole() {
+  getPermission() {
 
     $.ajax({
       url: this.props.url,
       cache: false,
       success: function(data) {
         this.setState({
-          role: data
+          permission: data
         });
       }.bind(this)
     });
@@ -37,10 +37,10 @@ var SingleRoleView = React.createClass({
       data: json,
       success: function() {
 
-        var role = this.state.role;
-        role.name = newName;
+        var permission = this.state.permission;
+        permission.name = newName;
 
-        this.setState({ role: role });
+        this.setState({ permission: permission });
 
       }.bind(this)
     });
@@ -60,10 +60,10 @@ var SingleRoleView = React.createClass({
       data: json,
       success: function() {
 
-        var role = this.state.role;
-        role.description = newDescription;
+        var permission = this.state.permission;
+        permission.description = newDescription;
 
-        this.setState({ role: role });
+        this.setState({ permission: permission });
 
       }.bind(this)
     });
@@ -72,23 +72,17 @@ var SingleRoleView = React.createClass({
 
   render() {
 
-    var role = this.state.role;
+    var permission = this.state.permission;
     var self = this;
 
-    if (role == null)
-      return (<h1>Unknown role {this.props.roleKey}</h1>);
+    if (permission == null)
+      return (<h1>Unknown permission {this.props.permissionKey}</h1>);
 
     return (
       <div className="well">
 
-        <h1><InlineEditor initialValue={role.name} onChange={this.onNameChanged} /></h1>
-        <div><InlineEditor initialValue={role.description} onChange={this.onDescriptionChanged} /></div>
-
-        <PermissionGrid
-          collection={role.permissions}
-          navigate={this.props.navigate}
-          url={this.props.url + "/permissions/"}
-        />
+        <h1><InlineEditor initialValue={permission.name} onChange={this.onNameChanged} /></h1>
+        <div><InlineEditor initialValue={permission.description} onChange={this.onDescriptionChanged} /></div>
 
       </div>
     )
