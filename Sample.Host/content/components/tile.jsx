@@ -12,6 +12,7 @@ var Tile = React.createClass({
 
     this.props.onDelete(
       function() {
+        dialog.asyncStop();
         dialog.close();
       },
       function() {

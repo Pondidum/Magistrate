@@ -58,10 +58,6 @@ var SingleUserView = React.createClass({
     if (user == null)
       return (<h1>Unknown user {this.props.userKey}</h1>);
 
-    var roles = user.roles.map(function(role, index) {
-      return (<li key={index} className="role-pill"><a href="#">{role.name}</a></li>);
-    });
-
     return (
       <div className="well">
         <h1>{user.name}<small className="pull-right">{user.key}</small></h1>
