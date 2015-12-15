@@ -1,7 +1,9 @@
 using System;
+using System.Linq;
 using Ledger;
 using Ledger.Stores;
 using Magistrate.Domain;
+using Magistrate.Domain.ReadModels;
 using Magistrate.Domain.Services;
 
 namespace Magistrate.Tests.Acceptance
@@ -13,17 +15,18 @@ namespace Magistrate.Tests.Acceptance
 		protected Permission FirstPermission { get; }
 		protected Permission SecondPermission { get; }
 
-		protected Guid[] FirstPermissionOnly { get; }
-		protected Guid[] SecondPermissionOnly { get; }
+		protected Guid FirstPermissionOnly { get; }
+		protected Guid SecondPermissionOnly { get; }
 		protected Guid[] BothPermissions { get; }
 
-		protected SystemProjections ReadModel { get; }
+		protected UserReadModel ReadUser => _readModel.Users.Single();
 
 		private readonly AggregateStore<Guid> _store;
+		private readonly SystemProjections _readModel;
 
 		public UserAcceptanceBase()
 		{
-			ReadModel = new SystemProjections();
+			_readModel = new SystemProjections();
 
 			User = User.Create(new MagistrateUser(), "user-01", "Andy");
 			TestRole = Role.Create(new MagistrateUser(), "role-01", "Team Leader", "Leads Teams.");
@@ -31,12 +34,12 @@ namespace Magistrate.Tests.Acceptance
 			FirstPermission = Permission.Create(new MagistrateUser(), "permission-01", "First", "");
 			SecondPermission = Permission.Create(new MagistrateUser(), "permission-02", "Second", "");
 
-			FirstPermissionOnly = new[] { FirstPermission.ID };
-			SecondPermissionOnly = new[] { SecondPermission.ID };
+			FirstPermissionOnly = FirstPermission.ID;
+			SecondPermissionOnly = SecondPermission.ID;
 			BothPermissions = new[] { FirstPermission.ID, SecondPermission.ID };
 
-			var es= new InMemoryEventStore();
-			var wrapped = new ProjectionEventStore(es, ReadModel.Project);
+			var es = new InMemoryEventStore();
+			var wrapped = new ProjectionEventStore(es, _readModel.Project);
 			_store = new AggregateStore<Guid>(wrapped);
 
 			Project(FirstPermission);
