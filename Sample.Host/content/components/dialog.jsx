@@ -39,11 +39,10 @@ var Dialog = React.createClass({
 
     var acceptStyle = this.props.acceptStyle || "primary";
     var acceptText = this.props.acceptText || "Add";
-    var size = this.props.size || "large";
 
     return (
       <div className="static-modal">
-        <Modal show={this.state.showModal} onHide={this.close} bsSize={size}>
+        <Modal show={this.state.showModal} onHide={this.close} bsSize="lg">
           <Modal.Header closeButton>
             <Modal.Title>{this.props.title}</Modal.Title>
           </Modal.Header>

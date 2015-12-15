@@ -61,7 +61,7 @@ var Tile = React.createClass({
               {deleteControl}
             </ul>
           </h3>
-          <Dialog title="Confirm Delete" acceptText="Delete" acceptStyle="danger" onSubmit={this.handleDeleteSubmit} size="medium" ref="deleteDialog">
+          <Dialog title="Confirm Delete" acceptText="Delete" acceptStyle="danger" onSubmit={this.handleDeleteSubmit} size="lg" ref="deleteDialog">
             {this.props.dialogContent}
           </Dialog>
         </div>
