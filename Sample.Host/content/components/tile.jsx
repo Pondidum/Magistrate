@@ -42,25 +42,12 @@ var Tile = React.createClass({
       );
     }
 
-    var editControl;
-
-    if (this.props.editAction) {
-      editControl = (
-        <li>
-          <a href="#" onClick={this.props.editAction}>
-            <span className="glyphicon glyphicon-pencil"></span>
-          </a>
-        </li>
-      );
-    }
-
     return (
       <div className="panel panel-default">
         <div className="panel-heading">
           <h3 className="panel-title">
             {title}
             <ul className="tile-actions pull-right list-unstyled list-inline">
-              {editControl}
               {deleteControl}
             </ul>
           </h3>
