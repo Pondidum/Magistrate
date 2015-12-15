@@ -54,8 +54,6 @@ var PermissionTile = React.createClass({
       <p>Are you sure you want to delete the permission <strong>{permission.name}</strong>?</p>
     );
 
-    var editAction = this.props.showEdit ? this.editPermissionAction : null;
-
     return (
       <Tile
         title={permission.name}
