@@ -88,6 +88,7 @@ var SingleRoleView = React.createClass({
           collection={role.permissions}
           navigate={this.props.navigate}
           url={this.props.url + "/permissions/"}
+          tileSize={self.props.tileSize}
         />
 
       </div>

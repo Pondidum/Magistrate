@@ -52,7 +52,7 @@ var App = React.createClass({
       case 'singleuser':
         var key = this.state.location.options.key;
 
-        content = (<SingleUserView key={key} userKey={key} url={"/api/users/" + key} navigate={this.navigate} />);
+        content = (<SingleUserView key={key} userKey={key} url={"/api/users/" + key} navigate={this.navigate} tileSize={tileSize} />);
         selected = 'users';
 
         break;
@@ -60,7 +60,7 @@ var App = React.createClass({
       case 'singlerole':
         var key = this.state.location.options.key;
 
-        content = (<SingleRoleView key={key} roleKey={key} url={"/api/roles/" + key} navigate={this.navigate} />);
+        content = (<SingleRoleView key={key} roleKey={key} url={"/api/roles/" + key} navigate={this.navigate} tileSize={tileSize} />);
         selected = 'roles';
 
         break;
@@ -68,7 +68,7 @@ var App = React.createClass({
       case 'singlepermission':
         var key = this.state.location.options.key;
 
-        content = (<SinglePermissionView key={key} permissionKey={key} url={"/api/permissions/" + key} navigate={this.navigate} />);
+        content = (<SinglePermissionView key={key} permissionKey={key} url={"/api/permissions/" + key} navigate={this.navigate} tileSize={tileSize} />);
         selected = 'permissions';
 
         break;
