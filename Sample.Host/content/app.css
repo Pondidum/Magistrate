@@ -7,7 +7,7 @@
   padding-bottom: 24px !important;
 }
 
-nav ul li.active {
+ul.nav li.active {
   background-color: #00776C;
 }
 

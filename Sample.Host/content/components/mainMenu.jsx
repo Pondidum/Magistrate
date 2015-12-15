@@ -1,6 +1,3 @@
-var Tabs = ReactBootstrap.Tabs;
-var Tab = ReactBootstrap.Tab;
-
 var MainMenu = React.createClass({
 
   onTabSelect(key) {
@@ -9,14 +6,32 @@ var MainMenu = React.createClass({
 
   render() {
 
+    var navigate = this.props.navigate;
     var selected = this.props.selected;
 
+    var items = [ "Users", "Roles", "Permissions" ];
+
+    var tabs = items.map(function(item, index) {
+
+      var onClick = function(e) {
+        e.preventDefault();
+        navigate(item.toLowerCase());
+      }
+
+      var active = selected == item.toLowerCase() ? "active" : "";
+
+      return (
+        <li key={index} className={active}>
+          <a href="#" onClick={onClick}>{item}</a>
+        </li>
+      );
+
+    });
+
     return (
-      <Tabs activeKey={this.props.selected} onSelect={this.onTabSelect}>
-        <Tab eventKey="users" title="Users" />
-        <Tab eventKey="roles" title="Roles" />
-        <Tab eventKey="permissions" title="Permissions" />
-      </Tabs>
+      <ul className="nav nav-tabs">
+        {tabs}
+      </ul>
     );
   }
 
