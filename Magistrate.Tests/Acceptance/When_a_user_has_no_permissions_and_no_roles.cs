@@ -1,4 +1,5 @@
-﻿using Shouldly;
+﻿using System.Linq;
+using Shouldly;
 using Xunit;
 
 namespace Magistrate.Tests.Acceptance
@@ -10,7 +11,9 @@ namespace Magistrate.Tests.Acceptance
 		{
 			User.AddRole(new MagistrateUser(), TestRole);
 
-			User.Roles.ShouldBe(new[] { TestRole.ID });
+			Project(User);
+
+			ReadModel.Users.Single().Roles.Single().ID.ShouldBe(TestRole.ID);
 		}
 
 		[Fact]
@@ -18,7 +21,9 @@ namespace Magistrate.Tests.Acceptance
 		{
 			User.RemoveRole(new MagistrateUser(), TestRole);
 
-			User.Roles.ShouldBeEmpty();
+			Project(User);
+
+			ReadModel.Users.Single().Roles.ShouldBeEmpty();
 		}
 
 		[Fact]
@@ -26,8 +31,10 @@ namespace Magistrate.Tests.Acceptance
 		{
 			User.AddInclude(new MagistrateUser(), FirstPermission);
 
-			User.Includes.ShouldBe(FirstPermissionOnly);
-			User.Revokes.ShouldBeEmpty();
+			Project(User);
+
+			ReadModel.Users.Single().Includes.Single().ID.ShouldBe(FirstPermissionOnly.Single());
+			ReadModel.Users.Single().Revokes.ShouldBeEmpty();
 		}
 
 		[Fact]
@@ -35,8 +42,10 @@ namespace Magistrate.Tests.Acceptance
 		{
 			User.AddRevoke(new MagistrateUser(), FirstPermission);
 
-			User.Revokes.ShouldBe(FirstPermissionOnly);
-			User.Includes.ShouldBeEmpty();
+			Project(User);
+
+			ReadModel.Users.Single().Revokes.Single().ID.ShouldBe(FirstPermissionOnly.Single());
+			ReadModel.Users.Single().Includes.ShouldBeEmpty();
 		}
 
 		[Fact]
@@ -44,8 +53,10 @@ namespace Magistrate.Tests.Acceptance
 		{
 			User.RemoveInclude(new MagistrateUser(), FirstPermission);
 
-			User.Includes.ShouldBeEmpty();
-			User.Revokes.ShouldBeEmpty();
+			Project(User);
+
+			ReadModel.Users.Single().Includes.ShouldBeEmpty();
+			ReadModel.Users.Single().Revokes.ShouldBeEmpty();
 		}
 
 		[Fact]
@@ -53,8 +64,10 @@ namespace Magistrate.Tests.Acceptance
 		{
 			User.RemoveRevoke(new MagistrateUser(), FirstPermission);
 
-			User.Includes.ShouldBeEmpty();
-			User.Revokes.ShouldBeEmpty();
+			Project(User);
+
+			ReadModel.Users.Single().Includes.ShouldBeEmpty();
+			ReadModel.Users.Single().Revokes.ShouldBeEmpty();
 		}
 	}
 }

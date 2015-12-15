@@ -1,4 +1,5 @@
-﻿using Shouldly;
+﻿using System.Linq;
+using Shouldly;
 using Xunit;
 
 namespace Magistrate.Tests.Acceptance
@@ -15,8 +16,10 @@ namespace Magistrate.Tests.Acceptance
 		{
 			User.AddInclude(new MagistrateUser(), SecondPermission);
 
-			User.Includes.ShouldBe(BothPermissions);
-			User.Revokes.ShouldBeEmpty();
+			Project(User);
+
+			ReadModel.Users.Single().Includes.Select(p => p.ID).ShouldBe(BothPermissions);
+			ReadModel.Users.Single().Revokes.ShouldBeEmpty();
 		}
 
 		[Fact]
@@ -24,8 +27,10 @@ namespace Magistrate.Tests.Acceptance
 		{
 			User.AddInclude(new MagistrateUser(), FirstPermission);
 
-			User.Includes.ShouldBe(FirstPermissionOnly);
-			User.Revokes.ShouldBeEmpty();
+			Project(User);
+
+			ReadModel.Users.Single().Includes.Single().ID.ShouldBe(FirstPermissionOnly.Single());
+			ReadModel.Users.Single().Revokes.ShouldBeEmpty();
 		}
 
 		[Fact]
@@ -33,8 +38,10 @@ namespace Magistrate.Tests.Acceptance
 		{
 			User.RemoveInclude(new MagistrateUser(), SecondPermission);
 
-			User.Includes.ShouldBe(FirstPermissionOnly);
-			User.Revokes.ShouldBeEmpty();
+			Project(User);
+
+			ReadModel.Users.Single().Includes.Single().ID.ShouldBe(FirstPermissionOnly.Single());
+			ReadModel.Users.Single().Revokes.ShouldBeEmpty();
 		}
 
 		[Fact]
@@ -42,8 +49,10 @@ namespace Magistrate.Tests.Acceptance
 		{
 			User.RemoveInclude(new MagistrateUser(), FirstPermission);
 
-			User.Includes.ShouldBeEmpty();
-			User.Revokes.ShouldBeEmpty();
+			Project(User);
+
+			ReadModel.Users.Single().Includes.ShouldBeEmpty();
+			ReadModel.Users.Single().Revokes.ShouldBeEmpty();
 		}
 
 		[Fact]
@@ -51,8 +60,10 @@ namespace Magistrate.Tests.Acceptance
 		{
 			User.AddRevoke(new MagistrateUser(), SecondPermission);
 
-			User.Includes.ShouldBe(FirstPermissionOnly);
-			User.Revokes.ShouldBe(SecondPermissionOnly);
+			Project(User);
+
+			ReadModel.Users.Single().Includes.Single().ID.ShouldBe(FirstPermissionOnly.Single());
+			ReadModel.Users.Single().Revokes.Single().ID.ShouldBe(SecondPermissionOnly.Single());
 		}
 
 		[Fact]
@@ -60,8 +71,10 @@ namespace Magistrate.Tests.Acceptance
 		{
 			User.AddRevoke(new MagistrateUser(), FirstPermission);
 
-			User.Includes.ShouldBeEmpty();
-			User.Revokes.ShouldBe(FirstPermissionOnly);
+			Project(User);
+
+			ReadModel.Users.Single().Includes.ShouldBeEmpty();
+			ReadModel.Users.Single().Revokes.Single().ID.ShouldBe(FirstPermissionOnly.Single());
 		}
 
 		[Fact]
@@ -69,8 +82,10 @@ namespace Magistrate.Tests.Acceptance
 		{
 			User.RemoveRevoke(new MagistrateUser(), SecondPermission);
 
-			User.Includes.ShouldBe(FirstPermissionOnly);
-			User.Revokes.ShouldBeEmpty();
+			Project(User);
+
+			ReadModel.Users.Single().Includes.Single().ID.ShouldBe(FirstPermissionOnly.Single());
+			ReadModel.Users.Single().Revokes.ShouldBeEmpty();
 		}
 
 		[Fact]
@@ -78,8 +93,10 @@ namespace Magistrate.Tests.Acceptance
 		{
 			User.RemoveRevoke(new MagistrateUser(), FirstPermission);
 
-			User.Includes.ShouldBe(FirstPermissionOnly);
-			User.Revokes.ShouldBeEmpty();
+			Project(User);
+
+			ReadModel.Users.Single().Includes.Single().ID.ShouldBe(FirstPermissionOnly.Single());
+			ReadModel.Users.Single().Revokes.ShouldBeEmpty();
 		}
 	}
 }
