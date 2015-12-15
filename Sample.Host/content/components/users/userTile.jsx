@@ -37,7 +37,8 @@ var UserTile = React.createClass({
         title={user.name}
         navigateTo={this.navigateToDetails}
         onDelete={this.onDelete}
-        dialogContent={confirmation}>
+        dialogContent={confirmation}
+        tileSize={this.props.tileSize}>
         <div>Roles: {user.roles.length}</div>
         <div>Includes: {user.includes.length}</div>
         <div>Revokes: {user.revokes.length}</div>

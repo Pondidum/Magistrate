@@ -4,10 +4,9 @@ var PermissionOverview = React.createClass({
 
     return (
       <Overview
-        url={this.props.url}
         tile={PermissionTile}
         create={CreatePermissionDialog}
-        navigate={this.props.navigate}
+        {...this.props}
       />
     );
 

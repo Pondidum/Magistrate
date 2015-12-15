@@ -47,7 +47,8 @@ var RoleTile = React.createClass({
         title={role.name}
         navigateTo={this.navigateToDetails}
         onDelete={this.onDelete}
-        dialogContent={confirmation}>
+        dialogContent={confirmation}
+        tileSize={this.props.tileSize}>
         <p>{role.description}</p>
       </Tile>
     );

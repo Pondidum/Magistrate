@@ -42,6 +42,16 @@ var Tile = React.createClass({
       );
     }
 
+    var body;
+
+    if (this.props.tileSize != "small") {
+      body = (
+        <div className="panel-body" style={{ height: "100px" }}>
+          {this.props.children}
+        </div>
+      );
+    }
+
     return (
       <div className="panel panel-default">
         <div className="panel-heading">
@@ -55,9 +65,7 @@ var Tile = React.createClass({
             {this.props.dialogContent}
           </Dialog>
         </div>
-        <div className="panel-body" style={{ height: "100px" }}>
-          {this.props.children}
-        </div>
+        {body}
       </div>
     );
 

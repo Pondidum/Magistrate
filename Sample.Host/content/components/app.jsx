@@ -42,6 +42,8 @@ var App = React.createClass({
 
   render() {
 
+    var tileSize = "small";
+
     var content;
     var selected = '';
 
@@ -73,19 +75,19 @@ var App = React.createClass({
 
       case 'users':
 
-        content = (<UserOverview navigate={this.navigate} url="/api/users" />);
+        content = (<UserOverview navigate={this.navigate} url="/api/users" tileSize={tileSize} />);
         selected = 'users';
 
         break;
 
       case 'roles':
-        content = (<RoleOverview navigate={this.navigate} url="/api/roles" />);
+        content = (<RoleOverview navigate={this.navigate} url="/api/roles" tileSize={tileSize} />);
         selected = 'roles';
 
         break;
 
       case 'permissions':
-        content = (<PermissionOverview navigate={this.navigate} url="/api/permissions" />);
+        content = (<PermissionOverview navigate={this.navigate} url="/api/permissions" tileSize={tileSize} />);
         selected = 'permissions';
 
         break;
