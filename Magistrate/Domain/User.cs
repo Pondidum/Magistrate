@@ -11,10 +11,6 @@ namespace Magistrate.Domain
 		public string Name { get; private set; }
 		public bool IsActive { get; private set; }
 
-		public IEnumerable<Guid> Includes => _includes;
-		public IEnumerable<Guid> Revokes => _revokes;
-		public IEnumerable<Guid> Roles => _roles;
-
 		private readonly HashSet<Guid> _includes;
 		private readonly HashSet<Guid> _revokes;
 		private readonly HashSet<Guid> _roles;
