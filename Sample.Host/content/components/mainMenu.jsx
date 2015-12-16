@@ -9,7 +9,7 @@ var MainMenu = React.createClass({
     this.props.setTileSize(Tile.sizes.small);
   },
 
-  setMediumGrid(e) {
+  setLargeGrid(e) {
     e.preventDefault();
     this.props.setTileSize(Tile.sizes.large);
   },
@@ -18,6 +18,7 @@ var MainMenu = React.createClass({
 
     var navigate = this.props.navigate;
     var selected = this.props.selected;
+    var tileSize = this.props.tileSize;
 
     var items = [ "Users", "Roles", "Permissions" ];
 
@@ -42,8 +43,12 @@ var MainMenu = React.createClass({
       <ul className="nav nav-tabs">
         {tabs}
         <li className="pull-right">
-          <a href="#" onClick={this.setSmallGrid}><span className="glyphicon glyphicon-th" /></a>
-          <a href="#" onClick={this.setMediumGrid}><span className="glyphicon glyphicon-th-large" /></a>
+          <a href="#" className={tileSize == Tile.sizes.small ? "active" : ""} onClick={this.setSmallGrid}>
+            <span className="glyphicon glyphicon-th" />
+          </a>
+          <a href="#" className={tileSize == Tile.sizes.large ? "active" : ""} onClick={this.setLargeGrid}>
+            <span className="glyphicon glyphicon-th-large" />
+          </a>
         </li>
       </ul>
     );

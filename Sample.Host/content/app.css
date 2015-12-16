@@ -21,8 +21,9 @@ ul.nav li.pull-right a {
   padding-right: 10px;
 }
 
-ul.nav li.pull-right a span:hover {
+ul.nav li.pull-right a.active {
   /* color */
+  background-color: #00776C !important;
 }
 
 table.table div.checkbox {
