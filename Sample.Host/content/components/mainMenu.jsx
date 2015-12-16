@@ -6,12 +6,12 @@ var MainMenu = React.createClass({
 
   setSmallGrid(e) {
     e.preventDefault();
-    this.props.setTileSize("small");
+    this.props.setTileSize(Tile.sizes.small);
   },
 
   setMediumGrid(e) {
     e.preventDefault();
-    this.props.setTileSize("medium");
+    this.props.setTileSize(Tile.sizes.large);
   },
 
   render() {

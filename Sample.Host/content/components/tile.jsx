@@ -1,5 +1,12 @@
 var Tile = React.createClass({
 
+  statics: {
+    sizes: {
+      small: "sm",
+      large: "lg"
+    }
+  },
+
   openDeleteDialog(e) {
       e.preventDefault();
       this.refs.deleteDialog.open();
@@ -44,7 +51,7 @@ var Tile = React.createClass({
 
     var body;
 
-    if (this.props.tileSize != "small") {
+    if (this.props.tileSize == Tile.sizes.large) {
       body = (
         <div className="panel-body" style={{ height: "100px" }}>
           {this.props.children}
