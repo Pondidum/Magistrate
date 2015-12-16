@@ -12,7 +12,7 @@ var App = React.createClass({
   getInitialState() {
     return {
       location: this.getLocation(),
-      tileSize: Tile.sizes.large
+      tileSize: reactCookie.load('tileSize') || Tile.sizes.large
     };
   },
 
@@ -43,6 +43,7 @@ var App = React.createClass({
 
   setTileSize(size) {
     this.setState({ tileSize: size });
+    reactCookie.save('tileSize', size);
   },
 
   render() {
