@@ -4,6 +4,16 @@ var MainMenu = React.createClass({
     this.props.navigate(key);
   },
 
+  setSmallGrid(e) {
+    e.preventDefault();
+    this.props.setTileSize("small");
+  },
+
+  setMediumGrid(e) {
+    e.preventDefault();
+    this.props.setTileSize("medium");
+  },
+
   render() {
 
     var navigate = this.props.navigate;
@@ -31,6 +41,10 @@ var MainMenu = React.createClass({
     return (
       <ul className="nav nav-tabs">
         {tabs}
+        <li className="pull-right">
+          <a href="#" onClick={this.setSmallGrid}><span className="glyphicon glyphicon-th" /></a>
+          <a href="#" onClick={this.setMediumGrid}><span className="glyphicon glyphicon-th-large" /></a>
+        </li>
       </ul>
     );
   }

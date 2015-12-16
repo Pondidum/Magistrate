@@ -11,7 +11,8 @@ var App = React.createClass({
 
   getInitialState() {
     return {
-      location: this.getLocation()
+      location: this.getLocation(),
+      tileSize: "medium"
     };
   },
 
@@ -40,9 +41,13 @@ var App = React.createClass({
 
   },
 
+  setTileSize(size) {
+    this.setState({ tileSize: size });
+  },
+
   render() {
 
-    var tileSize = "small";
+    var tileSize = this.state.tileSize;
 
     var content;
     var selected = '';
@@ -95,7 +100,7 @@ var App = React.createClass({
 
     return (
       <div className="row">
-        <MainMenu navigate={this.navigate} selected={selected} />
+        <MainMenu navigate={this.navigate} selected={selected} setTileSize={this.setTileSize} />
         <div className="">
           {content}
         </div>

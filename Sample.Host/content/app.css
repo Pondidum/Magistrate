@@ -11,6 +11,20 @@ ul.nav li.active {
   background-color: #00776C;
 }
 
+ul.nav li.pull-right {
+  margin-right: 1em;
+}
+
+ul.nav li.pull-right a {
+  display: inline-block;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+ul.nav li.pull-right a span:hover {
+  /* color */
+}
+
 table.table div.checkbox {
   margin-top: 0;
   margin-bottom: 0;
