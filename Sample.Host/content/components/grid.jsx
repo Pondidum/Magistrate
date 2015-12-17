@@ -38,15 +38,14 @@ var Grid = React.createClass({
 
     var collection = this.state.collection.map(function(item, index) {
       return (
-        <li key={index} className="col-md-3">
-          <self.props.tile
-            content={item}
-            onRemove={self.onRemove}
-            navigate={self.props.navigate}
-            url={self.props.url}
-            tileSize={self.props.tileSize}
-          />
-        </li>
+        <self.props.tile
+          key={index}
+          content={item}
+          onRemove={self.onRemove}
+          navigate={self.props.navigate}
+          url={self.props.url}
+          tileSize={self.props.tileSize}
+        />
       );
     });
 

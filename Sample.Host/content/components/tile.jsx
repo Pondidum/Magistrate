@@ -60,20 +60,22 @@ var Tile = React.createClass({
     }
 
     return (
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <h3 className="panel-title">
-            {title}
-            <ul className="tile-actions pull-right list-unstyled list-inline">
-              {deleteControl}
-            </ul>
-          </h3>
-          <Dialog title="Confirm Delete" acceptText="Delete" acceptStyle="danger" onSubmit={this.handleDeleteSubmit} size="lg" ref="deleteDialog">
-            {this.props.dialogContent}
-          </Dialog>
+      <li className="col-md-3">
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h3 className="panel-title">
+              {title}
+              <ul className="tile-actions pull-right list-unstyled list-inline">
+                {deleteControl}
+              </ul>
+            </h3>
+            <Dialog title="Confirm Delete" acceptText="Delete" acceptStyle="danger" onSubmit={this.handleDeleteSubmit} size="lg" ref="deleteDialog">
+              {this.props.dialogContent}
+            </Dialog>
+          </div>
+          {body}
         </div>
-        {body}
-      </div>
+      </li>
     );
 
   }
