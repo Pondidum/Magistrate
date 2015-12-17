@@ -49,7 +49,7 @@ var RoleTile = React.createClass({
         onDelete={this.onDelete}
         dialogContent={confirmation}
         tileSize={this.props.tileSize}>
-        <p>{role.description}</p>
+        {role.description}
       </Tile>
     );
   }

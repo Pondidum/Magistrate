@@ -61,7 +61,7 @@ var PermissionTile = React.createClass({
         onDelete={this.onDelete}
         dialogContent={confirmation}
         tileSize={this.props.tileSize}>
-        <p>{permission.description}</p>
+        {permission.description}
         <EditPermissionDialog url={this.props.url + "/" + permission.key} ref="editDialog" />
       </Tile>
     );
