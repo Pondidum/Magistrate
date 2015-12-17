@@ -37,18 +37,6 @@ var Tile = React.createClass({
     else
       title = (<span>{this.props.title}</span>);
 
-    var deleteControl;
-
-    if (this.props.onDelete) {
-      deleteControl = (
-        <li>
-          <a href="#" onClick={this.openDeleteDialog}>
-            <span className="glyphicon glyphicon-remove-circle"></span>
-          </a>
-        </li>
-      );
-    }
-
     var body;
 
     if (this.props.tileSize == Tile.sizes.large) {
@@ -66,7 +54,11 @@ var Tile = React.createClass({
             <h3 className="panel-title">
               {title}
               <ul className="tile-actions pull-right list-unstyled list-inline">
-                {deleteControl}
+                <li>
+                  <a href="#" onClick={this.openDeleteDialog}>
+                    <span className="glyphicon glyphicon-remove-circle"></span>
+                  </a>
+                </li>
               </ul>
             </h3>
             <Dialog title="Confirm Delete" acceptText="Delete" acceptStyle="danger" onSubmit={this.handleDeleteSubmit} size="lg" ref="deleteDialog">
