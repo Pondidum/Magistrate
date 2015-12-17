@@ -47,7 +47,7 @@ var Tile = React.createClass({
     if (this.props.tileSize == Tile.sizes.large) {
       body = (
         <div className="panel-body" style={{ height: "100px" }}>
-          {this.props.children}
+          {this.renderChildren()}
         </div>
       );
     }
@@ -77,6 +77,24 @@ var Tile = React.createClass({
 
   },
 
+  renderChildren() {
+    var children = this.props.children;
+
+    if (children.constructor !== Array) {
+      return (<span>{children}</span>);
+    }
+
+    var list = children.map(function(child, index) {
+      return (<li key={index}>{child}</li>);
+    });
+
+    return (
+      <ul className={"list-unstyled " + (this.props.tileSize == Tile.sizes.table ? "list-inline" : "")}>
+        {list}
+      </ul>
+    );
+  },
+
   renderRow(title) {
 
     return (
@@ -84,7 +102,7 @@ var Tile = React.createClass({
         <div className="row panel panel-default">
           <div className="panel-body">
             <div className="col-sm-3">{title}</div>
-            <div className="col-sm-8">{this.props.children}</div>
+            <div className="col-sm-8">{this.renderChildren()}</div>
             <div className="col-sm-1">
               <a href="#" onClick={this.openDeleteDialog}>
                 <span className="glyphicon glyphicon-remove-circle"></span>
