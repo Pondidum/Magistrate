@@ -14,6 +14,11 @@ var MainMenu = React.createClass({
     this.props.setTileSize(Tile.sizes.large);
   },
 
+  setTableGrid(e) {
+    e.preventDefault();
+    this.props.setTileSize(Tile.sizes.table);
+  },
+
   render() {
 
     var navigate = this.props.navigate;
@@ -48,6 +53,9 @@ var MainMenu = React.createClass({
           </a>
           <a href="#" className={tileSize == Tile.sizes.large ? "active" : ""} onClick={this.setLargeGrid}>
             <span className="glyphicon glyphicon-th-large" />
+          </a>
+          <a href="#" className={tileSize == Tile.sizes.table ? "active" : ""} onClick={this.setTableGrid}>
+            <span className="glyphicon glyphicon-th-list" />
           </a>
         </li>
       </ul>

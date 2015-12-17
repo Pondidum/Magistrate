@@ -69,6 +69,11 @@ a.permission-delete:hover {
 
 
 
+.tile div.panel {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 
 .inline-editor {
   line-height: 1.5;

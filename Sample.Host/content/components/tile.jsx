@@ -3,7 +3,8 @@ var Tile = React.createClass({
   statics: {
     sizes: {
       small: "sm",
-      large: "lg"
+      large: "lg",
+      table: "tbl"
     }
   },
 
@@ -37,6 +38,10 @@ var Tile = React.createClass({
     else
       title = (<span>{this.props.title}</span>);
 
+    if (this.props.tileSize == Tile.sizes.table) {
+      return this.renderRow(title);
+    }
+
     var body;
 
     if (this.props.tileSize == Tile.sizes.large) {
@@ -48,7 +53,7 @@ var Tile = React.createClass({
     }
 
     return (
-      <li className="col-md-3">
+      <li className="col-md-3 tile">
         <div className="panel panel-default">
           <div className="panel-heading">
             <h3 className="panel-title">
@@ -70,5 +75,25 @@ var Tile = React.createClass({
       </li>
     );
 
-  }
+  },
+
+  renderRow(title) {
+
+    return (
+      <li className="col-md-12 tile">
+        <div className="row panel panel-default">
+          <div className="panel-body">
+            <div className="col-sm-3">{title}</div>
+            <div className="col-sm-8">{this.props.children}</div>
+            <div className="col-sm-1">
+              <a href="#" onClick={this.openDeleteDialog}>
+                <span className="glyphicon glyphicon-remove-circle"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </li>
+    );
+  },
+
 });
