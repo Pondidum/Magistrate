@@ -59,7 +59,10 @@ var Overview = React.createClass({
 
     var collection = this.state.collection
       .filter(function(item) {
-        return item.name.search(filter) != -1;
+        var isName =  item.name.search(filter) != -1;
+        var isDescription = (item.description || "").search(filter) != -1;
+
+        return isName || isDescription;
       })
       .map(function(item, index) {
         return (
