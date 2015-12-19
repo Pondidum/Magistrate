@@ -3,27 +3,12 @@ var Overview = React.createClass({
   getInitialState() {
     return {
       filter: "",
-      collection: [],
+      collection: null,
     };
   },
 
-  componentDidMount() {
-    this.loadCollection();
-  },
-
-  loadCollection() {
-
-    $.ajax({
-      url: this.props.url + "/all",
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({
-          collection: data || []
-        });
-      }.bind(this)
-    });
-
+  getCollection() {
+    return this.state.collection || this.props.collection;
   },
 
   onFilterChanged(value) {
@@ -33,7 +18,7 @@ var Overview = React.createClass({
   },
 
   onAdd(item) {
-    var newCollection = this.state.collection.concat([item]);
+    var newCollection = this.getCollection().concat([item]);
 
     this.setState({
       collection: newCollection
@@ -42,7 +27,7 @@ var Overview = React.createClass({
 
   onRemove(item) {
 
-    var newCollection = this.state.collection.filter(function(x) {
+    var newCollection = this.getCollection().filter(function(x) {
       return x.key !== item.key
     });
 
@@ -54,27 +39,15 @@ var Overview = React.createClass({
 
   render() {
 
-    var self = this;
     var filter = new RegExp(this.state.filter, "i");
 
-    var collection = this.state.collection
+    var collection = this
+      .getCollection()
       .filter(function(item) {
         var isName =  item.name.search(filter) != -1;
         var isDescription = (item.description || "").search(filter) != -1;
 
         return isName || isDescription;
-      })
-      .map(function(item, index) {
-        return (
-          <self.props.tile
-            key={index}
-            content={item}
-            onRemove={self.onRemove}
-            navigate={self.props.navigate}
-            url={self.props.url}
-            tileSize={self.props.tileSize}
-          />
-        );
       });
 
     return (
@@ -82,13 +55,17 @@ var Overview = React.createClass({
         <div>
           <div className="row">
             <div className="col-sm-2">
-              <self.props.create onCreate={this.onAdd} url={self.props.url} />
+              <this.props.create onCreate={this.onAdd} url={this.props.url} />
             </div>
             <FilterBar filterChanged={this.onFilterChanged} />
           </div>
-          <ul className="list-unstyled list-inline">
-            {collection}
-          </ul>
+            <Grid
+              name="???"
+              tile={this.props.tile}
+              {...this.props}
+              collection={collection}
+            />
+
         </div>
       </div>
     );

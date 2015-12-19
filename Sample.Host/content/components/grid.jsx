@@ -2,13 +2,17 @@ var Grid = React.createClass({
 
   getInitialState() {
     return {
-      collection: this.props.collection
+      collection: null
     };
+  },
+
+  getCollection() {
+    return this.state.collection || this.props.collection;
   },
 
   onRemove(item) {
 
-    var newCollection = this.state.collection.filter(function(p) {
+    var newCollection = this.getCollection().filter(function(p) {
       return p.key != item.key;
     });
 
@@ -17,7 +21,7 @@ var Grid = React.createClass({
 
   onCollectionChanged(added, removed) {
 
-    var current = this.state.collection;
+    var current = this.getCollection();
 
     current = current.concat(added);
     current = current.filter(function(item) {
@@ -35,8 +39,9 @@ var Grid = React.createClass({
   render() {
 
     var self = this;
+    var collection = this.getCollection();
 
-    var collection = this.state.collection.map(function(item, index) {
+    var collection = collection.map(function(item, index) {
       return (
         <self.props.tile
           key={index}
@@ -52,25 +57,39 @@ var Grid = React.createClass({
     return (
       <div>
 
-        <div className="page-header">
-          <a href="#" onClick={this.showDialog}>Change {this.props.name}...</a>
+        {this.renderHeader()}
 
-          <this.props.selector
-            initialValue={this.state.collection}
-            url={self.props.url}
-            onChange={this.onCollectionChanged}
-            ref="dialog"
-          />
-
+        <div className="row">
+          <ul className="list-unstyled list-inline col-sm-12">
+            {collection}
+          </ul>
         </div>
-
-        <ul className="list-unstyled list-inline row">
-          {collection}
-        </ul>
 
       </div>
     );
 
+  },
+
+  renderHeader() {
+
+    if (this.props.selector == null)
+      return null;
+
+    var collection = this.getCollection();
+
+    return (
+      <div className="page-header">
+        <a href="#" onClick={this.showDialog}>Change {this.props.name}...</a>
+
+        <this.props.selector
+          initialValue={collection}
+          url={this.props.url}
+          onChange={this.onCollectionChanged}
+          ref="dialog"
+        />
+
+      </div>
+    );
   }
 
 });
