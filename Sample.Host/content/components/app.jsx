@@ -12,7 +12,10 @@ var App = React.createClass({
   getInitialState() {
     return {
       location: this.getLocation(),
-      tileSize: reactCookie.load('tileSize') || Tile.sizes.large
+      tileSize: reactCookie.load('tileSize') || Tile.sizes.large,
+      permissions: [],
+      roles: [],
+      users: []
     };
   },
 
@@ -39,6 +42,9 @@ var App = React.createClass({
       console.error(settings.url, err.toString());
     });
 
+    this.loadPermissions();
+    this.loadRoles();
+    this.loadUsers();
   },
 
   setTileSize(size) {
@@ -46,6 +52,104 @@ var App = React.createClass({
     reactCookie.save('tileSize', size);
   },
 
+  loadPermissions() {
+    $.ajax({
+      url: "/api/permissions/all",
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        this.setState({
+          permissions: data || []
+        });
+      }.bind(this)
+    });
+  },
+
+  loadRoles() {
+    $.ajax({
+      url: "/api/roles/all",
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        this.setState({
+          roles: data || []
+        });
+      }.bind(this)
+    });
+  },
+
+  loadUsers() {
+    $.ajax({
+      url: "/api/users/all",
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        this.setState({
+          users: data || []
+        });
+      }.bind(this)
+    });
+  },
+
+  onAddPermission(item) {
+    var newCollection = this.state.permissions.concat([item]);
+
+    this.setState({
+      permissions: newCollection
+    });
+  },
+
+  onRemovePermission(item) {
+
+    var newCollection = this.state.permissions.filter(function(x) {
+      return x.key !== item.key
+    });
+
+    this.setState({
+      permissions: newCollection
+    });
+
+  },
+
+  onAddRole(item) {
+    var newCollection = this.state.roles.concat([item]);
+
+    this.setState({
+      roles: newCollection
+    });
+  },
+
+  onRemoveRole(item) {
+
+    var newCollection = this.state.roles.filter(function(x) {
+      return x.key !== item.key
+    });
+
+    this.setState({
+      roles: newCollection
+    });
+
+  },
+
+  onAddUser(item) {
+    var newCollection = this.state.users.concat([item]);
+
+    this.setState({
+      users: newCollection
+    });
+  },
+
+  onRemoveUser(item) {
+
+    var newCollection = this.state.users.filter(function(x) {
+      return x.key !== item.key
+    });
+
+    this.setState({
+      users: newCollection
+    });
+
+  },
   render() {
 
     var tileSize = this.state.tileSize;
@@ -81,20 +185,47 @@ var App = React.createClass({
 
       case 'users':
 
-        content = (<UserOverview navigate={this.navigate} url="/api/users" tileSize={tileSize} />);
         selected = 'users';
+        content = (
+          <UserOverview
+            collection={this.state.users}
+            onAdd={this.onAddUser}
+            onRemove={this.onRemoveUser}
+            navigate={this.navigate}
+            url="/api/users"
+            tileSize={tileSize}
+          />
+        );
 
         break;
 
       case 'roles':
-        content = (<RoleOverview navigate={this.navigate} url="/api/roles" tileSize={tileSize} />);
         selected = 'roles';
+        content = (
+          <RoleOverview
+            collection={this.state.roles}
+            onAdd={this.onAddRole}
+            onRemove={this.onRemoveRole}
+            navigate={this.navigate}
+            url="/api/roles"
+            tileSize={tileSize}
+          />
+        );
 
         break;
 
       case 'permissions':
-        content = (<PermissionOverview navigate={this.navigate} url="/api/permissions" tileSize={tileSize} />);
         selected = 'permissions';
+        content = (
+          <PermissionOverview
+            collection={this.state.permissions}
+            onAdd={this.onAddPermission}
+            onRemove={this.onRemovePermission}
+            navigate={this.navigate}
+            url="/api/permissions"
+            tileSize={tileSize}
+          />
+        );
 
         break;
     }

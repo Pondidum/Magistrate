@@ -2,13 +2,8 @@ var Overview = React.createClass({
 
   getInitialState() {
     return {
-      filter: "",
-      collection: null,
+      filter: ""
     };
-  },
-
-  getCollection() {
-    return this.state.collection || this.props.collection;
   },
 
   onFilterChanged(value) {
@@ -17,32 +12,11 @@ var Overview = React.createClass({
     });
   },
 
-  onAdd(item) {
-    var newCollection = this.getCollection().concat([item]);
-
-    this.setState({
-      collection: newCollection
-    });
-  },
-
-  onRemove(item) {
-
-    var newCollection = this.getCollection().filter(function(x) {
-      return x.key !== item.key
-    });
-
-    this.setState({
-      collection: newCollection
-    });
-
-  },
-
   render() {
 
     var filter = new RegExp(this.state.filter, "i");
 
-    var collection = this
-      .getCollection()
+    var collection = this.props.collection
       .filter(function(item) {
         var isName =  item.name.search(filter) != -1;
         var isDescription = (item.description || "").search(filter) != -1;
@@ -55,7 +29,7 @@ var Overview = React.createClass({
         <div>
           <div className="row">
             <div className="col-sm-2">
-              <this.props.create onCreate={this.onAdd} url={this.props.url} />
+              <this.props.create onCreate={this.props.onAdd} url={this.props.url} />
             </div>
             <FilterBar filterChanged={this.onFilterChanged} />
           </div>
