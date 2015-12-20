@@ -1,36 +1,5 @@
 var Grid = React.createClass({
 
-  getInitialState() {
-    return {
-      collection: null
-    };
-  },
-
-  getCollection() {
-    return this.state.collection || this.props.collection;
-  },
-
-  onRemove(item) {
-
-    var newCollection = this.getCollection().filter(function(p) {
-      return p.key != item.key;
-    });
-
-    this.setState({ collection: newCollection });
-  },
-
-  onCollectionChanged(added, removed) {
-
-    var current = this.getCollection();
-
-    current = current.concat(added);
-    current = current.filter(function(item) {
-      return removed.find(p => p.key == item.key) == null;
-    });
-
-    this.setState({ collection: current });
-  },
-
   showDialog(e) {
     e.preventDefault();
     this.refs.dialog.open();
@@ -39,14 +8,14 @@ var Grid = React.createClass({
   render() {
 
     var self = this;
-    var collection = this.getCollection();
+    var collection = this.props.collection;
 
     var collection = collection.map(function(item, index) {
       return (
         <self.props.tile
           key={index}
           content={item}
-          onRemove={self.onRemove}
+          onRemove={self.props.onRemove}
           navigate={self.props.navigate}
           url={self.props.url}
           tileSize={self.props.tileSize}
@@ -75,7 +44,7 @@ var Grid = React.createClass({
     if (this.props.selector == null)
       return null;
 
-    var collection = this.getCollection();
+    var collection = this.props.collection;
 
     return (
       <div className="page-header">
@@ -84,7 +53,7 @@ var Grid = React.createClass({
         <this.props.selector
           initialValue={collection}
           url={this.props.url}
-          onChange={this.onCollectionChanged}
+          onChange={this.props.onChange}
           ref="dialog"
         />
 

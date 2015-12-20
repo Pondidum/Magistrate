@@ -111,6 +111,18 @@ var App = React.createClass({
 
   },
 
+  onChangePermissions(added, removed) {
+
+    var current = this.state.permissions;
+
+    current = current.concat(added);
+    current = current.filter(function(item) {
+      return removed.find(p => p.key == item.key) == null;
+    });
+
+    this.setState({ permissions: current });
+  },
+
   onAddRole(item) {
     var newCollection = this.state.roles.concat([item]);
 
@@ -129,6 +141,18 @@ var App = React.createClass({
       roles: newCollection
     });
 
+  },
+
+  onChangeRoles(added, removed) {
+
+    var current = this.state.roles;
+
+    current = current.concat(added);
+    current = current.filter(function(item) {
+      return removed.find(p => p.key == item.key) == null;
+    });
+
+    this.setState({ roles: current });
   },
 
   onAddUser(item) {
@@ -150,6 +174,19 @@ var App = React.createClass({
     });
 
   },
+
+  onChangeUsers(added, removed) {
+
+    var current = this.state.users;
+
+    current = current.concat(added);
+    current = current.filter(function(item) {
+      return removed.find(p => p.key == item.key) == null;
+    });
+
+    this.setState({ users: current });
+  },
+
   render() {
 
     var tileSize = this.state.tileSize;
@@ -191,6 +228,7 @@ var App = React.createClass({
             collection={this.state.users}
             onAdd={this.onAddUser}
             onRemove={this.onRemoveUser}
+            onChange={this.onChangeUsers}
             navigate={this.navigate}
             url="/api/users"
             tileSize={tileSize}
@@ -206,6 +244,7 @@ var App = React.createClass({
             collection={this.state.roles}
             onAdd={this.onAddRole}
             onRemove={this.onRemoveRole}
+            onChange={this.onChangeRoles}
             navigate={this.navigate}
             url="/api/roles"
             tileSize={tileSize}
@@ -221,6 +260,7 @@ var App = React.createClass({
             collection={this.state.permissions}
             onAdd={this.onAddPermission}
             onRemove={this.onRemovePermission}
+            onChange={this.onChangePermissions}
             navigate={this.navigate}
             url="/api/permissions"
             tileSize={tileSize}
