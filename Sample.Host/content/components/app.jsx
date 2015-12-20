@@ -92,99 +92,57 @@ var App = React.createClass({
   },
 
   onAddPermission(item) {
-    var newCollection = this.state.permissions.concat([item]);
-
     this.setState({
-      permissions: newCollection
+      permissions: collection.add(this.state.permissions, item)
     });
   },
 
   onRemovePermission(item) {
-
-    var newCollection = this.state.permissions.filter(function(x) {
-      return x.key !== item.key
-    });
-
     this.setState({
-      permissions: newCollection
+      permissions: collection.remove(this.state.permissions, item)
     });
-
   },
 
   onChangePermissions(added, removed) {
-
-    var current = this.state.permissions;
-
-    current = current.concat(added);
-    current = current.filter(function(item) {
-      return removed.find(p => p.key == item.key) == null;
+    this.setState({
+      permissions: collection.change(this.state.permissions, added, removed)
     });
-
-    this.setState({ permissions: current });
   },
 
   onAddRole(item) {
-    var newCollection = this.state.roles.concat([item]);
-
     this.setState({
-      roles: newCollection
+      roles: collection.add(this.state.roles, item)
     });
   },
 
   onRemoveRole(item) {
-
-    var newCollection = this.state.roles.filter(function(x) {
-      return x.key !== item.key
-    });
-
     this.setState({
-      roles: newCollection
+      roles: collection.remove(this.state.roles, item)
     });
-
   },
 
   onChangeRoles(added, removed) {
-
-    var current = this.state.roles;
-
-    current = current.concat(added);
-    current = current.filter(function(item) {
-      return removed.find(p => p.key == item.key) == null;
+    this.setState({
+      roles: collection.change(this.state.roles, added, removed)
     });
-
-    this.setState({ roles: current });
   },
 
   onAddUser(item) {
-    var newCollection = this.state.users.concat([item]);
-
     this.setState({
-      users: newCollection
+      users: collection.add(this.state.users, item)
     });
   },
 
   onRemoveUser(item) {
-
-    var newCollection = this.state.users.filter(function(x) {
-      return x.key !== item.key
-    });
-
     this.setState({
-      users: newCollection
+      users: collection.remove(this.state.users, item)
     });
-
   },
 
   onChangeUsers(added, removed) {
-
-    var current = this.state.users;
-
-    current = current.concat(added);
-    current = current.filter(function(item) {
-      return removed.find(p => p.key == item.key) == null;
+    this.setState({
+      users: collection.change(this.state.users, added, removed)
     });
-
-    this.setState({ users: current });
   },
 
   render() {
