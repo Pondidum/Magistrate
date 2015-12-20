@@ -1,29 +1,5 @@
 var SingleUserView = React.createClass({
 
-  getInitialState() {
-    return {
-      user: null
-    };
-  },
-
-  componentDidMount() {
-    this.getUser();
-  },
-
-  getUser() {
-
-    $.ajax({
-      url: this.props.url,
-      cache: false,
-      success: function(data) {
-        this.setState({
-          user: data
-        });
-      }.bind(this)
-    });
-
-  },
-
   onNameChanged(newName) {
 
     var json = JSON.stringify({
@@ -37,7 +13,7 @@ var SingleUserView = React.createClass({
       data: json,
       success: function() {
 
-        var user = this.state.user;
+        var user = this.props.user;
         user.name = newName;
 
         this.setState({ user: user });
@@ -48,21 +24,21 @@ var SingleUserView = React.createClass({
   },
 
   onAdd(name, item) {
-    var user = this.state.user;
+    var user = this.props.user;
     user[name] = collection.add(user[name], item);
 
     this.setState({ user: user });
   },
 
   onRemove(name, item) {
-    var user = this.state.user;
+    var user = this.props.user;
     user[name] = collection.remove(user[name], item);
 
     this.setState({ user: user });
   },
 
   onChange(name, added, removed) {
-    var user = this.state.user;
+    var user = this.props.user;
     user[name] = collection.change(user[name], added, removed);
 
     this.setState({ user: user });
@@ -70,7 +46,7 @@ var SingleUserView = React.createClass({
 
   render() {
 
-    var user = this.state.user;
+    var user = this.props.user;
     var self = this;
 
     if (user == null)

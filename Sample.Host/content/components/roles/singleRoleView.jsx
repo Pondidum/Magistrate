@@ -1,29 +1,5 @@
 var SingleRoleView = React.createClass({
 
-  getInitialState() {
-    return {
-      role: null
-    };
-  },
-
-  componentDidMount() {
-    this.getRole();
-  },
-
-  getRole() {
-
-    $.ajax({
-      url: this.props.url,
-      cache: false,
-      success: function(data) {
-        this.setState({
-          role: data
-        });
-      }.bind(this)
-    });
-
-  },
-
   onNameChanged(newName) {
 
     var json = JSON.stringify({
@@ -37,7 +13,7 @@ var SingleRoleView = React.createClass({
       data: json,
       success: function() {
 
-        var role = this.state.role;
+        var role = this.props.role;
         role.name = newName;
 
         this.setState({ role: role });
@@ -60,7 +36,7 @@ var SingleRoleView = React.createClass({
       data: json,
       success: function() {
 
-        var role = this.state.role;
+        var role = this.props.role;
         role.description = newDescription;
 
         this.setState({ role: role });
@@ -71,21 +47,21 @@ var SingleRoleView = React.createClass({
   },
 
   onAddPermission(permission) {
-    var role = this.state.role;
+    var role = this.props.role;
     role.permissions = collection.add(role.permissions, permission);
 
     this.setState({ role: role });
   },
 
   onRemovePermission(permission) {
-    var role = this.state.role;
+    var role = this.props.role;
     role.permissions = collection.remove(role.permissions, permission);
 
     this.setState({ role: role });
   },
 
   onChangePermissions(added, removed) {
-    var role = this.state.role;
+    var role = this.props.role;
     role.permissions = collection.change(role.permissions, added, removed);
 
     this.setState({ role: role });
@@ -93,7 +69,7 @@ var SingleRoleView = React.createClass({
 
   render() {
 
-    var role = this.state.role;
+    var role = this.props.role;
     var self = this;
 
     if (role == null)

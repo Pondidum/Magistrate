@@ -1,29 +1,5 @@
 var SinglePermissionView = React.createClass({
 
-  getInitialState() {
-    return {
-      permission: null
-    };
-  },
-
-  componentDidMount() {
-    this.getPermission();
-  },
-
-  getPermission() {
-
-    $.ajax({
-      url: this.props.url,
-      cache: false,
-      success: function(data) {
-        this.setState({
-          permission: data
-        });
-      }.bind(this)
-    });
-
-  },
-
   onNameChanged(newName) {
 
     var json = JSON.stringify({
@@ -37,7 +13,7 @@ var SinglePermissionView = React.createClass({
       data: json,
       success: function() {
 
-        var permission = this.state.permission;
+        var permission = this.props.permission;
         permission.name = newName;
 
         this.setState({ permission: permission });
@@ -60,7 +36,7 @@ var SinglePermissionView = React.createClass({
       data: json,
       success: function() {
 
-        var permission = this.state.permission;
+        var permission = this.props.permission;
         permission.description = newDescription;
 
         this.setState({ permission: permission });
@@ -72,7 +48,7 @@ var SinglePermissionView = React.createClass({
 
   render() {
 
-    var permission = this.state.permission;
+    var permission = this.props.permission;
     var self = this;
 
     if (permission == null)
