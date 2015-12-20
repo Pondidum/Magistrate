@@ -12,12 +12,7 @@ var SingleUserView = React.createClass({
       method: "PUT",
       data: json,
       success: function() {
-
-        var user = this.props.user;
-        user.name = newName;
-
-        this.setState({ user: user });
-
+        this.props.user.name = newName;
       }.bind(this)
     });
 
@@ -26,22 +21,16 @@ var SingleUserView = React.createClass({
   onAdd(name, item) {
     var user = this.props.user;
     user[name] = collection.add(user[name], item);
-
-    this.setState({ user: user });
   },
 
   onRemove(name, item) {
     var user = this.props.user;
     user[name] = collection.remove(user[name], item);
-
-    this.setState({ user: user });
   },
 
   onChange(name, added, removed) {
     var user = this.props.user;
     user[name] = collection.change(user[name], added, removed);
-
-    this.setState({ user: user });
   },
 
   render() {

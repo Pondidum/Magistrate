@@ -12,12 +12,7 @@ var SinglePermissionView = React.createClass({
       method: "PUT",
       data: json,
       success: function() {
-
-        var permission = this.props.permission;
-        permission.name = newName;
-
-        this.setState({ permission: permission });
-
+        this.props.permission.name = newName;
       }.bind(this)
     });
 
@@ -35,12 +30,7 @@ var SinglePermissionView = React.createClass({
       method: "PUT",
       data: json,
       success: function() {
-
-        var permission = this.props.permission;
-        permission.description = newDescription;
-
-        this.setState({ permission: permission });
-
+        this.props.permission.description = newDescription;
       }.bind(this)
     });
 

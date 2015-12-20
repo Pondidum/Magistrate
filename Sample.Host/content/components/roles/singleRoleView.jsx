@@ -12,12 +12,7 @@ var SingleRoleView = React.createClass({
       method: "PUT",
       data: json,
       success: function() {
-
-        var role = this.props.role;
-        role.name = newName;
-
-        this.setState({ role: role });
-
+        this.props.role.name = newName;
       }.bind(this)
     });
 
@@ -35,12 +30,7 @@ var SingleRoleView = React.createClass({
       method: "PUT",
       data: json,
       success: function() {
-
-        var role = this.props.role;
-        role.description = newDescription;
-
-        this.setState({ role: role });
-
+        this.props.role.description = newDescription;
       }.bind(this)
     });
 
@@ -49,22 +39,16 @@ var SingleRoleView = React.createClass({
   onAddPermission(permission) {
     var role = this.props.role;
     role.permissions = collection.add(role.permissions, permission);
-
-    this.setState({ role: role });
   },
 
   onRemovePermission(permission) {
     var role = this.props.role;
     role.permissions = collection.remove(role.permissions, permission);
-
-    this.setState({ role: role });
   },
 
   onChangePermissions(added, removed) {
     var role = this.props.role;
     role.permissions = collection.change(role.permissions, added, removed);
-
-    this.setState({ role: role });
   },
 
   render() {
