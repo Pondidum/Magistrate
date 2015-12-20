@@ -70,6 +70,27 @@ var SingleRoleView = React.createClass({
 
   },
 
+  onAddPermission(permission) {
+    var role = this.state.role;
+    role.permissions = collection.add(role.permissions, permission);
+
+    this.setState({ role: role });
+  },
+
+  onRemovePermission(permission) {
+    var role = this.state.role;
+    role.permissions = collection.remove(role.permissions, permission);
+
+    this.setState({ role: role });
+  },
+
+  onChangePermissions(added, removed) {
+    var role = this.state.role;
+    role.permissions = collection.change(role.permissions, added, removed);
+
+    this.setState({ role: role });
+  },
+
   render() {
 
     var role = this.state.role;
@@ -86,6 +107,9 @@ var SingleRoleView = React.createClass({
 
         <PermissionGrid
           collection={role.permissions}
+          onAdd={this.onAddPermission}
+          onRemove={this.onRemovePermission}
+          onChange={this.onChangePermissions}
           navigate={this.props.navigate}
           url={this.props.url + "/permissions/"}
           tileSize={self.props.tileSize}

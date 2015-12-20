@@ -47,30 +47,25 @@ var SingleUserView = React.createClass({
 
   },
 
-  onIncludeRemoved(permission) {
+  onAdd(name, item) {
     var user = this.state.user;
-    var newCollection = user.includes.filter(function(inc) {
-      return inc.key != permission.key;
-    });
+    user[name] = collection.add(user[name], item);
 
-    user.includes = newCollection;
-
-    this.setState({
-      user: user
-    });
+    this.setState({ user: user });
   },
 
-  onRevokeRemoved(permission) {
+  onRemove(name, item) {
     var user = this.state.user;
-    var newCollection = user.revokes.filter(function(inc) {
-      return inc.key != permission.key;
-    });
+    user[name] = collection.remove(user[name], item);
 
-    user.revokes = newCollection;
+    this.setState({ user: user });
+  },
 
-    this.setState({
-      user: user
-    });
+  onChange(name, added, removed) {
+    var user = this.state.user;
+    user[name] = collection.change(user[name], added, removed);
+
+    this.setState({ user: user });
   },
 
   render() {
@@ -87,6 +82,9 @@ var SingleUserView = React.createClass({
 
         <RoleGrid
           collection={user.roles}
+          onAdd={item => this.onAdd("roles", item)}
+          onRemove={item => this.onRemove("roles", item)}
+          onChange={(a, r) => this.onChange("roles", a, r)}
           navigate={this.props.navigate}
           url={this.props.url + "/roles/"}
           name="Roles"
@@ -95,6 +93,9 @@ var SingleUserView = React.createClass({
 
         <PermissionGrid
           collection={user.includes}
+          onAdd={item => this.onAdd("includes", item)}
+          onRemove={item => this.onRemove("includes", item)}
+          onChange={(a, r) => this.onChange("includes", a, r)}
           navigate={this.props.navigate}
           url={this.props.url + "/includes/"}
           name="Includes"
@@ -103,6 +104,9 @@ var SingleUserView = React.createClass({
 
         <PermissionGrid
           collection={user.revokes}
+          onAdd={item => this.onAdd("revokes", item)}
+          onRemove={item => this.onRemove("revokes", item)}
+          onChange={(a, r) => this.onChange("revokes", a, r)}
           navigate={this.props.navigate}
           url={this.props.url + "/revokes/"}
           name="Revokes"
