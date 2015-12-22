@@ -23,19 +23,16 @@ namespace Magistrate.Domain.Services
 		public SystemFacade(IEventStore eventStore)
 		{
 			_projections = new SystemProjections();
-			_eventStore = new ProjectionEventStore(eventStore, _projections.Project);
+			var es = new ProjectionEventStore(eventStore, _projections.Project);
 
-			_store = new AggregateStore<Guid>(_eventStore);
+			_store = new AggregateStore<Guid>(es);
 		}
 
 		public void Load()
 		{
-			using (var reader = _eventStore.CreateReader<Guid>(MagistrateStream))
-			{
-				reader
-					.LoadAllEvents()
-					.ForEach(_projections.Project);
-			}
+			_store
+				.ReplayAll(MagistrateStream)
+				.ForEach(_projections.Project);
 		}
 
 		public UserReadModel CreateUser(MagistrateUser currentUser, string key, string name)
