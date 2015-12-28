@@ -56,7 +56,7 @@ gulp.task('test', [ "compile" ], function() {
   return gulp
     .src(['**/bin/*/*.Tests.dll'], { read: false })
     .pipe(xunit({
-      executable: './tools/xunit/xunit.console.exe',
+      executable: './packages/xunit.runner.console.2.1.0/tools/xunit.console.exe',
       options: {
         verbose: true,
         nologo: true,
