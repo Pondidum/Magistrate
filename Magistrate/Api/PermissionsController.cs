@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Magistrate.Domain;
 using Magistrate.Domain.Services;
 using Microsoft.Owin;
 using Owin;
@@ -49,7 +50,7 @@ namespace Magistrate.Api
 
 		private async Task DeletePermission(IOwinContext context)
 		{
-			var dto = context.ReadJson<string[]>();
+			var dto = context.ReadJson<PermissionKey[]>();
 			var user = context.GetUser();
 
 			foreach (var key in dto)
@@ -88,7 +89,7 @@ namespace Magistrate.Api
 
 		private class CreatePermissionDto
 		{
-			public string Key { get; set; }
+			public PermissionKey Key { get; set; }
 			public string Name { get; set; }
 			public string Description { get; set; }
 		}

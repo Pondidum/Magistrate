@@ -5,9 +5,9 @@ using Magistrate.Domain.Events.UserEvents;
 
 namespace Magistrate.Domain
 {
-	public class User : AggregateRoot<Guid>, IKeyed, IIdentity
+	public class User : AggregateRoot<Guid>, IKeyed<UserKey>, IIdentity
 	{
-		public string Key { get; private set; }
+		public UserKey Key { get; private set; }
 		public string Name { get; private set; }
 		public bool IsActive { get; private set; }
 
@@ -28,9 +28,8 @@ namespace Magistrate.Domain
 			return new User();
 		}
 
-		public static User Create(MagistrateUser currentUser, string key, string name)
+		public static User Create(MagistrateUser currentUser, UserKey key, string name)
 		{
-			ValidateKey(key);
 			ValidateName(name);
 
 			var user = new User();
@@ -117,13 +116,6 @@ namespace Magistrate.Domain
 			});
 		}
 
-
-
-		private static void ValidateKey(string key)
-		{
-			if (string.IsNullOrWhiteSpace(key))
-				throw new ArgumentException("Key cannot be null or whitespace", nameof(key));
-		}
 
 		private static void ValidateName(string name)
 		{

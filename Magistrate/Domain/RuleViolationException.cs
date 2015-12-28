@@ -5,17 +5,17 @@ using Ledger.Infrastructure;
 
 namespace Magistrate.Domain
 {
-	public class RuleViolationException : Exception
+	public class RuleViolationException<TKey> : Exception
 	{
 		public IEnumerable<string> Violations { get; }
 
-		public RuleViolationException(IKeyed aggregate, List<string> violationMessages)
+		public RuleViolationException(IKeyed<TKey> aggregate, List<string> violationMessages)
 			: base(BuildMessage(aggregate, violationMessages))
 		{
 			Violations = violationMessages;
 		}
 
-		private static string BuildMessage(IKeyed aggregate, IEnumerable<string> messages)
+		private static string BuildMessage(IKeyed<TKey> aggregate, IEnumerable<string> messages)
 		{
 			var sb = new StringBuilder();
 

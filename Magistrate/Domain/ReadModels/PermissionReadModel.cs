@@ -4,11 +4,11 @@ using Newtonsoft.Json;
 
 namespace Magistrate.Domain.ReadModels
 {
-	public class PermissionReadModel : IKeyed, IIdentity
+	public class PermissionReadModel : IKeyed<PermissionKey>, IIdentity
 	{
 		[JsonIgnore]
 		public Guid ID { get; set; }
-		public string Key { get; set; }
+		public PermissionKey Key { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 

@@ -18,8 +18,8 @@ namespace Magistrate.Tests.Domain.Rules
 		[Fact]
 		public void When_there_are_no_items()
 		{
-			var rule = new UniqueKeyRule<Permission>(Enumerable.Empty<Permission>());
-			var add = Permission.Create(_current, "test", "test", "");
+			var rule = new UniqueKeyRule<Permission, PermissionKey>(Enumerable.Empty<Permission>());
+			var add = Permission.Create(_current, new PermissionKey("test"), "test", "");
 
 			rule.IsSatisfiedBy(add).ShouldBe(true);
 		}
@@ -27,12 +27,12 @@ namespace Magistrate.Tests.Domain.Rules
 		[Fact]
 		public void When_the_item_clashes_with_another()
 		{
-			var rule = new UniqueKeyRule<Permission>(new[]
+			var rule = new UniqueKeyRule<Permission, PermissionKey>(new[]
 			{
-				Permission.Create(_current, "test", "Already In", "")
+				Permission.Create(_current, new PermissionKey("test"), "Already In", "")
 			});
 
-			var add = Permission.Create(_current, "test", "New", "");
+			var add = Permission.Create(_current, new PermissionKey("test"), "New", "");
 
 			rule.IsSatisfiedBy(add).ShouldBe(false);
 		}
@@ -40,8 +40,8 @@ namespace Magistrate.Tests.Domain.Rules
 		[Fact]
 		public void When_the_item_is_already_in_the_collection()
 		{
-			var perm = Permission.Create(_current, "test", "Already In", "");
-            var rule = new UniqueKeyRule<Permission>(new[] { perm });
+			var perm = Permission.Create(_current, new PermissionKey("test"), "Already In", "");
+            var rule = new UniqueKeyRule<Permission, PermissionKey>(new[] { perm });
 
 			rule.IsSatisfiedBy(perm).ShouldBe(true);
 		}

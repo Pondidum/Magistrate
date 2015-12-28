@@ -34,43 +34,43 @@ namespace Magistrate.Domain.Services
 				.ForEach(_projections.Project);
 		}
 
-		public UserReadModel CreateUser(MagistrateUser currentUser, string key, string name)
+		public UserReadModel CreateUser(MagistrateUser currentUser, UserKey key, string name)
 		{
 			var user = User.Create(currentUser, key, name);
 			var model = new UserReadModel { ID = user.ID, Key = user.Key };
 
-			CheckRules(Users, model);
+			CheckRules<UserReadModel, UserKey>(Users, model);
 
 			_store.Save(MagistrateStream, user);
 
 			return Users.First(u => u.ID == user.ID);
 		}
 
-		public RoleReadModel CreateRole(MagistrateUser currentUser, string key, string name, string description)
+		public RoleReadModel CreateRole(MagistrateUser currentUser, RoleKey key, string name, string description)
 		{
 			var role = Role.Create(currentUser, key, name, description);
 			var model = new RoleReadModel { ID = role.ID, Key = role.Key };
 
-			CheckRules(Roles, model);
+			CheckRules<RoleReadModel, RoleKey>(Roles, model);
 
 			_store.Save(MagistrateStream, role);
 
 			return Roles.First(r => r.ID == role.ID);
 		}
 
-		public PermissionReadModel CreatePermission(MagistrateUser currentUser, string key, string name, string description)
+		public PermissionReadModel CreatePermission(MagistrateUser currentUser, PermissionKey key, string name, string description)
 		{
 			var permission = Permission.Create(currentUser, key, name, description);
 			var model = new PermissionReadModel { ID = permission.ID, Key = permission.Key };
 
-			CheckRules(Permissions, model);
+			CheckRules<PermissionReadModel, PermissionKey>(Permissions, model);
 
 			_store.Save(MagistrateStream, permission);
 
 			return Permissions.First(p => p.ID == permission.ID);
 		}
 
-		public void OnPermission(string key, Action<Permission> action)
+		public void OnPermission(PermissionKey key, Action<Permission> action)
 		{
 			var permission = LoadPermission(key);
 
@@ -79,7 +79,7 @@ namespace Magistrate.Domain.Services
 			_store.Save(MagistrateStream, permission);
 		}
 
-		public void OnRole(string key, Action<Role> action)
+		public void OnRole(RoleKey key, Action<Role> action)
 		{
 			var role = LoadRole(key);
 
@@ -88,7 +88,7 @@ namespace Magistrate.Domain.Services
 			_store.Save(MagistrateStream, role);
 		}
 
-		public void OnUser(string key, Action<User> action)
+		public void OnUser(UserKey key, Action<User> action)
 		{
 			var user = LoadUser(key);
 
@@ -97,27 +97,27 @@ namespace Magistrate.Domain.Services
 			_store.Save(MagistrateStream, user);
 		}
 
-		public Permission LoadPermission(string key)
+		public Permission LoadPermission(PermissionKey key)
 		{
 			var model = Permissions.First(p => p.Key == key);
 			return _store.Load(MagistrateStream, model.ID, Permission.Blank);
 		}
 
-		public Role LoadRole(string key)
+		public Role LoadRole(RoleKey key)
 		{
 			var model = Roles.First(r => r.Key == key);
 			return _store.Load(MagistrateStream, model.ID, Role.Blank);
 		}
 
-		public User LoadUser(string key)
+		public User LoadUser(UserKey key)
 		{
 			var model = Users.First(r => r.Key == key);
 			return _store.Load(MagistrateStream, model.ID, User.Blank);
 		}
 
-		private void CheckRules<T>(IEnumerable<T> collection, T target) where T : IKeyed, IIdentity
+		private void CheckRules<T, TKey>(IEnumerable<T> collection, T target) where T : IKeyed<TKey>, IIdentity
 		{
-			var rules = new[] { new UniqueKeyRule<T>(collection) };
+			var rules = new[] { new UniqueKeyRule<T, TKey>(collection) };
 
 			var violations = rules
 				.Where(r => r.IsSatisfiedBy(target) == false)
@@ -125,7 +125,7 @@ namespace Magistrate.Domain.Services
 				.ToList();
 
 			if (violations.Any())
-				throw new RuleViolationException(target, violations);
+				throw new RuleViolationException<TKey>(target, violations);
 		}
 	}
 }

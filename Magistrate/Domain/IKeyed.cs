@@ -2,9 +2,9 @@ using System;
 
 namespace Magistrate.Domain
 {
-	public interface IKeyed
+	public interface IKeyed<TKey>
 	{
-		string Key { get; }
+		TKey Key { get; }
 	}
 
 	public interface IIdentity

@@ -22,7 +22,7 @@ namespace Magistrate.Api
 			: base(next)
 		{
 			Mapper.CreateMap<Exception, ExceptionResponse>();
-			Mapper.CreateMap<RuleViolationException, ExceptionResponse>();
+			Mapper.CreateMap(typeof(RuleViolationException<>), typeof(ExceptionResponse));
 		}
 
 		public override async Task Invoke(IOwinContext context)

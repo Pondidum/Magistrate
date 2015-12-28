@@ -5,11 +5,11 @@ using Newtonsoft.Json;
 
 namespace Magistrate.Domain.ReadModels
 {
-	public class RoleReadModel : IKeyed, IIdentity
+	public class RoleReadModel : IKeyed<RoleKey>, IIdentity
 	{
 		[JsonIgnore]
 		public Guid ID { get; set; }
-		public string Key { get; set; }
+		public RoleKey Key { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 

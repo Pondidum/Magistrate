@@ -6,11 +6,11 @@ using Newtonsoft.Json;
 
 namespace Magistrate.Domain.ReadModels
 {
-	public class UserReadModel : IKeyed, IIdentity
+	public class UserReadModel : IKeyed<UserKey>, IIdentity
 	{
 		[JsonIgnore]
 		public Guid ID { get; set; }
-		public string Key { get; set; }
+		public UserKey Key { get; set; }
 		public string Name { get; set; }
 
 		public HashSet<PermissionReadModel> Includes { get; }
@@ -24,7 +24,7 @@ namespace Magistrate.Domain.ReadModels
 			Roles = new HashSet<RoleReadModel>();
 		}
 
-		public bool Can(string permissionKey)
+		public bool Can(PermissionKey permissionKey)
 		{
 			if (Revokes.Any(revoke => revoke.Key == permissionKey))
 				return false;

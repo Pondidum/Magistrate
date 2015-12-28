@@ -51,7 +51,7 @@ namespace Magistrate.Api
 
 		private async Task DeleteRole(IOwinContext context)
 		{
-			var dto = context.ReadJson<string[]>();
+			var dto = context.ReadJson<RoleKey[]>();
 			var user = context.GetUser();
 
 			foreach (var key in dto)
@@ -92,7 +92,7 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, RoleKey, async roleKey =>
 			{
-				var dto = context.ReadJson<string[]>();
+				var dto = context.ReadJson<PermissionKey[]>();
 				var user = context.GetUser();
 
 				System.OnRole(roleKey, role =>
@@ -111,7 +111,7 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, RoleKey, async roleKey =>
 			{
-				var dto = context.ReadJson<string[]>();
+				var dto = context.ReadJson<PermissionKey[]>();
 				var user = context.GetUser();
 
 				System.OnRole(roleKey, role =>
@@ -128,7 +128,7 @@ namespace Magistrate.Api
 
 		private class CreateRoleDto
 		{
-			public string Key { get; set; }
+			public RoleKey Key { get; set; }
 			public string Name { get; set; }
 			public string Description { get; set; }
 		}

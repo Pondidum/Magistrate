@@ -10,6 +10,9 @@ namespace Magistrate.Domain
 
 		public PermissionKey(string key)
 		{
+			if (string.IsNullOrWhiteSpace(key))
+				throw new ArgumentException("Key cannot be null or whitespace", nameof(key));
+
 			_key = key;
 		}
 

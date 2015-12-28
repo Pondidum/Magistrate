@@ -5,7 +5,7 @@ using Ledger;
 
 namespace Magistrate.Domain.Rules
 {
-	public class UniqueKeyRule<T> : IRule<T> where T : IKeyed, IIdentity
+	public class UniqueKeyRule<T, TKey> : IRule<T> where T : IKeyed<TKey>, IIdentity
 	{
 		private readonly IEnumerable<T> _allItems;
 
@@ -18,7 +18,7 @@ namespace Magistrate.Domain.Rules
 		{
 			return _allItems
 				.Where(item => item.ID != target.ID)
-				.Any(item => item.Key.Equals(target.Key, StringComparison.OrdinalIgnoreCase)) == false;
+				.Any(item => item.Key.Equals(target.Key)) == false;
 		}
 
 		public string GetMessage(T target)

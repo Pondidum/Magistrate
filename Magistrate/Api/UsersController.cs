@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Magistrate.Domain;
 using Magistrate.Domain.Services;
 using Microsoft.Owin;
 using Owin;
@@ -72,7 +73,7 @@ namespace Magistrate.Api
 
 		private async Task DeleteUser(IOwinContext context)
 		{
-			var dto = context.ReadJson<string[]>();
+			var dto = context.ReadJson<UserKey[]>();
 			var currentUser = context.GetUser();
 
 			foreach (var key in dto)
@@ -87,7 +88,7 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				var dto = context.ReadJson<string[]>();
+				var dto = context.ReadJson<PermissionKey[]>();
 				var currentUser = context.GetUser();
 
 				foreach (var permissionKey in dto)
@@ -103,7 +104,7 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				var dto = context.ReadJson<string[]>();
+				var dto = context.ReadJson<PermissionKey[]>();
 				var currentUser = context.GetUser();
 
 				foreach (var permissionKey in dto)
@@ -119,7 +120,7 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				var dto = context.ReadJson<string[]>();
+				var dto = context.ReadJson<PermissionKey[]>();
 				var currentUser = context.GetUser();
 
 				foreach (var permissionKey in dto)
@@ -135,7 +136,7 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				var dto = context.ReadJson<string[]>();
+				var dto = context.ReadJson<PermissionKey[]>();
 				var currentUser = context.GetUser();
 
 				foreach (var permissionKey in dto)
@@ -151,7 +152,7 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				var dto = context.ReadJson<string[]>();
+				var dto = context.ReadJson<RoleKey[]>();
 				var currentUser = context.GetUser();
 
 				foreach (var roleKey in dto)
@@ -167,7 +168,7 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, UserKey, async key =>
 			{
-				var dto = context.ReadJson<string[]>();
+				var dto = context.ReadJson<RoleKey[]>();
 				var currentUser = context.GetUser();
 
 				foreach (var roleKey in dto)
@@ -198,7 +199,7 @@ namespace Magistrate.Api
 
 		private class CreateUserDto
 		{
-			public string Key { get; set; }
+			public UserKey Key { get; set; }
 			public string Name { get; set; }
 		}
 

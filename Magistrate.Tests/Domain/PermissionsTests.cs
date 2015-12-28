@@ -25,7 +25,7 @@ namespace Magistrate.Tests.Domain
 		public void A_permission_must_have_a_key()
 		{
 			Should.Throw<ArgumentException>(
-				() => Permission.Create(_currentUser, "", "No key permission", "doesnt have a key")).Message
+				() => Permission.Create(_currentUser, new PermissionKey(""), "No key permission", "doesnt have a key")).Message
 				.ShouldContain("Key cannot be null or whitespace");
 		}
 
@@ -33,14 +33,14 @@ namespace Magistrate.Tests.Domain
 		public void A_permission_must_have_a_name()
 		{
 			Should.Throw<ArgumentException>(
-				() => Permission.Create(_currentUser, "some-key", "", "doesnt have a name")).Message
+				() => Permission.Create(_currentUser, new PermissionKey("some-key"), "", "doesnt have a name")).Message
 				.ShouldContain("Name cannot be null or whitespace");
 		}
 
 		[Fact]
 		public void A_permission_doesnt_need_a_description()
 		{
-			var permission = Permission.Create(_currentUser, "some-key", "some-name", "");
+			var permission = Permission.Create(_currentUser, new PermissionKey("some-key"), "some-name", "");
 
 			permission.Description.ShouldBeEmpty();
 		}
@@ -48,11 +48,11 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void A_permission_gets_all_properties_assigned()
 		{
-			var permission = Permission.Create(_currentUser, "some-key", "some name", "some description");
+			var permission = Permission.Create(_currentUser, new PermissionKey("some-key"), "some name", "some description");
 
 			permission.ShouldSatisfyAllConditions(
 				() => permission.ID.ShouldNotBe(Guid.Empty),
-				() => permission.Key.ShouldBe("some-key"),
+				() => permission.Key.ShouldBe(new PermissionKey("some-key")),
 				() => permission.Name.ShouldBe("some name"),
 				() => permission.Description.ShouldBe("some description")
 			);
@@ -61,7 +61,7 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void A_permissions_name_cannot_be_removed()
 		{
-			var permission = Permission.Create(_currentUser, "some-key", "some name", "some description");
+			var permission = Permission.Create(_currentUser, new PermissionKey("some-key"), "some name", "some description");
 
 			Should.Throw<ArgumentException>(
 				() => permission.ChangeName(_currentUser, "")).Message
@@ -71,7 +71,7 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void Changing_a_permissions_name_works()
 		{
-			var permission = Permission.Create(_currentUser, "some-key", "some name", "some description");
+			var permission = Permission.Create(_currentUser, new PermissionKey("some-key"), "some name", "some description");
 
 			permission.ChangeName(_currentUser, "new name");
 			permission.Name.ShouldBe("new name");
@@ -80,7 +80,7 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void Changing_a_permissions_description_works()
 		{
-			var permission = Permission.Create(_currentUser, "some-key", "some name", "some description");
+			var permission = Permission.Create(_currentUser, new PermissionKey("some-key"), "some name", "some description");
 			
 			permission.ChangeDescription(_currentUser, "new description");
 			permission.Description.ShouldBe("new description");
@@ -89,7 +89,7 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void Two_permissions_are_equal_if_they_have_the_same_id()
 		{
-			var p1 = Permission.Create(_currentUser, "key", "name", "");
+			var p1 = Permission.Create(_currentUser, new PermissionKey("key"), "name", "");
 			var p2 = Clone(p1);
 
 			p2.ID.ShouldBe(p1.ID);

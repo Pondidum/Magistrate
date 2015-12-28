@@ -5,9 +5,9 @@ using Magistrate.Domain.Events.RoleEvents;
 
 namespace Magistrate.Domain
 {
-	public class Role : AggregateRoot<Guid>, IKeyed, IIdentity
+	public class Role : AggregateRoot<Guid>, IKeyed<RoleKey>, IIdentity
 	{
-		public string Key { get; private set; }
+		public RoleKey Key { get; private set; }
 		public string Name { get; private set; }
 		public string Description { get; private set; }
 		public bool IsActive { get; private set; }
@@ -27,9 +27,8 @@ namespace Magistrate.Domain
 			return new Role();
 		}
 
-		public static Role Create(MagistrateUser user, string key, string name, string description)
+		public static Role Create(MagistrateUser user, RoleKey key, string name, string description)
 		{
-			ValidateKey(key);
 			ValidateName(name);
 
 			var role = new Role();
@@ -97,13 +96,6 @@ namespace Magistrate.Domain
 			});
 		}
 
-
-
-		private static void ValidateKey(string key)
-		{
-			if (string.IsNullOrWhiteSpace(key))
-				throw new ArgumentException("Key cannot be null or whitespace", nameof(key));
-		}
 
 		private static void ValidateName(string name)
 		{

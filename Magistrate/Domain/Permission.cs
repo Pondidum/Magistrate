@@ -5,9 +5,9 @@ using Magistrate.Domain.Events.PermissionEvents;
 
 namespace Magistrate.Domain
 {
-	public class Permission : AggregateRoot<Guid>, IEquatable<Permission>, IKeyed, IIdentity
+	public class Permission : AggregateRoot<Guid>, IEquatable<Permission>, IKeyed<PermissionKey>, IIdentity
 	{
-		public string Key { get; private set; }
+		public PermissionKey Key { get; private set; }
 		public string Name { get; private set; }
 		public string Description { get; private set; }
 		public bool IsActive { get; private set; }
@@ -22,9 +22,8 @@ namespace Magistrate.Domain
 			return new Permission();
 		}
 
-		public static Permission Create(MagistrateUser user, string key, string name, string description)
+		public static Permission Create(MagistrateUser user, PermissionKey key, string name, string description)
 		{
-			ValidateKey(key);
 			ValidateName(name);
 
 			var perm = new Permission();
@@ -73,12 +72,6 @@ namespace Magistrate.Domain
 			{
 				User = user
 			});
-		}
-
-		private static void ValidateKey(string key)
-		{
-			if (string.IsNullOrWhiteSpace(key))
-				throw new ArgumentException("Key cannot be null or whitespace", nameof(key));
 		}
 
 		private static void ValidateName(string name)

@@ -1,4 +1,5 @@
-﻿using Magistrate.Domain.ReadModels;
+﻿using Magistrate.Domain;
+using Magistrate.Domain.ReadModels;
 using Shouldly;
 using Xunit;
 
@@ -11,8 +12,8 @@ namespace Magistrate.Tests.Domain.ReadModels
 
 		public UserReadModelTests()
 		{
-			_permissionOne = new PermissionReadModel { Name = "One", Key = "perm-one" };
-			_permissionTwo = new PermissionReadModel { Name = "Two", Key = "perm-two" };
+			_permissionOne = new PermissionReadModel { Name = "One", Key = new PermissionKey("perm-one") };
+			_permissionTwo = new PermissionReadModel { Name = "Two", Key = new PermissionKey("perm-two") };
 		}
 
 		[Fact]
