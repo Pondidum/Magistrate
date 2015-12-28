@@ -107,6 +107,8 @@
     <Compile Include="Domain\Services\Projector.cs" />
     <Compile Include="Domain\Services\SystemFacade.cs" />
     <Compile Include="Domain\Services\SystemProjections.cs" />
+    <Compile Include="Domain\UserKey.cs" />
+    <Compile Include="Domain\UserKeyConverter.cs" />
     <Compile Include="MagistrateConfiguration.cs" />
     <Compile Include="MagistrateExtensions.cs" />
     <Compile Include="MagistrateUser.cs" />
