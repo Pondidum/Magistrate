@@ -9,10 +9,8 @@ _ReSharper.*
 *.cache
 *.DotSettings
 *.DotSettings.user
-.vs/
 
 AssemblyVersion.cs
 
-packages
-build
-node_modules
+/packages
+/node_modules
