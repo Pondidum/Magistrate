@@ -96,9 +96,13 @@
     <Compile Include="Domain\Events\UserEvents\UserCreatedEvent.cs" />
     <Compile Include="Domain\Events\UserLoggedEvent.cs" />
     <Compile Include="Domain\IKeyed.cs" />
+    <Compile Include="Domain\PermissionKey.cs" />
+    <Compile Include="Domain\PermissionKeyConverter.cs" />
     <Compile Include="Domain\ReadModels\PermissionReadModel.cs" />
     <Compile Include="Domain\ReadModels\RoleReadModel.cs" />
     <Compile Include="Domain\ReadModels\UserReadModel.cs" />
+    <Compile Include="Domain\RoleKey.cs" />
+    <Compile Include="Domain\RoleKeyConverter.cs" />
     <Compile Include="Domain\Rules\IRule.cs" />
     <Compile Include="Domain\Permission.cs" />
     <Compile Include="Domain\Rules\UniqueKeyRule.cs" />
