@@ -18,7 +18,6 @@ namespace Magistrate.Domain.Services
 
 		private readonly AggregateStore<Guid> _store;
 		private readonly SystemProjections _projections;
-		private readonly ProjectionEventStore _eventStore;
 
 		public SystemFacade(IEventStore eventStore)
 		{
