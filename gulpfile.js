@@ -19,7 +19,7 @@ var config = {
   output: "./build/deploy"
 }
 
-gulp.task("default", [ "restore", "version", "compile", "test" ]);
+gulp.task("default", [ "restore", "version", "compile", "test", "pack" ]);
 
 gulp.task('restore', function() {
   return gulp
@@ -58,7 +58,19 @@ gulp.task('test', [ "compile" ], function() {
     .pipe(xunit({
       executable: './tools/xunit/xunit.console.exe',
       options: {
-        quiet: true
+        verbose: true,
+        nologo: true,
       }
+    }));
+});
+
+gulp.task('pack', [ 'test' ], function () {
+  return gulp
+    .src('**/*.nuspec', { read: false })
+    .pipe(rename({ extname: ".csproj" }))
+    .pipe(shell([
+      '"tools/nuget/nuget.exe" pack <%= file.path %> -version <%= version %> -prop configuration=<%= mode %> -o <%= output%>'
+    ], {
+      templateData: config
     }));
 });
