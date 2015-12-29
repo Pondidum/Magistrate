@@ -91,6 +91,8 @@
     <Compile Include="Acceptance\When_a_user_has_one_role_with_a_permission.cs" />
     <Compile Include="ApiTests\ApiAcceptanceTests.cs" />
     <Compile Include="ApiTests\PermissionControllerTests.cs" />
+    <Compile Include="ApiTests\RoleControllerTests.cs" />
+    <Compile Include="ApiTests\UserControllerTests.cs" />
     <Compile Include="Domain\PermissionKeyTests.cs" />
     <Compile Include="Domain\PermissionsTests.cs" />
     <Compile Include="Domain\ReadModels\UserReadModelTests.cs" />

@@ -9,7 +9,7 @@ namespace Magistrate.Tests.ApiTests
 		[Fact]
 		public async void When_listing_all_permissions()
 		{
-			var response = await  Get("/api/permissions/all");
+			var response = await Get("/api/permissions/all");
 
 			var expected = JToken.Parse(@"
 [
@@ -34,75 +34,5 @@ namespace Magistrate.Tests.ApiTests
 			JToken.DeepEquals(response, expected).ShouldBe(true, response.ToString);
 		}
 
-		[Fact]
-		public async void When_listing_all_roles()
-		{
-			var response = await Get("/api/roles/all");
-
-			var expected = JToken.Parse(@"
-[
-  {
-    ""key"": ""role-one"",
-    ""name"": ""first"",
-    ""description"": ""first role"",
-    ""permissions"": [
-      {
-        ""key"": ""perm-one"",
-        ""name"": ""first"",
-        ""description"": ""first permission""
-      }
-    ]
-  }
-]
-");
-
-			JToken.DeepEquals(response, expected).ShouldBe(true, response.ToString);
-		}
-
-		[Fact]
-		public async void When_listing_all_users()
-		{
-			var response = await Get("/api/users/all");
-
-			var expected = JToken.Parse(@"
-[
-  {
-    ""key"": ""user-one"",
-    ""name"": ""first"",
-    ""isActive"": false,
-    ""includes"": [
-      {
-        ""key"": ""perm-two"",
-        ""name"": ""second"",
-        ""description"": ""second permission""
-      }
-    ],
-    ""revokes"": [
-      {
-        ""key"": ""perm-three"",
-        ""name"": ""third"",
-        ""description"": ""third permission""
-      }
-    ],
-    ""roles"": [
-      {
-        ""key"": ""role-one"",
-        ""name"": ""first"",
-        ""description"": ""first role"",
-        ""permissions"": [
-          {
-            ""key"": ""perm-one"",
-            ""name"": ""first"",
-            ""description"": ""first permission""
-          }
-        ]
-      }
-    ]
-  }
-]
-");
-
-			JToken.DeepEquals(response, expected).ShouldBe(true, response.ToString);
-		}
 	}
 }
