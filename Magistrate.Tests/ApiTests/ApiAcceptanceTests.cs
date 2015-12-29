@@ -1,4 +1,6 @@
 using System;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Ledger;
 using Ledger.Stores;
@@ -58,6 +60,15 @@ namespace Magistrate.Tests.ApiTests
 		protected async Task<JToken> Get(string url)
 		{
 			return JToken.Parse(await _server.HttpClient.GetStringAsync(url));
+		}
+
+		protected async Task<JToken> PutJson(string url, string body)
+		{
+			var response = await _server
+				.HttpClient
+				.PutAsync(url, new StringContent(body, Encoding.UTF8, "application/json"));
+
+			return JToken.Parse(await response.Content.ReadAsStringAsync());
 		}
 
 		public void Dispose()

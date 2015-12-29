@@ -34,5 +34,25 @@ namespace Magistrate.Tests.ApiTests
 			JToken.DeepEquals(response, expected).ShouldBe(true, response.ToString);
 		}
 
+		[Fact]
+		public async void When_creating_a_permission()
+		{
+			var response = await PutJson("/api/permissions", @"
+{
+  ""key"":""perm-new"",
+  ""name"":""New Permission"",
+  ""description"":""A new permission"",
+}
+");
+			var expected = JToken.Parse(@"
+  {
+    ""key"": ""perm-new"",
+    ""name"": ""New Permission"",
+    ""description"": ""A new permission""
+  }
+");
+
+			JToken.DeepEquals(response, expected).ShouldBe(true, response.ToString);
+		}
 	}
 }
