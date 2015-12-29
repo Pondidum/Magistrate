@@ -10,7 +10,7 @@ namespace Magistrate.Domain.Services
 {
 	public class SystemFacade
 	{
-		private const string MagistrateStream = "Magistrate";
+		public const string MagistrateStream = "Magistrate";
 
 		public IEnumerable<UserReadModel> Users => _projections.Users;
 		public IEnumerable<RoleReadModel> Roles => _projections.Roles;
