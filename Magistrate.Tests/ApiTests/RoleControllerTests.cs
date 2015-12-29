@@ -9,7 +9,7 @@ namespace Magistrate.Tests.ApiTests
 		[Fact]
 		public async void When_listing_all_roles()
 		{
-			var response = await Get("/api/roles/all");
+			var response = await GetJson("/api/roles/all");
 
 			var expected = JToken.Parse(@"
 [

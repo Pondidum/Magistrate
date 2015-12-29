@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,9 +58,27 @@ namespace Magistrate.Tests.ApiTests
 			});
 		}
 
-		protected async Task<JToken> Get(string url)
+		protected async Task<HttpStatusCode> Get(string url)
+		{
+			var response = await _server
+				.HttpClient
+				.GetAsync(url);
+
+			return response.StatusCode;
+		}
+
+		protected async Task<JToken> GetJson(string url)
 		{
 			return JToken.Parse(await _server.HttpClient.GetStringAsync(url));
+		}
+
+		protected async Task<HttpStatusCode> Put(string url, string body)
+		{
+			var response = await _server
+				.HttpClient
+				.PutAsync(url, new StringContent(body, Encoding.UTF8, "application/json"));
+
+			return response.StatusCode;
 		}
 
 		protected async Task<JToken> PutJson(string url, string body)
@@ -69,6 +88,16 @@ namespace Magistrate.Tests.ApiTests
 				.PutAsync(url, new StringContent(body, Encoding.UTF8, "application/json"));
 
 			return JToken.Parse(await response.Content.ReadAsStringAsync());
+		}
+
+		protected async Task<HttpStatusCode> Delete(string url, string body)
+		{
+			var response = await _server
+				.CreateRequest(url)
+				.And(r => r.Content = new StringContent(body, Encoding.UTF8, "application/json"))
+				.SendAsync(HttpMethod.Delete.ToString());
+
+			return response.StatusCode;
 		}
 
 		public void Dispose()

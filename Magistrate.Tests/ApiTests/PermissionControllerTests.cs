@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Net;
+using Newtonsoft.Json.Linq;
 using Shouldly;
 using Xunit;
 
@@ -9,7 +10,7 @@ namespace Magistrate.Tests.ApiTests
 		[Fact]
 		public async void When_listing_all_permissions()
 		{
-			var response = await Get("/api/permissions/all");
+			var response = await GetJson("/api/permissions/all");
 
 			var expected = JToken.Parse(@"
 [
@@ -53,6 +54,48 @@ namespace Magistrate.Tests.ApiTests
 ");
 
 			JToken.DeepEquals(response, expected).ShouldBe(true, response.ToString);
+		}
+
+		[Fact]
+		public async void When_changing_a_permissions_name()
+		{
+			await Put("/api/permissions/perm-one/name", @"{ ""name"":""replaced name"" }");
+			var response = await GetJson("/api/permissions/perm-one");
+
+			var expected = JToken.Parse(@"
+  {
+    ""key"": ""perm-one"",
+    ""name"": ""replaced name"",
+    ""description"": ""first permission""
+  }
+");
+			JToken.DeepEquals(response, expected).ShouldBe(true, response.ToString);
+		}
+
+		[Fact]
+		public async void When_changing_a_permissions_description()
+		{
+			await Put("/api/permissions/perm-one/description", @"{ ""description"":""replaced description"" }");
+			var response = await GetJson("/api/permissions/perm-one");
+
+			var expected = JToken.Parse(@"
+  {
+    ""key"": ""perm-one"",
+    ""name"": ""first"",
+    ""description"": ""replaced description""
+  }
+");
+			JToken.DeepEquals(response, expected).ShouldBe(true, response.ToString);
+		}
+
+		[Fact]
+		public async void When_deleteing_a_permission()
+		{
+			await Delete("/api/permissions", @"[""perm-one""]");
+
+			var response = await Get("/api/permissions/perm-one");
+
+			response.ShouldBe(HttpStatusCode.NotFound);
 		}
 	}
 }

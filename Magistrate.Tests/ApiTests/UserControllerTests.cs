@@ -9,7 +9,7 @@ namespace Magistrate.Tests.ApiTests
 		[Fact]
 		public async void When_listing_all_users()
 		{
-			var response = await Get("/api/users/all");
+			var response = await GetJson("/api/users/all");
 
 			var expected = JToken.Parse(@"
 [
