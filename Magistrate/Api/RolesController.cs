@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Magistrate.Domain;
 using Magistrate.Domain.Services;
@@ -44,8 +45,12 @@ namespace Magistrate.Api
 		{
 			await NotFoundOrAction(context, RoleKey, async key =>
 			{
-				var role = System.Roles.First(r => r.Key == key);
-				await context.JsonResponse(role);
+				var role = System.Roles.FirstOrDefault(r => r.Key == key);
+
+				if (role != null)
+					await context.JsonResponse(role);
+				else
+					context.Response.StatusCode = (int)HttpStatusCode.NotFound;
 			});
 		}
 
