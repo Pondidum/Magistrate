@@ -1,5 +1,4 @@
 using Newtonsoft.Json.Linq;
-using Shouldly;
 using Xunit;
 
 namespace Magistrate.Tests.ApiTests
@@ -28,7 +27,7 @@ namespace Magistrate.Tests.ApiTests
 ]
 ");
 
-			JToken.DeepEquals(response, expected).ShouldBe(true, response.ToString);
+			ShouldBeTheSame(response, expected);
 		}
 	}
 }

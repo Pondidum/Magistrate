@@ -10,6 +10,7 @@ using Magistrate.Domain;
 using Magistrate.Domain.Services;
 using Microsoft.Owin.Testing;
 using Newtonsoft.Json.Linq;
+using Shouldly;
 
 namespace Magistrate.Tests.ApiTests
 {
@@ -98,6 +99,11 @@ namespace Magistrate.Tests.ApiTests
 				.SendAsync(HttpMethod.Delete.ToString());
 
 			return response.StatusCode;
+		}
+
+		protected void ShouldBeTheSame(JToken actual, JToken expected)
+		{
+			actual.ToString().ShouldBe(expected.ToString());
 		}
 
 		public void Dispose()

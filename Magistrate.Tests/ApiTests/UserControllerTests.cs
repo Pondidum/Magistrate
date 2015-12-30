@@ -49,7 +49,7 @@ namespace Magistrate.Tests.ApiTests
 ]
 ");
 
-			JToken.DeepEquals(response, expected).ShouldBe(true, response.ToString);
+			ShouldBeTheSame(response, expected);
 		}
 	}
 }
