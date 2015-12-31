@@ -33,6 +33,9 @@ namespace Magistrate.Tests.ApiTests
 			var r1 = Role.Create(currentUser, new RoleKey("role-one"), "first", "first role");
 			r1.AddPermission(currentUser, p1);
 
+			var r2 = Role.Create(currentUser, new RoleKey("role-two"), "second", "second role");
+			r2.AddPermission(currentUser, p2);
+
 			var u1 = User.Create(currentUser, new UserKey("user-one"), "first");
 			u1.AddRole(currentUser, r1);
 			u1.AddInclude(currentUser, p2);
@@ -44,6 +47,7 @@ namespace Magistrate.Tests.ApiTests
 			store.Save(SystemFacade.MagistrateStream, p2);
 			store.Save(SystemFacade.MagistrateStream, p3);
 			store.Save(SystemFacade.MagistrateStream, r1);
+			store.Save(SystemFacade.MagistrateStream, r2);
 			store.Save(SystemFacade.MagistrateStream, u1);
 
 			var config = new MagistrateConfiguration

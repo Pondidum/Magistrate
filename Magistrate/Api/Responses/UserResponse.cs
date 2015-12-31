@@ -7,7 +7,6 @@ namespace Magistrate.Api.Responses
 	{
 		public string Key { get; set; }
 		public string Name { get; set; }
-		public bool IsActive { get; set; }
 
 		public IEnumerable<PermissionResponse> Includes { get; set; }
 		public IEnumerable<PermissionResponse> Revokes { get; set; }

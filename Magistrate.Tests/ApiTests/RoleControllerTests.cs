@@ -25,6 +25,18 @@ namespace Magistrate.Tests.ApiTests
         ""description"": ""first permission""
       }
     ]
+  },
+  {
+    ""key"": ""role-two"",
+    ""name"": ""second"",
+    ""description"": ""second role"",
+    ""permissions"": [
+        {
+        ""key"": ""perm-two"",
+        ""name"": ""second"",
+        ""description"": ""second permission""
+        }
+    ]
   }
 ]
 ");
