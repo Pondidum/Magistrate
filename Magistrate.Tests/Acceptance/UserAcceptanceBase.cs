@@ -22,11 +22,11 @@ namespace Magistrate.Tests.Acceptance
 		protected UserReadModel ReadUser => _readModel.Users.Single();
 
 		private readonly AggregateStore<Guid> _store;
-		private readonly SystemProjections _readModel;
+		private readonly ReadModelProjections _readModel;
 
 		public UserAcceptanceBase()
 		{
-			_readModel = new SystemProjections();
+			_readModel = new ReadModelProjections();
 
 			User = User.Create(new MagistrateUser(), new UserKey("user-01"), "Andy");
 			TestRole = Role.Create(new MagistrateUser(), new RoleKey("role-01"), "Team Leader", "Leads Teams.");

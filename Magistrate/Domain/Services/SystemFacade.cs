@@ -17,11 +17,11 @@ namespace Magistrate.Domain.Services
 		public IEnumerable<PermissionReadModel> Permissions => _projections.Permissions;
 
 		private readonly AggregateStore<Guid> _store;
-		private readonly SystemProjections _projections;
+		private readonly ReadModelProjections _projections;
 
 		public SystemFacade(IEventStore eventStore)
 		{
-			_projections = new SystemProjections();
+			_projections = new ReadModelProjections();
 			var es = new ProjectionEventStore(eventStore, _projections.Project);
 
 			_store = new AggregateStore<Guid>(es);

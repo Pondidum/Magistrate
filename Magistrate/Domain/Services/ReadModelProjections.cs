@@ -9,7 +9,7 @@ using Magistrate.Domain.ReadModels;
 
 namespace Magistrate.Domain.Services
 {
-	public class SystemProjections
+	public class ReadModelProjections
 	{
 		public IEnumerable<UserReadModel> Users => _users.Values;
 		public IEnumerable<RoleReadModel> Roles => _roles.Values;
@@ -21,7 +21,7 @@ namespace Magistrate.Domain.Services
 
 		private readonly  Projector _projector;
 
-		public SystemProjections()
+		public ReadModelProjections()
 		{
 			_projector = new Projector();
 
