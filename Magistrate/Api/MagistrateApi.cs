@@ -33,6 +33,7 @@ namespace Magistrate.Api
 			Mapper.CreateMap<PermissionReadModel, PermissionResponse>();
 			Mapper.CreateMap<RoleReadModel, RoleResponse>();
 			Mapper.CreateMap<UserReadModel, UserResponse>();
+			Mapper.CreateMap<HistoryEntry, HistoryResponse>();
 		}
 
 		public void Configure(IAppBuilder app)

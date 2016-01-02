@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using Shouldly;
@@ -169,6 +171,25 @@ namespace Magistrate.Tests.ApiTests
 			var response = await Get("/api/roles/role-one");
 
 			response.ShouldBe(HttpStatusCode.NotFound);
+		}
+
+		[Fact]
+		public async void When_getting_history()
+		{
+			var response = await GetJson("/api/roles/role-one/history");
+			var entry = response.First();
+
+			entry.ShouldSatisfyAllConditions(
+				() => entry.SelectToken("action").Value<string>().ShouldBe("RoleCreatedEvent"),
+				() => entry.SelectToken("onAggregate").ShouldBe(null),
+				() => entry.SelectToken("at").Value<DateTime>().ShouldBeGreaterThan(DateTime.MinValue),
+				() => ShouldBeTheSame(entry.SelectToken("by"), JToken.Parse(@" { ""name"": ""Andy Dote"", ""key"": ""andy-dote"" }"))
+			);
+
+			response
+				.Select(t => t.SelectToken("action")
+				.Value<string>())
+				.ShouldBe(new[] { "RoleCreatedEvent", "PermissionAddedToRoleEvent" });
 		}
 	}
 }

@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System;
+using System.Linq;
+using System.Net;
 using Newtonsoft.Json.Linq;
 using Shouldly;
 using Xunit;
@@ -79,11 +81,11 @@ namespace Magistrate.Tests.ApiTests
 			var response = await GetJson("/api/permissions/perm-one");
 
 			var expected = JToken.Parse(@"
-  {
-    ""key"": ""perm-one"",
-    ""name"": ""first"",
-    ""description"": ""replaced description""
-  }
+{
+  ""key"": ""perm-one"",
+  ""name"": ""first"",
+  ""description"": ""replaced description""
+}
 ");
 			ShouldBeTheSame(response, expected);
 		}
@@ -96,6 +98,20 @@ namespace Magistrate.Tests.ApiTests
 			var response = await Get("/api/permissions/perm-one");
 
 			response.ShouldBe(HttpStatusCode.NotFound);
+		}
+
+		[Fact]
+		public async void When_getting_history()
+		{
+			var response = await GetJson("/api/permissions/perm-one/history");
+			var entry = response.Single();
+
+			entry.ShouldSatisfyAllConditions(
+				() => entry.SelectToken("action").Value<string>().ShouldBe("PermissionCreatedEvent"),
+				() => entry.SelectToken("onAggregate").ShouldBe(null),
+				() => entry.SelectToken("at").Value<DateTime>().ShouldBeGreaterThan(DateTime.MinValue),
+				() => ShouldBeTheSame(entry.SelectToken("by"), JToken.Parse(@" { ""name"": ""Andy Dote"", ""key"": ""andy-dote"" }"))
+			);
 		}
 	}
 }

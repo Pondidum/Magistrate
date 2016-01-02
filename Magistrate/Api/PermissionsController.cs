@@ -24,6 +24,7 @@ namespace Magistrate.Api
 			app.Route("/api/permissions/{permission-key}").Get(GetPermissionDetails);
 			app.Route("/api/permissions/{permission-key}/name").Put(UpdatePermissionName);
 			app.Route("/api/permissions/{permission-key}/description").Put(UpdatePermissionDescription);
+			app.Route("/api/permissions/{permission-key}/history").Get(GetHistory);
 		}
 
 		private async Task GetAll(IOwinContext context)
@@ -89,6 +90,19 @@ namespace Magistrate.Api
 				System.OnPermission(key, permission => permission.ChangeDescription(user, dto.Description));
 
 				await Task.Yield();
+			});
+		}
+
+		private async Task GetHistory(IOwinContext context)
+		{
+			await NotFoundOrAction(context, PermissionKey, async permissionKey =>
+			{
+				var permission = System.Permissions.FirstOrDefault(u => u.Key == permissionKey);
+
+				if (permission == null)
+					context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+				else
+					await context.JsonResponse(System.History.Where(h => h.OnAggregate == permission.ID));
 			});
 		}
 
