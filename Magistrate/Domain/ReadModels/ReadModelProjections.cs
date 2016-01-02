@@ -5,9 +5,9 @@ using Ledger.Infrastructure;
 using Magistrate.Domain.Events.PermissionEvents;
 using Magistrate.Domain.Events.RoleEvents;
 using Magistrate.Domain.Events.UserEvents;
-using Magistrate.Domain.ReadModels;
+using Magistrate.Domain.Services;
 
-namespace Magistrate.Domain.Services
+namespace Magistrate.Domain.ReadModels
 {
 	public class ReadModelProjections
 	{
