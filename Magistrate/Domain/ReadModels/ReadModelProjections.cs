@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Ledger;
 using Ledger.Infrastructure;
+using Magistrate.Domain.Events;
 using Magistrate.Domain.Events.PermissionEvents;
 using Magistrate.Domain.Events.RoleEvents;
 using Magistrate.Domain.Events.UserEvents;
@@ -14,12 +15,14 @@ namespace Magistrate.Domain.ReadModels
 		public IEnumerable<UserReadModel> Users => _users.Values;
 		public IEnumerable<RoleReadModel> Roles => _roles.Values;
 		public IEnumerable<PermissionReadModel> Permissions => _permissions.Values;
+		public IEnumerable<HistoryEntry> History => _history;
 
 		private readonly Dictionary<Guid, UserReadModel> _users;
 		private readonly Dictionary<Guid, RoleReadModel> _roles;
 		private readonly Dictionary<Guid, PermissionReadModel> _permissions;
+		private readonly List<HistoryEntry> _history;
 
-		private readonly  Projector _projector;
+		private readonly Projector _projector;
 
 		public ReadModelProjections()
 		{
@@ -28,6 +31,7 @@ namespace Magistrate.Domain.ReadModels
 			_users = new Dictionary<Guid, UserReadModel>();
 			_roles = new Dictionary<Guid, RoleReadModel>();
 			_permissions = new Dictionary<Guid, PermissionReadModel>();
+			_history = new List<HistoryEntry>();
 
 			RegisterProjections(_projector);
 		}
@@ -39,6 +43,8 @@ namespace Magistrate.Domain.ReadModels
 
 		private void RegisterProjections(Projector projector)
 		{
+			projector.Add<UserLoggedEvent>(e => _history.Add(HistoryEntry.From(e)));
+
 			projector.Add<PermissionCreatedEvent>(e => _permissions[e.AggregateID] = PermissionReadModel.From(e));
 			projector.Add<PermissionDescriptionChangedEvent>(e => _permissions[e.AggregateID].Description = e.NewDescription);
 			projector.Add<PermissionNameChangedEvent>(e => _permissions[e.AggregateID].Name = e.NewName);

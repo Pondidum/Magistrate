@@ -35,6 +35,8 @@ namespace Magistrate.Api
 			app.Route("/api/users/{user-key}/roles").Delete(RemoveRole);
 
 			app.Route("/api/users/{user-key}/check/{permission-key}").Get(CheckPermission);
+
+			app.Route("/api/users/{user-key}/history").Get(GetHistory);
 		}
 
 		private async Task GetAll(IOwinContext context)
@@ -199,6 +201,19 @@ namespace Magistrate.Api
 
 					await context.JsonResponse(result);
 				});
+			});
+		}
+
+		private async Task GetHistory(IOwinContext context)
+		{
+			await NotFoundOrAction(context, UserKey, async userKey =>
+			{
+				var user = System.Users.FirstOrDefault(u => u.Key == userKey);
+
+				if (user == null)
+					context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+				else
+					await context.JsonResponse(System.History.Where(h => h.OnAggregate == user.ID));
 			});
 		}
 
