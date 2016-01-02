@@ -98,6 +98,7 @@
     <Compile Include="Domain\ReadModels\UserReadModelTests.cs" />
     <Compile Include="Domain\RoleTests.cs" />
     <Compile Include="Domain\Rules\UniqueKeyRuleTests.cs" />
+    <Compile Include="Domain\Services\ProjectorTests.cs" />
     <Compile Include="Domain\UserKeyTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
