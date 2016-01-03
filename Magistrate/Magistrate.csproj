@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Api\Controller.cs" />
     <Compile Include="Api\Extensions.cs" />
+    <Compile Include="Api\HistoryController.cs" />
     <Compile Include="Api\JsonExceptionMiddleware.cs" />
     <Compile Include="Api\MagistrateApi.cs" />
     <Compile Include="Api\MagistrateUserMiddleware.cs" />

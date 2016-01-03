@@ -13,6 +13,7 @@ namespace Magistrate.Api
 		private readonly RolesController _roles;
 		private readonly UsersController _users;
 		private readonly SystemFacade _system;
+		private readonly HistoryController _history;
 
 		public MagistrateApi(MagistrateConfiguration config)
 		{
@@ -22,6 +23,7 @@ namespace Magistrate.Api
 			_permissions = new PermissionsController(_system);
 			_roles = new RolesController(_system);
 			_users = new UsersController(_system);
+			_history = new HistoryController(_system);
 
 			ConfigureAutoMapper();
 
@@ -46,6 +48,7 @@ namespace Magistrate.Api
 			_permissions.Configure(app);
 			_roles.Configure(app);
 			_users.Configure(app);
+			_history.Configure(app);
 		}
 	}
 }
