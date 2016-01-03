@@ -25,7 +25,7 @@ var MainMenu = React.createClass({
     var selected = this.props.selected;
     var tileSize = this.props.tileSize;
 
-    var items = [ "Users", "Roles", "Permissions" ];
+    var items = [ "Users", "Roles", "Permissions", "History" ];
 
     var tabs = items.map(function(item, index) {
 

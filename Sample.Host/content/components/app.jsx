@@ -6,7 +6,8 @@ var App = React.createClass({
     roles: 'GET /roles',
     singlerole: 'GET /roles/:key',
     permissions: 'GET /permissions',
-    singlepermission: 'GET /permissions/:key'
+    singlepermission: 'GET /permissions/:key',
+    history: 'GET /history'
   }),
 
   getInitialState() {
@@ -248,6 +249,14 @@ var App = React.createClass({
             tileSize={tileSize}
           />
         );
+
+        break;
+
+        case 'history':
+          selected = 'history';
+          content = (
+            <HistoryOverview />
+          );
 
         break;
     }
