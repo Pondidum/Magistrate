@@ -27,12 +27,20 @@ var HistoryOverview = React.createClass({
   },
 
   render() {
+    var current = moment();
+
     var history = this.state.history.map(function(item, index) {
+
+      var stamp = moment(item.at);
+      var displayDate = current.diff(stamp, 'days') <= 1
+        ? stamp.fromNow()
+        : stamp.calendar();
+
       return (
         <li key={index} className="col-md-12 tile">
           <div className="panel panel-default">
             <div className="panel-body">
-              <div className="col-sm-3">{moment(item.at).calendar()}</div>
+              <div className="col-sm-3">{displayDate}</div>
               <div className="col-sm-4"><strong>{item.action.replace(/Event$/, "")}</strong> by <strong>{item.by.name}</strong></div>
             </div>
           </div>
