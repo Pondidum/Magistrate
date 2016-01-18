@@ -43,6 +43,9 @@ var App = React.createClass({
       console.error(settings.url, err.toString());
     });
 
+    var locale = window.navigator.userLanguage || window.navigator.language;
+    moment.locale(locale);
+
     this.loadPermissions();
     this.loadRoles();
     this.loadUsers();

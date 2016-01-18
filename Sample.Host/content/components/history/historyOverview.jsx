@@ -32,7 +32,7 @@ var HistoryOverview = React.createClass({
         <li key={index} className="col-md-12 tile">
           <div className="panel panel-default">
             <div className="panel-body">
-              <div className="col-sm-3">{item.at}</div>
+              <div className="col-sm-3">{moment(item.at).calendar()}</div>
               <div className="col-sm-4"><strong>{item.action.replace(/Event$/, "")}</strong> by <strong>{item.by.name}</strong></div>
             </div>
           </div>
