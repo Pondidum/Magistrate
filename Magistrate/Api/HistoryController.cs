@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Magistrate.Domain.Services;
 using Microsoft.Owin;
 using Owin;
@@ -20,7 +21,7 @@ namespace Magistrate.Api
 
 		private async Task GetAllHistory(IOwinContext context)
 		{
-			await context.JsonResponse(System.History);
+			await context.JsonResponse(System.History.Reverse());
 		}
 	}
 }
