@@ -41,7 +41,7 @@ var HistoryOverview = React.createClass({
           <div className="panel panel-default">
             <div className="panel-body">
               <div className="col-sm-3">{displayDate}</div>
-              <div className="col-sm-4"><strong>{item.action.replace(/Event$/, "")}</strong> by <strong>{item.by.name}</strong></div>
+              <div className="col-sm-9"><strong>{item.by.name}</strong> {item.description}</div>
             </div>
           </div>
         </li>

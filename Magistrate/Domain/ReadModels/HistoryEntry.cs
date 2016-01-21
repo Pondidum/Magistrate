@@ -9,6 +9,7 @@ namespace Magistrate.Domain.ReadModels
 		public Guid OnAggregate { get; private set; }
 		public MagistrateUser By { get; private set; }
 		public DateTime At { get; private set; }
+		public string Description { get; private set; }
 
 		public static HistoryEntry From(UserLoggedEvent @event)
 		{
@@ -17,7 +18,8 @@ namespace Magistrate.Domain.ReadModels
 				Action = @event.GetType().Name,
 				At = @event.Stamp,
 				By = @event.User,
-				OnAggregate = @event.AggregateID
+				OnAggregate = @event.AggregateID,
+				Description =  @event.EventDescription
 			};
 		}
 	}

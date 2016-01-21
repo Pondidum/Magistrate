@@ -5,7 +5,6 @@ using Ledger;
 using Ledger.Infrastructure;
 using Magistrate.Domain.ReadModels;
 using Magistrate.Domain.Rules;
-using Magistrate.Infrastructure;
 
 namespace Magistrate.Domain.Services
 {
