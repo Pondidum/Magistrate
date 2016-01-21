@@ -4,9 +4,23 @@ namespace Magistrate.Domain.Events.PermissionEvents
 {
 	public class PermissionCreatedEvent : UserLoggedEvent
 	{
-		public Guid ID { get; set; }
-		public PermissionKey Key { get; set; }
-		public string Name { get; set; }
-		public string Description { get; set; }
+		public Guid ID { get; }
+		public PermissionKey Key { get; }
+		public string Name { get; }
+		public string Description { get; }
+
+		public PermissionCreatedEvent(MagistrateUser user, Guid id, PermissionKey key, string name, string description)
+			: base(user)
+		{
+			ID = id;
+			Key = key;
+			Name = name;
+			Description = description;
+		}
+
+		public override string EventDescription
+		{
+			get { return $"Created Permission '{Name}'"; }
+		}
 	}
 }

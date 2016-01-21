@@ -4,6 +4,11 @@ namespace Magistrate.Domain.Events.UserEvents
 {
 	public class RevokeRemovedFromUserEvent : UserLoggedEvent
 	{
-		public Guid PermissionID { get; set; }
+		public RevokeRemovedFromUserEvent(MagistrateUser user, Guid permissionID) : base(user)
+		{
+			PermissionID = permissionID;
+		}
+
+		public Guid PermissionID { get; }
 	}
 }

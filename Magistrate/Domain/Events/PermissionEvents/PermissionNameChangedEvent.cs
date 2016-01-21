@@ -2,6 +2,18 @@
 {
 	public class PermissionNameChangedEvent : UserLoggedEvent
 	{
-		public string NewName { get; set; }
+		public PermissionNameChangedEvent(MagistrateUser user, string oldName, string newName) : base(user)
+		{
+			OldName = oldName;
+			NewName = newName;
+		}
+
+		public string OldName { get; }
+		public string NewName { get; }
+
+		public override string EventDescription
+		{
+			get { return $"Changed {OldName} to {NewName}"; }
+		}
 	}
 }

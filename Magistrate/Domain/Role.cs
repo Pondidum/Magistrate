@@ -33,13 +33,13 @@ namespace Magistrate.Domain
 
 			var role = new Role();
 			role.ApplyEvent(new RoleCreatedEvent
-			{
-				ID = Guid.NewGuid(),
-				User = user,
-				Key = key,
-				Name = name,
-				Description = description
-			});
+			(
+				user,
+				Guid.NewGuid(),
+				key,
+				name,
+				description
+			));
 
 			return role;
 		}
@@ -52,10 +52,10 @@ namespace Magistrate.Domain
 				return;
 
 			ApplyEvent(new RoleNameChangedEvent
-			{
-				User = user,
-				NewName = newName
-			});
+			(
+				user,
+				newName
+			));
 		}
 
 		public void ChangeDescription(MagistrateUser user, string newDescription)
@@ -64,36 +64,36 @@ namespace Magistrate.Domain
 				return;
 
 			ApplyEvent(new RoleDescriptionChangedEvent
-			{
-				User = user,
-				NewDescription = newDescription
-			});
+			(
+				user,
+				newDescription
+			));
 		}
 
 		public void Deactivate(MagistrateUser user)
 		{
 			ApplyEvent(new RoleDeactivatedEvent
-			{
-				User = user
-			});
+			(
+				user
+			));
 		}
 
 		public void AddPermission(MagistrateUser user, Permission permission)
 		{
 			ApplyEvent(new PermissionAddedToRoleEvent
-			{
-				User = user,
-				PermissionID = permission.ID
-			});
+			(
+				user,
+				permission.ID
+			));
 		}
 
 		public void RemovePermission(MagistrateUser user, Permission permission)
 		{
 			ApplyEvent(new PermissionRemovedFromRoleEvent
-			{
-				User = user,
-				PermissionID = permission.ID
-			});
+			(
+				user,
+				permission.ID
+			));
 		}
 
 

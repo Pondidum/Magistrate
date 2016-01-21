@@ -17,14 +17,14 @@ namespace Magistrate.Domain.Services
 			_onEvent = onEvent;
 		}
 
-		public IStoreReader<TKey> CreateReader<TKey>(string streamName)
+		public IStoreReader<TKey> CreateReader<TKey>(EventStoreContext context)
 		{
-			return _other.CreateReader<TKey>(streamName);
+			return _other.CreateReader<TKey>(context);
 		}
 
-		public IStoreWriter<TKey> CreateWriter<TKey>(string streamName)
+		public IStoreWriter<TKey> CreateWriter<TKey>(EventStoreContext context)
 		{
-			var otherWriter = _other.CreateWriter<TKey>(streamName);
+			var otherWriter = _other.CreateWriter<TKey>(context);
 
 			return new ProjectionWriter<TKey>(otherWriter, e => _onEvent((IDomainEvent<Guid>)e));
 		}

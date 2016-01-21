@@ -34,12 +34,12 @@ namespace Magistrate.Domain
 
 			var user = new User();
 			user.ApplyEvent(new UserCreatedEvent
-			{
-				ID = Guid.NewGuid(),
-				User = currentUser,
-				Key = key,
-				Name = name
-			});
+			(
+				currentUser,
+				Guid.NewGuid(),
+				key,
+				name
+			));
 
 			return user;
 		}
@@ -48,72 +48,72 @@ namespace Magistrate.Domain
 		{
 			ValidateName(name);
 			ApplyEvent(new UserNameChangedEvent
-			{
-				User = currentUser,
-				NewName = name
-			});
+			(
+				currentUser,
+				name
+			));
 		}
 
 		public void Deactivate(MagistrateUser currentUser)
 		{
-			ApplyEvent(new UserDeactivatedEvent()
-			{
-				User = currentUser
-			});
+			ApplyEvent(new UserDeactivatedEvent
+			(
+				currentUser
+			));
 		}
 
 		public void AddInclude(MagistrateUser currentUser, Permission permission)
 		{
 			ApplyEvent(new IncludeAddedToUserEvent
-			{
-				User = currentUser,
-				PermissionID = permission.ID
-			});
+			(
+				currentUser,
+				permission.ID
+			));
 		}
 
 		public void RemoveInclude(MagistrateUser currentUser, Permission permission)
 		{
 			ApplyEvent(new IncludeRemovedFromUserEvent
-			{
-				User = currentUser,
-				PermissionID = permission.ID
-			});
+			(
+				currentUser,
+				permission.ID
+			));
 		}
 
 		public void AddRevoke(MagistrateUser currentUser, Permission permission)
 		{
 			ApplyEvent(new RevokeAddedToUserEvent
-			{
-				User = currentUser,
-				PermissionID = permission.ID
-			});
+			(
+				currentUser,
+				permission.ID
+			));
 		}
 
 		public void RemoveRevoke(MagistrateUser currentUser, Permission permission)
 		{
 			ApplyEvent(new RevokeRemovedFromUserEvent
-			{
-				User = currentUser,
-				PermissionID = permission.ID
-			});
+			(
+				currentUser,
+				permission.ID
+			));
 		}
 
 		public void AddRole(MagistrateUser currentUser, Role role)
 		{
 			ApplyEvent(new RoleAddedToUserEvent
-			{
-				User = currentUser,
-				RoleID = role.ID
-			});
+			(
+				currentUser,
+				role.ID
+			));
 		}
 
 		public void RemoveRole(MagistrateUser currentUser, Role role)
 		{
 			ApplyEvent(new RoleRemovedFromUserEvent
-			{
-				User = currentUser,
-				RoleID = role.ID
-			});
+			(
+				currentUser,
+				role.ID
+			));
 		}
 
 

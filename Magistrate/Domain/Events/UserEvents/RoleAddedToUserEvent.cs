@@ -4,6 +4,11 @@ namespace Magistrate.Domain.Events.UserEvents
 {
 	public class RoleAddedToUserEvent : UserLoggedEvent
 	{
-		 public Guid RoleID { get; set; }
+		public RoleAddedToUserEvent(MagistrateUser user, Guid roleID) : base(user)
+		{
+			RoleID = roleID;
+		}
+
+		public Guid RoleID { get; }
 	}
 }

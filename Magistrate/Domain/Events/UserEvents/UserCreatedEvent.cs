@@ -4,8 +4,15 @@ namespace Magistrate.Domain.Events.UserEvents
 {
 	public class UserCreatedEvent : UserLoggedEvent
 	{
-		public Guid ID { get; set; }
-		public UserKey Key { get; set; }
-		public string Name { get; set; }
+		public UserCreatedEvent(MagistrateUser user, Guid id, UserKey key, string name) : base(user)
+		{
+			ID = id;
+			Key = key;
+			Name = name;
+		}
+
+		public Guid ID { get; }
+		public UserKey Key { get; }
+		public string Name { get; }
 	}
 }

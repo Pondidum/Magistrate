@@ -4,9 +4,17 @@ namespace Magistrate.Domain.Events.RoleEvents
 {
 	public class RoleCreatedEvent : UserLoggedEvent
 	{
-		public Guid ID { get; set; }
-		public RoleKey Key { get; set; }
-		public string Name { get; set; }
-		public string Description { get; set; }
+		public RoleCreatedEvent(MagistrateUser user, Guid id, RoleKey key, string name, string description) : base(user)
+		{
+			ID = id;
+			Key = key;
+			Name = name;
+			Description = description;
+		}
+
+		public Guid ID { get; }
+		public RoleKey Key { get; }
+		public string Name { get; }
+		public string Description { get; }
 	}
 }

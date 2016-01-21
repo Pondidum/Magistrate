@@ -28,13 +28,13 @@ namespace Magistrate.Domain
 
 			var perm = new Permission();
 			perm.ApplyEvent(new PermissionCreatedEvent
-			{
-				ID = Guid.NewGuid(),
-				User = user,
-				Key = key,
-				Name = name,
-				Description = description
-			});
+			(
+				user,
+				Guid.NewGuid(),
+				key,
+				name,
+				description
+			));
 
 			return perm;
 		}
@@ -48,10 +48,11 @@ namespace Magistrate.Domain
 				return;
 
 			ApplyEvent(new PermissionNameChangedEvent
-			{
-				User = user,
-				NewName = newName
-			});
+			(
+				user,
+				Name,
+				newName
+			));
 		}
 
 		public void ChangeDescription(MagistrateUser user, string newDescription)
@@ -60,18 +61,20 @@ namespace Magistrate.Domain
 				return;
 
 			ApplyEvent(new PermissionDescriptionChangedEvent
-			{
-				User = user,
-				NewDescription = newDescription
-			});
+			(
+				user,
+				Name,
+				newDescription
+			));
 		}
 
 		public void Deactivate(MagistrateUser user)
 		{
 			ApplyEvent(new PermissionDeactivatedEvent
-			{
-				User = user
-			});
+			(
+				user,
+				Name
+			));
 		}
 
 		private static void ValidateName(string name)

@@ -2,6 +2,11 @@
 {
 	public class RoleDescriptionChangedEvent : UserLoggedEvent
 	{
-		public string NewDescription { get; set; }
+		public RoleDescriptionChangedEvent(MagistrateUser user, string newDescription) : base(user)
+		{
+			NewDescription = newDescription;
+		}
+
+		public string NewDescription { get; }
 	}
 }

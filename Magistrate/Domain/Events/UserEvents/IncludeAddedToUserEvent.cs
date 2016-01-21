@@ -4,6 +4,11 @@ namespace Magistrate.Domain.Events.UserEvents
 {
 	public class IncludeAddedToUserEvent : UserLoggedEvent
 	{
-		public Guid PermissionID { get; set; }
+		public IncludeAddedToUserEvent(MagistrateUser user, Guid permissionID) : base(user)
+		{
+			PermissionID = permissionID;
+		}
+
+		public Guid PermissionID { get; }
 	}
 }
