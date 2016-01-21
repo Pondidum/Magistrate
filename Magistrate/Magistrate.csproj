@@ -116,6 +116,7 @@
     <Compile Include="Domain\ReadModels\ReadModelProjections.cs" />
     <Compile Include="Domain\UserKey.cs" />
     <Compile Include="Domain\UserKeyConverter.cs" />
+    <Compile Include="Infrastructure\PrivateDefaultContractResolver.cs" />
     <Compile Include="MagistrateConfiguration.cs" />
     <Compile Include="MagistrateExtensions.cs" />
     <Compile Include="MagistrateUser.cs" />
