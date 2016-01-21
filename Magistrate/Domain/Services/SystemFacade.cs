@@ -27,7 +27,6 @@ namespace Magistrate.Domain.Services
 			var es = new ProjectionEventStore(eventStore, _projections.Project);
 
 			_store = new AggregateStore<Guid>(es);
-			_store.SerializerSettings.ContractResolver = new PrivateDefaultContractResolver();
 		}
 
 		public void Load()
