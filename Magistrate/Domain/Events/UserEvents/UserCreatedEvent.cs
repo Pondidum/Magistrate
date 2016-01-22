@@ -14,5 +14,7 @@ namespace Magistrate.Domain.Events.UserEvents
 		public Guid ID { get; }
 		public UserKey Key { get; }
 		public string Name { get; }
+
+		public override string EventDescription => $"Created new User '{Name}'";
 	}
 }

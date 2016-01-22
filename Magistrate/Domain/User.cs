@@ -44,13 +44,14 @@ namespace Magistrate.Domain
 			return user;
 		}
 
-		public void ChangeName(MagistrateUser currentUser, string name)
+		public void ChangeName(MagistrateUser currentUser, string newName)
 		{
-			ValidateName(name);
+			ValidateName(newName);
 			ApplyEvent(new UserNameChangedEvent
 			(
 				currentUser,
-				name
+				Name,
+				newName
 			));
 		}
 
@@ -58,7 +59,8 @@ namespace Magistrate.Domain
 		{
 			ApplyEvent(new UserDeactivatedEvent
 			(
-				currentUser
+				currentUser,
+				Name
 			));
 		}
 
@@ -67,7 +69,9 @@ namespace Magistrate.Domain
 			ApplyEvent(new IncludeAddedToUserEvent
 			(
 				currentUser,
-				permission.ID
+				permission.ID,
+				permission.Name,
+				Name
 			));
 		}
 
@@ -76,7 +80,9 @@ namespace Magistrate.Domain
 			ApplyEvent(new IncludeRemovedFromUserEvent
 			(
 				currentUser,
-				permission.ID
+				permission.ID,
+				permission.Name,
+				Name
 			));
 		}
 
@@ -85,7 +91,9 @@ namespace Magistrate.Domain
 			ApplyEvent(new RevokeAddedToUserEvent
 			(
 				currentUser,
-				permission.ID
+				permission.ID,
+				permission.Name,
+				Name
 			));
 		}
 
@@ -94,7 +102,9 @@ namespace Magistrate.Domain
 			ApplyEvent(new RevokeRemovedFromUserEvent
 			(
 				currentUser,
-				permission.ID
+				permission.ID,
+				permission.Name,
+				Name
 			));
 		}
 
@@ -103,7 +113,9 @@ namespace Magistrate.Domain
 			ApplyEvent(new RoleAddedToUserEvent
 			(
 				currentUser,
-				role.ID
+				role.ID,
+				role.Name,
+				Name
 			));
 		}
 
@@ -112,7 +124,9 @@ namespace Magistrate.Domain
 			ApplyEvent(new RoleRemovedFromUserEvent
 			(
 				currentUser,
-				role.ID
+				role.ID,
+				role.Name,
+				Name
 			));
 		}
 

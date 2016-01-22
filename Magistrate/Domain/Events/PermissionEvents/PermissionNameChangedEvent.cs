@@ -11,9 +11,6 @@
 		public string OldName { get; }
 		public string NewName { get; }
 
-		public override string EventDescription
-		{
-			get { return $"Changed {OldName} to {NewName}"; }
-		}
+		public override string EventDescription => $"Changed {OldName}'s Name to {NewName}";
 	}
 }

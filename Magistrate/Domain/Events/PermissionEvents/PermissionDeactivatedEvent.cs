@@ -9,9 +9,6 @@
 			PermissionName = permissionName;
 		}
 
-		public override string EventDescription
-		{
-			get { return $"Disabled {PermissionName}"; }
-		}
+		public override string EventDescription => $"Disabled Permission {PermissionName}";
 	}
 }

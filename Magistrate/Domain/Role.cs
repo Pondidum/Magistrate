@@ -54,6 +54,7 @@ namespace Magistrate.Domain
 			ApplyEvent(new RoleNameChangedEvent
 			(
 				user,
+				Name,
 				newName
 			));
 		}
@@ -66,7 +67,8 @@ namespace Magistrate.Domain
 			ApplyEvent(new RoleDescriptionChangedEvent
 			(
 				user,
-				newDescription
+				newDescription,
+				Name
 			));
 		}
 
@@ -74,7 +76,8 @@ namespace Magistrate.Domain
 		{
 			ApplyEvent(new RoleDeactivatedEvent
 			(
-				user
+				user,
+				Name
 			));
 		}
 
@@ -83,7 +86,9 @@ namespace Magistrate.Domain
 			ApplyEvent(new PermissionAddedToRoleEvent
 			(
 				user,
-				permission.ID
+				permission.ID,
+				permission.Name,
+				Name
 			));
 		}
 
@@ -92,7 +97,9 @@ namespace Magistrate.Domain
 			ApplyEvent(new PermissionRemovedFromRoleEvent
 			(
 				user,
-				permission.ID
+				permission.ID,
+				permission.Name,
+				Name
 			));
 		}
 

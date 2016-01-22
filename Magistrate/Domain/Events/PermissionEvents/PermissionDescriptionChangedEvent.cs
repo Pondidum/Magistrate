@@ -11,9 +11,6 @@
 		public string PermissionName { get; }
 		public string NewDescription { get; }
 
-		public override string EventDescription
-		{
-			get { return $"Changed {PermissionName}'s description to '{NewDescription}'"; }
-		}
+		public override string EventDescription => $"Changed {PermissionName}'s Description to '{NewDescription}'";
 	}
 }

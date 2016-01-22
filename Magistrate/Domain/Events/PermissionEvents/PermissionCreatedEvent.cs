@@ -18,9 +18,6 @@ namespace Magistrate.Domain.Events.PermissionEvents
 			Description = description;
 		}
 
-		public override string EventDescription
-		{
-			get { return $"Created Permission '{Name}'"; }
-		}
+		public override string EventDescription => $"Created new Permission '{Name}'";
 	}
 }

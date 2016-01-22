@@ -16,5 +16,7 @@ namespace Magistrate.Domain.Events.RoleEvents
 		public RoleKey Key { get; }
 		public string Name { get; }
 		public string Description { get; }
+
+		public override string EventDescription => $"Created new Role '{Name}'";
 	}
 }
