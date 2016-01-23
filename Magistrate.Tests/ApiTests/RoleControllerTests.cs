@@ -180,7 +180,7 @@ namespace Magistrate.Tests.ApiTests
 			var entry = response.First();
 
 			entry.ShouldSatisfyAllConditions(
-				() => entry.SelectToken("action").Value<string>().ShouldBe("RoleCreatedEvent"),
+				() => entry.SelectToken("action").Value<string>().ShouldBe("Role Created"),
 				() => entry.SelectToken("onAggregate").ShouldBe(null),
 				() => entry.SelectToken("at").Value<DateTime>().ShouldBeGreaterThan(DateTime.MinValue),
 				() => ShouldBeTheSame(entry.SelectToken("by"), JToken.Parse(@" { ""name"": ""Andy Dote"", ""key"": ""andy-dote"" }"))
@@ -189,7 +189,7 @@ namespace Magistrate.Tests.ApiTests
 			response
 				.Select(t => t.SelectToken("action")
 				.Value<string>())
-				.ShouldBe(new[] { "RoleCreatedEvent", "PermissionAddedToRoleEvent" });
+				.ShouldBe(new[] { "Role Created", "Permission Added To Role" });
 		}
 	}
 }

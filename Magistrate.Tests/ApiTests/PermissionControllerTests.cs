@@ -107,7 +107,7 @@ namespace Magistrate.Tests.ApiTests
 			var entry = response.Single();
 
 			entry.ShouldSatisfyAllConditions(
-				() => entry.SelectToken("action").Value<string>().ShouldBe("PermissionCreatedEvent"),
+				() => entry.SelectToken("action").Value<string>().ShouldBe("Permission Created"),
 				() => entry.SelectToken("onAggregate").ShouldBe(null),
 				() => entry.SelectToken("at").Value<DateTime>().ShouldBeGreaterThan(DateTime.MinValue),
 				() => ShouldBeTheSame(entry.SelectToken("by"), JToken.Parse(@" { ""name"": ""Andy Dote"", ""key"": ""andy-dote"" }"))
