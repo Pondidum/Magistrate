@@ -23,14 +23,14 @@ namespace Magistrate.Tests.Acceptance
 			ReadUser.Revokes.ShouldBeEmpty();
 		}
 
-		[Fact(Skip = "Not sure on whether this is the right behaviour yet")]
-		public void AddInclude_the_same_permission_does_nothing()
+		[Fact]
+		public void AddInclude_the_same_permission_adds_it()
 		{
 			User.AddInclude(new MagistrateUser(), FirstPermission);
 
 			Project(User);
 
-			ReadUser.Includes.ShouldBeEmpty();
+			ReadUser.Includes.Single().ID.ShouldBe(FirstPermissionOnly);
 			ReadUser.Revokes.ShouldBeEmpty();
 		}
 
