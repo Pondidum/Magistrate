@@ -95,3 +95,7 @@ a.permission-delete:hover {
 .inline-editor:hover > a {
   display: inline;
 }
+
+.history-row .panel {
+  margin-bottom: 0.5em;
+}
