@@ -95,7 +95,7 @@
     <Compile Include="ApiTests\UserControllerTests.cs" />
     <Compile Include="Domain\PermissionKeyTests.cs" />
     <Compile Include="Domain\PermissionsTests.cs" />
-    <Compile Include="Domain\ReadModels\HistoryEntryTests.cs" />
+    <Compile Include="Domain\ReadModels\HistoryReadModelTests.cs" />
     <Compile Include="Domain\ReadModels\UserReadModelTests.cs" />
     <Compile Include="Domain\RoleTests.cs" />
     <Compile Include="Domain\Rules\UniqueKeyRuleTests.cs" />

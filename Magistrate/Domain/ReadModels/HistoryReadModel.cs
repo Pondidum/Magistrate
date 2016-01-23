@@ -4,7 +4,7 @@ using Magistrate.Domain.Events;
 
 namespace Magistrate.Domain.ReadModels
 {
-	public class HistoryEntry
+	public class HistoryReadModel
 	{
 		private static readonly Regex SentenceCase = new Regex("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
 		private static readonly Regex RemoveEventSuffix = new Regex("(Event$)");
@@ -15,9 +15,9 @@ namespace Magistrate.Domain.ReadModels
 		public DateTime At { get; private set; }
 		public string Description { get; private set; }
 
-		public static HistoryEntry From(UserLoggedEvent @event)
+		public static HistoryReadModel From(UserLoggedEvent @event)
 		{
-			return new HistoryEntry
+			return new HistoryReadModel
 			{
 				Action = ActionFromEvent(@event.GetType().Name),
 				At = @event.Stamp,

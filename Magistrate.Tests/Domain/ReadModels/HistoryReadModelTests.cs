@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Magistrate.Tests.Domain.ReadModels
 {
-	public class HistoryEntryTests
+	public class HistoryReadModelTests
 	{
 		[Theory]
 		[InlineData("TestEvent", "Test")]
@@ -13,7 +13,7 @@ namespace Magistrate.Tests.Domain.ReadModels
 		[InlineData("HTMLUpdated", "HTML Updated")]
 		public void When_parsing_names(string eventName, string expected)
 		{
-			HistoryEntry.ActionFromEvent(eventName).ShouldBe(expected);
+			HistoryReadModel.ActionFromEvent(eventName).ShouldBe(expected);
 		} 
 	}
 }

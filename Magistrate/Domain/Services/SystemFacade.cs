@@ -15,7 +15,7 @@ namespace Magistrate.Domain.Services
 		public IEnumerable<UserReadModel> Users => _projections.Users;
 		public IEnumerable<RoleReadModel> Roles => _projections.Roles;
 		public IEnumerable<PermissionReadModel> Permissions => _projections.Permissions;
-		public IEnumerable<HistoryEntry> History => _projections.History;
+		public IEnumerable<HistoryReadModel> History => _projections.History;
 
 		private readonly AggregateStore<Guid> _store;
 		private readonly ReadModelProjections _projections;

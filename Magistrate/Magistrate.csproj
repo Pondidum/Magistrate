@@ -100,7 +100,7 @@
     <Compile Include="Domain\IKeyed.cs" />
     <Compile Include="Domain\PermissionKey.cs" />
     <Compile Include="Domain\PermissionKeyConverter.cs" />
-    <Compile Include="Domain\ReadModels\HistoryEntry.cs" />
+    <Compile Include="Domain\ReadModels\HistoryReadModel.cs" />
     <Compile Include="Domain\ReadModels\PermissionReadModel.cs" />
     <Compile Include="Domain\ReadModels\RoleReadModel.cs" />
     <Compile Include="Domain\ReadModels\UserReadModel.cs" />

@@ -63,7 +63,7 @@ namespace Magistrate.Api
 			await context.WriteJson(users.Map<UserResponse>(), Settings);
 		}
 
-		public static async Task JsonResponse(this IOwinContext context, IEnumerable<HistoryEntry> users)
+		public static async Task JsonResponse(this IOwinContext context, IEnumerable<HistoryReadModel> users)
 		{
 			await context.WriteJson(users.Map<HistoryResponse>(), Settings);
 		}
