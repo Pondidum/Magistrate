@@ -27,12 +27,19 @@ namespace Magistrate.Tests.Acceptance
 		public UserAcceptanceBase()
 		{
 			_readModel = new ReadModelProjections();
+			var currentUser = new MagistrateUser
+			{
+				Name = "Test User",
+				CanCreateUsers =  true,
+				CanCreateRoles =  true,
+				CanCreatePermissions = true
+			};
 
-			User = User.Create(new MagistrateUser(), new UserKey("user-01"), "Andy");
-			TestRole = Role.Create(new MagistrateUser(), new RoleKey("role-01"), "Team Leader", "Leads Teams.");
+			User = User.Create(currentUser, new UserKey("user-01"), "Andy");
+			TestRole = Role.Create(currentUser, new RoleKey("role-01"), "Team Leader", "Leads Teams.");
 
-			FirstPermission = Permission.Create(new MagistrateUser(), new PermissionKey("permission-01"), "First", "");
-			SecondPermission = Permission.Create(new MagistrateUser(), new PermissionKey("permission-02"), "Second", "");
+			FirstPermission = Permission.Create(currentUser, new PermissionKey("permission-01"), "First", "");
+			SecondPermission = Permission.Create(currentUser, new PermissionKey("permission-02"), "Second", "");
 
 			FirstPermissionOnly = FirstPermission.ID;
 			SecondPermissionOnly = SecondPermission.ID;

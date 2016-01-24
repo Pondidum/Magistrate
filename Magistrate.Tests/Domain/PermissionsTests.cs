@@ -17,7 +17,8 @@ namespace Magistrate.Tests.Domain
 			_currentUser = new MagistrateUser
 			{
 				Name = "Test Current User",
-				Key = "CurrentUser"
+				Key = "CurrentUser",
+				CanCreatePermissions = true
 			};
 		}
 

@@ -183,7 +183,8 @@ namespace Magistrate.Tests.ApiTests
 				() => entry.SelectToken("action").Value<string>().ShouldBe("Role Created"),
 				() => entry.SelectToken("onAggregate").ShouldBe(null),
 				() => entry.SelectToken("at").Value<DateTime>().ShouldBeGreaterThan(DateTime.MinValue),
-				() => ShouldBeTheSame(entry.SelectToken("by"), JToken.Parse(@" { ""name"": ""Andy Dote"", ""key"": ""andy-dote"" }"))
+				() => entry.SelectToken("by").SelectToken("name").Value<string>().ShouldBe("Andy Dote"),
+				() => entry.SelectToken("by").SelectToken("key").Value<string>().ShouldBe("andy-dote")
 			);
 
 			response

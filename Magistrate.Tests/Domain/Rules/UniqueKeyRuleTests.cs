@@ -12,7 +12,12 @@ namespace Magistrate.Tests.Domain.Rules
 
 		public UniqueKeyRuleTests()
 		{
-			_current = new MagistrateUser { Key = "user", Name = "user"};
+			_current = new MagistrateUser
+			{
+				Key = "user",
+				Name = "user",
+				CanCreatePermissions = true
+			};
 		}
 
 		[Fact]

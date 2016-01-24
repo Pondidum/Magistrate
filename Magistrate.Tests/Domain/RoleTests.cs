@@ -13,7 +13,13 @@ namespace Magistrate.Tests.Domain
 
 		public RolesTests()
 		{
-			_currentUser = new MagistrateUser { Name = "Current User", Key = "cu" };
+			_currentUser = new MagistrateUser
+			{
+				Name = "Current User",
+				Key = "cu",
+				CanCreatePermissions = true,
+				CanCreateRoles = true
+			};
 		}
 
 		[Fact]

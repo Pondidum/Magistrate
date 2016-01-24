@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security;
 using Ledger;
 using Magistrate.Domain.Events.RoleEvents;
 
@@ -29,6 +30,7 @@ namespace Magistrate.Domain
 
 		public static Role Create(MagistrateUser user, RoleKey key, string name, string description)
 		{
+			if (user.CanCreateRoles == false) throw new SecurityException($"{user.Name} cannot create roles.");
 			ValidateName(name);
 
 			var role = new Role();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security;
 using Ledger;
 using Magistrate.Domain.Events.UserEvents;
 
@@ -30,6 +31,8 @@ namespace Magistrate.Domain
 
 		public static User Create(MagistrateUser currentUser, UserKey key, string name)
 		{
+			if (currentUser.CanCreateUsers == false) throw new SecurityException($"{currentUser.Name} cannot create users.");
+
 			ValidateName(name);
 
 			var user = new User();

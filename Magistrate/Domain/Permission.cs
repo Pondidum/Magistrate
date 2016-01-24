@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security;
 using Ledger;
 using Magistrate.Domain.Events;
 using Magistrate.Domain.Events.PermissionEvents;
@@ -24,6 +25,7 @@ namespace Magistrate.Domain
 
 		public static Permission Create(MagistrateUser user, PermissionKey key, string name, string description)
 		{
+			if (user.CanCreatePermissions== false) throw new SecurityException($"{user.Name} cannot create permissions.");
 			ValidateName(name);
 
 			var perm = new Permission();

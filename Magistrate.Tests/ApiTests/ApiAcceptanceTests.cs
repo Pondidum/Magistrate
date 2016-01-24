@@ -23,7 +23,10 @@ namespace Magistrate.Tests.ApiTests
 			var currentUser = new MagistrateUser
 			{
 				Key = "andy-dote",
-				Name = "Andy Dote"
+				Name = "Andy Dote",
+				CanCreatePermissions = true,
+				CanCreateRoles = true,
+				CanCreateUsers = true
 			};
 
 			var p1 = Permission.Create(currentUser, new PermissionKey("perm-one"), "first", "first permission");
