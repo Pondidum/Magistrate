@@ -2,7 +2,9 @@ var HistoryOverview = React.createClass({
 
   getInitialState() {
     return {
-      history: []
+      history: [],
+      pageSize: 10,
+      currentPage: 0
     };
   },
 
@@ -26,12 +28,27 @@ var HistoryOverview = React.createClass({
   onFilterChanged(value) {
   },
 
+  onChangePage(index, e) {
+    e.preventDefault();
+    this.setState({ currentPage: index });
+  },
+
   render() {
+    var self = this;
     var current = moment();
 
+    var totalPages = Math.floor(this.state.history.length / this.state.pageSize);
+    var start = this.state.currentPage * totalPages;
+    var end = start + this.state.pageSize - 1;
+    var links = [];
+
     var history = this.state.history.map(function(item, index) {
-      return (<HistoryRow key={index} history={item} current={current} />);
-    });
+      return (<HistoryRow key={index} history={item} current={current} index={index}/>);
+    }).slice(start, end);
+
+    for (var i = 0; i < totalPages; i++) {
+      links.push(<li key={i}><a href="#" onClick={self.onChangePage.bind(self, i)} >{i + 1}</a></li>);
+    }
 
     return (
       <div>
@@ -42,6 +59,11 @@ var HistoryOverview = React.createClass({
           <ul className="list-unstyled col-sm-12">
             {history}
           </ul>
+          <div className="row">
+            <ul className="pagination col-sm-6 col-sm-offset-3">
+              {links}
+            </ul>
+          </div>
         </div>
       </div>
     );
