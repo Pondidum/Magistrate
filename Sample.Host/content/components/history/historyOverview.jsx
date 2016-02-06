@@ -38,8 +38,8 @@ var HistoryOverview = React.createClass({
     var current = moment();
 
     var totalPages = Math.floor(this.state.history.length / this.state.pageSize);
-    var start = this.state.currentPage * totalPages;
-    var end = start + this.state.pageSize - 1;
+    var start = this.state.currentPage * this.state.pageSize;
+    var end = start + this.state.pageSize;
     var links = [];
 
     var history = this.state.history.map(function(item, index) {
