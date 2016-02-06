@@ -56,13 +56,17 @@ var HistoryOverview = React.createClass({
           <div className="row">
             <FilterBar filterChanged={this.onFilterChanged} />
           </div>
-          <ul className="list-unstyled col-sm-12">
-            {history}
-          </ul>
           <div className="row">
-            <ul className="pagination col-sm-6 col-sm-offset-3">
-              {links}
+            <ul className="list-unstyled col-sm-12">
+              {history}
             </ul>
+          </div>
+          <div className="row">
+            <div className="col-sm-12 text-center">
+              <ul className="pagination">
+                {links}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
