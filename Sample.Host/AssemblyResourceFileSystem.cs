@@ -74,7 +74,7 @@ namespace Sample.Host
 			}
 
 			string fileName = subpath.Substring(1);  // Drop the leading '/'
-			string resourcePath = _baseNamespace + fileName;
+			string resourcePath = _baseNamespace + fileName.Replace('/', '.');
 			if (_assembly.GetManifestResourceInfo(resourcePath) == null)
 			{
 				fileInfo = null;
@@ -94,22 +94,16 @@ namespace Sample.Host
 		public bool TryGetDirectoryContents(string subpath, out IEnumerable<IFileInfo> contents)
 		{
 			// The file name is assumed to be the remainder of the resource name.
-
-			// Non-hierarchal.
-			if (!subpath.Equals("/"))
-			{
-				contents = null;
-				return false;
-			}
-
 			IList<IFileInfo> entries = new List<IFileInfo>();
+
+			var path = _baseNamespace + subpath.Replace('/', '.');
 
 			// TODO: The list of resources in an assembly isn't going to change. Consider caching.
 			string[] resources = _assembly.GetManifestResourceNames();
 			for (int i = 0; i < resources.Length; i++)
 			{
 				string resourceName = resources[i];
-				if (resourceName.StartsWith(_baseNamespace))
+				if (resourceName.StartsWith(path))
 				{
 					entries.Add(new EmbeddedResourceFileInfo(
 						_assembly, resourceName, resourceName.Substring(_baseNamespace.Length), _lastModified));
