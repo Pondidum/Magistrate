@@ -10,8 +10,8 @@ namespace Sample.Host
 	{
 		public void Configure(IAppBuilder app)
 		{
-			var fs = new PhysicalFileSystem("../../content");
-			//var fs = new AssemblyResourceFileSystem(Assembly.GetExecutingAssembly(), "Sample.Host.content");
+			//var fs = new PhysicalFileSystem("../../content");
+			var fs = new AssemblyResourceFileSystem(Assembly.GetExecutingAssembly(), "Magistrate.content");
 
 			app.UseBabel(new BabelFileOptions
 			{
