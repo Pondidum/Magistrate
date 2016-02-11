@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Ledger.Stores;
 using Ledger.Stores.Fs;
 using Magistrate;
+using Magistrate.WebInterface;
 using Microsoft.Owin.Hosting;
 using Serilog;
 

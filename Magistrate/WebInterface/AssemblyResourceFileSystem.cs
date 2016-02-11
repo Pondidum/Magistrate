@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Owin.FileSystems;
 
-namespace Sample.Host
+namespace Magistrate.WebInterface
 {
 	public class AssemblyResourceFileSystem : IFileSystem
 	{

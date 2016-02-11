@@ -1,10 +1,9 @@
 ﻿using System.Reflection;
-using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
 using Owin;
 using React.Owin;
 
-namespace Sample.Host
+namespace Magistrate.WebInterface
 {
 	public class MagistrateWebInterface
 	{
