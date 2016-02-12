@@ -89,14 +89,6 @@
       <HintPath>..\packages\Owin.Routing.0.7.0.0\lib\net45\Owin.Routing.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="React.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=9aed67b161f7db78, processorArchitecture=MSIL">
-      <HintPath>..\packages\React.Core.2.2.0\lib\net40\React.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="React.Owin, Version=2.2.0.0, Culture=neutral, PublicKeyToken=9aed67b161f7db78, processorArchitecture=MSIL">
-      <HintPath>..\packages\React.Owin.2.2.0\lib\net45\React.Owin.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -105,10 +97,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="VroomJs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9aed67b161f7db78, processorArchitecture=MSIL">
-      <HintPath>..\packages\React.Core.2.2.0\lib\net40\VroomJs.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\Controller.cs" />
@@ -234,9 +222,6 @@
   <ItemGroup>
     <Content Include="content\app.css" />
     <Content Include="content\app.htm" />
-    <Content Include="gulpfile.js" />
-    <Content Include="Resources\babel.js" />
-    <Content Include="Resources\react.js" />
     <EmbeddedResource Include="content\libs\uniloc.js" />
     <EmbeddedResource Include="content\libs\react.js" />
     <EmbeddedResource Include="content\libs\react-dom.min.js" />
