@@ -11,6 +11,7 @@ _ReSharper.*
 *.DotSettings.user
 
 AssemblyVersion.cs
+build.min.js
 
 /packages
 /node_modules

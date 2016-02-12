@@ -43,7 +43,16 @@ gulp.task('version', function() {
     .pipe(gulp.dest('./' + config.name + '/Properties'));
 });
 
-gulp.task('compile', [ "restore", "version" ], function() {
+gulp.task('transform', function() {
+  return gulp
+    .src(["./Magistrate/content/components/**/*.jsx"])
+    .pipe(debug())
+    .pipe(react())
+    .pipe(concat("build.min.js"))
+    .pipe(gulp.dest("./Magistrate/content"));
+});
+
+gulp.task('compile', [ "transform", "restore", "version" ], function() {
   return gulp
     .src(config.name + ".sln")
     .pipe(msbuild({
@@ -77,13 +86,4 @@ gulp.task('pack', [ 'test' ], function () {
     ], {
       templateData: config
     }));
-});
-
-gulp.task('transform', function(){
-  return gulp
-    .src(["./Magistrate/content/components/**/*.jsx"])
-    .pipe(debug())
-    .pipe(react())
-    .pipe(concat("build.min.js"))
-    .pipe(gulp.dest("./Magistrate/content"));
 });
