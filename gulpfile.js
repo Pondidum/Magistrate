@@ -8,6 +8,10 @@ var msbuild = require('gulp-msbuild');
 var xunit =require('gulp-xunit-runner');
 var debug = require('gulp-debug');
 
+
+var concat = require('gulp-concat');
+var react = require('gulp-react');
+
 var project = JSON.parse(fs.readFileSync("./package.json"));
 
 var config = {
@@ -73,4 +77,13 @@ gulp.task('pack', [ 'test' ], function () {
     ], {
       templateData: config
     }));
+});
+
+gulp.task('transform', function(){
+  return gulp
+    .src(["./Magistrate/content/components/**/*.jsx"])
+    .pipe(debug())
+    .pipe(react())
+    .pipe(concat("build.min.js"))
+    .pipe(gulp.dest("./Magistrate/content"));
 });
