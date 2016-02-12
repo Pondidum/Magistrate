@@ -46,7 +46,6 @@ gulp.task('version', function() {
 gulp.task('transform', function() {
   return gulp
     .src(["./Magistrate/content/components/**/*.jsx"])
-    .pipe(debug())
     .pipe(react())
     .pipe(concat("build.min.js"))
     .pipe(gulp.dest("./Magistrate/content"));
