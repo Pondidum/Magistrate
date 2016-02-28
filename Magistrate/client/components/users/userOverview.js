@@ -1,4 +1,7 @@
 import React from 'react'
+import UserTile from './usertile'
+import CreateUserDialog from './CreateUserDialog'
+import Overview from '../overview'
 
 var UserOverview = React.createClass({
 
@@ -15,3 +18,5 @@ var UserOverview = React.createClass({
 
   }
 });
+
+export default UserOverview

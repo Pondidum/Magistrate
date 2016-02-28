@@ -1,4 +1,7 @@
 import React from 'react'
+import Overview from '../overview'
+import PermissionTile from './permissionTile'
+import CreatePermissionDialog from './createPermissionDialog'
 
 var PermissionOverview = React.createClass({
 
@@ -16,3 +19,5 @@ var PermissionOverview = React.createClass({
   }
 
 });
+
+export default PermissionOverview

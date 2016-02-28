@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Modal, Button, ProgressBar } from 'react-bootstrap'
 
-var Dialog = React.createClass({
+const Dialog = React.createClass({
 
   getInitialState() {
     return {

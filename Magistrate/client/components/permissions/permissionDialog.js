@@ -1,6 +1,8 @@
-var Input = ReactBootstrap.Input;
+import React from 'react'
+import { Input } from 'react-bootstrap'
+import Dialog from '../dialog'
 
-var PermissionDialog = React.createClass({
+const PermissionDialog = React.createClass({
 
   getInitialState() {
     return {
@@ -102,3 +104,5 @@ var PermissionDialog = React.createClass({
     );
   }
 });
+
+export default PermissionDialog

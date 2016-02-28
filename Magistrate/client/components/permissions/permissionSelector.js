@@ -1,3 +1,6 @@
+import React from 'react'
+import SelectorDialog from '../SelectorDialog'
+
 var PermissionSelector = React.createClass({
 
   open() {
@@ -16,3 +19,5 @@ var PermissionSelector = React.createClass({
   }
 
 });
+
+export default PermissionSelector

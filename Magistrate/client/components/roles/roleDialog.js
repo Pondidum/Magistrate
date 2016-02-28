@@ -1,4 +1,6 @@
-var Input = ReactBootstrap.Input;
+import React from 'react'
+import { Input } from 'react-bootstrap'
+import Dialog from '../dialog'
 
 var RoleDialog = React.createClass({
 
@@ -104,3 +106,5 @@ var RoleDialog = React.createClass({
   }
 
 });
+
+export default RoleDialog

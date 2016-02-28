@@ -1,3 +1,5 @@
+import React from 'react'
+
 var UserTile = React.createClass({
 
   navigateToDetails(e) {

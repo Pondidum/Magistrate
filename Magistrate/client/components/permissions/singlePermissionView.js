@@ -1,4 +1,5 @@
 import React from 'react'
+import InlineEditor from '../InlineEditor'
 
 var SinglePermissionView = React.createClass({
 
@@ -57,3 +58,5 @@ var SinglePermissionView = React.createClass({
   }
 
 });
+
+export default SinglePermissionView

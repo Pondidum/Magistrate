@@ -1,3 +1,6 @@
+import React from 'react'
+import PermissionDialog from './permissionDialog'
+
 var EditPermissionDialog = React.createClass({
 
   open(permission, callback) {
@@ -44,3 +47,5 @@ var EditPermissionDialog = React.createClass({
     );
   }
 });
+
+export default EditPermissionDialog

@@ -1,3 +1,6 @@
+import React from 'react'
+import Tile from '../tile'
+
 var RoleTile = React.createClass({
 
   getInitialState() {
@@ -55,3 +58,5 @@ var RoleTile = React.createClass({
   }
 
 });
+
+export default RoleTile

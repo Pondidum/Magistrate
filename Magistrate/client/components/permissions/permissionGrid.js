@@ -1,3 +1,8 @@
+import React from 'react'
+import Grid from '../grid'
+import PermissionTile from './permissiontile'
+import PermissionSelector from './permissionSelector'
+
 var PermissionGrid = React.createClass({
 
   render() {
@@ -11,3 +16,5 @@ var PermissionGrid = React.createClass({
     );
   }
 });
+
+export default PermissionGrid

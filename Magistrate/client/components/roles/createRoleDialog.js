@@ -1,3 +1,6 @@
+import React from 'react'
+import RoleDialog from './roleDialog'
+
 var CreateRoleDialog = React.createClass({
 
   open() {
@@ -55,3 +58,5 @@ var CreateRoleDialog = React.createClass({
   }
 
 });
+
+export default CreateRoleDialog

@@ -1,3 +1,6 @@
+import React from 'react'
+import EditPermissionDialog from './EditPermissionDialog'
+
 var PermissionTile = React.createClass({
 
   getInitialState() {
@@ -68,3 +71,5 @@ var PermissionTile = React.createClass({
   }
 
 });
+
+export default PermissionTile

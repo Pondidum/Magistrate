@@ -1,3 +1,8 @@
+import React from 'react'
+import Grid from '../grid'
+import RoleTile from './roleTile'
+import RoleSelector from './RoleSelector'
+
 var RoleGrid = React.createClass({
 
   render() {
@@ -11,3 +16,5 @@ var RoleGrid = React.createClass({
     );
   }
 })
+
+export default RoleGrid

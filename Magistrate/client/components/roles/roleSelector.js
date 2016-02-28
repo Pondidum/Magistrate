@@ -1,3 +1,6 @@
+import React from 'react'
+import SelectorDialog from '../SelectorDialog'
+
 var RoleSelector = React.createClass({
 
   open() {
@@ -16,3 +19,5 @@ var RoleSelector = React.createClass({
   }
 
 });
+
+export default RoleSelector

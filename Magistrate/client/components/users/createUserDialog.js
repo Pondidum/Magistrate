@@ -1,4 +1,6 @@
-var Input = ReactBootstrap.Input;
+import React from 'react'
+import { Input } from 'react-bootstrap'
+import Dialog from '../dialog'
 
 var CreateUserDialog = React.createClass({
 

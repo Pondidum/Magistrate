@@ -1,4 +1,7 @@
 import React from 'react'
+import PermissionGrid from '../permissions/PermissionGrid'
+import RoleGrid from '../roles/RoleGrid'
+import InlineEditor from '../InlineEditor'
 
 var SingleUserView = React.createClass({
 
@@ -85,3 +88,5 @@ var SingleUserView = React.createClass({
   }
 
 });
+
+export default SingleUserView
