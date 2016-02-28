@@ -1,4 +1,5 @@
 import React from 'react'
+import Tile from '../tile'
 
 var UserTile = React.createClass({
 
@@ -48,3 +49,5 @@ var UserTile = React.createClass({
     );
   }
 });
+
+export default UserTile

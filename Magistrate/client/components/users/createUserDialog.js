@@ -121,3 +121,5 @@ var CreateUserDialog = React.createClass({
   }
 
 });
+
+export default CreateUserDialog
