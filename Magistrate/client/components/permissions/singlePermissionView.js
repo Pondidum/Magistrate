@@ -1,3 +1,5 @@
+import React from 'react'
+
 var SinglePermissionView = React.createClass({
 
   onNameChanged(newName) {

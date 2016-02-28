@@ -1,6 +1,6 @@
-var Modal = ReactBootstrap.Modal;
-var Button = ReactBootstrap.Button;
-var ProgressBar = ReactBootstrap.ProgressBar;
+import React from 'react'
+
+import { Modal, Button, ProgressBar } from 'react-bootstrap'
 
 var Dialog = React.createClass({
 
@@ -63,3 +63,5 @@ var Dialog = React.createClass({
   }
 
 });
+
+export default Dialog

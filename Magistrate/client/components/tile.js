@@ -1,3 +1,6 @@
+import React from 'react'
+import Dialog from './dialog'
+
 var Tile = React.createClass({
 
   statics: {
@@ -115,3 +118,5 @@ var Tile = React.createClass({
   },
 
 });
+
+export default Tile

@@ -1,3 +1,5 @@
+import React from 'react'
+
 var SingleUserView = React.createClass({
 
   onNameChanged(newName) {

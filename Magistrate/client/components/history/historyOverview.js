@@ -1,3 +1,5 @@
+import React from 'react'
+
 var HistoryOverview = React.createClass({
 
   getInitialState() {
@@ -74,3 +76,5 @@ var HistoryOverview = React.createClass({
   }
 
 });
+
+export default HistoryOverview

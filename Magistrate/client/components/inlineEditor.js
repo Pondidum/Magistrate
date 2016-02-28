@@ -1,3 +1,5 @@
+import React from 'react'
+
 var InlineEditor = React.createClass({
 
   getInitialState() {
@@ -76,3 +78,5 @@ var InlineEditor = React.createClass({
   }
 
 });
+
+export default InlineEditor

@@ -1,3 +1,5 @@
+import React from 'react'
+
 var Grid = React.createClass({
 
   showDialog(e) {
@@ -62,3 +64,5 @@ var Grid = React.createClass({
   }
 
 });
+
+export default Grid;

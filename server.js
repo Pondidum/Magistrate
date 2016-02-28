@@ -18,7 +18,7 @@ app.use("/js", express.static(root + 'js'));
 app.use("/fonts", express.static(root + 'fonts'));
 
 app.get("/", function(req, res) {
-  res.sendFile(root + 'index.html')
+  res.sendFile(root + 'app.htm')
 })
 
 app.listen(port, function(error) {

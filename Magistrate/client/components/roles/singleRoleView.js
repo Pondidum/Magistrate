@@ -1,3 +1,5 @@
+import React from 'react'
+
 var SingleRoleView = React.createClass({
 
   onNameChanged(newName) {

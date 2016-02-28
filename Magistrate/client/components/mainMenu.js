@@ -1,3 +1,6 @@
+import React from 'react'
+import Tile from './tile'
+
 var MainMenu = React.createClass({
 
   onTabSelect(key) {
@@ -63,3 +66,5 @@ var MainMenu = React.createClass({
   }
 
 });
+
+export default MainMenu

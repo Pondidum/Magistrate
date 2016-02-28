@@ -1,16 +1,17 @@
-var PermissionOverview = React.createClass({
+import React from 'react'
+
+var UserOverview = React.createClass({
 
   render() {
 
     return (
       <Overview
-        tile={PermissionTile}
-        create={CreatePermissionDialog}
+        tile={UserTile}
+        create={CreateUserDialog}
         collection={this.props.collection}
         {...this.props}
       />
     );
 
   }
-
 });

@@ -1,3 +1,5 @@
+import React from 'react'
+
 var HistoryRow = React.createClass({
 
   render() {
@@ -22,3 +24,5 @@ var HistoryRow = React.createClass({
     );
   }
 });
+
+export default HistoryRow

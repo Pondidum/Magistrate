@@ -1,3 +1,7 @@
+import React from 'react'
+import Grid from './grid'
+import FilterBar from './filterbar'
+
 var Overview = React.createClass({
 
   getInitialState() {
@@ -47,3 +51,5 @@ var Overview = React.createClass({
   }
 
 });
+
+export default Overview
