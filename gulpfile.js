@@ -6,6 +6,7 @@ var assemblyInfo = require('gulp-dotnet-assembly-info');
 var rename = require('gulp-rename');
 var msbuild = require('gulp-msbuild');
 var xunit =require('gulp-xunit-runner');
+var webpack = require("webpack-stream");
 var debug = require('gulp-debug');
 
 
@@ -45,11 +46,10 @@ gulp.task('version', function() {
 
 gulp.task('transform', function() {
   return gulp
-    .src(["./Magistrate/content/components/**/*.jsx"])
-    .pipe(react())
-    .pipe(concat("build.min.js"))
-    .pipe(gulp.dest("./Magistrate/content"));
-});
+    .src('./Magistrate/client/index.js')
+    .pipe(webpack(require('./webpack.config.js')))
+    .pipe(gulp.dest('./Magistrate/client/static/'));
+})
 
 gulp.task('compile', [ "transform", "restore", "version" ], function() {
   return gulp
