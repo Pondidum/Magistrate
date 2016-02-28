@@ -8,7 +8,7 @@ namespace Magistrate.WebInterface
 	{
 		public void Configure(IAppBuilder app)
 		{
-			var fs = new AssemblyResourceFileSystem(Assembly.GetExecutingAssembly(), "Magistrate.content");
+			var fs = new AssemblyResourceFileSystem(Assembly.GetExecutingAssembly(), "Magistrate.client");
 
 			var fileOptions = new FileServerOptions
 			{
