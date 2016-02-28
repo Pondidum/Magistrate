@@ -1,6 +1,7 @@
 import React from 'react'
 import unirouter from 'uniloc'
 import cookie from 'react-cookie'
+import moment from 'moment'
 
 import MainMenu from './mainmenu'
 import SingleUserView from './users/SingleUserView'

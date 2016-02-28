@@ -1,4 +1,6 @@
 import React from 'react'
+import moment from 'moment'
+import FilterBar from '../filterbar'
 
 var HistoryOverview = React.createClass({
 
