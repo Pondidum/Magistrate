@@ -17,7 +17,7 @@ namespace Magistrate.Api
 
 		public SocketConnector(SystemFacade system)
 		{
-			_server = new WebSocketServer("ws://localhost:8090");
+			_server = new WebSocketServer("ws://0.0.0.0:8090");
 			_sockets = new List<IWebSocketConnection>();
 			_handlers = new Dictionary<string, Action<Message>>(StringComparer.OrdinalIgnoreCase);
 		}
