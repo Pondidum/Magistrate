@@ -14,11 +14,13 @@ namespace Magistrate.Api
 		private readonly UsersController _users;
 		private readonly SystemFacade _system;
 		private readonly HistoryController _history;
+		private SocketConnector _socket;
 
 		public MagistrateApi(MagistrateConfiguration config)
 		{
 			_config = config;
 			_system	= new SystemFacade(config.EventStore);
+			_socket = new SocketConnector(_system);
 
 			_permissions = new PermissionsController(_system);
 			_roles = new RolesController(_system);
@@ -49,6 +51,8 @@ namespace Magistrate.Api
 			_roles.Configure(app);
 			_users.Configure(app);
 			_history.Configure(app);
+
+			_socket.Configure();
 		}
 	}
 }

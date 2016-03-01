@@ -15,9 +15,8 @@ namespace Magistrate.Api
 		private readonly SystemFacade _system;
 		private readonly Dictionary<string, Action<Message>> _handlers;
 
-		public SocketConnector(MagistrateConfiguration config)
+		public SocketConnector(SystemFacade system)
 		{
-			_system = new SystemFacade(config.EventStore);
 			_server = new WebSocketServer("ws://localhost:8090");
 			_sockets = new List<IWebSocketConnection>();
 			_handlers = new Dictionary<string, Action<Message>>(StringComparer.OrdinalIgnoreCase);
