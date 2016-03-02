@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Fleck;
 using Magistrate.Api.Responses;
-using Magistrate.Domain;
 using Magistrate.Domain.Services;
 using Newtonsoft.Json;
 
@@ -17,6 +16,7 @@ namespace Magistrate.Api
 
 		public SocketConnector(SystemFacade system)
 		{
+			_system = system;
 			_server = new WebSocketServer("ws://0.0.0.0:8090");
 			_sockets = new List<IWebSocketConnection>();
 			_handlers = new Dictionary<string, Action<Message>>(StringComparer.OrdinalIgnoreCase);
