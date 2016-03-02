@@ -1,6 +1,22 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Input } from 'react-bootstrap'
 import Dialog from '../dialog'
+
+import { createUser } from '../../actions'
+
+const mapStateToProps = (state) => {
+  return {
+    users: state.users
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createUser: (id, username) => dispatch(createUser(id, username)),
+  }
+}
+
 
 var CreateUserDialog = React.createClass({
 
@@ -11,36 +27,8 @@ var CreateUserDialog = React.createClass({
 
   onSubmit() {
 
-    var dialog = this.refs.dialog;
-
-    dialog.asyncStart();
-
-    var json = JSON.stringify({
-      key: this.state.key,
-      name: this.state.name
-    });
-
-    $.ajax({
-      url: this.props.url,
-      method: "PUT",
-      dataType: 'json',
-      data: json,
-      cache: false,
-      success: function(data) {
-        dialog.asyncStop();
-
-        if (data) {
-          this.props.onCreate(data);
-          dialog.close();
-        } else {
-          this.setState({ keyTaken: true });
-        }
-
-      }.bind(this),
-      error: function(xhr, status, err) {
-        dialog.asyncStop();
-      }
-    });
+    this.props.createUser(this.state.key, this.state.name);
+    dialog.close();
 
   },
 
@@ -122,4 +110,4 @@ var CreateUserDialog = React.createClass({
 
 });
 
-export default CreateUserDialog
+export default connect(mapStateToProps, mapDispatchToProps)(CreateUserDialog)
