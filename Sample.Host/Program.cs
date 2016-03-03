@@ -45,7 +45,10 @@ namespace Sample.Host
 						return new MagistrateUser
 						{
 							Name = "Andy Dote",
-							Key = "andy-dote"
+							Key = "andy-dote",
+							CanCreatePermissions = true,
+							CanCreateRoles = true,
+							CanCreateUsers = true,
 						};
 					};
 				});
