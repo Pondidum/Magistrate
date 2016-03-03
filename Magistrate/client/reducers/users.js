@@ -1,13 +1,28 @@
+const user = (state, action) => {
+
+  switch (action.type) {
+
+    case "CREATE_USER":
+      return {
+        key: action.key,
+        name: action.name,
+        includes: [],
+        revokes: [],
+        roles: [],
+      }
+
+    default:
+      return state;
+  }
+
+}
+
 const  users = (state = [], action) => {
 
   switch (action.type) {
+
     case "CREATE_USER":
-      return state.concat([
-        {
-          id: action.id,
-          username: action.username
-        }
-      ]);
+      return state.concat([ user(null, action) ]);
 
     case "SET_STATE":
       return  action.state.users;

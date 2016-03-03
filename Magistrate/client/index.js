@@ -6,6 +6,7 @@ import { render } from 'react-dom'
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux'
 
+import { setState } from './actions'
 import rootReducer from './reducers'
 
 
@@ -19,7 +20,7 @@ const store = createStore(rootReducer);
 
 socket.onmessage = (e) => {
   var state = JSON.parse(e.data);
-  console.log(state);
+  store.dispatch(setState(state));
 }
 
 render(

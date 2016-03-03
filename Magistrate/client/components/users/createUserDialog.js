@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createUser: (id, username) => dispatch(createUser(id, username)),
+    createUser: (key, username) => dispatch(createUser(key, username)),
   }
 }
 
@@ -28,7 +28,7 @@ var CreateUserDialog = React.createClass({
   onSubmit() {
 
     this.props.createUser(this.state.key, this.state.name);
-    dialog.close();
+    this.refs.dialog.close();
 
   },
 
