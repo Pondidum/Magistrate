@@ -58,8 +58,8 @@ namespace Magistrate.Api
 			Send(new StateMessage
 			{
 				Permissions = _system.Permissions.Map<PermissionResponse>(),
-				Roles = _system.Permissions.Map<RoleResponse>(),
-				Users = _system.Permissions.Map<UserResponse>(),
+				Roles = _system.Roles.Map<RoleResponse>(),
+				Users = _system.Users.Map<UserResponse>(),
 			});
 		}
 	}
