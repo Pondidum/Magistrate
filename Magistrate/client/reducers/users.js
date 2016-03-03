@@ -9,6 +9,9 @@ const  users = (state = [], action) => {
         }
       ]);
 
+    case "SET_STATE":
+      return  action.state.users;
+
     default:
       return state;
   }

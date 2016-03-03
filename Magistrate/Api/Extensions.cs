@@ -16,7 +16,7 @@ namespace Magistrate.Api
 {
 	public static class Extensions
 	{
-		private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+		public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
 		{
 			ContractResolver = new CamelCasePropertyNamesContractResolver()
 		};

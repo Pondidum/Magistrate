@@ -39,7 +39,7 @@ namespace Magistrate.Api
 
 		public void Send(object message)
 		{
-			var json = JsonConvert.SerializeObject(message);
+			var json = JsonConvert.SerializeObject(message, Extensions.Settings);
 			_sockets.ForEach(socket => socket.Send(json));
 		}
 
