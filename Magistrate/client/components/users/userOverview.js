@@ -5,15 +5,6 @@ import UserTile from './usertile'
 import CreateUserDialog from './CreateUserDialog'
 import Overview from '../overview'
 
-
-const SimpleGrid = ({ children }) => (
-  <div className="row">
-    <ul className="list-unstyled list-inline col-sm-12">
-      {children}
-    </ul>
-  </div>
-);
-
 const SimpleOverview = ({ users }) => (
   <div>
     <div className="row">
@@ -21,9 +12,11 @@ const SimpleOverview = ({ users }) => (
         <CreateUserDialog  />
       </div>
     </div>
-    <SimpleGrid>
-      {users.map((user, i) => <UserTile key={i} content={user} /> )}
-    </SimpleGrid>
+    <div className="row">
+      <ul className="list-unstyled list-inline col-sm-12">
+        {users.map((user, i) => <UserTile key={i} content={user} /> )}
+      </ul>
+    </div>
   </div>
 );
 
