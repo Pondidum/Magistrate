@@ -8,7 +8,6 @@ import CreateUserDialog from './CreateUserDialog'
 import Overview from '../overview'
 import FilterBar from '../filterbar'
 
-//const SimpleOverview = ({ users }) => (
 class SimpleOverview extends Component {
 
   constructor() {

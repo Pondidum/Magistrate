@@ -1,5 +1,5 @@
 import React from 'react'
-import PermissionGrid from '../permissions/PermissionGrid'
+import PermissionGrid from '../permissions/permissionGrid'
 import RoleGrid from '../roles/RoleGrid'
 import InlineEditor from '../InlineEditor'
 

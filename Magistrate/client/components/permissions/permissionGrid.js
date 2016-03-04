@@ -1,6 +1,6 @@
 import React from 'react'
 import Grid from '../grid'
-import PermissionTile from './permissiontile'
+import PermissionTile from './permissionTile'
 import PermissionSelector from './permissionSelector'
 
 var PermissionGrid = React.createClass({

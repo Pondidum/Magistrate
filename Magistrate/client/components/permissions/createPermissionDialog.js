@@ -1,5 +1,5 @@
 import React from 'react'
-import PermissionDialog from './PermissionDialog'
+import PermissionDialog from './permissionDialog'
 
 var CreatePermissionDialog = React.createClass({
 
