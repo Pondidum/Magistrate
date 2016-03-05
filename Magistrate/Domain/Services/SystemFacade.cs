@@ -116,14 +116,25 @@ namespace Magistrate.Domain.Services
 			return _store.Load(MagistrateStream, model.ID, User.Blank);
 		}
 
-		private void CheckRules<T, TKey>(IEnumerable<T> collection, T target) where T : IKeyed<TKey>, IIdentity
+		public bool CanCreateUser(UserKey key)
+		{
+			var model = new UserReadModel { ID = Guid.NewGuid(), Key = key };
+			return GetRuleViolations<UserReadModel, UserKey>(Users, model).Any();
+		}
+
+		private IEnumerable<string> GetRuleViolations<T, TKey>(IEnumerable<T> collection, T target) where T : IKeyed<TKey>, IIdentity
 		{
 			var rules = new[] { new UniqueKeyRule<T, TKey>(collection) };
 
-			var violations = rules
+			return rules
 				.Where(r => r.IsSatisfiedBy(target) == false)
 				.Select(r => r.GetMessage(target))
 				.ToList();
+		}
+
+		private void CheckRules<T, TKey>(IEnumerable<T> collection, T target) where T : IKeyed<TKey>, IIdentity
+		{
+			var violations = GetRuleViolations<T, TKey>(collection, target).ToList();
 
 			if (violations.Any())
 				throw new RuleViolationException<TKey>(target, violations);

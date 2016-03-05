@@ -20,12 +20,14 @@ namespace Magistrate.Api
 		{
 			_config = config;
 			_system	= new SystemFacade(config.EventStore);
-			_socket = new SocketConnector(_system);
+			
 
 			_permissions = new PermissionsController(_system);
 			_roles = new RolesController(_system);
 			_users = new UsersController(_system);
 			_history = new HistoryController(_system);
+
+			_socket = new SocketConnector(_system);
 
 			ConfigureAutoMapper();
 
