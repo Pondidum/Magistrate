@@ -110,6 +110,7 @@
     <Compile Include="Api\MagistrateApi.cs" />
     <Compile Include="Api\MagistrateUserMiddleware.cs" />
     <Compile Include="Api\PermissionsController.cs" />
+    <Compile Include="Api\Queries\IsUsernameValid.cs" />
     <Compile Include="Api\Responses\HistoryResponse.cs" />
     <Compile Include="Api\Responses\PermissionResponse.cs" />
     <Compile Include="Api\Responses\RoleResponse.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Domain\Services\Projector.cs" />
     <Compile Include="Domain\Services\SystemFacade.cs" />
     <Compile Include="Domain\ReadModels\ReadModelProjections.cs" />
+    <Compile Include="Domain\Services\UserService.cs" />
     <Compile Include="Domain\UserKey.cs" />
     <Compile Include="Domain\UserKeyConverter.cs" />
     <Compile Include="MagistrateConfiguration.cs" />

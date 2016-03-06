@@ -25,7 +25,7 @@ namespace Magistrate.Api
 			_handlers["USER_VALID"] = message =>
 			{
 				var m = (IsUsernameValidDto) message;
-				Send(new IsUsernameValid(_system).Execute(m.Key));
+				Send(new IsUsernameValid(_system.UserService).Execute(m.Key));
 			};
 		}
 

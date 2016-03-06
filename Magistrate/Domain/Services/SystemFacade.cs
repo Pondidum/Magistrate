@@ -17,8 +17,11 @@ namespace Magistrate.Domain.Services
 		public IEnumerable<PermissionReadModel> Permissions => _projections.Permissions;
 		public IEnumerable<HistoryReadModel> History => _projections.History;
 
+		public UserService UserService => _userService;
+
 		private readonly AggregateStore<Guid> _store;
 		private readonly ReadModelProjections _projections;
+		private readonly UserService _userService;
 
 		public SystemFacade(IEventStore eventStore)
 		{
@@ -26,6 +29,8 @@ namespace Magistrate.Domain.Services
 			var es = new ProjectionEventStore(eventStore, _projections.Project);
 
 			_store = new AggregateStore<Guid>(es);
+
+			_userService = new UserService(_projections.Users);
 		}
 
 		public void Load()
@@ -40,7 +45,8 @@ namespace Magistrate.Domain.Services
 			var user = User.Create(currentUser, key, name);
 			var model = new UserReadModel { ID = user.ID, Key = user.Key };
 
-			CheckRules<UserReadModel, UserKey>(Users, model);
+			_userService.AssertCanCreateUser(key);
+
 
 			_store.Save(MagistrateStream, user);
 
@@ -114,12 +120,6 @@ namespace Magistrate.Domain.Services
 		{
 			var model = Users.First(r => r.Key == key);
 			return _store.Load(MagistrateStream, model.ID, User.Blank);
-		}
-
-		public bool CanCreateUser(UserKey key)
-		{
-			var model = new UserReadModel { ID = Guid.NewGuid(), Key = key };
-			return GetRuleViolations<UserReadModel, UserKey>(Users, model).Any();
 		}
 
 		private IEnumerable<string> GetRuleViolations<T, TKey>(IEnumerable<T> collection, T target) where T : IKeyed<TKey>, IIdentity

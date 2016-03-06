@@ -5,18 +5,18 @@ namespace Magistrate.Api.Queries
 {
 	public class IsUsernameValid
 	{
-		private readonly SystemFacade _system;
+		private readonly UserService _userService;
 
-		public IsUsernameValid(SystemFacade system)
+		public IsUsernameValid(UserService userService)
 		{
-			_system = system;
+			_userService = userService;
 		}
 
 		public object Execute(string key)
 		{
 			return new
 			{
-				Value = _system.CanCreateUser(new UserKey(key))
+				Value = _userService.CanCreateUser(new UserKey(key))
 			};
 		}
 	}
