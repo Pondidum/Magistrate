@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -7,6 +8,7 @@ using Ledger;
 using Ledger.Stores;
 using Magistrate.Api;
 using Magistrate.Domain;
+using Magistrate.Domain.ReadModels;
 using Magistrate.Domain.Services;
 using Microsoft.Owin.Testing;
 using Newtonsoft.Json.Linq;
@@ -39,7 +41,8 @@ namespace Magistrate.Tests.ApiTests
 			var r2 = Role.Create(currentUser, new RoleKey("role-two"), "second", "second role");
 			r2.AddPermission(currentUser, p2);
 
-			var u1 = User.Create(currentUser, new UserKey("user-one"), "first");
+			var userService = new UserService(Enumerable.Empty<UserReadModel>());
+			var u1 = User.Create(userService, currentUser, new UserKey("user-one"), "first");
 			u1.AddRole(currentUser, r1);
 			u1.AddInclude(currentUser, p2);
 			u1.AddRevoke(currentUser, p3);

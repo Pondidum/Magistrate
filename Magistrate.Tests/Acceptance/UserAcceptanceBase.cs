@@ -23,10 +23,13 @@ namespace Magistrate.Tests.Acceptance
 
 		private readonly AggregateStore<Guid> _store;
 		private readonly ReadModelProjections _readModel;
+		private readonly UserService _service;
 
 		public UserAcceptanceBase()
 		{
 			_readModel = new ReadModelProjections();
+			_service = new UserService(_readModel.Users);
+
 			var currentUser = new MagistrateUser
 			{
 				Name = "Test User",
@@ -35,7 +38,7 @@ namespace Magistrate.Tests.Acceptance
 				CanCreatePermissions = true
 			};
 
-			User = User.Create(currentUser, new UserKey("user-01"), "Andy");
+			User = User.Create(_service, currentUser, new UserKey("user-01"), "Andy");
 			TestRole = Role.Create(currentUser, new RoleKey("role-01"), "Team Leader", "Leads Teams.");
 
 			FirstPermission = Permission.Create(currentUser, new PermissionKey("permission-01"), "First", "");
