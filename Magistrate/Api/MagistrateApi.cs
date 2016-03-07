@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Magistrate.Api.Handlers;
 using Magistrate.Api.Responses;
 using Magistrate.Domain.ReadModels;
 using Magistrate.Domain.Services;
@@ -27,7 +28,10 @@ namespace Magistrate.Api
 			_users = new UsersController(_system);
 			_history = new HistoryController(_system);
 
-			_socket = new SocketConnector(_system);
+			_socket = new SocketConnector(_system, new IActionHandler[]
+			{
+				new IsUsernameValidHandler(_system.UserService)
+			});
 
 			ConfigureAutoMapper();
 

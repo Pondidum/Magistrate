@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Fleck;
-using Magistrate.Api.Queries;
 using Magistrate.Api.Responses;
 using Magistrate.Domain.Services;
 using Newtonsoft.Json;
@@ -13,51 +13,51 @@ namespace Magistrate.Api
 		private readonly WebSocketServer _server;
 		private readonly List<IWebSocketConnection> _sockets;
 		private readonly SystemFacade _system;
-		private readonly Dictionary<string, Action<Message>> _handlers;
+		private readonly Dictionary<string, Action<HandlerActions>> _handlers;
 
-		public SocketConnector(SystemFacade system)
+		public SocketConnector(SystemFacade system, IEnumerable<IActionHandler> handlers)
 		{
 			_system = system;
 			_server = new WebSocketServer("ws://0.0.0.0:8090");
 			_sockets = new List<IWebSocketConnection>();
-			_handlers = new Dictionary<string, Action<Message>>(StringComparer.OrdinalIgnoreCase);
 
-			_handlers["USER_VALID"] = message =>
-			{
-				var m = (IsUsernameValidDto) message;
-				Send(new IsUsernameValid(_system.UserService).Execute(m.Key));
-			};
+			_handlers = handlers.ToDictionary(
+				h => h.ActionName,
+				h => new Action<HandlerActions>(h.Handle),
+				StringComparer.OrdinalIgnoreCase);
 		}
 
 		public void Configure()
 		{
 			_server.Start(socket =>
 			{
-				socket.OnOpen = () =>
-				{
-					_sockets.Add(socket);
-					OnConnect();
-				};
+				socket.OnOpen = () => OnOpen(socket);
 				socket.OnClose = () => _sockets.Remove(socket);
 
-				socket.OnMessage = OnMessage;
+				socket.OnMessage = json => OnMessage(socket, json);
 			});
 		}
 
 		public void Send(object message)
 		{
-			var json = JsonConvert.SerializeObject(message, Extensions.Settings);
-			_sockets.ForEach(socket => socket.Send(json));
+			var sender = new HandlerActions(_sockets, null, string.Empty);
+			sender.Broadcast(message);
 		}
 
-		private void OnMessage(string json)
+		private void OnOpen(IWebSocketConnection socket)
+		{
+			_sockets.Add(socket);
+			OnConnect();
+		}
+
+		private void OnMessage(IWebSocketConnection socket, string json)
 		{
 			var message = JsonConvert.DeserializeObject<Message>(json);
 
-			Action<Message> handler;
+			Action<HandlerActions> handler;
 
 			if (_handlers.TryGetValue(message.Type, out handler))
-				handler(message);
+				handler(new HandlerActions(_sockets, socket, json));
 		}
 
 		private void OnConnect()
@@ -69,17 +69,14 @@ namespace Magistrate.Api
 				Users = _system.Users.Map<UserResponse>(),
 			});
 		}
+
+		private class Message
+		{
+			public string Type { get; set; }
+		}
 	}
 
-	public class Message
-	{
-		public string Type { get; set; }
-	}
-
-	public class IsUsernameValidDto : Message
-	{
-		public string Key { get; set; }
-	}
+	
 
 	public class StateMessage
 	{

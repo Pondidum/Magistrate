@@ -43,7 +43,6 @@ namespace Magistrate.Domain.Services
 		public UserReadModel CreateUser(MagistrateUser currentUser, UserKey key, string name)
 		{
 			var user = User.Create(_userService, currentUser, key, name);
-			var model = new UserReadModel { ID = user.ID, Key = user.Key };
 
 			_store.Save(MagistrateStream, user);
 
