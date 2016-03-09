@@ -19,7 +19,7 @@ namespace Magistrate.Domain.Services
 		{
 			var model = new UserReadModel { ID = Guid.NewGuid(), Key = key };
 
-			return GetRuleViolations(model).Any();
+			return GetRuleViolations(model).Any() == false;
 		}
 
 		private IEnumerable<string> GetRuleViolations(UserReadModel target)

@@ -3,17 +3,19 @@ import { connect } from 'react-redux'
 import { Input } from 'react-bootstrap'
 import Dialog from '../dialog'
 
-import { createUser } from '../../actions'
+import { createUser, validateUser } from '../../actions'
 
 const mapStateToProps = (state) => {
   return {
-    users: state.users
+    users: state.users,
+    isValid: state.userValidation.isValid
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     createUser: (key, username) => dispatch(createUser(key, username)),
+    validateUser: (key) => dispatch(validateUser(key))
   }
 }
 
@@ -35,24 +37,23 @@ var CreateUserDialog = React.createClass({
   getInitialState() {
     return {
       key: '',
-      name: '',
-      keyTaken: false,
+      name: ''
     };
   },
 
   validateKey() {
     var key = this.state.key;
 
-    if (key == null || key == '' || this.state.keyTaken)
+    if (key == null || key == '' || !this.props.isValid)
       return 'error';
 
     return 'success';
   },
 
   onKeyChanged() {
-    this.setState({
-      key: this.refs.key.getValue()
-    });
+    var key = this.refs.key.getValue();
+    this.setState({ key: key });
+    this.props.validateUser(key);
   },
 
   validateName() {
@@ -72,7 +73,7 @@ var CreateUserDialog = React.createClass({
 
   render() {
 
-    var keyHelp = this.state.keyTaken
+    var keyHelp = !this.props.isValid
       ? "This key is already in use"
       : "Unique identifier for the User";
 

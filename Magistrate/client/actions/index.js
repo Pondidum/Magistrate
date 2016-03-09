@@ -7,9 +7,14 @@ export const createUser = (key, name) => {
   }
 }
 
-export const setState = (state) => {
+export const validateUser = (key) => {
   return {
-    type: "SET_STATE",
-    state: state
+    meta: { remote: true },
+    type: "IS_USER_VALID",
+    key
   }
+}
+
+export const setState = (state) => {
+  return state || { type: "" };
 }

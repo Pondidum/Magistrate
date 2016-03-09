@@ -22,7 +22,7 @@ namespace Magistrate.Api.Handlers
 
 			e.Reply(new
 			{
-				Type = ActionName,
+				Type = ActionName + "_RESPONSE",
 				IsValid = valid
 			});
 		}
