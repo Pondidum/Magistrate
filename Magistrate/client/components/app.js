@@ -62,7 +62,6 @@ const App = React.createClass({
 
     this.loadPermissions();
     this.loadRoles();
-    this.loadUsers();
   },
 
   setTileSize(size) {
@@ -91,19 +90,6 @@ const App = React.createClass({
       success: function(data) {
         this.setState({
           roles: data || []
-        });
-      }.bind(this)
-    });
-  },
-
-  loadUsers() {
-    $.ajax({
-      url: "/api/users/all",
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({
-          users: data || []
         });
       }.bind(this)
     });
@@ -146,21 +132,12 @@ const App = React.createClass({
   },
 
   onAddUser(item) {
-    this.setState({
-      users: collection.add(this.state.users, item)
-    });
   },
 
   onRemoveUser(item) {
-    this.setState({
-      users: collection.remove(this.state.users, item)
-    });
   },
 
   onChangeUsers(added, removed) {
-    this.setState({
-      users: collection.change(this.state.users, added, removed)
-    });
   },
 
   render() {
@@ -223,17 +200,7 @@ const App = React.createClass({
       case 'users':
 
         selected = 'users';
-        content = (
-          <UserOverview
-            collection={this.state.users}
-            onAdd={this.onAddUser}
-            onRemove={this.onRemoveUser}
-            onChange={this.onChangeUsers}
-            navigate={this.navigate}
-            url="/api/users"
-            tileSize={tileSize}
-          />
-        );
+        content = (<UserOverview />);
 
         break;
 
