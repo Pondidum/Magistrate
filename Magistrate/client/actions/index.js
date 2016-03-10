@@ -16,5 +16,5 @@ export const validateUser = (key) => {
 }
 
 export const setState = (state) => {
-  return state || { type: "" };
+  return Object.assign({ type: "" }, state);
 }
