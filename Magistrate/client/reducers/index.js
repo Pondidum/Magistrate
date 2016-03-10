@@ -1,19 +1,6 @@
 import { combineReducers } from 'redux'
 import users from './users'
-
-const userValidation = (state = {}, action) => {
-
-  switch (action.type) {
-
-    case "IS_USER_VALID_RESPONSE":
-      return {
-        isValid: action.isValid
-      };
-
-    default:
-      return state;
-  }
-}
+import userValidation from './userValidation'
 
 export default combineReducers({
   users,
