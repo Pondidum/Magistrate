@@ -12,7 +12,11 @@ namespace Magistrate.Domain
 
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
-			return new UserKey(Convert.ToString(reader.Value));
+			var value = Convert.ToString(reader.Value);
+
+			return string.IsNullOrWhiteSpace(value) 
+				? null 
+				: new UserKey(value);
 		}
 
 		public override bool CanConvert(Type objectType)
