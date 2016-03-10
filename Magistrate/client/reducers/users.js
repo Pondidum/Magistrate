@@ -24,8 +24,8 @@ const  users = (state = [], action) => {
     case "CREATE_USER":
       return state.concat([ user(null, action) ]);
 
-    case "SET_STATE":
-      return  action.state.users;
+    case "COLLECTIONS_CHANGED":
+      return  action.users;
 
     default:
       return state;

@@ -80,6 +80,8 @@ namespace Magistrate.Api
 
 	public class StateMessage
 	{
+		public string Type { get { return "COLLECTIONS_CHANGED"; } }
+
 		public IEnumerable<PermissionResponse> Permissions { get; set; }
 		public IEnumerable<RoleResponse> Roles { get; set; }
 		public IEnumerable<UserResponse> Users { get; set; }
