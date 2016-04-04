@@ -8,7 +8,7 @@ import RoleTile from './roleTile'
 import CreateRoleDialog from './CreateRoleDialog'
 import FilterBar from '../filterbar'
 
-class RoleOverview extends Component {
+class GenericOverview extends Component {
 
   constructor() {
     super();
@@ -18,22 +18,22 @@ class RoleOverview extends Component {
   render() {
 
     var exp = new RegExp(this.state.filter, "i");
-    var tiles = this.props.roles
-      .filter(role => {
-        var isName =  role.name.search(exp) != -1;
-        var isDescription = (role.description || "").search(exp) != -1;
+    var tiles = this.props.items
+      .filter(item => {
+        var isName =  item.name.search(exp) != -1;
+        var isDescription = (item.description || "").search(exp) != -1;
 
         return isName || isDescription;
       })
-      .map((role, i) => (
-        <RolteTile key={i} content={role} />
+      .map((item, i) => (
+        <this.props.tile key={i} content={role} />
       ));
 
     return (
       <div>
         <div className="row">
           <div className="col-sm-2">
-            <CreateRoleDialog  />
+            {this.props.buttons}
           </div>
           <FilterBar filterChanged={value => this.setState({ filter: value })} />
         </div>
@@ -46,6 +46,14 @@ class RoleOverview extends Component {
     )
   }
 }
+
+const RoleOverview = ({ roles }) => (
+  <GenericOverview
+    items={roles}
+    tile={RoleTile}
+    buttons={[<CreateRoleDialog  />]}
+  />
+)
 
 const mapStateToProps = (state) => {
   return {
