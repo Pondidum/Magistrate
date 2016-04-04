@@ -1,55 +1,43 @@
-import React from 'react'
-import Grid from './grid'
+import React, { Component } from 'react'
 import FilterBar from './filterbar'
 
-var Overview = React.createClass({
+class Overview extends Component {
 
-  getInitialState() {
-    return {
-      filter: ""
-    };
-  },
-
-  onFilterChanged(value) {
-    this.setState({
-      filter: value
-    });
-  },
+  constructor() {
+    super();
+    this.state = { filter: "" };
+  }
 
   render() {
 
-    var filter = new RegExp(this.state.filter, "i");
-
-    var collection = this.props.collection
-      .filter(function(item) {
-        var isName =  item.name.search(filter) != -1;
-        var isDescription = (item.description || "").search(filter) != -1;
+    var exp = new RegExp(this.state.filter, "i");
+    var tiles = this.props.items
+      .filter(item => {
+        var isName =  item.name.search(exp) != -1;
+        var isDescription = (item.description || "").search(exp) != -1;
 
         return isName || isDescription;
-      });
+      })
+      .map((item, i) => (
+        <this.props.tile key={i} content={item} />
+      ));
 
     return (
       <div>
-        <div>
-          <div className="row">
-            <div className="col-sm-2">
-              <this.props.create onCreate={this.props.onAdd} url={this.props.url} />
-            </div>
-            <FilterBar filterChanged={this.onFilterChanged} />
+        <div className="row">
+          <div className="col-sm-2">
+            {this.props.buttons}
           </div>
-            <Grid
-              name="???"
-              tile={this.props.tile}
-              {...this.props}
-              collection={collection}
-            />
-
+          <FilterBar filterChanged={value => this.setState({ filter: value })} />
+        </div>
+        <div className="row">
+          <ul className="list-unstyled list-inline col-sm-12">
+            {tiles}
+          </ul>
         </div>
       </div>
-    );
-
+    )
   }
-
-});
+}
 
 export default Overview
