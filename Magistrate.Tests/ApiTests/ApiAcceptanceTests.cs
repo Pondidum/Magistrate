@@ -72,9 +72,11 @@ namespace Magistrate.Tests.ApiTests
 		protected async Task<HttpStatusCode> Get(string url)
 		{
 			var response = await _server
-				.HttpClient
-				.GetAsync(url);
+				.CreateRequest("/api/address")
+				.AddHeader("content-type", "application/json")
+				.GetAsync();
 
+			var json = await response.Content.ReadAsStringAsync();
 			return response.StatusCode;
 		}
 
