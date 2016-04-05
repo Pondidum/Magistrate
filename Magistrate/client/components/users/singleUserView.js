@@ -58,7 +58,6 @@ var SingleUserView = React.createClass({
           navigate={this.props.navigate}
           url={this.props.url + "/roles/"}
           name="Roles"
-          tileSize={self.props.tileSize}
         />
 
         <PermissionGrid
@@ -69,7 +68,6 @@ var SingleUserView = React.createClass({
           navigate={this.props.navigate}
           url={this.props.url + "/includes/"}
           name="Includes"
-          tileSize={self.props.tileSize}
         />
 
         <PermissionGrid
@@ -80,7 +78,6 @@ var SingleUserView = React.createClass({
           navigate={this.props.navigate}
           url={this.props.url + "/revokes/"}
           name="Revokes"
-          tileSize={self.props.tileSize}
         />
 
       </div>

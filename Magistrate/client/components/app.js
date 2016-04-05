@@ -27,7 +27,6 @@ const App = React.createClass({
   getInitialState() {
     return {
       location: this.getLocation(),
-      tileSize: reactCookie.load('tileSize') || Tile.sizes.large,
       permissions: [],
       roles: [],
       users: []
@@ -62,11 +61,6 @@ const App = React.createClass({
 
     this.loadPermissions();
     this.loadRoles();
-  },
-
-  setTileSize(size) {
-    this.setState({ tileSize: size });
-    reactCookie.save('tileSize', size);
   },
 
   loadPermissions() {
@@ -142,8 +136,6 @@ const App = React.createClass({
 
   render() {
 
-    var tileSize = this.state.tileSize;
-
     var content;
     var selected = '';
 
@@ -159,7 +151,6 @@ const App = React.createClass({
             user={this.state.users.find(u => u.key == key)}
             url={"/api/users/" + key}
             navigate={this.navigate}
-            tileSize={tileSize}
           />
         );
 
@@ -175,7 +166,6 @@ const App = React.createClass({
             role={this.state.roles.find(r => r.key == key)}
             url={"/api/roles/" + key}
             navigate={this.navigate}
-            tileSize={tileSize}
           />
         );
 
@@ -191,7 +181,6 @@ const App = React.createClass({
             permission={this.state.permissions.find(p => p.key == key)}
             url={"/api/permissions/" + key}
             navigate={this.navigate}
-            tileSize={tileSize}
           />
         );
 
@@ -214,7 +203,6 @@ const App = React.createClass({
             onChange={this.onChangeRoles}
             navigate={this.navigate}
             url="/api/roles"
-            tileSize={tileSize}
           />
         );
 
@@ -230,7 +218,6 @@ const App = React.createClass({
             onChange={this.onChangePermissions}
             navigate={this.navigate}
             url="/api/permissions"
-            tileSize={tileSize}
           />
         );
 
@@ -247,7 +234,7 @@ const App = React.createClass({
 
     return (
       <div className="row">
-        <MainMenu navigate={this.navigate} selected={selected} tileSize={tileSize} setTileSize={this.setTileSize} />
+        <MainMenu navigate={this.navigate} selected={selected} />
         <div className="">
           {content}
         </div>

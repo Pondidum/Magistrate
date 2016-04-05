@@ -1,5 +1,6 @@
 import React from 'react'
 import Tile from './tile'
+import TileSizeSelector from './TileSizeSelector'
 
 var MainMenu = React.createClass({
 
@@ -7,26 +8,10 @@ var MainMenu = React.createClass({
     this.props.navigate(key);
   },
 
-  setSmallGrid(e) {
-    e.preventDefault();
-    this.props.setTileSize(Tile.sizes.small);
-  },
-
-  setLargeGrid(e) {
-    e.preventDefault();
-    this.props.setTileSize(Tile.sizes.large);
-  },
-
-  setTableGrid(e) {
-    e.preventDefault();
-    this.props.setTileSize(Tile.sizes.table);
-  },
-
   render() {
 
     var navigate = this.props.navigate;
     var selected = this.props.selected;
-    var tileSize = this.props.tileSize;
 
     var items = [ "Users", "Roles", "Permissions", "History" ];
 
@@ -50,17 +35,7 @@ var MainMenu = React.createClass({
     return (
       <ul className="nav nav-tabs">
         {tabs}
-        <li className="pull-right">
-          <a href="#" className={tileSize == Tile.sizes.small ? "active" : ""} onClick={this.setSmallGrid}>
-            <span className="glyphicon glyphicon-th" />
-          </a>
-          <a href="#" className={tileSize == Tile.sizes.large ? "active" : ""} onClick={this.setLargeGrid}>
-            <span className="glyphicon glyphicon-th-large" />
-          </a>
-          <a href="#" className={tileSize == Tile.sizes.table ? "active" : ""} onClick={this.setTableGrid}>
-            <span className="glyphicon glyphicon-th-list" />
-          </a>
-        </li>
+        <TileSizeSelector className="pull-right" />
       </ul>
     );
   }

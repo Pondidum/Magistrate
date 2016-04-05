@@ -7,9 +7,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux'
 import remoteMiddleware from './infrastructure/remoteMiddleware'
 
-import { setState } from './actions'
+import { setState, setTileSize } from './actions'
 import rootReducer from './reducers'
-
 
 import App from './components/app'
 
@@ -24,6 +23,9 @@ socket.onmessage = (e) => {
   var state = JSON.parse(e.data);
   store.dispatch(setState(state));
 }
+
+var tileSize = reactCookie.load('tileSize') || Tile.sizes.large
+store.dispatch(setTileSize(tileSize));
 
 render(
   <Provider store={store}>

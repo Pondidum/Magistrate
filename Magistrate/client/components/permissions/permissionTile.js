@@ -62,8 +62,7 @@ var PermissionTile = React.createClass({
         title={permission.name}
         navigateTo={this.navigateToDetails}
         onDelete={this.onDelete}
-        dialogContent={confirmation}
-        tileSize={this.props.tileSize}>
+        dialogContent={confirmation}>
         {permission.description}
         <EditPermissionDialog url={this.props.url + "/" + permission.key} ref="editDialog" />
       </Tile>

@@ -20,7 +20,6 @@ var Grid = React.createClass({
           onRemove={self.props.onRemove}
           navigate={self.props.navigate}
           url={self.props.url}
-          tileSize={self.props.tileSize}
         />
       );
     });
