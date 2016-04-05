@@ -1,5 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
 import Dialog from './dialog'
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    tileSize: state.ui.tileSize,
+    ...ownProps
+  }
+}
 
 var Tile = React.createClass({
 
@@ -119,4 +128,4 @@ var Tile = React.createClass({
 
 });
 
-export default Tile
+export default connect(mapStateToProps)(Tile)

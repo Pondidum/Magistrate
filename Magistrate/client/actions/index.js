@@ -18,3 +18,10 @@ export const validateUser = (key) => {
 export const setState = (state) => {
   return Object.assign({ type: "" }, state);
 }
+
+export const setTileSize = (size) => {
+  return {
+    type: "SET_TILE_SIZE",
+    size: size
+  }
+}
