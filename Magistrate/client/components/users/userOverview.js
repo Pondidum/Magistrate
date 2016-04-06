@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 //import UserTile from './usertile'
-import Plate from '../Plate'
+import Plate from '../plate'
 import CreateUserDialog from './CreateUserDialog'
 import Overview from '../overview'
 
