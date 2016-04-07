@@ -1,5 +1,5 @@
 import React from 'react'
-import Tile from '../tile'
+import PlateSizes from './sizes'
 
 const PlateChildren = ({ children, tileSize }) => {
   if (children.constructor !== Array) {
@@ -11,7 +11,7 @@ const PlateChildren = ({ children, tileSize }) => {
   });
 
   return (
-    <ul className={"list-unstyled " + (tileSize == Tile.sizes.table ? "list-inline" : "")}>
+    <ul className={"list-unstyled " + (tileSize == PlateSizes.table ? "list-inline" : "")}>
       {list}
     </ul>
   )

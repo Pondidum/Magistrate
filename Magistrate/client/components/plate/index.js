@@ -1,7 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Tile from '../tile'
+import PlateSizes from './sizes'
+import PlateSmall from './PlateSmall'
+import PlateLarge from './PlateLarge'
+import PlateRow from './PlateRow'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -14,10 +17,10 @@ const Plate = (props) => {
 
   const tileSize = props.tileSize;
 
-  if (tileSize == Tile.sizes.large)
+  if (tileSize == PlateSizes.large)
     return <PlateLarge {...props} />
 
-  if (tileSize == Tile.sizes.table)
+  if (tileSize == PlateSizes.table)
     return <PlateRow {...props} />
 
   return <PlateSmall {...props} />

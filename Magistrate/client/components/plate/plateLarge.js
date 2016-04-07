@@ -1,4 +1,5 @@
 import React from 'react'
+import PlateHeader from './PlateHeader'
 import PlateChildren from './PlateChildren'
 
 const PlateLarge = ({ title, onCross, tileSize, children }) => (

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { setTileSize } from '../actions/'
-import Tile from './tile'
+import PlateSizes from './plate/sizes'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -23,20 +23,20 @@ const TileSizeSelector = ({ className, tileSize, setTileSize }) => (
   <li className={className}>
     <a
       href="#"
-      className={tileSize == Tile.sizes.small ? "active" : ""}
-      onClick={e => setTileSize(Tile.sizes.small)}>
+      className={tileSize == PlateSizes.small ? "active" : ""}
+      onClick={e => setTileSize(PlateSizes.small)}>
         <span className="glyphicon glyphicon-th" />
     </a>
     <a
       href="#"
-      className={tileSize == Tile.sizes.large ? "active" : ""}
-      onClick={e => setTileSize(Tile.sizes.large)}>
+      className={tileSize == PlateSizes.large ? "active" : ""}
+      onClick={e => setTileSize(PlateSizes.large)}>
         <span className="glyphicon glyphicon-th-large" />
     </a>
     <a
       href="#"
-      className={tileSize == Tile.sizes.table ? "active" : ""}
-      onClick={e => setTileSize(Tile.sizes.table)}>
+      className={tileSize == PlateSizes.table ? "active" : ""}
+      onClick={e => setTileSize(PlateSizes.table)}>
         <span className="glyphicon glyphicon-th-list" />
     </a>
   </li>

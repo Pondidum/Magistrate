@@ -1,4 +1,5 @@
 import React from 'react'
+import PlateHeader from './PlateHeader'
 
 const PlateSmall = ({ title, onCross }) => (
   <li className="col-md-3 tile">
