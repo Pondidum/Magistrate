@@ -25,3 +25,11 @@ export const setTileSize = (size) => {
     size: size
   }
 }
+
+export const deleteUser = (key) => {
+  return {
+    meta: { remote: true }
+    type: "DELETE_USER",
+    key
+  }
+}
