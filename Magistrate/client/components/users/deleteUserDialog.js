@@ -24,7 +24,7 @@ class DeleteUserDialog extends Component {
         acceptText="Delete"
         acceptStyle="danger"
         title="Delete User"
-        accept={() => deleteUser(user.key)}
+        onSubmit={() => deleteUser(user.key)}
       >
         <p>Delete user <strong>{user.name}</strong>?</p>
       </Dialog>
