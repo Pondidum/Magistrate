@@ -2,7 +2,7 @@ import React from 'react'
 import PlateHeader from './PlateHeader'
 import PlateChildren from './PlateChildren'
 
-const PlateLarge = ({ title, onCross, tileSize, children }) => (
+const PlateLarge = ({ title, onCross, tileSize, additions, children }) => (
   <li className="col-md-3 tile">
     <div className="panel panel-default">
       <PlateHeader title={title} onCross={onCross} />
@@ -10,6 +10,7 @@ const PlateLarge = ({ title, onCross, tileSize, children }) => (
         <PlateChildren tileSize={tileSize} children={children} />
       </div>
     </div>
+    {additions}
   </li>
 );
 
