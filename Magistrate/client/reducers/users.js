@@ -27,6 +27,9 @@ const  users = (state = [], action) => {
     case "COLLECTIONS_CHANGED":
       return  action.users;
 
+    case "DELETE_USER":
+      return state.filter(u => u.key != action.key);
+
     default:
       return state;
   }
