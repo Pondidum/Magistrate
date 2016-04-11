@@ -33,3 +33,12 @@ export const deleteUser = (key) => {
     key
   }
 }
+
+export const renameUser = (key, newName) => {
+  return {
+    meta: { remote: true },
+    type: "RENAME_USER",
+    key,
+    newName
+  }
+}

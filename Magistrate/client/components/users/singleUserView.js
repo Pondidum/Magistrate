@@ -1,89 +1,45 @@
-import React from 'react'
-import PermissionGrid from '../permissions/permissionGrid'
-import RoleGrid from '../roles/RoleGrid'
-import InlineEditor from '../InlineEditor'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { renameUser } from '../../actions'
 
-var SingleUserView = React.createClass({
+const mapDispatchToProps = (dispatch) => {
+  return {
+    renameUser: (key, newName) => dispatch(renameUser(key, newName))
+  }
+}
 
-  onNameChanged(newName) {
+class SingleUserView extends Component {
 
-    var json = JSON.stringify({
-      name: newName
-    });
-
-    $.ajax({
-      url: this.props.url + "/name",
-      cache: false,
-      method: "PUT",
-      data: json,
-      success: function() {
-        this.props.user.name = newName;
-      }.bind(this)
-    });
-
-  },
-
-  onAdd(name, item) {
-    var user = this.props.user;
-    user[name] = collection.add(user[name], item);
-  },
-
-  onRemove(name, item) {
-    var user = this.props.user;
-    user[name] = collection.remove(user[name], item);
-  },
-
-  onChange(name, added, removed) {
-    var user = this.props.user;
-    user[name] = collection.change(user[name], added, removed);
-  },
+  constructor() {
+    super()
+  }
 
   render() {
-
-    var user = this.props.user;
-    var self = this;
-
-    if (user == null)
-      return (<h1>Unknown user {this.props.userKey}</h1>);
+    const { user, renameUser } = this.props;
+    const onRename = (newName) => renameUser(user.key, newName);
 
     return (
       <div className="well">
-        <h1><InlineEditor initialValue={user.name} onChange={this.onNameChanged} /><small className="pull-right">{user.key}</small></h1>
+        <h1>
+          <InlineEditor initialValue={user.name} onChange={onRename} />
+          <small className="pull-right">{user.key}</small>
+        </h1>
 
-        <RoleGrid
-          collection={user.roles}
-          onAdd={item => this.onAdd("roles", item)}
-          onRemove={item => this.onRemove("roles", item)}
-          onChange={(a, r) => this.onChange("roles", a, r)}
-          navigate={this.props.navigate}
-          url={this.props.url + "/roles/"}
-          name="Roles"
-        />
+        <div className="page-header">
+          <a href="#">Change Roles...</a>
+        </div>
 
-        <PermissionGrid
-          collection={user.includes}
-          onAdd={item => this.onAdd("includes", item)}
-          onRemove={item => this.onRemove("includes", item)}
-          onChange={(a, r) => this.onChange("includes", a, r)}
-          navigate={this.props.navigate}
-          url={this.props.url + "/includes/"}
-          name="Includes"
-        />
+        <div className="page-header">
+          <a href="#">Change Includes...</a>
+        </div>
 
-        <PermissionGrid
-          collection={user.revokes}
-          onAdd={item => this.onAdd("revokes", item)}
-          onRemove={item => this.onRemove("revokes", item)}
-          onChange={(a, r) => this.onChange("revokes", a, r)}
-          navigate={this.props.navigate}
-          url={this.props.url + "/revokes/"}
-          name="Revokes"
-        />
+        <div className="page-header">
+          <a href="#">Change Revokes...</a>
+        </div>
 
       </div>
-    );
+    )
   }
+}
 
-});
-
-export default SingleUserView
+export default connect(null, mapDispatchToProps)(SingleUserView)
