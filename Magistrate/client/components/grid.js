@@ -1,67 +1,22 @@
 import React from 'react'
 
-var Grid = React.createClass({
+const Grid = (props) => {
 
-  showDialog(e) {
-    e.preventDefault();
-    this.refs.dialog.open();
-  },
+  const { collection, filter } = props;
 
-  render() {
+  var tiles = collection
+    .filter((item, index) => filter(item, index))
+    .map((item, i) => (
+      <props.tile key={i} content={item} />
+    ));
 
-    var self = this;
-    var collection = this.props.collection;
+  return (
+    <div className="row">
+      <ul className="list-unstyled list-inline col-sm-12">
+        {tiles}
+      </ul>
+    </div>
+  )
+}
 
-    var collection = collection.map(function(item, index) {
-      return (
-        <self.props.tile
-          key={index}
-          content={item}
-          onRemove={self.props.onRemove}
-          navigate={self.props.navigate}
-          url={self.props.url}
-        />
-      );
-    });
-
-    return (
-      <div>
-
-        {this.renderHeader()}
-
-        <div className="row">
-          <ul className="list-unstyled list-inline col-sm-12">
-            {collection}
-          </ul>
-        </div>
-
-      </div>
-    );
-
-  },
-
-  renderHeader() {
-
-    if (this.props.selector == null)
-      return null;
-
-    var collection = this.props.collection;
-
-    return (
-      <div className="page-header">
-        <a href="#" onClick={this.showDialog}>Change {this.props.name}...</a>
-
-        <this.props.selector
-          initialValue={collection}
-          url={this.props.url}
-          onChange={this.props.onChange}
-          ref="dialog"
-        />
-
-      </div>
-    );
-  }
-
-});
-
-export default Grid;
+export default Grid

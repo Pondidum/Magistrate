@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import FilterBar from './filterbar'
-import SimpleGrid from './SimpleGrid'
+import Grid from './Grid'
 
 class Overview extends Component {
 
@@ -27,7 +27,7 @@ class Overview extends Component {
           </div>
           <FilterBar filterChanged={value => this.setState({ filter: value })} />
         </div>
-        <SimpleGrid collection={this.props.items} filter={filter} tile={this.props.tile} />
+        <Grid collection={this.props.items} filter={filter} tile={this.props.tile} />
       </div>
     )
   }
