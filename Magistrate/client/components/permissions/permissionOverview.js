@@ -15,7 +15,7 @@ const PermissionOverview = ({ permissions }) => (
   <Overview
     items={permissions}
     tile={PermissionTile}
-    buttons={[ <CreatePermissionDialog /> ]}
+    buttons={[ <CreatePermissionDialog key={1} /> ]}
   />
 )
 

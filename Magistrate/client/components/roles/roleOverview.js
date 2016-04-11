@@ -15,7 +15,7 @@ const RoleOverview = ({ roles }) => (
   <Overview
     items={roles}
     tile={RoleTile}
-    buttons={[<CreateRoleDialog  />]}
+    buttons={[<CreateRoleDialog key={1} />]}
   />
 
 )
