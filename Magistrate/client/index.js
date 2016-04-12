@@ -6,17 +6,21 @@ import { render } from 'react-dom'
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux'
 import remoteMiddleware from './infrastructure/remoteMiddleware'
+import { Router, Route, hashHistory } from 'react-router'
+import { syncHistory, routerReducer } from 'react-router-redux'
 
 import { setState, setTileSize } from './actions'
 import rootReducer from './reducers'
 
 import App from './components/app'
+import UserOverview from './components/users/UserOverview'
 
 var socket = new WebSocket(`ws://${location.hostname}:8090`);
 socket.onopen = () => console.log("opened");
 socket.onclose = () => console.log("closed");
 
-const createStoreWithMiddleware = applyMiddleware(remoteMiddleware(socket))(createStore);
+const reduxRouterMiddleware = syncHistory(hashHistory);
+const createStoreWithMiddleware = applyMiddleware(remoteMiddleware(socket), reduxRouterMiddleware)(createStore);
 const store = createStoreWithMiddleware(rootReducer);
 
 socket.onmessage = (e) => {
@@ -29,7 +33,11 @@ store.dispatch(setTileSize(tileSize));
 
 render(
   <Provider store={store}>
-    <App />
+    <Router history={hashHistory}>
+      <Route path="/" component={App}>
+        <Route path="users" component={UserOverview}/>
+      </Route>
+    </Router>
   </Provider>,
   document.getElementById('container')
 )

@@ -1,8 +1,20 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { routeActions } from 'react-router-redux'
+
 import Tile from './tile'
 import TileSizeSelector from './TileSizeSelector'
 
-var MainMenu = ({ navigate, selected }) => {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    navigate: (area) => {
+      dispatch(routeActions.push("/" + area + "/"));
+    }
+  }
+}
+
+
+const MainMenu = ({ params, navigate, selected }) => {
 
   const items = [ "Users", "Roles", "Permissions", "History" ];
 
@@ -31,4 +43,4 @@ var MainMenu = ({ navigate, selected }) => {
   );
 }
 
-export default MainMenu
+export default connect(null, mapDispatchToProps)(MainMenu)
