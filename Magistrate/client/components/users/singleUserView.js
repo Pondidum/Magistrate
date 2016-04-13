@@ -6,7 +6,7 @@ import InlineEditor from '../InlineEditor'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.users.find(u => u.key == ownProps.params.key) || {}
+    user: state.users.find(u => u.key == ownProps.params.key)
   }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -15,38 +15,29 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-class SingleUserView extends Component {
+const SingleUserView = ({ user, renameUser }) => (
+  <div className="well">
+    <h1>
+      <InlineEditor
+        initialValue={user.name}
+        onChange={(newName) => renameUser(user.key, newName)}
+      />
+      <small className="pull-right">{user.key}</small>
+    </h1>
 
-  constructor() {
-    super()
-  }
+    <div className="page-header">
+      <a href="#">Change Roles...</a>
+    </div>
 
-  render() {
-    const { user, renameUser } = this.props;
-    const onRename = (newName) => renameUser(user.key, newName);
+    <div className="page-header">
+      <a href="#">Change Includes...</a>
+    </div>
 
-    return (
-      <div className="well">
-        <h1>
-          <InlineEditor initialValue={user.name} onChange={onRename} />
-          <small className="pull-right">{user.key}</small>
-        </h1>
+    <div className="page-header">
+      <a href="#">Change Revokes...</a>
+    </div>
 
-        <div className="page-header">
-          <a href="#">Change Roles...</a>
-        </div>
-
-        <div className="page-header">
-          <a href="#">Change Includes...</a>
-        </div>
-
-        <div className="page-header">
-          <a href="#">Change Revokes...</a>
-        </div>
-
-      </div>
-    )
-  }
-}
+  </div>
+)
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleUserView)
