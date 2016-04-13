@@ -2,6 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { renameUser } from '../../actions'
 
+import InlineEditor from '../InlineEditor'
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.users.find(u => u.key == ownProps.params.key) || {}
+  }
+}
 const mapDispatchToProps = (dispatch) => {
   return {
     renameUser: (key, newName) => dispatch(renameUser(key, newName))
@@ -42,4 +49,4 @@ class SingleUserView extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(SingleUserView)
+export default connect(mapStateToProps, mapDispatchToProps)(SingleUserView)
