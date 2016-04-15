@@ -1,9 +1,11 @@
 import React from 'react'
 
 const PlateHeader = ({ title, onClick, onCross }) => (
-  <div className="panel-heading" onClick={onClick}>
+  <div className="panel-heading">
     <h3 className="panel-title">
-      {title}
+      <a href="#" onClick={onClick}>
+        {title}
+      </a>
       <ul className="tile-actions pull-right list-unstyled list-inline">
         <li>
           <a href="#" onClick={onCross}>
