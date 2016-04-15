@@ -1,9 +1,9 @@
 import React from 'react'
 import PlateChildren from './PlateChildren'
 
-const PlateRow = ({ title, onCross, tileSize, additions, children }) => (
+const PlateRow = ({ title, onClick, onCross, tileSize, additions, children }) => (
   <li className="col-md-12 tile">
-    <div className="row panel panel-default">
+    <div className="row panel panel-default" onClick={onClick}>
       <div className="panel-body">
         <div className="col-sm-3">{title}</div>
         <div className="col-sm-8"><PlateChildren tileSize={tileSize} children={children} /></div>
