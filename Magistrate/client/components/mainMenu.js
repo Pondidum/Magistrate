@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-const MainMenu = ({ params, navigate, selected }) => {
+const MainMenu = ({ route, navigate }) => {
 
   const items = [ "Users", "Roles", "Permissions", "History" ];
 
@@ -25,7 +25,7 @@ const MainMenu = ({ params, navigate, selected }) => {
       navigate(item.toLowerCase());
     }
 
-    var active = selected == item.toLowerCase() ? "active" : "";
+    var active = route && route[0].path.toLowerCase() == item.toLowerCase() ? "active" : "";
 
     return (
       <li key={index} className={active}>

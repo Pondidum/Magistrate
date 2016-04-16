@@ -28,7 +28,7 @@ const App = React.createClass({
   render() {
     return (
       <div className="row">
-        <MainMenu params={this.props.params} />
+        <MainMenu route={this.props.route.childRoutes} />
         <div className="">
           {this.props.children}
         </div>
