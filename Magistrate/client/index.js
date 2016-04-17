@@ -15,6 +15,7 @@ import rootReducer from './reducers'
 import App from './components/app'
 import UserOverview from './components/users/UserOverview'
 import SingleUserView from './components/users/SingleUserView'
+import RoleOverview from './components/roles/RoleOverview'
 
 var socket = new WebSocket(`ws://${location.hostname}:8090`);
 socket.onopen = () => console.log("opened");
@@ -38,6 +39,7 @@ render(
       <Route path="/" component={App}>
         <Route path="users" component={UserOverview}/>
         <Route path="users/:key" component={SingleUserView} />
+        <Route path="roles" component={RoleOverview} />
       </Route>
     </Router>
   </Provider>,

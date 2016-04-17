@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 
-import Plate from '../plate'
+import Plate from '../Plate'
 import DeleteUserDialog from './DeleteUserDialog'
 
 const mapDispatchToProps = (dispatch) => {
@@ -15,6 +15,7 @@ class UserPlate extends Component {
 
   render () {
     const { content, navigate } = this.props;
+
     return (
       <Plate
         title={content.name}
@@ -29,4 +30,4 @@ class UserPlate extends Component {
   }
 }
 
-export default  connect(null, mapDispatchToProps)(UserPlate)
+export default connect(null, mapDispatchToProps)(UserPlate)

@@ -11,7 +11,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-
 const UserOverview = ({ users }) => (
   <Overview
     items={users}
