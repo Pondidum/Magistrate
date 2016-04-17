@@ -50,3 +50,12 @@ export const deleteRole = (key) => {
     key
   }
 }
+
+export const renameRole = (key, newName) => {
+  return {
+    meta: { remote: true},
+    type: "RENAME_ROLE",
+    key,
+    newName
+  }
+}

@@ -9,6 +9,7 @@ const mapStateToProps = (state, ownProps) => {
     user: state.users.find(u => u.key == ownProps.params.key)
   }
 }
+
 const mapDispatchToProps = (dispatch) => {
   return {
     renameUser: (key, newName) => dispatch(renameUser(key, newName))

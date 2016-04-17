@@ -7,7 +7,7 @@ import DeleteRoleDialog from './DeleteRoleDialog'
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    navigate: (key) => dispatch(routeActions.push(`/user/${key}`))
+    navigate: (key) => dispatch(routeActions.push(`/roles/${key}`))
   }
 }
 
