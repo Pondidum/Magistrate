@@ -4,13 +4,6 @@ import cookie from 'react-cookie'
 import moment from 'moment'
 
 import MainMenu from './mainmenu'
-// import SingleUserView from './users/SingleUserView'
-// import UserOverview from './users/UserOverview'
-// import SingleRoleView from './roles/SingleRoleView'
-// import RoleOverview from './roles/RoleOverview'
-// import SinglePermissionView from './permissions/SinglePermissionView'
-// import PermissionOverview from './permissions/PermissionOverview'
-// import HistoryOverview from './history/HistoryOverview'
 
 const App = React.createClass({
 

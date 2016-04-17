@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const TileSizeSelector = ({ className, tileSize, setTileSize }) => (
+const PlateSizeSelector = ({ className, tileSize, setTileSize }) => (
   <li className={className}>
     <a
       href="#"
@@ -42,4 +42,4 @@ const TileSizeSelector = ({ className, tileSize, setTileSize }) => (
   </li>
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(TileSizeSelector)
+export default connect(mapStateToProps, mapDispatchToProps)(PlateSizeSelector)

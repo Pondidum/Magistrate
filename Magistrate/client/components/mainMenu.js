@@ -2,8 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { routeActions } from 'react-router-redux'
 
-import Tile from './tile'
-import TileSizeSelector from './TileSizeSelector'
+import PlateSizeSelector from './PlateSizeSelector'
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -38,7 +37,7 @@ const MainMenu = ({ route, navigate }) => {
   return (
     <ul className="nav nav-tabs">
       {tabs}
-      <TileSizeSelector className="pull-right" />
+      <PlateSizeSelector className="pull-right" />
     </ul>
   );
 }
