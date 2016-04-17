@@ -42,3 +42,11 @@ export const renameUser = (key, newName) => {
     newName
   }
 }
+
+export const deleteRole = (key) => {
+  return {
+    meta: { remote: true },
+    type: "DELETE_ROLE",
+    key
+  }
+}
