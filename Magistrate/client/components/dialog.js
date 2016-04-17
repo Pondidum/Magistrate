@@ -29,6 +29,7 @@ const Dialog = React.createClass({
 
   accept() {
     this.props.onSubmit();
+    this.close();
   },
 
   render() {
