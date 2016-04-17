@@ -21,7 +21,7 @@ class UserPlate extends Component {
         title={content.name}
         additions={<DeleteUserDialog user={content} ref={d => this.dialog = d} />}
         onClick={e => { e.preventDefault(); navigate(content.key); }}
-        onCross={() => this.dialog.getWrappedInstance().open()}>
+        onCross={e => { e.preventDefault(); this.dialog.getWrappedInstance().open(); }}>
         <span>Roles: {content.roles.length}</span>
         <span>Includes: {content.includes.length}</span>
         <span>Revokes: {content.revokes.length}</span>

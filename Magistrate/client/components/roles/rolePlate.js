@@ -21,7 +21,7 @@ class RolePlate extends Component {
         title={content.name}
         additions={<DeleteRoleDialog role={content} ref={d => this.dialog = d} />}
         onClick={e => { e.preventDefault(); navigate(content.key); }}
-        onCross={() => this.dialog.getWrappedInstance().open()}>
+        onCross={e => { e.preventDefault(); this.dialog.getWrappedInstance().open(); }}>
         {content.description}
       </Plate>
     )
