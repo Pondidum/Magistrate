@@ -24,7 +24,7 @@ const MainMenu = ({ route, navigate }) => {
       navigate(item.toLowerCase());
     }
 
-    var active = route && route[0].path.toLowerCase() == item.toLowerCase() ? "active" : "";
+    var active = route.toLowerCase() == item.toLowerCase() ? "active" : "";
 
     return (
       <li key={index} className={active}>

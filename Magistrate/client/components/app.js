@@ -21,7 +21,7 @@ const App = React.createClass({
   render() {
     return (
       <div className="row">
-        <MainMenu route={this.props.route.childRoutes} />
+        <MainMenu route={this.props.location.pathname.replace(/\//g, '')} />
         <div className="">
           {this.props.children}
         </div>
