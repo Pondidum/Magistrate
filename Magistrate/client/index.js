@@ -17,6 +17,7 @@ import UserOverview from './components/users/UserOverview'
 import SingleUserView from './components/users/SingleUserView'
 import RoleOverview from './components/roles/RoleOverview'
 import SingleRoleView from './components/roles/SingleRoleView'
+import PermissionOverview from './components/permissions/PermissionOverview'
 
 var socket = new WebSocket(`ws://${location.hostname}:8090`);
 socket.onopen = () => console.log("opened");
@@ -42,6 +43,7 @@ render(
         <Route path="users/:key" component={SingleUserView} />
         <Route path="roles" component={RoleOverview} />
         <Route path="roles/:key" component={SingleRoleView} />
+        <Route path="permissions" component={PermissionOverview} />
       </Route>
     </Router>
   </Provider>,

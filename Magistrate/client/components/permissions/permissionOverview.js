@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import Overview from '../overview'
-import PermissionTile from './permissionTile'
-import CreatePermissionDialog from './createPermissionDialog'
+import Overview from '../Overview'
+import PermissionPlate from './PermissionPlate'
+import CreatePermissionDialog from './CreatePermissionDialog'
 
 const mapStateToProps = (state) => {
   return {
@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
 const PermissionOverview = ({ permissions }) => (
   <Overview
     items={permissions}
-    tile={PermissionTile}
+    tile={PermissionPlate}
     buttons={[ <CreatePermissionDialog key={1} /> ]}
   />
 )
