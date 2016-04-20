@@ -4,6 +4,9 @@ const permissions = (state = [], action) => {
     case "COLLECTIONS_CHANGED":
       return action.permissions;
 
+    case "DELETE_PERMISSION":
+      return state.filter(r => r.key != action.key);
+
     default:
       return state;
   }

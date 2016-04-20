@@ -59,3 +59,11 @@ export const renameRole = (key, newName) => {
     newName
   }
 }
+
+export const deletePermission = (key) => {
+  return {
+    meta: { remote: true },
+    type: "DELETE_PERMISSION",
+    key
+  }
+}
