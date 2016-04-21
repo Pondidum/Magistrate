@@ -1,6 +1,6 @@
 import React from 'react'
 import { Input } from 'react-bootstrap'
-import Dialog from '../dialog'
+import Dialog from '../Dialog'
 
 const PermissionDialog = React.createClass({
 

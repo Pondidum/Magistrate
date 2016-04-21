@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Input } from 'react-bootstrap'
-import Dialog from '../dialog'
+import Dialog from '../Dialog'
 
 import { createUser, validateUser } from '../../actions'
 

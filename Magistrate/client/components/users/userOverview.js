@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import UserPlate from './UserPlate'
 import CreateUserDialog from './CreateUserDialog'
-import Overview from '../overview'
+import Overview from '../Overview'
 
 const mapStateToProps = (state) => {
   return {

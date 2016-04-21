@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Dialog from './dialog'
+import Dialog from './Dialog'
 
 const mapStateToProps = (state, ownProps) => {
   return {

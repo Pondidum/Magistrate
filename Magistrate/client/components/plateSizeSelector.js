@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { setTileSize } from '../actions/'
-import PlateSizes from './plate/sizes'
+import PlateSizes from './Plate/sizes'
 
 const mapStateToProps = (state, ownProps) => {
   return {
