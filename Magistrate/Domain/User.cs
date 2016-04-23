@@ -76,17 +76,20 @@ namespace Magistrate.Domain
 
 		public void AddInclude(MagistrateUser currentUser, Permission permission)
 		{
-			ApplyEvent(new IncludeAddedToUserEvent
-			(
-				currentUser,
-				permission.ID,
-				permission.Name,
-				Name
-			));
+			if (_includes.Contains(permission.ID))
+				return;
+
+			if (_revokes.Contains(permission.ID))
+				ApplyEvent(new RevokeRemovedFromUserEvent(currentUser, permission.ID, permission.Name, Name));
+
+			ApplyEvent(new IncludeAddedToUserEvent(currentUser, permission.ID, permission.Name, Name));
 		}
 
 		public void RemoveInclude(MagistrateUser currentUser, Permission permission)
 		{
+			if (_includes.Contains(permission.ID) == false)
+				return;
+
 			ApplyEvent(new IncludeRemovedFromUserEvent
 			(
 				currentUser,
@@ -98,17 +101,20 @@ namespace Magistrate.Domain
 
 		public void AddRevoke(MagistrateUser currentUser, Permission permission)
 		{
-			ApplyEvent(new RevokeAddedToUserEvent
-			(
-				currentUser,
-				permission.ID,
-				permission.Name,
-				Name
-			));
+			if (_revokes.Contains(permission.ID))
+				return;
+
+			if (_includes.Contains(permission.ID))
+				ApplyEvent(new IncludeRemovedFromUserEvent(currentUser, permission.ID, permission.Name, Name));
+
+			ApplyEvent(new RevokeAddedToUserEvent(currentUser, permission.ID, permission.Name, Name));
 		}
 
 		public void RemoveRevoke(MagistrateUser currentUser, Permission permission)
 		{
+			if (_revokes.Contains(permission.ID) == false)
+				return;
+
 			ApplyEvent(new RevokeRemovedFromUserEvent
 			(
 				currentUser,
@@ -178,7 +184,6 @@ namespace Magistrate.Domain
 
 		private void Handle(IncludeAddedToUserEvent e)
 		{
-			_revokes.Remove(e.PermissionID);
 			_includes.Add(e.PermissionID);
 		}
 
@@ -189,7 +194,6 @@ namespace Magistrate.Domain
 
 		private void Handle(RevokeAddedToUserEvent e)
 		{
-			_includes.Remove(e.PermissionID);
 			_revokes.Add(e.PermissionID);
 		}
 
