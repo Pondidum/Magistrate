@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Ledger;
 using Magistrate.Domain.Events.UserEvents;
+using Magistrate.Infrastructure;
 
 namespace Magistrate.Domain.Services
 {

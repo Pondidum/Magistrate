@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Ledger;
 
-namespace Magistrate.Domain.Services
+namespace Magistrate.Infrastructure
 {
 	public class Projector
 	{

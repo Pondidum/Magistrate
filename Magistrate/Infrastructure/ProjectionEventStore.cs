@@ -4,7 +4,7 @@ using Ledger;
 using Ledger.Infrastructure;
 using Ledger.Stores;
 
-namespace Magistrate.Domain.Services
+namespace Magistrate.Infrastructure
 {
 	public class ProjectionEventStore : IEventStore
 	{

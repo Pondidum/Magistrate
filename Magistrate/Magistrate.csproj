@@ -130,11 +130,12 @@
     <Compile Include="Domain\RoleKeyConverter.cs" />
     <Compile Include="Domain\Permission.cs" />
     <Compile Include="Domain\RuleViolationException.cs" />
-    <Compile Include="Domain\Services\ProjectionEventStore.cs" />
-    <Compile Include="Domain\Services\Projector.cs" />
+    <Compile Include="Infrastructure\ProjectionEventStore.cs" />
+    <Compile Include="Infrastructure\Projector.cs" />
     <Compile Include="Domain\Services\UserService.cs" />
     <Compile Include="Domain\UserKey.cs" />
     <Compile Include="Domain\UserKeyConverter.cs" />
+    <Compile Include="Infrastructure\Projectionist.cs" />
     <Compile Include="MagistrateConfiguration.cs" />
     <Compile Include="MagistrateUser.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />

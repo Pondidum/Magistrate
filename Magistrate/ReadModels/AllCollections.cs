@@ -6,6 +6,7 @@ using Magistrate.Domain.Events.PermissionEvents;
 using Magistrate.Domain.Events.RoleEvents;
 using Magistrate.Domain.Events.UserEvents;
 using Magistrate.Domain.Services;
+using Magistrate.Infrastructure;
 
 namespace Magistrate.ReadModels
 {

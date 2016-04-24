@@ -1,6 +1,7 @@
 ﻿using Magistrate.Domain.Events;
 using Magistrate.Domain.Events.UserEvents;
 using Magistrate.Domain.Services;
+using Magistrate.Infrastructure;
 using Shouldly;
 using Xunit;
 
