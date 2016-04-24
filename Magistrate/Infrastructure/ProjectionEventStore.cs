@@ -6,42 +6,39 @@ using Ledger.Stores;
 
 namespace Magistrate.Infrastructure
 {
-	public class ProjectionEventStore : IEventStore
+	public class ProjectionStore : InterceptingEventStore
 	{
-		private readonly IEventStore _other;
-		private readonly Action<IDomainEvent<Guid>> _onEvent;
+		private readonly Action<DomainEvent<Guid>> _projection;
 
-		public ProjectionEventStore(IEventStore other, Action<IDomainEvent<Guid>> onEvent)
+		public ProjectionStore(IEventStore other, Action<DomainEvent<Guid>> projection) : base(other)
 		{
-			_other = other;
-			_onEvent = onEvent;
+			_projection = projection;
 		}
 
-		public IStoreReader<TKey> CreateReader<TKey>(EventStoreContext context)
+		public override IStoreWriter<TKey> CreateWriter<TKey>(EventStoreContext context)
 		{
-			return _other.CreateReader<TKey>(context);
+			var other = base.CreateWriter<TKey>(context);
+
+			return new AsyncWriter<TKey>(other, e => _projection(e as DomainEvent<Guid>));
 		}
 
-		public IStoreWriter<TKey> CreateWriter<TKey>(EventStoreContext context)
+		private class AsyncWriter<T> : InterceptingWriter<T>
 		{
-			var otherWriter = _other.CreateWriter<TKey>(context);
+			private readonly Action<DomainEvent<T>> _projection;
 
-			return new ProjectionWriter<TKey>(otherWriter, e => _onEvent((IDomainEvent<Guid>)e));
-		}
-
-		private class ProjectionWriter<TKey> : InterceptingWriter<TKey>
-		{
-			private readonly Action<IDomainEvent<TKey>> _onEvent;
-
-			public ProjectionWriter(IStoreWriter<TKey> other, Action<IDomainEvent<TKey>> onEvent)
-				: base(other)
+			public AsyncWriter(IStoreWriter<T> other, Action<DomainEvent<T>> projection) : base(other)
 			{
-				_onEvent = onEvent;
+				_projection = projection;
 			}
 
-			public override void SaveEvents(IEnumerable<IDomainEvent<TKey>> changes)
+			public override void SaveEvents(IEnumerable<DomainEvent<T>> changes)
 			{
-				base.SaveEvents(changes.Apply(change => _onEvent(change)));
+				var toRaise = new List<DomainEvent<T>>();
+
+				base.SaveEvents(changes.Apply(e => toRaise.Add(e)));
+
+				foreach (var domainEvent in toRaise)
+					_projection(domainEvent);
 			}
 		}
 	}
