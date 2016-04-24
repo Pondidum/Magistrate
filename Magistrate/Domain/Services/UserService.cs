@@ -1,44 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Magistrate.Domain.ReadModels;
-using Magistrate.Domain.Rules;
+using Ledger;
+using Magistrate.Domain.Events.UserEvents;
 
 namespace Magistrate.Domain.Services
 {
 	public class UserService
 	{
-		private readonly IEnumerable<UserReadModel> _users;
+		private readonly Projector _projections;
+		private readonly HashSet<UserKey> _keys;
 
-		public UserService(IEnumerable<UserReadModel> users)
+		public UserService()
 		{
-			_users = users;
+			_keys = new HashSet<UserKey>();
+			_projections = new Projector();
+
+			_projections.Add<UserCreatedEvent>(e => _keys.Add(e.Key));
+		}
+
+		public void Project(DomainEvent<Guid> e)
+		{
+			_projections.Project(e);
 		}
 
 		public bool CanCreateUser(UserKey key)
 		{
-			var model = new UserReadModel { ID = Guid.NewGuid(), Key = key };
-
-			return GetRuleViolations(model).Any() == false;
-		}
-
-		private IEnumerable<string> GetRuleViolations(UserReadModel target)
-		{
-			var rules = new[] { new UniqueKeyRule<UserReadModel, UserKey>(_users) };
-
-			return rules
-				.Where(r => r.IsSatisfiedBy(target) == false)
-				.Select(r => r.GetMessage(target))
-				.ToList();
-		}
-
-		public void AssertCanCreateUser(UserKey key)
-		{
-			var model = new UserReadModel { ID = Guid.NewGuid(), Key = key };
-			var violations = GetRuleViolations(model).ToList();
-
-			if (violations.Any())
-				throw new RuleViolationException<UserKey>(model, violations);
+			return _keys.Contains(key) == false;
 		}
 	}
 }

@@ -2,7 +2,6 @@
 using System.Linq;
 using Magistrate.Domain;
 using Magistrate.Domain.Events.UserEvents;
-using Magistrate.Domain.ReadModels;
 using Shouldly;
 using Xunit;
 

@@ -103,23 +103,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\Controller.cs" />
-    <Compile Include="Api\Extensions.cs" />
-    <Compile Include="Api\HandlerActions.cs" />
-    <Compile Include="Api\HistoryController.cs" />
-    <Compile Include="Api\IActionHandler.cs" />
-    <Compile Include="Api\JsonExceptionMiddleware.cs" />
-    <Compile Include="Api\MagistrateApi.cs" />
-    <Compile Include="Api\MagistrateUserMiddleware.cs" />
-    <Compile Include="Api\PermissionsController.cs" />
-    <Compile Include="Api\Handlers\IsUsernameValid.cs" />
-    <Compile Include="Api\Responses\HistoryResponse.cs" />
-    <Compile Include="Api\Responses\PermissionResponse.cs" />
-    <Compile Include="Api\Responses\RoleResponse.cs" />
-    <Compile Include="Api\Responses\UserResponse.cs" />
-    <Compile Include="Api\RolesController.cs" />
-    <Compile Include="Api\SocketConnector.cs" />
-    <Compile Include="Api\UsersController.cs" />
     <Compile Include="Domain\Events\PermissionEvents\PermissionDeactivatedEvent.cs" />
     <Compile Include="Domain\Events\PermissionEvents\PermissionDescriptionChangedEvent.cs" />
     <Compile Include="Domain\Events\RoleEvents\RoleDeactivatedEvent.cs" />
@@ -143,30 +126,25 @@
     <Compile Include="Domain\IKeyed.cs" />
     <Compile Include="Domain\PermissionKey.cs" />
     <Compile Include="Domain\PermissionKeyConverter.cs" />
-    <Compile Include="Domain\ReadModels\HistoryReadModel.cs" />
-    <Compile Include="Domain\ReadModels\PermissionReadModel.cs" />
-    <Compile Include="Domain\ReadModels\RoleReadModel.cs" />
-    <Compile Include="Domain\ReadModels\UserReadModel.cs" />
     <Compile Include="Domain\RoleKey.cs" />
     <Compile Include="Domain\RoleKeyConverter.cs" />
-    <Compile Include="Domain\Rules\IRule.cs" />
     <Compile Include="Domain\Permission.cs" />
-    <Compile Include="Domain\Rules\UniqueKeyRule.cs" />
     <Compile Include="Domain\RuleViolationException.cs" />
     <Compile Include="Domain\Services\ProjectionEventStore.cs" />
     <Compile Include="Domain\Services\Projector.cs" />
-    <Compile Include="Domain\Services\SystemFacade.cs" />
-    <Compile Include="Domain\ReadModels\ReadModelProjections.cs" />
     <Compile Include="Domain\Services\UserService.cs" />
     <Compile Include="Domain\UserKey.cs" />
     <Compile Include="Domain\UserKeyConverter.cs" />
     <Compile Include="MagistrateConfiguration.cs" />
-    <Compile Include="MagistrateExtensions.cs" />
     <Compile Include="MagistrateUser.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Domain\Role.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadModels\AllCollections.cs" />
+    <Compile Include="ReadModels\PermissionModel.cs" />
+    <Compile Include="ReadModels\RoleModel.cs" />
+    <Compile Include="ReadModels\UserModel.cs" />
     <Compile Include="WebInterface\AssemblyResourceFileSystem.cs" />
     <Compile Include="WebInterface\MagistrateWebInterface.cs" />
   </ItemGroup>
@@ -196,6 +174,7 @@
     <EmbeddedResource Include="client\fonts\RobotoDraftRegular.woff2" />
     <EmbeddedResource Include="client\js\material.min.js.map" />
     <EmbeddedResource Include="client\js\ripples.min.js.map" />
+    <None Include="Magistrate.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

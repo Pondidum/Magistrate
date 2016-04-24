@@ -38,7 +38,8 @@ namespace Magistrate.Domain
 		{
 			if (currentUser.CanCreateUsers == false) throw new SecurityException($"{currentUser.Name} cannot create users.");
 
-			service.AssertCanCreateUser(key);
+			if (service.CanCreateUser(key) == false)
+				throw new ArgumentException($"There is already a User with the Key '{key}'", nameof(key));
 
 			ValidateName(name);
 

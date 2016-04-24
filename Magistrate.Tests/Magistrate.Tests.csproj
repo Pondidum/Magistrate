@@ -84,21 +84,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Acceptance\UserAcceptanceBase.cs" />
-    <Compile Include="Acceptance\When_a_user_has_no_permissions_and_no_roles.cs" />
-    <Compile Include="Acceptance\When_a_user_has_one_included_permission.cs" />
-    <Compile Include="Acceptance\When_a_user_has_one_revoked_permission.cs" />
-    <Compile Include="Acceptance\When_a_user_has_one_role_with_a_permission.cs" />
-    <Compile Include="ApiTests\ApiAcceptanceTests.cs" />
-    <Compile Include="ApiTests\PermissionControllerTests.cs" />
-    <Compile Include="ApiTests\RoleControllerTests.cs" />
-    <Compile Include="ApiTests\UserControllerTests.cs" />
     <Compile Include="Domain\PermissionKeyTests.cs" />
     <Compile Include="Domain\PermissionsTests.cs" />
-    <Compile Include="Domain\ReadModels\HistoryReadModelTests.cs" />
-    <Compile Include="Domain\ReadModels\UserReadModelTests.cs" />
     <Compile Include="Domain\RoleTests.cs" />
-    <Compile Include="Domain\Rules\UniqueKeyRuleTests.cs" />
     <Compile Include="Domain\Services\ProjectorTests.cs" />
     <Compile Include="Domain\UserKeyTests.cs" />
     <Compile Include="Domain\UserTests.cs" />
