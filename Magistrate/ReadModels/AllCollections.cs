@@ -25,27 +25,27 @@ namespace Magistrate.ReadModels
 			_roles = new Dictionary<Guid, RoleModel>();
 			_permissions = new Dictionary<Guid, PermissionModel>();
 
-			_projections.Add<PermissionCreatedEvent>(e => _permissions[e.AggregateID] = PermissionModel.From(e));
-			_projections.Add<PermissionDescriptionChangedEvent>(e => _permissions[e.AggregateID].Description = e.NewDescription);
-			_projections.Add<PermissionNameChangedEvent>(e => _permissions[e.AggregateID].Name = e.NewName);
+			_projections.Register<PermissionCreatedEvent>(e => _permissions[e.AggregateID] = PermissionModel.From(e));
+			_projections.Register<PermissionDescriptionChangedEvent>(e => _permissions[e.AggregateID].Description = e.NewDescription);
+			_projections.Register<PermissionNameChangedEvent>(e => _permissions[e.AggregateID].Name = e.NewName);
 
-			_projections.Add<RoleCreatedEvent>(e => _roles[e.AggregateID] = RoleModel.From(e));
-			_projections.Add<RoleDescriptionChangedEvent>(e => _roles[e.AggregateID].Description = e.NewDescription);
-			_projections.Add<RoleNameChangedEvent>(e => _roles[e.AggregateID].Name = e.NewName);
-			_projections.Add<PermissionAddedToRoleEvent>(e => _roles[e.AggregateID].Permissions.Add(_permissions[e.PermissionID]));
-			_projections.Add<PermissionRemovedFromRoleEvent>(e => _roles[e.AggregateID].Permissions.Remove(_permissions[e.PermissionID]));
+			_projections.Register<RoleCreatedEvent>(e => _roles[e.AggregateID] = RoleModel.From(e));
+			_projections.Register<RoleDescriptionChangedEvent>(e => _roles[e.AggregateID].Description = e.NewDescription);
+			_projections.Register<RoleNameChangedEvent>(e => _roles[e.AggregateID].Name = e.NewName);
+			_projections.Register<PermissionAddedToRoleEvent>(e => _roles[e.AggregateID].Permissions.Add(_permissions[e.PermissionID]));
+			_projections.Register<PermissionRemovedFromRoleEvent>(e => _roles[e.AggregateID].Permissions.Remove(_permissions[e.PermissionID]));
 
-			_projections.Add<UserCreatedEvent>(e => _users[e.AggregateID] = UserModel.From(e));
-			_projections.Add<UserNameChangedEvent>(e => _users[e.AggregateID].Name = e.NewName);
-			_projections.Add<IncludeAddedToUserEvent>(e => _users[e.AggregateID].Includes.Add(_permissions[e.PermissionID]));
-			_projections.Add<IncludeRemovedFromUserEvent>(e => _users[e.AggregateID].Includes.Remove(_permissions[e.PermissionID]));
+			_projections.Register<UserCreatedEvent>(e => _users[e.AggregateID] = UserModel.From(e));
+			_projections.Register<UserNameChangedEvent>(e => _users[e.AggregateID].Name = e.NewName);
+			_projections.Register<IncludeAddedToUserEvent>(e => _users[e.AggregateID].Includes.Add(_permissions[e.PermissionID]));
+			_projections.Register<IncludeRemovedFromUserEvent>(e => _users[e.AggregateID].Includes.Remove(_permissions[e.PermissionID]));
 
-			_projections.Add<RevokeAddedToUserEvent>(e => _users[e.AggregateID].Revokes.Add(_permissions[e.PermissionID]));
-			_projections.Add<RevokeRemovedFromUserEvent>(e => _users[e.AggregateID].Revokes.Remove(_permissions[e.PermissionID]));
-			_projections.Add<RoleAddedToUserEvent>(e => _users[e.AggregateID].Roles.Add(_roles[e.RoleID]));
-			_projections.Add<RoleRemovedFromUserEvent>(e => _users[e.AggregateID].Roles.Remove(_roles[e.RoleID]));
+			_projections.Register<RevokeAddedToUserEvent>(e => _users[e.AggregateID].Revokes.Add(_permissions[e.PermissionID]));
+			_projections.Register<RevokeRemovedFromUserEvent>(e => _users[e.AggregateID].Revokes.Remove(_permissions[e.PermissionID]));
+			_projections.Register<RoleAddedToUserEvent>(e => _users[e.AggregateID].Roles.Add(_roles[e.RoleID]));
+			_projections.Register<RoleRemovedFromUserEvent>(e => _users[e.AggregateID].Roles.Remove(_roles[e.RoleID]));
 
-			_projections.Add<PermissionDeactivatedEvent>(e =>
+			_projections.Register<PermissionDeactivatedEvent>(e =>
 			{
 				var permission = _permissions[e.AggregateID];
 
@@ -55,7 +55,7 @@ namespace Magistrate.ReadModels
 				_users.Values.ForEach(u => u.Revokes.Remove(permission));
 			});
 
-			_projections.Add<RoleDeactivatedEvent>(e =>
+			_projections.Register<RoleDeactivatedEvent>(e =>
 			{
 				var role = _roles[e.AggregateID];
 
@@ -63,7 +63,7 @@ namespace Magistrate.ReadModels
 				_users.Values.ForEach(u => u.Roles.Remove(role));
 			});
 
-			_projections.Add<UserDeactivatedEvent>(e =>
+			_projections.Register<UserDeactivatedEvent>(e =>
 			{
 				_users.Remove(e.AggregateID);
 			});
@@ -72,7 +72,7 @@ namespace Magistrate.ReadModels
 
 		public void Project(DomainEvent<Guid> e)
 		{
-			_projections.Project(e);
+			_projections.Apply(e);
 		}
 
 	}

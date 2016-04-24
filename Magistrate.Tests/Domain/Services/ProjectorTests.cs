@@ -14,7 +14,7 @@ namespace Magistrate.Tests.Domain.Services
 		{
 			var projector = new Projector();
 
-			Should.NotThrow(() => projector.Project(new UserDeactivatedEvent(new MagistrateUser(), "Test")));
+			Should.NotThrow(() => projector.Apply(new UserDeactivatedEvent(new MagistrateUser(), "Test")));
 		}
 
 		[Fact]
@@ -22,9 +22,9 @@ namespace Magistrate.Tests.Domain.Services
 		{
 			var count = 0;
 			var projector = new Projector();
-			projector.Add<UserDeactivatedEvent>(e => count++);
+			projector.Register<UserDeactivatedEvent>(e => count++);
 
-			projector.Project(new UserDeactivatedEvent(new MagistrateUser(), "Test"));
+			projector.Apply(new UserDeactivatedEvent(new MagistrateUser(), "Test"));
 
 			count.ShouldBe(1);
 		}
@@ -36,10 +36,10 @@ namespace Magistrate.Tests.Domain.Services
 			var second = 0;
 
 			var projector = new Projector();
-			projector.Add<UserDeactivatedEvent>(e => first++);
-			projector.Add<UserDeactivatedEvent>(e => second++);
+			projector.Register<UserDeactivatedEvent>(e => first++);
+			projector.Register<UserDeactivatedEvent>(e => second++);
 
-			projector.Project(new UserDeactivatedEvent(new MagistrateUser(), "Test"));
+			projector.Apply(new UserDeactivatedEvent(new MagistrateUser(), "Test"));
 
 			first.ShouldBe(1);
 			second.ShouldBe(1);
@@ -52,10 +52,10 @@ namespace Magistrate.Tests.Domain.Services
 			var inherited = 0;
 
 			var projector = new Projector();
-			projector.Add<UserDeactivatedEvent>(e => direct++);
-			projector.Add<UserLoggedEvent>(e => inherited++);
+			projector.Register<UserDeactivatedEvent>(e => direct++);
+			projector.Register<UserLoggedEvent>(e => inherited++);
 
-			projector.Project(new UserDeactivatedEvent(new MagistrateUser(), "Test"));
+			projector.Apply(new UserDeactivatedEvent(new MagistrateUser(), "Test"));
 
 			direct.ShouldBe(1);
 			inherited.ShouldBe(1);

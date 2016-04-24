@@ -16,12 +16,12 @@ namespace Magistrate.Domain.Services
 			_keys = new HashSet<UserKey>();
 			_projections = new Projector();
 
-			_projections.Add<UserCreatedEvent>(e => _keys.Add(e.Key));
+			_projections.Register<UserCreatedEvent>(e => _keys.Add(e.Key));
 		}
 
 		public void Project(DomainEvent<Guid> e)
 		{
-			_projections.Project(e);
+			_projections.Apply(e);
 		}
 
 		public bool CanCreateUser(UserKey key)
