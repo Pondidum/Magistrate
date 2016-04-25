@@ -1,29 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Ledger;
 
 namespace Magistrate.Infrastructure
 {
 	public class Projector
 	{
-		private readonly Dictionary<Type, Action<DomainEvent<Guid>>> _projections;
+		private readonly Dictionary<Type, List<Action<DomainEvent<Guid>>>> _projections;
 
 		public Projector()
 		{
-			_projections = new Dictionary<Type, Action<DomainEvent<Guid>>>();
+			_projections = new Dictionary<Type, List<Action<DomainEvent<Guid>>>>();
 		}
 
 		public void Register<TEvent>(Action<TEvent> projection) where TEvent : DomainEvent<Guid>
 		{
-			_projections[typeof(TEvent)] = e => projection((TEvent)e);
+			List<Action<DomainEvent<Guid>>> handlers;
+
+			if (_projections.TryGetValue(typeof(TEvent), out handlers) == false)
+			{
+				handlers = new List<Action<DomainEvent<Guid>>>();
+				_projections.Add(typeof(TEvent), handlers);
+			}
+
+			handlers.Add(e => projection((TEvent)e));
 		}
 
-		public void Apply(DomainEvent<Guid> e)
+		public void Apply(DomainEvent<Guid> @event)
 		{
-			Action<DomainEvent<Guid>> projection;
+			var handlers = _projections
+				 .Where(pair => pair.Key.IsInstanceOfType(@event))
+				 .SelectMany(pair => pair.Value);
 
-			if (_projections.TryGetValue(e.GetType(), out projection))
-				projection(e);
+			foreach (var projection in handlers)
+				projection(@event);
 		}
 	}
 }

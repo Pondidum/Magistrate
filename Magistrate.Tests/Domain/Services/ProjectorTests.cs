@@ -46,7 +46,7 @@ namespace Magistrate.Tests.Domain.Services
 		}
 
 		[Fact]
-		public void When_projectiong_an_inherited_event()
+		public void When_projecting_an_inherited_event()
 		{
 			var direct = 0;
 			var inherited = 0;
