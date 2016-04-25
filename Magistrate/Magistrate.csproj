@@ -131,6 +131,7 @@
     <Compile Include="Domain\Permission.cs" />
     <Compile Include="Domain\RuleViolationException.cs" />
     <Compile Include="Domain\Services\ProjectionService.cs" />
+    <Compile Include="Domain\Services\RoleService.cs" />
     <Compile Include="Infrastructure\ProjectionEventStore.cs" />
     <Compile Include="Infrastructure\Projector.cs" />
     <Compile Include="Domain\Services\UserService.cs" />

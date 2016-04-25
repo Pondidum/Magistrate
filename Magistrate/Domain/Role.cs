@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security;
 using Ledger;
 using Magistrate.Domain.Events.RoleEvents;
+using Magistrate.Domain.Services;
 
 namespace Magistrate.Domain
 {
@@ -28,9 +29,13 @@ namespace Magistrate.Domain
 			return new Role();
 		}
 
-		public static Role Create(MagistrateUser user, RoleKey key, string name, string description)
+		public static Role Create(RoleService service, MagistrateUser user, RoleKey key, string name, string description)
 		{
 			if (user.CanCreateRoles == false) throw new SecurityException($"{user.Name} cannot create roles.");
+
+			if (service.CanCreateRole(key) == false)
+				throw new ArgumentException($"There is already a Role with the Key '{key}'", nameof(key));
+
 			ValidateName(name);
 
 			var role = new Role();

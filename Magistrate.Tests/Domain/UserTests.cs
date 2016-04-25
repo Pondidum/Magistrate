@@ -2,6 +2,7 @@
 using System.Linq;
 using Magistrate.Domain;
 using Magistrate.Domain.Events.UserEvents;
+using Magistrate.Domain.Services;
 using Shouldly;
 using Xunit;
 
@@ -97,7 +98,7 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void When_a_role_is_added()
 		{
-			var role = Role.Create(_cu, new RoleKey("role-one"), "role one", "");
+			var role = Role.Create(new RoleService(), _cu, new RoleKey("role-one"), "role one", "");
 			role.AddPermission(_cu, _permissionOne);
 
 			_user.AddRole(_cu, role);
@@ -115,7 +116,7 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void When_the_user_has_a_revoked_permission_included_by_a_role()
 		{
-			var role = Role.Create(_cu, new RoleKey("role-one"), "role one", "");
+			var role = Role.Create(new RoleService(), _cu, new RoleKey("role-one"), "role one", "");
 			role.AddPermission(_cu, _permissionOne);
 
 			_user.AddRole(_cu, role);
