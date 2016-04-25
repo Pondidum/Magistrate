@@ -7,7 +7,7 @@ using Magistrate.Domain.Services;
 
 namespace Magistrate.Domain
 {
-	public class User : AggregateRoot<Guid>, IKeyed<UserKey>, IIdentity
+	public class User : AggregateRoot<Guid>, IIdentity
 	{
 		public UserKey Key { get; private set; }
 		public string Name { get; private set; }

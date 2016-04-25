@@ -7,7 +7,7 @@ using Magistrate.Domain.Services;
 
 namespace Magistrate.Domain
 {
-	public class Permission : AggregateRoot<Guid>, IEquatable<Permission>, IKeyed<PermissionKey>, IIdentity
+	public class Permission : AggregateRoot<Guid>, IEquatable<Permission>, IIdentity
 	{
 		public PermissionKey Key { get; private set; }
 		public string Name { get; private set; }

@@ -129,7 +129,6 @@
     <Compile Include="Domain\RoleKey.cs" />
     <Compile Include="Domain\RoleKeyConverter.cs" />
     <Compile Include="Domain\Permission.cs" />
-    <Compile Include="Domain\RuleViolationException.cs" />
     <Compile Include="Domain\Services\PermissionService.cs" />
     <Compile Include="Domain\Services\ProjectionService.cs" />
     <Compile Include="Domain\Services\RoleService.cs" />

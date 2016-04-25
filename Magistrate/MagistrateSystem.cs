@@ -13,13 +13,16 @@ namespace Magistrate
 
 		public MagistrateSystem(MagistrateConfiguration config)
 		{
-
 			var all = new AllCollections();
 			var userService = new UserService();
+			var roleService = new RoleService();
+			var permissionService = new PermissionService();
 
 			var projectionist = new Projectionist()
 				.Add(all.Project)
-				.Add(userService.Project);
+				.Add(userService.Project)
+				.Add(roleService.Project)
+				.Add(permissionService.Project);
 
 			var projectionStore = new ProjectionStore(config.EventStore, projectionist.Apply);
 			var store = new AggregateStore<Guid>(projectionStore);
