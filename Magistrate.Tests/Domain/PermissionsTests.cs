@@ -109,10 +109,10 @@ namespace Magistrate.Tests.Domain
 		{
 			var service = new PermissionService();
 
-			var r1 = Permission.Create(service, _currentUser, new PermissionKey("1"), "name", "desc");
+			var p1 = Permission.Create(service, _currentUser, new PermissionKey("1"), "name", "desc");
 
 			//simulate saving to the eventstore
-			r1.GetUncommittedEvents().ForEach(service.Project);
+			p1.GetUncommittedEvents().ForEach(service.Project);
 
 			Should.Throw<ArgumentException>(() => Permission.Create(service, _currentUser, new PermissionKey("1"), "new", "newer"));
 		}

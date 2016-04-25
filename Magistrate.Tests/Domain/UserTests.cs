@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Ledger.Infrastructure;
 using Magistrate.Domain;
 using Magistrate.Domain.Events.UserEvents;
 using Magistrate.Domain.Services;
@@ -192,6 +193,19 @@ namespace Magistrate.Tests.Domain
 				typeof(IncludeAddedToUserEvent),
 				typeof(IncludeRemovedFromUserEvent),
 				typeof(RevokeAddedToUserEvent));
+		}
+
+		[Fact]
+		public void Multiple_roles_with_the_same_key_cannot_be_created()
+		{
+			var service = new UserService();
+
+			var u1 = User.Create(service, _cu, new UserKey("1"), "name");
+
+			//simulate saving to the eventstore
+			u1.GetUncommittedEvents().ForEach(service.Project);
+
+			Should.Throw<ArgumentException>(() => User.Create(service, _cu, new UserKey("1"), "new"));
 		}
 	}
 }
