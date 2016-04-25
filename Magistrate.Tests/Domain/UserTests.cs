@@ -25,9 +25,10 @@ namespace Magistrate.Tests.Domain
 			};
 
 			_user = User.Blank();
+			var ps = new PermissionService();
 
-			_permissionOne = Permission.Create(_cu, new PermissionKey("perm-one"), "One", "");
-			_permissionTwo = Permission.Create(_cu, new PermissionKey("perm-two"), "Two", "");
+			_permissionOne = Permission.Create(ps, _cu, new PermissionKey("perm-one"), "One", "");
+			_permissionTwo = Permission.Create(ps, _cu, new PermissionKey("perm-two"), "Two", "");
 		}
 
 		private void EventsShouldBe(params Type[] events)

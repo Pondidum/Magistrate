@@ -3,6 +3,7 @@ using System.Security;
 using Ledger;
 using Magistrate.Domain.Events;
 using Magistrate.Domain.Events.PermissionEvents;
+using Magistrate.Domain.Services;
 
 namespace Magistrate.Domain
 {
@@ -23,9 +24,13 @@ namespace Magistrate.Domain
 			return new Permission();
 		}
 
-		public static Permission Create(MagistrateUser user, PermissionKey key, string name, string description)
+		public static Permission Create(PermissionService service, MagistrateUser user, PermissionKey key, string name, string description)
 		{
 			if (user.CanCreatePermissions== false) throw new SecurityException($"{user.Name} cannot create permissions.");
+
+			if (service.CanCreatePermission(key) == false)
+				throw new ArgumentException($"There is already a Permission with the Key '{key}'", nameof(key));
+
 			ValidateName(name);
 
 			var perm = new Permission();

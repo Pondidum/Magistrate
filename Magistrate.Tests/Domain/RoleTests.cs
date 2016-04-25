@@ -11,10 +11,13 @@ namespace Magistrate.Tests.Domain
 	{
 		private readonly MagistrateUser _currentUser;
 		private readonly RoleService _roleService;
+		private readonly PermissionService _permissionService;
 
 		public RolesTests()
 		{
 			_roleService = new RoleService();
+			_permissionService = new PermissionService();
+
 			_currentUser = new MagistrateUser
 			{
 				Name = "Current User",
@@ -93,7 +96,7 @@ namespace Magistrate.Tests.Domain
 		public void A_permission_can_be_added_and_removed()
 		{
 			var role = Role.Create(_roleService, _currentUser, new RoleKey("some-key"), "some name", "some description");
-			var permission = Permission.Create(_currentUser, new PermissionKey("key"), "permission_one", "");
+			var permission = Permission.Create(_permissionService, _currentUser, new PermissionKey("key"), "permission_one", "");
 
 			role.AddPermission(_currentUser, permission);
 			role.Permissions.ShouldBe(new[] { permission.ID });
