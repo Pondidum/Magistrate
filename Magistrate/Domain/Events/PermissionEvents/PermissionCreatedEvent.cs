@@ -9,7 +9,7 @@ namespace Magistrate.Domain.Events.PermissionEvents
 		public string Name { get; }
 		public string Description { get; }
 
-		public PermissionCreatedEvent(MagistrateUser user, Guid id, PermissionKey key, string name, string description)
+		public PermissionCreatedEvent(Operator user, Guid id, PermissionKey key, string name, string description)
 			: base(user)
 		{
 			ID = id;

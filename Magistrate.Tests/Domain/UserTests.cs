@@ -12,13 +12,13 @@ namespace Magistrate.Tests.Domain
 	public class UserTests
 	{
 		private readonly User _user;
-		private MagistrateUser _cu;
+		private Operator _cu;
 		private Permission _permissionOne;
 		private Permission _permissionTwo;
 
 		public UserTests()
 		{
-			_cu = new MagistrateUser
+			_cu = new Operator
 			{
 				CanCreatePermissions = true,
 				CanCreateRoles = true,

@@ -4,7 +4,7 @@ namespace Magistrate.Domain.Events.UserEvents
 {
 	public class RevokeRemovedFromUserEvent : UserLoggedEvent
 	{
-		public RevokeRemovedFromUserEvent(MagistrateUser user, Guid permissionID, string permissionName, string userName) : base(user)
+		public RevokeRemovedFromUserEvent(Operator user, Guid permissionID, string permissionName, string userName) : base(user)
 		{
 			PermissionID = permissionID;
 			PermissionName = permissionName;

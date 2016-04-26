@@ -2,7 +2,7 @@
 {
 	public class RoleNameChangedEvent : UserLoggedEvent
 	{
-		public RoleNameChangedEvent(MagistrateUser user, string oldName, string newName) : base(user)
+		public RoleNameChangedEvent(Operator user, string oldName, string newName) : base(user)
 		{
 			NewName = newName;
 			OldName = oldName;

@@ -1,6 +1,6 @@
 ﻿namespace Magistrate
 {
-	public class MagistrateUser
+	public class Operator
 	{
 		public string Name { get; set; }
 		public string Key { get; set; }

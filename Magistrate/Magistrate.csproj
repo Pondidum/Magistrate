@@ -140,7 +140,7 @@
     <Compile Include="Infrastructure\Projectionist.cs" />
     <Compile Include="MagistrateConfiguration.cs" />
     <Compile Include="MagistrateSystem.cs" />
-    <Compile Include="MagistrateUser.cs" />
+    <Compile Include="Operator.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Domain\Role.cs" />
     <Compile Include="Domain\User.cs" />

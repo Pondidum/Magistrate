@@ -2,7 +2,7 @@
 {
 	public class UserDeactivatedEvent : UserLoggedEvent
 	{
-		public UserDeactivatedEvent(MagistrateUser user, string userName) : base(user)
+		public UserDeactivatedEvent(Operator user, string userName) : base(user)
 		{
 			UserName = userName;
 		}

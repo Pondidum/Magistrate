@@ -2,7 +2,7 @@
 {
 	public class RoleDeactivatedEvent : UserLoggedEvent
 	{
-		public RoleDeactivatedEvent(MagistrateUser user, string roleName) : base(user)
+		public RoleDeactivatedEvent(Operator user, string roleName) : base(user)
 		{
 			RoleName = roleName;
 		}

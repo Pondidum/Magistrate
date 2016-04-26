@@ -24,7 +24,7 @@ namespace Magistrate.Domain
 			return new Permission();
 		}
 
-		public static Permission Create(PermissionService service, MagistrateUser user, PermissionKey key, string name, string description)
+		public static Permission Create(PermissionService service, Operator user, PermissionKey key, string name, string description)
 		{
 			if (user.CanCreatePermissions== false) throw new SecurityException($"{user.Name} cannot create permissions.");
 
@@ -47,7 +47,7 @@ namespace Magistrate.Domain
 		}
 
 
-		public void ChangeName(MagistrateUser user, string newName)
+		public void ChangeName(Operator user, string newName)
 		{
 			ValidateName(newName);
 
@@ -62,7 +62,7 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void ChangeDescription(MagistrateUser user, string newDescription)
+		public void ChangeDescription(Operator user, string newDescription)
 		{
 			if (Description.Equals(newDescription, StringComparison.OrdinalIgnoreCase))
 				return;
@@ -75,7 +75,7 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void Deactivate(MagistrateUser user)
+		public void Deactivate(Operator user)
 		{
 			ApplyEvent(new PermissionDeactivatedEvent
 			(

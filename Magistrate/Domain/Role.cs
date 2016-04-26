@@ -29,7 +29,7 @@ namespace Magistrate.Domain
 			return new Role();
 		}
 
-		public static Role Create(RoleService service, MagistrateUser user, RoleKey key, string name, string description)
+		public static Role Create(RoleService service, Operator user, RoleKey key, string name, string description)
 		{
 			if (user.CanCreateRoles == false) throw new SecurityException($"{user.Name} cannot create roles.");
 
@@ -51,7 +51,7 @@ namespace Magistrate.Domain
 			return role;
 		}
 
-		public void ChangeName(MagistrateUser user, string newName)
+		public void ChangeName(Operator user, string newName)
 		{
 			ValidateName(newName);
 
@@ -66,7 +66,7 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void ChangeDescription(MagistrateUser user, string newDescription)
+		public void ChangeDescription(Operator user, string newDescription)
 		{
 			if (Description == newDescription)
 				return;
@@ -79,7 +79,7 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void Deactivate(MagistrateUser user)
+		public void Deactivate(Operator user)
 		{
 			ApplyEvent(new RoleDeactivatedEvent
 			(
@@ -88,7 +88,7 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void AddPermission(MagistrateUser user, Permission permission)
+		public void AddPermission(Operator user, Permission permission)
 		{
 			ApplyEvent(new PermissionAddedToRoleEvent
 			(
@@ -99,7 +99,7 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void RemovePermission(MagistrateUser user, Permission permission)
+		public void RemovePermission(Operator user, Permission permission)
 		{
 			ApplyEvent(new PermissionRemovedFromRoleEvent
 			(

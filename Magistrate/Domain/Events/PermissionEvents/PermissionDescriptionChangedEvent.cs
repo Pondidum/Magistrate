@@ -2,7 +2,7 @@
 {
 	public class PermissionDescriptionChangedEvent : UserLoggedEvent
 	{
-		public PermissionDescriptionChangedEvent(MagistrateUser user, string permissionName, string newDescription) : base(user)
+		public PermissionDescriptionChangedEvent(Operator user, string permissionName, string newDescription) : base(user)
 		{
 			PermissionName = permissionName;
 			NewDescription = newDescription;

@@ -12,13 +12,13 @@ namespace Magistrate.Tests.Domain
 {
 	public class PermissionsTests
 	{
-		private readonly MagistrateUser _currentUser;
+		private readonly Operator _currentUser;
 		private readonly PermissionService _permissionService;
 
 		public PermissionsTests()
 		{
 			_permissionService = new PermissionService();
-			_currentUser = new MagistrateUser
+			_currentUser = new Operator
 			{
 				Name = "Test Current User",
 				Key = "CurrentUser",

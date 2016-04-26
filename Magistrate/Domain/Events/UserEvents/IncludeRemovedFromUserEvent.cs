@@ -4,7 +4,7 @@ namespace Magistrate.Domain.Events.UserEvents
 {
 	public class IncludeRemovedFromUserEvent : UserLoggedEvent
 	{
-		public IncludeRemovedFromUserEvent(MagistrateUser user, Guid permissionID, string permissionName, string userName) : base(user)
+		public IncludeRemovedFromUserEvent(Operator user, Guid permissionID, string permissionName, string userName) : base(user)
 		{
 			PermissionID = permissionID;
 			PermissionName = permissionName;

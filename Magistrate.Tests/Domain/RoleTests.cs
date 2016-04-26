@@ -9,7 +9,7 @@ namespace Magistrate.Tests.Domain
 {
 	public class RolesTests
 	{
-		private readonly MagistrateUser _currentUser;
+		private readonly Operator _currentUser;
 		private readonly RoleService _roleService;
 		private readonly PermissionService _permissionService;
 
@@ -18,7 +18,7 @@ namespace Magistrate.Tests.Domain
 			_roleService = new RoleService();
 			_permissionService = new PermissionService();
 
-			_currentUser = new MagistrateUser
+			_currentUser = new Operator
 			{
 				Name = "Current User",
 				Key = "cu",

@@ -34,7 +34,7 @@ namespace Magistrate.Domain
 			return new User();
 		}
 
-		public static User Create(UserService service, MagistrateUser currentUser, UserKey key, string name)
+		public static User Create(UserService service, Operator currentUser, UserKey key, string name)
 		{
 			if (currentUser.CanCreateUsers == false) throw new SecurityException($"{currentUser.Name} cannot create users.");
 
@@ -55,7 +55,7 @@ namespace Magistrate.Domain
 			return user;
 		}
 
-		public void ChangeName(MagistrateUser currentUser, string newName)
+		public void ChangeName(Operator currentUser, string newName)
 		{
 			ValidateName(newName);
 			ApplyEvent(new UserNameChangedEvent
@@ -66,7 +66,7 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void Deactivate(MagistrateUser currentUser)
+		public void Deactivate(Operator currentUser)
 		{
 			ApplyEvent(new UserDeactivatedEvent
 			(
@@ -75,7 +75,7 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void AddInclude(MagistrateUser currentUser, Permission permission)
+		public void AddInclude(Operator currentUser, Permission permission)
 		{
 			if (_includes.Contains(permission.ID))
 				return;
@@ -86,7 +86,7 @@ namespace Magistrate.Domain
 			ApplyEvent(new IncludeAddedToUserEvent(currentUser, permission.ID, permission.Name, Name));
 		}
 
-		public void RemoveInclude(MagistrateUser currentUser, Permission permission)
+		public void RemoveInclude(Operator currentUser, Permission permission)
 		{
 			if (_includes.Contains(permission.ID) == false)
 				return;
@@ -100,7 +100,7 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void AddRevoke(MagistrateUser currentUser, Permission permission)
+		public void AddRevoke(Operator currentUser, Permission permission)
 		{
 			if (_revokes.Contains(permission.ID))
 				return;
@@ -111,7 +111,7 @@ namespace Magistrate.Domain
 			ApplyEvent(new RevokeAddedToUserEvent(currentUser, permission.ID, permission.Name, Name));
 		}
 
-		public void RemoveRevoke(MagistrateUser currentUser, Permission permission)
+		public void RemoveRevoke(Operator currentUser, Permission permission)
 		{
 			if (_revokes.Contains(permission.ID) == false)
 				return;
@@ -125,7 +125,7 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void AddRole(MagistrateUser currentUser, Role role)
+		public void AddRole(Operator currentUser, Role role)
 		{
 			ApplyEvent(new RoleAddedToUserEvent
 			(
@@ -136,7 +136,7 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void RemoveRole(MagistrateUser currentUser, Role role)
+		public void RemoveRole(Operator currentUser, Role role)
 		{
 			ApplyEvent(new RoleRemovedFromUserEvent
 			(

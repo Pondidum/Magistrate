@@ -4,7 +4,7 @@
 	{
 		public string PermissionName { get; }
 
-		public PermissionDeactivatedEvent(MagistrateUser user, string permissionName) : base(user)
+		public PermissionDeactivatedEvent(Operator user, string permissionName) : base(user)
 		{
 			PermissionName = permissionName;
 		}
