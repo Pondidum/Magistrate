@@ -153,6 +153,7 @@
     <Compile Include="Domain\UserKeyConverter.cs" />
     <Compile Include="Infrastructure\Projectionist.cs" />
     <Compile Include="MagistrateConfiguration.cs" />
+    <Compile Include="MagistrateRegistry.cs" />
     <Compile Include="MagistrateSystem.cs" />
     <Compile Include="Operator.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="ReadModels\PermissionModel.cs" />
     <Compile Include="ReadModels\RoleModel.cs" />
     <Compile Include="ReadModels\UserModel.cs" />
+    <Compile Include="ServicePolicy.cs" />
     <Compile Include="WebInterface\AssemblyResourceFileSystem.cs" />
     <Compile Include="WebInterface\MagistrateWebInterface.cs" />
   </ItemGroup>
