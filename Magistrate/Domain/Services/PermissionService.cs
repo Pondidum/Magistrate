@@ -12,6 +12,7 @@ namespace Magistrate.Domain.Services
 			_keys = new HashSet<PermissionKey>();
 
 			Register<PermissionCreatedEvent>(e => _keys.Add(e.Key));
+			Register<PermissionDeactivatedEvent>(e => _keys.Remove(e.));
 		}
 
 		public bool CanCreatePermission(PermissionKey key)

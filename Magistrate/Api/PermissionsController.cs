@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Ledger.Infrastructure;
 using Magistrate.Domain;
 using Magistrate.Domain.Commands;
 using Magistrate.Domain.Services;
@@ -30,7 +31,7 @@ namespace Magistrate.Api
 		{
 			app.Route("/api/permissions").Get(GetAll);
 			app.Route("/api/permissions").Put(CreatePermission);
-			//app.Route("/api/permissions/").Delete(DeletePermission);
+			app.Route("/api/permissions/").Delete(DeletePermission);
 			app.Route("/api/permissions/{permission-key}").Get(GetPermissionDetails);
 			//app.Route("/api/permissions/{permission-key}/name").Put(UpdatePermissionName);
 			//app.Route("/api/permissions/{permission-key}/description").Put(UpdatePermissionDescription);
@@ -52,6 +53,8 @@ namespace Magistrate.Api
 				dto.Name,
 				dto.Description
 			));
+
+			await Task.Yield();
 		}
 
 		private async Task GetPermissionDetails(IOwinContext context)
@@ -62,18 +65,17 @@ namespace Magistrate.Api
 			await context.WriteJson(permission, _settings);
 		}
 
-		//private async Task DeletePermission(IOwinContext context)
-		//{
-		//	var dto = context.ReadJson<PermissionKey[]>();
-		//	var user = context.GetUser();
+		private async Task DeletePermission(IOwinContext context)
+		{
+			var user = context.GetOperator();
 
-		//	foreach (var key in dto)
-		//	{
-		//		System.OnPermission(key, permission => permission.Deactivate(user));
-		//	}
+			context
+				.ReadJson<PermissionKey[]>()
+				.Select(key => _allCollections.Permissions.Single(p => p.Key == key))
+				.ForEach(p => _mediator.Publish(new DeletePermissionCommand(user, p.ID)));
 
-		//	await Task.Yield();
-		//}
+			await Task.Yield();
+		}
 
 		//private async Task UpdatePermissionName(IOwinContext context)
 		//{

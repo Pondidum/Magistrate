@@ -120,7 +120,9 @@
     <Compile Include="Api\PermissionsController.cs" />
     <Compile Include="Boot.cs" />
     <Compile Include="Domain\CommandHandlers\CreatePermissionCommandHandler.cs" />
+    <Compile Include="Domain\CommandHandlers\DeletePermissionCommandHandler.cs" />
     <Compile Include="Domain\Commands\CreatePermissionCommand.cs" />
+    <Compile Include="Domain\Commands\DeletePermissionCommand.cs" />
     <Compile Include="Domain\Events\PermissionEvents\PermissionDeactivatedEvent.cs" />
     <Compile Include="Domain\Events\PermissionEvents\PermissionDescriptionChangedEvent.cs" />
     <Compile Include="Domain\Events\RoleEvents\RoleDeactivatedEvent.cs" />
