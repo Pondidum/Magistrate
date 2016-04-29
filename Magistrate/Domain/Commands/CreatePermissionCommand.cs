@@ -7,10 +7,11 @@ namespace Magistrate.Domain.Commands
 		public PermissionKey Key { get; }
 		public string Name { get; }
 		public string Description { get; }
-		public MagistrateUser Operator { get; set; }
+		public Operator Operator { get; }
 
-		public CreatePermissionCommand(PermissionKey key, string name, string description)
+		public CreatePermissionCommand(Operator user, PermissionKey key, string name, string description)
 		{
+			Operator = user;
 			Key = key;
 			Name = name;
 			Description = description;

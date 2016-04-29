@@ -19,8 +19,14 @@ namespace Magistrate.Domain.CommandHandlers
 
 		public void Handle(CreatePermissionCommand notification)
 		{
-			var user = Permission.Create(_service, notification.Operator, notification.Key, notification.Name, notification.Description);
-			throw new System.NotImplementedException();
+			var permission = Permission.Create(
+				_service,
+				notification.Operator,
+				notification.Key,
+				notification.Name,
+				notification.Description);
+
+			_store.Save("Magistrate", permission);
 		}
 	}
 }
