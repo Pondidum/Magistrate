@@ -28,7 +28,7 @@ namespace Magistrate.Api
 
 		public void Configure(IAppBuilder app)
 		{
-			app.Route("/api/permissions/all").Get(GetAll);
+			app.Route("/api/permissions").Get(GetAll);
 			app.Route("/api/permissions").Put(CreatePermission);
 			//app.Route("/api/permissions/").Delete(DeletePermission);
 			app.Route("/api/permissions/{permission-key}").Get(GetPermissionDetails);
