@@ -115,6 +115,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\ApiExtensions.cs" />
+    <Compile Include="Api\MagistrateOperatorMiddleware.cs" />
+    <Compile Include="Api\PermissionsController.cs" />
     <Compile Include="Domain\CommandHandlers\CreatePermissionCommandHandler.cs" />
     <Compile Include="Domain\Commands\CreatePermissionCommand.cs" />
     <Compile Include="Domain\Events\PermissionEvents\PermissionDeactivatedEvent.cs" />

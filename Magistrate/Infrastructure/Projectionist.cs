@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Ledger;
+using Magistrate.Domain.Services;
 
 namespace Magistrate.Infrastructure
 {
@@ -22,6 +23,11 @@ namespace Magistrate.Infrastructure
 		{
 			_projections.Add(action);
 			return this;
+		}
+
+		public Projectionist Add(ProjectionService service)
+		{
+			return Add(service.Project);
 		}
 	}
 }

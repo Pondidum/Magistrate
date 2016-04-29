@@ -2,109 +2,117 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Magistrate.Domain;
+using Magistrate.Domain.Commands;
 using Magistrate.Domain.Services;
+using Magistrate.ReadModels;
+using MediatR;
 using Microsoft.Owin;
+using Newtonsoft.Json;
 using Owin;
 using Owin.Routing;
 
 namespace Magistrate.Api
 {
-	public class PermissionsController : Controller
+	public class PermissionsController
 	{
-		public PermissionsController(SystemFacade system)
-			: base(system)
+		private readonly AllCollections _allCollections;
+		private readonly JsonSerializerSettings _settings;
+		private readonly IMediator _mediator;
+
+		public PermissionsController(AllCollections allCollections, JsonSerializerSettings settings, IMediator mediator)
 		{
+			_allCollections = allCollections;
+			_settings = settings;
+			_mediator = mediator;
 		}
 
 		public void Configure(IAppBuilder app)
 		{
 			app.Route("/api/permissions/all").Get(GetAll);
 			app.Route("/api/permissions").Put(CreatePermission);
-			app.Route("/api/permissions/").Delete(DeletePermission);
+			//app.Route("/api/permissions/").Delete(DeletePermission);
 			app.Route("/api/permissions/{permission-key}").Get(GetPermissionDetails);
-			app.Route("/api/permissions/{permission-key}/name").Put(UpdatePermissionName);
-			app.Route("/api/permissions/{permission-key}/description").Put(UpdatePermissionDescription);
-			app.Route("/api/permissions/{permission-key}/history").Get(GetHistory);
+			//app.Route("/api/permissions/{permission-key}/name").Put(UpdatePermissionName);
+			//app.Route("/api/permissions/{permission-key}/description").Put(UpdatePermissionDescription);
+			//app.Route("/api/permissions/{permission-key}/history").Get(GetHistory);
 		}
 
 		private async Task GetAll(IOwinContext context)
 		{
-			await context.JsonResponse(System.Permissions);
+			await context.WriteJson(_allCollections.Permissions, _settings);
 		}
 
 		private async Task CreatePermission(IOwinContext context)
 		{
 			var dto = context.ReadJson<CreatePermissionDto>();
 
-			var permission = System.CreatePermission(context.GetUser(), dto.Key, dto.Name, dto.Description);
-
-			await context.JsonResponse(permission);
+			_mediator.Publish(new CreatePermissionCommand(
+				context.GetOperator(),
+				dto.Key,
+				dto.Name,
+				dto.Description
+			));
 		}
 
 		private async Task GetPermissionDetails(IOwinContext context)
 		{
-			await NotFoundOrAction(context, PermissionKey, async key =>
-			{
-				var permission = System.Permissions.FirstOrDefault(p => p.Key == key);
+			var key = new PermissionKey(context.GetRouteValue("key"));
+			var permission = _allCollections.Permissions.Single(p => p.Key == key);
 
-				if (permission != null)
-					await context.JsonResponse(permission);
-				else
-					context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-			});
+			await context.WriteJson(permission, _settings);
 		}
 
-		private async Task DeletePermission(IOwinContext context)
-		{
-			var dto = context.ReadJson<PermissionKey[]>();
-			var user = context.GetUser();
+		//private async Task DeletePermission(IOwinContext context)
+		//{
+		//	var dto = context.ReadJson<PermissionKey[]>();
+		//	var user = context.GetUser();
 
-			foreach (var key in dto)
-			{
-				System.OnPermission(key, permission => permission.Deactivate(user));
-			}
+		//	foreach (var key in dto)
+		//	{
+		//		System.OnPermission(key, permission => permission.Deactivate(user));
+		//	}
 
-			await Task.Yield();
-		}
+		//	await Task.Yield();
+		//}
 
-		private async Task UpdatePermissionName(IOwinContext context)
-		{
-			await NotFoundOrAction(context, PermissionKey, async key =>
-			{
-				var dto = context.ReadJson<EditPermissionDto>();
-				var user = context.GetUser();
+		//private async Task UpdatePermissionName(IOwinContext context)
+		//{
+		//	await NotFoundOrAction(context, PermissionKey, async key =>
+		//	{
+		//		var dto = context.ReadJson<EditPermissionDto>();
+		//		var user = context.GetUser();
 
-				System.OnPermission(key, permission => permission.ChangeName(user, dto.Name));
+		//		System.OnPermission(key, permission => permission.ChangeName(user, dto.Name));
 
-				await Task.Yield();
-			});
-		}
+		//		await Task.Yield();
+		//	});
+		//}
 
-		private async Task UpdatePermissionDescription(IOwinContext context)
-		{
-			await NotFoundOrAction(context, PermissionKey, async key =>
-			{
-				var dto = context.ReadJson<EditPermissionDto>();
-				var user = context.GetUser();
+		//private async Task UpdatePermissionDescription(IOwinContext context)
+		//{
+		//	await NotFoundOrAction(context, PermissionKey, async key =>
+		//	{
+		//		var dto = context.ReadJson<EditPermissionDto>();
+		//		var user = context.GetUser();
 
-				System.OnPermission(key, permission => permission.ChangeDescription(user, dto.Description));
+		//		System.OnPermission(key, permission => permission.ChangeDescription(user, dto.Description));
 
-				await Task.Yield();
-			});
-		}
+		//		await Task.Yield();
+		//	});
+		//}
 
-		private async Task GetHistory(IOwinContext context)
-		{
-			await NotFoundOrAction(context, PermissionKey, async permissionKey =>
-			{
-				var permission = System.Permissions.FirstOrDefault(u => u.Key == permissionKey);
+		//private async Task GetHistory(IOwinContext context)
+		//{
+		//	await NotFoundOrAction(context, PermissionKey, async permissionKey =>
+		//	{
+		//		var permission = System.Permissions.FirstOrDefault(u => u.Key == permissionKey);
 
-				if (permission == null)
-					context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-				else
-					await context.JsonResponse(System.History.Where(h => h.OnAggregate == permission.ID));
-			});
-		}
+		//		if (permission == null)
+		//			context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+		//		else
+		//			await context.JsonResponse(System.History.Where(h => h.OnAggregate == permission.ID));
+		//	});
+		//}
 
 		private class CreatePermissionDto
 		{
@@ -113,10 +121,10 @@ namespace Magistrate.Api
 			public string Description { get; set; }
 		}
 
-		private class EditPermissionDto
-		{
-			public string Name { get; set; }
-			public string Description { get; set; }
-		}
+		//private class EditPermissionDto
+		//{
+		//	public string Name { get; set; }
+		//	public string Description { get; set; }
+		//}
 	}
 }

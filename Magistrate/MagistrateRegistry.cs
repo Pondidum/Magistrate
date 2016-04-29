@@ -1,5 +1,6 @@
 using Ledger;
 using Magistrate.Infrastructure;
+using Magistrate.ReadModels;
 using MediatR;
 using StructureMap;
 using StructureMap.Graph;
@@ -24,6 +25,7 @@ namespace Magistrate
 			For<IMediator>().Use<Mediator>();
 
 			Policies.Add<ServicePolicy>();
+			For<AllCollections>().Singleton();
 
 			For<Projectionist>().Singleton();
 			For<IEventStore>()

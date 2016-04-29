@@ -3,11 +3,11 @@ using Microsoft.Owin;
 
 namespace Magistrate.Api
 {
-	internal class MagistrateUserMiddleware : OwinMiddleware
+	internal class MagistrateOperatorMiddleware : OwinMiddleware
 	{
 		private readonly MagistrateConfiguration _config;
 
-		public MagistrateUserMiddleware(OwinMiddleware next, MagistrateConfiguration config)
+		public MagistrateOperatorMiddleware(OwinMiddleware next, MagistrateConfiguration config)
 			: base(next)
 		{
 			_config = config;
@@ -15,7 +15,7 @@ namespace Magistrate.Api
 
 		public override async Task Invoke(IOwinContext context)
 		{
-			context.Set("user", _config.User());
+			context.Set("operator", _config.User());
 
 			await Next.Invoke(context);
 		}
