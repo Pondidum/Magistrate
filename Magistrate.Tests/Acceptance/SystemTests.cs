@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -37,7 +38,24 @@ namespace Magistrate.Tests.Acceptance
 					() => permission.Description.ShouldBe("Permission One")
 				);
 
+				await Delete(host, permission.Key);
+
+				(await GetAll(host)).ShouldBeEmpty();
+
+				await Create(host, new Model { Key = "perm-1", Name = "Permission 1", Description = "Permission One" });
 			}
+		}
+
+		private static async Task Delete(TestServer host, params string[] keys)
+		{
+			var response = await host
+				.HttpClient
+				.SendAsync(new HttpRequestMessage(HttpMethod.Delete, "/api/permissions")
+				{
+					Content = AsJson(keys)
+				});
+
+			response.StatusCode.ShouldBe(HttpStatusCode.OK);
 		}
 
 		private static async Task Create(TestServer host, Model model)
