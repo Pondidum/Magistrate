@@ -38,12 +38,36 @@ namespace Magistrate.Tests.Acceptance
 					() => permission.Description.ShouldBe("Permission One")
 				);
 
+				await Rename(host, permission.Key, "First");
+				
+				(await GetSingle(host, permission.Key)).Name.ShouldBe("First");
+
 				await Delete(host, permission.Key);
 
 				(await GetAll(host)).ShouldBeEmpty();
 
 				await Create(host, new Model { Key = "perm-1", Name = "Permission 1", Description = "Permission One" });
 			}
+		}
+
+		private static async Task<Model> GetSingle(TestServer host, string key)
+		{
+			var response = await host
+					.HttpClient
+					.GetAsync("/api/permissions/" + key);
+
+			var json = await response.Content.ReadAsStringAsync();
+
+			return JsonConvert.DeserializeObject<Model>(json);
+		}
+
+		private static async Task Rename(TestServer host, string key, string name)
+		{
+			var response = await host
+				.HttpClient
+				.PutAsync("/api/permissions/" + key + "/name", AsJson(new { Name = name }));
+
+			response.StatusCode.ShouldBe(HttpStatusCode.OK);
 		}
 
 		private static async Task Delete(TestServer host, params string[] keys)

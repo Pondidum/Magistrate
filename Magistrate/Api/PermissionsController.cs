@@ -32,8 +32,8 @@ namespace Magistrate.Api
 			app.Route("/api/permissions").Get(GetAll);
 			app.Route("/api/permissions").Put(CreatePermission);
 			app.Route("/api/permissions/").Delete(DeletePermission);
-			app.Route("/api/permissions/{permission-key}").Get(GetPermissionDetails);
-			//app.Route("/api/permissions/{permission-key}/name").Put(UpdatePermissionName);
+			app.Route("/api/permissions/{key}").Get(GetPermissionDetails);
+			app.Route("/api/permissions/{key}/name").Put(UpdatePermissionName);
 			//app.Route("/api/permissions/{permission-key}/description").Put(UpdatePermissionDescription);
 			//app.Route("/api/permissions/{permission-key}/history").Get(GetHistory);
 		}
@@ -77,18 +77,21 @@ namespace Magistrate.Api
 			await Task.Yield();
 		}
 
-		//private async Task UpdatePermissionName(IOwinContext context)
-		//{
-		//	await NotFoundOrAction(context, PermissionKey, async key =>
-		//	{
-		//		var dto = context.ReadJson<EditPermissionDto>();
-		//		var user = context.GetUser();
+		private async Task UpdatePermissionName(IOwinContext context)
+		{
+			var key = new PermissionKey(context.GetRouteValue("key"));
+			var dto = context.ReadJson<EditPermissionDto>();
 
-		//		System.OnPermission(key, permission => permission.ChangeName(user, dto.Name));
+			var permission = _allCollections.Permissions.Single(p => p.Key == key);
 
-		//		await Task.Yield();
-		//	});
-		//}
+			_mediator.Publish(new ChangePermissionNameCommand(
+				context.GetOperator(),
+				permission.ID,
+				dto.Name
+			));
+
+			await Task.Yield();
+		}
 
 		//private async Task UpdatePermissionDescription(IOwinContext context)
 		//{
@@ -123,10 +126,10 @@ namespace Magistrate.Api
 			public string Description { get; set; }
 		}
 
-		//private class EditPermissionDto
-		//{
-		//	public string Name { get; set; }
-		//	public string Description { get; set; }
-		//}
+		private class EditPermissionDto
+		{
+			public string Name { get; set; }
+			public string Description { get; set; }
+		}
 	}
 }
