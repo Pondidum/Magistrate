@@ -13,7 +13,7 @@ namespace Magistrate.Domain.Services
 			_keys = new Dictionary<Guid, PermissionKey>();
 
 			Register<PermissionCreatedEvent>(e => _keys.Add(e.AggregateID, e.Key));
-			Register<PermissionDeactivatedEvent>(e => _keys.Remove(e.AggregateID));
+			Register<PermissionDeletedEvent>(e => _keys.Remove(e.AggregateID));
 		}
 
 		public bool CanCreatePermission(PermissionKey key)

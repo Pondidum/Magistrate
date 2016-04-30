@@ -46,7 +46,7 @@ namespace Magistrate.ReadModels
 			_projections.Register<RoleAddedToUserEvent>(e => _users[e.AggregateID].Roles.Add(_roles[e.RoleID]));
 			_projections.Register<RoleRemovedFromUserEvent>(e => _users[e.AggregateID].Roles.Remove(_roles[e.RoleID]));
 
-			_projections.Register<PermissionDeactivatedEvent>(e =>
+			_projections.Register<PermissionDeletedEvent>(e =>
 			{
 				var permission = _permissions[e.AggregateID];
 

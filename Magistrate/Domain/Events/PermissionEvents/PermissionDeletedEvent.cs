@@ -1,10 +1,10 @@
 ﻿namespace Magistrate.Domain.Events.PermissionEvents
 {
-	public class PermissionDeactivatedEvent : UserLoggedEvent
+	public class PermissionDeletedEvent : UserLoggedEvent
 	{
 		public string PermissionName { get; }
 
-		public PermissionDeactivatedEvent(Operator user, string permissionName) : base(user)
+		public PermissionDeletedEvent(Operator user, string permissionName) : base(user)
 		{
 			PermissionName = permissionName;
 		}

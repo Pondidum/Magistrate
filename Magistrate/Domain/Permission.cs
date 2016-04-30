@@ -75,9 +75,9 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void Deactivate(Operator user)
+		public void Delete(Operator user)
 		{
-			ApplyEvent(new PermissionDeactivatedEvent
+			ApplyEvent(new PermissionDeletedEvent
 			(
 				user,
 				Name
@@ -110,7 +110,7 @@ namespace Magistrate.Domain
 			Name = e.NewName;
 		}
 
-		private void Handle(PermissionDeactivatedEvent e)
+		private void Handle(PermissionDeletedEvent e)
 		{
 			IsActive = false;
 		}
