@@ -1,10 +1,8 @@
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Ledger.Infrastructure;
 using Magistrate.Domain;
 using Magistrate.Domain.Commands;
-using Magistrate.Domain.Services;
 using Magistrate.ReadModels;
 using MediatR;
 using Microsoft.Owin;
@@ -34,8 +32,7 @@ namespace Magistrate.Api
 			app.Route("/api/permissions/").Delete(DeletePermission);
 			app.Route("/api/permissions/{key}").Get(GetPermissionDetails);
 			app.Route("/api/permissions/{key}/name").Put(UpdatePermissionName);
-			//app.Route("/api/permissions/{permission-key}/description").Put(UpdatePermissionDescription);
-			//app.Route("/api/permissions/{permission-key}/history").Get(GetHistory);
+			app.Route("/api/permissions/{key}/description").Put(UpdatePermissionDescription);
 		}
 
 		private async Task GetAll(IOwinContext context)
@@ -93,31 +90,21 @@ namespace Magistrate.Api
 			await Task.Yield();
 		}
 
-		//private async Task UpdatePermissionDescription(IOwinContext context)
-		//{
-		//	await NotFoundOrAction(context, PermissionKey, async key =>
-		//	{
-		//		var dto = context.ReadJson<EditPermissionDto>();
-		//		var user = context.GetUser();
+		private async Task UpdatePermissionDescription(IOwinContext context)
+		{
+			var key = new PermissionKey(context.GetRouteValue("key"));
+			var dto = context.ReadJson<EditPermissionDto>();
 
-		//		System.OnPermission(key, permission => permission.ChangeDescription(user, dto.Description));
+			var permission = _allCollections.Permissions.Single(p => p.Key == key);
 
-		//		await Task.Yield();
-		//	});
-		//}
+			_mediator.Publish(new ChangePermissionDescriptionCommand(
+				context.GetOperator(),
+				permission.ID,
+				dto.Description
+			));
 
-		//private async Task GetHistory(IOwinContext context)
-		//{
-		//	await NotFoundOrAction(context, PermissionKey, async permissionKey =>
-		//	{
-		//		var permission = System.Permissions.FirstOrDefault(u => u.Key == permissionKey);
-
-		//		if (permission == null)
-		//			context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-		//		else
-		//			await context.JsonResponse(System.History.Where(h => h.OnAggregate == permission.ID));
-		//	});
-		//}
+			await Task.Yield();
+		}
 
 		private class CreatePermissionDto
 		{

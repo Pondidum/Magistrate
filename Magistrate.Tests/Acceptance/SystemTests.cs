@@ -49,8 +49,11 @@ namespace Magistrate.Tests.Acceptance
 			);
 
 			await Rename(permission.Key, "First");
-
 			(await GetSingle(permission.Key)).Name.ShouldBe("First");
+
+
+			await ChangeDescription(permission.Key, "1 up");
+			(await GetSingle(permission.Key)).Description.ShouldBe("1 up");
 
 			await Delete(permission.Key);
 
@@ -75,6 +78,15 @@ namespace Magistrate.Tests.Acceptance
 			var response = await _host
 				.HttpClient
 				.PutAsync("/api/permissions/" + key + "/name", AsJson(new { Name = name }));
+
+			response.StatusCode.ShouldBe(HttpStatusCode.OK);
+		}
+
+		private async Task ChangeDescription(string key, string desc)
+		{
+			var response = await _host
+				.HttpClient
+				.PutAsync("/api/permissions/" + key + "/description", AsJson(new { Description = desc }));
 
 			response.StatusCode.ShouldBe(HttpStatusCode.OK);
 		}
