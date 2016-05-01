@@ -98,10 +98,10 @@ namespace Magistrate.Tests.Domain
 			var role = Role.Create(_roleService, _currentUser, new RoleKey("some-key"), "some name", "some description");
 			var permission = Permission.Create(_permissionService, _currentUser, new PermissionKey("key"), "permission_one", "");
 
-			role.AddPermission(_currentUser, permission);
+			role.AddPermission(_currentUser, permission.ID);
 			role.Permissions.ShouldBe(new[] { permission.ID });
 
-			role.RemovePermission(_currentUser, permission);
+			role.RemovePermission(_currentUser, permission.ID);
 			role.Permissions.ShouldBeEmpty();
 		}
 

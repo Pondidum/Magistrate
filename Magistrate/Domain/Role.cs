@@ -88,25 +88,21 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void AddPermission(Operator user, Permission permission)
+		public void AddPermission(Operator user, Guid permissionID)
 		{
 			ApplyEvent(new PermissionAddedToRoleEvent
 			(
 				user,
-				permission.ID,
-				permission.Name,
-				Name
+				permissionID
 			));
 		}
 
-		public void RemovePermission(Operator user, Permission permission)
+		public void RemovePermission(Operator user, Guid permissionID)
 		{
 			ApplyEvent(new PermissionRemovedFromRoleEvent
 			(
 				user,
-				permission.ID,
-				permission.Name,
-				Name
+				permissionID
 			));
 		}
 

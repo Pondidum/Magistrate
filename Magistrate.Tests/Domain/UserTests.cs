@@ -101,7 +101,7 @@ namespace Magistrate.Tests.Domain
 		public void When_a_role_is_added()
 		{
 			var role = Role.Create(new RoleService(), _cu, new RoleKey("role-one"), "role one", "");
-			role.AddPermission(_cu, _permissionOne);
+			role.AddPermission(_cu, _permissionOne.ID);
 
 			_user.AddRole(_cu, role);
 
@@ -119,7 +119,7 @@ namespace Magistrate.Tests.Domain
 		public void When_the_user_has_a_revoked_permission_included_by_a_role()
 		{
 			var role = Role.Create(new RoleService(), _cu, new RoleKey("role-one"), "role one", "");
-			role.AddPermission(_cu, _permissionOne);
+			role.AddPermission(_cu, _permissionOne.ID);
 
 			_user.AddRole(_cu, role);
 			_user.AddRevoke(_cu, _permissionOne);
