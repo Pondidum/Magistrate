@@ -121,12 +121,16 @@
     <Compile Include="Boot.cs" />
     <Compile Include="Domain\CommandHandlers\ChangePermissionDescriptionCommandHandler.cs" />
     <Compile Include="Domain\CommandHandlers\ChangePermissionNameCommandHandler.cs" />
+    <Compile Include="Domain\CommandHandlers\CreateRoleCommandHandler.cs" />
+    <Compile Include="Domain\CommandHandlers\DeleteRoleCommandHandler.cs" />
     <Compile Include="Domain\Commands\ChangePermissionDescriptionCommand.cs" />
     <Compile Include="Domain\Commands\ChangePermissionNameCommand.cs" />
     <Compile Include="Domain\CommandHandlers\CreatePermissionCommandHandler.cs" />
     <Compile Include="Domain\CommandHandlers\DeletePermissionCommandHandler.cs" />
     <Compile Include="Domain\Commands\CreatePermissionCommand.cs" />
+    <Compile Include="Domain\Commands\CreateRoleCommand.cs" />
     <Compile Include="Domain\Commands\DeletePermissionCommand.cs" />
+    <Compile Include="Domain\Commands\DeleteRoleCommand.cs" />
     <Compile Include="Domain\Events\PermissionEvents\PermissionDeletedEvent.cs" />
     <Compile Include="Domain\Events\PermissionEvents\PermissionDescriptionChangedEvent.cs" />
     <Compile Include="Domain\Events\RoleEvents\RoleDeletedEvent.cs" />
