@@ -79,9 +79,9 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void Deactivate(Operator user)
+		public void Delete(Operator user)
 		{
-			ApplyEvent(new RoleDeactivatedEvent
+			ApplyEvent(new RoleDeletedEvent
 			(
 				user,
 				Name
@@ -132,7 +132,7 @@ namespace Magistrate.Domain
 			Name = e.NewName;
 		}
 
-		private void Handle(RoleDeactivatedEvent e)
+		private void Handle(RoleDeletedEvent e)
 		{
 			IsActive = false;
 		}

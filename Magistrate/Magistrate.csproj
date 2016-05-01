@@ -129,7 +129,7 @@
     <Compile Include="Domain\Commands\DeletePermissionCommand.cs" />
     <Compile Include="Domain\Events\PermissionEvents\PermissionDeletedEvent.cs" />
     <Compile Include="Domain\Events\PermissionEvents\PermissionDescriptionChangedEvent.cs" />
-    <Compile Include="Domain\Events\RoleEvents\RoleDeactivatedEvent.cs" />
+    <Compile Include="Domain\Events\RoleEvents\RoleDeletedEvent.cs" />
     <Compile Include="Domain\Events\UserEvents\IncludeAddedToUserEvent.cs" />
     <Compile Include="Domain\Events\UserEvents\IncludeRemovedFromUserEvent.cs" />
     <Compile Include="Domain\Events\UserEvents\UserDeactivatedEvent.cs" />

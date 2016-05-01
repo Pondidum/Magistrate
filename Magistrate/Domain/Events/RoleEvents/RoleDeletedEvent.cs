@@ -1,8 +1,8 @@
 ﻿namespace Magistrate.Domain.Events.RoleEvents
 {
-	public class RoleDeactivatedEvent : UserLoggedEvent
+	public class RoleDeletedEvent : UserLoggedEvent
 	{
-		public RoleDeactivatedEvent(Operator user, string roleName) : base(user)
+		public RoleDeletedEvent(Operator user, string roleName) : base(user)
 		{
 			RoleName = roleName;
 		}
