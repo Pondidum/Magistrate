@@ -12,6 +12,7 @@ namespace Magistrate.ReadModels
 	public class AllCollections
 	{
 		public IEnumerable<PermissionModel> Permissions => _permissions.Values;
+		public IEnumerable<RoleModel> Roles => _roles.Values; 
 
 		private readonly Dictionary<Guid, UserModel> _users;
 		private readonly Dictionary<Guid, RoleModel> _roles;
@@ -56,7 +57,7 @@ namespace Magistrate.ReadModels
 				_users.Values.ForEach(u => u.Revokes.Remove(permission));
 			});
 
-			_projections.Register<RoleDeactivatedEvent>(e =>
+			_projections.Register<RoleDeletedEvent>(e =>
 			{
 				var role = _roles[e.AggregateID];
 
