@@ -2,6 +2,8 @@ using Ledger;
 using Magistrate.Infrastructure;
 using Magistrate.ReadModels;
 using MediatR;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using StructureMap;
 using StructureMap.Graph;
 
@@ -30,6 +32,11 @@ namespace Magistrate
 			For<Projectionist>().Singleton();
 			For<IEventStore>()
 				.Use(context => new ProjectionStore(store, context.GetInstance<Projectionist>().Apply));
+
+			For<JsonSerializerSettings>().Use(new JsonSerializerSettings
+			{
+				ContractResolver = new CamelCasePropertyNamesContractResolver()
+			});
 		}
 	}
 }
