@@ -2,12 +2,15 @@ using System;
 using System.Collections.Generic;
 using Magistrate.Domain;
 using Magistrate.Domain.Events.UserEvents;
+using Newtonsoft.Json;
 
 namespace Magistrate.ReadModels
 {
 	public class UserModel
 	{
+		[JsonIgnore]
 		public Guid ID { get; set; }
+
 		public UserKey Key { get; set; }
 		public string Name { get; set; }
 
