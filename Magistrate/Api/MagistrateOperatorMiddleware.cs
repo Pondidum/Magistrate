@@ -3,7 +3,7 @@ using Microsoft.Owin;
 
 namespace Magistrate.Api
 {
-	internal class MagistrateOperatorMiddleware : OwinMiddleware
+	public class MagistrateOperatorMiddleware : OwinMiddleware
 	{
 		private readonly MagistrateConfiguration _config;
 

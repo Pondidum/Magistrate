@@ -8,11 +8,14 @@ using Ledger;
 using Ledger.Stores;
 using Magistrate.Api;
 using Magistrate.Domain;
-using Magistrate.Domain.ReadModels;
+using Magistrate.Domain.Commands;
 using Magistrate.Domain.Services;
+using MediatR;
 using Microsoft.Owin.Testing;
 using Newtonsoft.Json.Linq;
+using Owin;
 using Shouldly;
+using StructureMap;
 
 namespace Magistrate.Tests.ApiTests
 {
@@ -22,7 +25,7 @@ namespace Magistrate.Tests.ApiTests
 
 		public ApiAcceptanceTests()
 		{
-			var currentUser = new MagistrateUser
+			var currentUser = new Operator
 			{
 				Key = "andy-dote",
 				Name = "Andy Dote",
@@ -31,41 +34,48 @@ namespace Magistrate.Tests.ApiTests
 				CanCreateUsers = true
 			};
 
-			var p1 = Permission.Create(currentUser, new PermissionKey("perm-one"), "first", "first permission");
-			var p2 = Permission.Create(currentUser, new PermissionKey("perm-two"), "second", "second permission");
-			var p3 = Permission.Create(currentUser, new PermissionKey("perm-three"), "third", "third permission");
+			var config = new MagistrateConfiguration
+			{
+				EventStore = new InMemoryEventStore(),
+				User = () => currentUser
+			};
 
-			var r1 = Role.Create(currentUser, new RoleKey("role-one"), "first", "first role");
-			r1.AddPermission(currentUser, p1);
+			var container = new Container(new MagistrateRegistry(config.EventStore));
 
-			var r2 = Role.Create(currentUser, new RoleKey("role-two"), "second", "second role");
-			r2.AddPermission(currentUser, p2);
+			container.GetInstance<Boot>().Load();
 
-			var userService = new UserService(Enumerable.Empty<UserReadModel>());
-			var u1 = User.Create(userService, currentUser, new UserKey("user-one"), "first");
+			var ps = container.GetInstance<PermissionService>();
+			var rs = container.GetInstance<RoleService>();
+			var us = container.GetInstance<UserService>();
+			
+			var p1 = Permission.Create(ps, currentUser, new PermissionKey("perm-one"), "first", "first permission");
+			var p2 = Permission.Create(ps, currentUser, new PermissionKey("perm-two"), "second", "second permission");
+			var p3 = Permission.Create(ps, currentUser, new PermissionKey("perm-three"), "third", "third permission");
+
+			var r1 = Role.Create(rs, currentUser, new RoleKey("role-one"), "first", "first role");
+			r1.AddPermission(currentUser, p1.ID);
+
+			var r2 = Role.Create(rs, currentUser, new RoleKey("role-two"), "second", "second role");
+			r2.AddPermission(currentUser, p2.ID);
+
+			var u1 = User.Create(us, currentUser, new UserKey("user-one"), "first");
 			u1.AddRole(currentUser, r1);
 			u1.AddInclude(currentUser, p2);
 			u1.AddRevoke(currentUser, p3);
 
-			var events = new InMemoryEventStore();
-			var store = new AggregateStore<Guid>(events);
-			store.Save(SystemFacade.MagistrateStream, p1);
-			store.Save(SystemFacade.MagistrateStream, p2);
-			store.Save(SystemFacade.MagistrateStream, p3);
-			store.Save(SystemFacade.MagistrateStream, r1);
-			store.Save(SystemFacade.MagistrateStream, r2);
-			store.Save(SystemFacade.MagistrateStream, u1);
+			var store = container.GetInstance<AggregateStore<Guid>>();
+			
+			store.Save(MagistrateSystem.MagistrateStream, p1);
+			store.Save(MagistrateSystem.MagistrateStream, p2);
+			store.Save(MagistrateSystem.MagistrateStream, p3);
+			store.Save(MagistrateSystem.MagistrateStream, r1);
+			store.Save(MagistrateSystem.MagistrateStream, r2);
+			store.Save(MagistrateSystem.MagistrateStream, u1);
 
-			var config = new MagistrateConfiguration
-			{
-				EventStore = events,
-				User = () => currentUser
-			};
-
-			var api = new MagistrateApi(config);
 			_server = TestServer.Create(app =>
 			{
-				api.Configure(app);
+				app.Use<MagistrateOperatorMiddleware>(config);
+				container.GetInstance<PermissionsController>().Configure(app);
 			});
 		}
 

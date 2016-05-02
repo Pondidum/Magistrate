@@ -12,7 +12,7 @@ namespace Magistrate.Tests.ApiTests
 		[Fact]
 		public async void When_listing_all_permissions()
 		{
-			var response = await GetJson("/api/permissions/all");
+			var response = await GetJson("/api/permissions");
 
 			var expected = JToken.Parse(@"
 [
@@ -40,7 +40,7 @@ namespace Magistrate.Tests.ApiTests
 		[Fact]
 		public async void When_creating_a_permission()
 		{
-			var response = await PutJson("/api/permissions", @"
+			var response = await Put("/api/permissions", @"
 {
   ""key"":""perm-new"",
   ""name"":""New Permission"",
@@ -55,7 +55,7 @@ namespace Magistrate.Tests.ApiTests
   }
 ");
 
-			ShouldBeTheSame(response, expected);
+			response.ShouldBe(HttpStatusCode.OK);
 		}
 
 		[Fact]
@@ -98,21 +98,6 @@ namespace Magistrate.Tests.ApiTests
 			var response = await Get("/api/permissions/perm-one");
 
 			response.ShouldBe(HttpStatusCode.NotFound);
-		}
-
-		[Fact]
-		public async void When_getting_history()
-		{
-			var response = await GetJson("/api/permissions/perm-one/history");
-			var entry = response.Single();
-
-			entry.ShouldSatisfyAllConditions(
-				() => entry.SelectToken("action").Value<string>().ShouldBe("Permission Created"),
-				() => entry.SelectToken("onAggregate").ShouldBe(null),
-				() => entry.SelectToken("at").Value<DateTime>().ShouldBeGreaterThan(DateTime.MinValue),
-				() => entry.SelectToken("by").SelectToken("name").Value<string>().ShouldBe("Andy Dote"),
-				() => entry.SelectToken("by").SelectToken("key").Value<string>().ShouldBe("andy-dote")
-			);
 		}
 	}
 }
