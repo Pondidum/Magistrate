@@ -118,6 +118,7 @@
     <Compile Include="Api\ApiExtensions.cs" />
     <Compile Include="Api\MagistrateOperatorMiddleware.cs" />
     <Compile Include="Api\PermissionsController.cs" />
+    <Compile Include="Api\RolesController.cs" />
     <Compile Include="Boot.cs" />
     <Compile Include="Domain\CommandHandlers\AddPermissionsToRoleCommandHandler.cs" />
     <Compile Include="Domain\CommandHandlers\ChangePermissionDescriptionCommandHandler.cs" />

@@ -1,149 +1,151 @@
 ﻿using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Ledger.Infrastructure;
 using Magistrate.Domain;
+using Magistrate.Domain.Commands;
 using Magistrate.Domain.Services;
+using Magistrate.ReadModels;
+using MediatR;
 using Microsoft.Owin;
+using Newtonsoft.Json;
 using Owin;
 using Owin.Routing;
 
 namespace Magistrate.Api
 {
-	public class RolesController : Controller
+	public class RolesController
 	{
-		public RolesController(SystemFacade system)
-			: base(system)
+		private readonly AllCollections _allCollections;
+		private readonly JsonSerializerSettings _settings;
+		private readonly IMediator _mediator;
+
+		public RolesController(AllCollections allCollections, JsonSerializerSettings settings, IMediator mediator)
 		{
+			_allCollections = allCollections;
+			_settings = settings;
+			_mediator = mediator;
 		}
 
 		public void Configure(IAppBuilder app)
 		{
-			app.Route("/api/roles/all").Get(GetAll);
+			app.Route("/api/roles").Get(GetAll);
 			app.Route("/api/roles").Put(CreateRole);
 			app.Route("/api/roles").Delete(DeleteRole);
-			app.Route("/api/roles/{role-key}").Get(GetRoleDetails);
-			app.Route("/api/roles/{role-key}/name").Put(UpdateRoleName);
-			app.Route("/api/roles/{role-key}/description").Put(UpdateRoleDescription);
-			app.Route("/api/roles/{role-key}/permissions").Put(AddPermissions);
-			app.Route("/api/roles/{role-key}/permissions").Delete(RemovePermissions);
-			app.Route("/api/roles/{role-key}/history").Get(GetHistory);
-
+			app.Route("/api/roles/{key}").Get(GetRoleDetails);
+			app.Route("/api/roles/{key}/name").Put(UpdateRoleName);
+			app.Route("/api/roles/{key}/description").Put(UpdateRoleDescription);
+			app.Route("/api/roles/{key}/permissions").Put(AddPermissions);
+			app.Route("/api/roles/{key}/permissions").Delete(RemovePermissions);
 		}
 
 		private async Task GetAll(IOwinContext context)
 		{
-			await context.JsonResponse(System.Roles);
+			await context.WriteJson(_allCollections.Roles, _settings);
+		}
+
+		private async Task GetRoleDetails(IOwinContext context)
+		{
+			var key = new RoleKey(context.GetRouteValue("key"));
+			var role = _allCollections.Roles.Single(r => r.Key == key);
+
+			await context.WriteJson(role, _settings);
 		}
 
 		private async Task CreateRole(IOwinContext context)
 		{
 			var dto = context.ReadJson<CreateRoleDto>();
-			var role = System.CreateRole(context.GetUser(), dto.Key, dto.Name, dto.Description);
 
-			await context.JsonResponse(role);
-		}
+			_mediator.Publish(new CreateRoleCommand(
+				context.GetOperator(),
+				dto.Key,
+				dto.Name,
+				dto.Description
+			));
 
-		private async Task GetRoleDetails(IOwinContext context)
-		{
-			await NotFoundOrAction(context, RoleKey, async key =>
-			{
-				var role = System.Roles.FirstOrDefault(r => r.Key == key);
-
-				if (role != null)
-					await context.JsonResponse(role);
-				else
-					context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-			});
+			await Task.Yield();
 		}
 
 		private async Task DeleteRole(IOwinContext context)
 		{
-			var dto = context.ReadJson<RoleKey[]>();
-			var user = context.GetUser();
+			var user = context.GetOperator();
 
-			foreach (var key in dto)
-			{
-				System.OnRole(key, role => role.Deactivate(user));
-			}
+			context
+				.ReadJson<RoleKey[]>()
+				.Select(key => _allCollections.Roles.Single(p => p.Key == key))
+				.ForEach(p => _mediator.Publish(new DeleteRoleCommand(user, p.ID)));
 
 			await Task.Yield();
 		}
 
 		private async Task UpdateRoleName(IOwinContext context)
 		{
-			await NotFoundOrAction(context, RoleKey, async key =>
-			{
-				var dto = context.ReadJson<EditRoleDto>();
-				var user = context.GetUser();
+			var key = new RoleKey(context.GetRouteValue("key"));
+			var dto = context.ReadJson<EditRoleDto>();
 
-				System.OnRole(key, role => role.ChangeName(user, dto.Name));
+			var role = _allCollections.Roles.Single(r => r.Key == key);
 
-				await Task.Yield();
-			});
+			_mediator.Publish(new ChangeRoleNameCommand(
+				context.GetOperator(),
+				role.ID,
+				dto.Name
+			));
+
+			await Task.Yield();
 		}
 
 		private async Task UpdateRoleDescription(IOwinContext context)
 		{
-			await NotFoundOrAction(context, RoleKey, async key =>
-			{
-				var dto = context.ReadJson<EditRoleDto>();
-				var user = context.GetUser();
+			var key = new RoleKey(context.GetRouteValue("key"));
+			var dto = context.ReadJson<EditRoleDto>();
 
-				System.OnRole(key, role => role.ChangeDescription(user, dto.Description));
+			var role = _allCollections.Roles.Single(r => r.Key == key);
 
-				await Task.Yield();
-			});
+			_mediator.Publish(new ChangeRoleDescriptionCommand(
+				context.GetOperator(),
+				role.ID,
+				dto.Description
+			));
+
+			await Task.Yield();
 		}
 
 		private async Task AddPermissions(IOwinContext context)
 		{
-			await NotFoundOrAction(context, RoleKey, async roleKey =>
-			{
-				var dto = context.ReadJson<PermissionKey[]>();
-				var user = context.GetUser();
+			var key = new RoleKey(context.GetRouteValue("key"));
+			var role = _allCollections.Roles.Single(r => r.Key == key);
 
-				System.OnRole(roleKey, role =>
-				{
-					foreach (var permission in dto)
-					{
-						role.AddPermission(user, System.LoadPermission(permission));
-					}
-				});
+			var permissions = context
+				.ReadJson<PermissionKey[]>()
+				.Select(pk => _allCollections.Permissions.Single(p => p.Key == pk))
+				.Select(p => p.ID);
 
-				await Task.Yield();
-			});
+			_mediator.Publish(new AddPermissionsToRoleCommand(
+				context.GetOperator(),
+				role.ID,
+				permissions
+			));
+
+			await Task.Yield();
 		}
 
 		private async Task RemovePermissions(IOwinContext context)
 		{
-			await NotFoundOrAction(context, RoleKey, async roleKey =>
-			{
-				var dto = context.ReadJson<PermissionKey[]>();
-				var user = context.GetUser();
+			var key = new RoleKey(context.GetRouteValue("key"));
+			var role = _allCollections.Roles.Single(r => r.Key == key);
 
-				System.OnRole(roleKey, role =>
-				{
-					foreach (var permission in dto)
-					{
-						role.RemovePermission(user, System.LoadPermission(permission));
-					}
-				});
+			var permissions = context
+				.ReadJson<PermissionKey[]>()
+				.Select(pk => _allCollections.Permissions.Single(p => p.Key == pk))
+				.Select(p => p.ID);
 
-				await Task.Yield();
-			});
-		}
+			_mediator.Publish(new RemovePermissionsFromRoleCommand(
+				context.GetOperator(),
+				role.ID,
+				permissions
+			));
 
-		private async Task GetHistory(IOwinContext context)
-		{
-			await NotFoundOrAction(context, RoleKey, async roleKey =>
-			{
-				var role = System.Roles.FirstOrDefault(u => u.Key == roleKey);
-
-				if (role == null)
-					context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-				else
-					await context.JsonResponse(System.History.Where(h => h.OnAggregate == role.ID));
-			});
+			await Task.Yield();
 		}
 
 		private class CreateRoleDto

@@ -99,6 +99,7 @@
     <Compile Include="Acceptance\SystemTests.cs" />
     <Compile Include="ApiTests\ApiAcceptanceTests.cs" />
     <Compile Include="ApiTests\PermissionControllerTests.cs" />
+    <Compile Include="ApiTests\RoleControllerTests.cs" />
     <Compile Include="Domain\PermissionKeyTests.cs" />
     <Compile Include="Domain\PermissionsTests.cs" />
     <Compile Include="Domain\RoleTests.cs" />

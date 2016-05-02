@@ -19,7 +19,7 @@ namespace Magistrate.Domain.CommandHandlers
 			var role = _store.Load(MagistrateSystem.MagistrateStream, notification.RoleID, Role.Blank);
 
 			foreach (var permissionID in notification.PermissionIDs)
-				role.AddPermission(notification.Operator, permissionID);
+				role.RemovePermission(notification.Operator, permissionID);
 
 			_store.Save(MagistrateSystem.MagistrateStream, role);
 		}

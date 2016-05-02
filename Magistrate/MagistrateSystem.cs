@@ -29,6 +29,7 @@ namespace Magistrate
 			app.Use<MagistrateOperatorMiddleware>(_config);
 
 			_container.GetInstance<PermissionsController>().Configure(app);
+			_container.GetInstance<RolesController>().Configure(app);
 		}
 	}
 }

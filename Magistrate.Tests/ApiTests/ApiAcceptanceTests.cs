@@ -76,6 +76,7 @@ namespace Magistrate.Tests.ApiTests
 			{
 				app.Use<MagistrateOperatorMiddleware>(config);
 				container.GetInstance<PermissionsController>().Configure(app);
+				container.GetInstance<RolesController>().Configure(app);
 			});
 		}
 

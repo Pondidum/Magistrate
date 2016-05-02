@@ -12,7 +12,7 @@ namespace Magistrate.Tests.ApiTests
 		[Fact]
 		public async void When_listing_all_roles()
 		{
-			var response = await GetJson("/api/roles/all");
+			var response = await GetJson("/api/roles");
 
 			var expected = JToken.Parse(@"
 [
@@ -49,24 +49,15 @@ namespace Magistrate.Tests.ApiTests
 		[Fact]
 		public async void When_creating_a_role()
 		{
-			var response = await PutJson("/api/roles", @"
+			var response = await Put("/api/roles", @"
 {
   ""key"":""role-new"",
   ""name"":""New Role"",
   ""description"":""A new role"",
 }
 ");
-			var expected = JToken.Parse(@"
-  {
-    ""key"": ""role-new"",
-    ""name"": ""New Role"",
-    ""description"": ""A new role"",
-    ""permissions"": []
-  }
-");
 
-			ShouldBeTheSame(response, expected);
-
+			response.ShouldBe(HttpStatusCode.OK);
 		}
 
 		[Fact]
@@ -171,26 +162,6 @@ namespace Magistrate.Tests.ApiTests
 			var response = await Get("/api/roles/role-one");
 
 			response.ShouldBe(HttpStatusCode.NotFound);
-		}
-
-		[Fact]
-		public async void When_getting_history()
-		{
-			var response = await GetJson("/api/roles/role-one/history");
-			var entry = response.First();
-
-			entry.ShouldSatisfyAllConditions(
-				() => entry.SelectToken("action").Value<string>().ShouldBe("Role Created"),
-				() => entry.SelectToken("onAggregate").ShouldBe(null),
-				() => entry.SelectToken("at").Value<DateTime>().ShouldBeGreaterThan(DateTime.MinValue),
-				() => entry.SelectToken("by").SelectToken("name").Value<string>().ShouldBe("Andy Dote"),
-				() => entry.SelectToken("by").SelectToken("key").Value<string>().ShouldBe("andy-dote")
-			);
-
-			response
-				.Select(t => t.SelectToken("action")
-				.Value<string>())
-				.ShouldBe(new[] { "Role Created", "Permission Added To Role" });
 		}
 	}
 }
