@@ -12,7 +12,8 @@ namespace Magistrate.ReadModels
 	public class AllCollections
 	{
 		public IEnumerable<PermissionModel> Permissions => _permissions.Values;
-		public IEnumerable<RoleModel> Roles => _roles.Values; 
+		public IEnumerable<RoleModel> Roles => _roles.Values;
+		public IEnumerable<UserModel> Users => _users.Values;
 
 		private readonly Dictionary<Guid, UserModel> _users;
 		private readonly Dictionary<Guid, RoleModel> _roles;
