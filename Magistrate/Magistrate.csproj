@@ -128,6 +128,7 @@
     <Compile Include="Domain\CommandHandlers\CreateRoleCommandHandler.cs" />
     <Compile Include="Domain\CommandHandlers\CreateUserCommandHandler.cs" />
     <Compile Include="Domain\CommandHandlers\DeleteRoleCommandHandler.cs" />
+    <Compile Include="Domain\CommandHandlers\DeleteUserCommandHandler.cs" />
     <Compile Include="Domain\CommandHandlers\RemovePermissionsFromRoleCommandHandler.cs" />
     <Compile Include="Domain\Commands\AddPermissionsToRoleCommand.cs" />
     <Compile Include="Domain\Commands\ChangePermissionDescriptionCommand.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Domain\Commands\CreateUserCommand.cs" />
     <Compile Include="Domain\Commands\DeletePermissionCommand.cs" />
     <Compile Include="Domain\Commands\DeleteRoleCommand.cs" />
+    <Compile Include="Domain\Commands\DeleteUserCommand.cs" />
     <Compile Include="Domain\Commands\RemovePermissionsFromRoleCommand.cs" />
     <Compile Include="Domain\Events\PermissionEvents\PermissionDeletedEvent.cs" />
     <Compile Include="Domain\Events\PermissionEvents\PermissionDescriptionChangedEvent.cs" />
