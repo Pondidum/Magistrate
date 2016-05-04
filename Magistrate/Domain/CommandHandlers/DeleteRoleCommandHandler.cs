@@ -18,7 +18,7 @@ namespace Magistrate.Domain.CommandHandlers
 		{
 			var role = _store.Load(MagistrateSystem.MagistrateStream, notification.RoleID, Role.Blank);
 
-			role.Delete(notification.User);
+			role.Delete(notification.Operator);
 
 			_store.Save(MagistrateSystem.MagistrateStream, role);
 		}

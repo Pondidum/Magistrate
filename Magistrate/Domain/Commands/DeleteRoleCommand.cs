@@ -5,12 +5,12 @@ namespace Magistrate.Domain.Commands
 {
 	public class DeleteRoleCommand : INotification
 	{
-		public Operator User { get; }
+		public Operator Operator { get; }
 		public Guid RoleID { get; }
 
-		public DeleteRoleCommand(Operator user, Guid roleID)
+		public DeleteRoleCommand(Operator @operator, Guid roleID)
 		{
-			User = user;
+			Operator = @operator;
 			RoleID = roleID;
 		}
 	}
