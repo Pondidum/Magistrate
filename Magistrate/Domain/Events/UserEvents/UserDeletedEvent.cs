@@ -1,8 +1,8 @@
 ﻿namespace Magistrate.Domain.Events.UserEvents
 {
-	public class UserDeactivatedEvent : UserLoggedEvent
+	public class UserDeletedEvent : UserLoggedEvent
 	{
-		public UserDeactivatedEvent(Operator user, string userName) : base(user)
+		public UserDeletedEvent(Operator user, string userName) : base(user)
 		{
 			UserName = userName;
 		}

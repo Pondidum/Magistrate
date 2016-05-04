@@ -66,7 +66,7 @@ namespace Magistrate.ReadModels
 				_users.Values.ForEach(u => u.Roles.Remove(role));
 			});
 
-			_projections.Register<UserDeactivatedEvent>(e =>
+			_projections.Register<UserDeletedEvent>(e =>
 			{
 				_users.Remove(e.AggregateID);
 			});

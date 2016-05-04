@@ -66,9 +66,9 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void Deactivate(Operator currentUser)
+		public void Delete(Operator currentUser)
 		{
-			ApplyEvent(new UserDeactivatedEvent
+			ApplyEvent(new UserDeletedEvent
 			(
 				currentUser,
 				Name
@@ -168,7 +168,7 @@ namespace Magistrate.Domain
 			Name = e.NewName;
 		}
 
-		private void Handle(UserDeactivatedEvent e)
+		private void Handle(UserDeletedEvent e)
 		{
 			IsActive = false;
 		}
