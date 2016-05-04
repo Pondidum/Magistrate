@@ -60,8 +60,8 @@ namespace Magistrate.Tests.ApiTests
 
 			var u1 = User.Create(us, currentUser, new UserKey("user-one"), "first");
 			u1.AddRole(currentUser, r1);
-			u1.AddInclude(currentUser, p2);
-			u1.AddRevoke(currentUser, p3);
+			u1.AddInclude(currentUser, p2.ID);
+			u1.AddRevoke(currentUser, p3.ID);
 
 			var store = container.GetInstance<AggregateStore<Guid>>();
 			

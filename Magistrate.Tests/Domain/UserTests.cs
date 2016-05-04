@@ -52,7 +52,7 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void When_an_include_is_added()
 		{
-			_user.AddInclude(_cu, _permissionOne);
+			_user.AddInclude(_cu, _permissionOne.ID);
 
 			_user.ShouldSatisfyAllConditions(
 				() => _user.Includes.ShouldBe(new[] { _permissionOne.ID }),
@@ -67,7 +67,7 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void When_a_revoke_is_added()
 		{
-			_user.AddRevoke(_cu, _permissionOne);
+			_user.AddRevoke(_cu, _permissionOne.ID);
 
 			_user.ShouldSatisfyAllConditions(
 				() => _user.Includes.ShouldBeEmpty(),
@@ -82,8 +82,8 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void When_the_user_has_a_revoke_and_adds_an_include()
 		{
-			_user.AddRevoke(_cu, _permissionOne);
-			_user.AddInclude(_cu, _permissionOne);
+			_user.AddRevoke(_cu, _permissionOne.ID);
+			_user.AddInclude(_cu, _permissionOne.ID);
 
 			_user.ShouldSatisfyAllConditions(
 				() => _user.Includes.ShouldBe(new[] { _permissionOne.ID }),
@@ -122,7 +122,7 @@ namespace Magistrate.Tests.Domain
 			role.AddPermission(_cu, _permissionOne.ID);
 
 			_user.AddRole(_cu, role);
-			_user.AddRevoke(_cu, _permissionOne);
+			_user.AddRevoke(_cu, _permissionOne.ID);
 
 			_user.ShouldSatisfyAllConditions(
 				() => _user.Includes.ShouldBeEmpty(),
@@ -138,8 +138,8 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void When_adding_the_same_include_twice()
 		{
-			_user.AddInclude(_cu, _permissionOne);
-			_user.AddInclude(_cu, _permissionOne);
+			_user.AddInclude(_cu, _permissionOne.ID);
+			_user.AddInclude(_cu, _permissionOne.ID);
 
 			EventsShouldBe(
 				typeof(IncludeAddedToUserEvent));
@@ -148,8 +148,8 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void When_adding_the_same_revoke_twice()
 		{
-			_user.AddRevoke(_cu, _permissionOne);
-			_user.AddRevoke(_cu, _permissionOne);
+			_user.AddRevoke(_cu, _permissionOne.ID);
+			_user.AddRevoke(_cu, _permissionOne.ID);
 
 			EventsShouldBe(
 				typeof(RevokeAddedToUserEvent));
@@ -158,7 +158,7 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void When_removing_a_non_existing_include()
 		{
-			_user.RemoveInclude(_cu, _permissionOne);
+			_user.RemoveInclude(_cu, _permissionOne.ID);
 
 			EventsShouldBe();
 		}
@@ -166,7 +166,7 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void When_removing_a_non_existing_revoke()
 		{
-			_user.RemoveRevoke(_cu, _permissionOne);
+			_user.RemoveRevoke(_cu, _permissionOne.ID);
 
 			EventsShouldBe();
 		}
@@ -174,8 +174,8 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void When_the_user_has_a_revoke_and_it_is_added_as_an_include()
 		{
-			_user.AddRevoke(_cu, _permissionOne);
-			_user.AddInclude(_cu, _permissionOne);
+			_user.AddRevoke(_cu, _permissionOne.ID);
+			_user.AddInclude(_cu, _permissionOne.ID);
 
 			EventsShouldBe(
 				typeof(RevokeAddedToUserEvent),
@@ -186,8 +186,8 @@ namespace Magistrate.Tests.Domain
 		[Fact]
 		public void When_the_user_has_an_include_and_it_is_added_as_a_revoke()
 		{
-			_user.AddInclude(_cu, _permissionOne);
-			_user.AddRevoke(_cu, _permissionOne);
+			_user.AddInclude(_cu, _permissionOne.ID);
+			_user.AddRevoke(_cu, _permissionOne.ID);
 
 			EventsShouldBe(
 				typeof(IncludeAddedToUserEvent),

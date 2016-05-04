@@ -75,53 +75,49 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void AddInclude(Operator currentUser, Permission permission)
+		public void AddInclude(Operator currentUser, Guid permissionID)
 		{
-			if (_includes.Contains(permission.ID))
+			if (_includes.Contains(permissionID))
 				return;
 
-			if (_revokes.Contains(permission.ID))
-				ApplyEvent(new RevokeRemovedFromUserEvent(currentUser, permission.ID, permission.Name, Name));
+			if (_revokes.Contains(permissionID))
+				ApplyEvent(new RevokeRemovedFromUserEvent(currentUser, permissionID));
 
-			ApplyEvent(new IncludeAddedToUserEvent(currentUser, permission.ID, permission.Name, Name));
+			ApplyEvent(new IncludeAddedToUserEvent(currentUser, permissionID));
 		}
 
-		public void RemoveInclude(Operator currentUser, Permission permission)
+		public void RemoveInclude(Operator currentUser, Guid permissionID)
 		{
-			if (_includes.Contains(permission.ID) == false)
+			if (_includes.Contains(permissionID) == false)
 				return;
 
 			ApplyEvent(new IncludeRemovedFromUserEvent
 			(
 				currentUser,
-				permission.ID,
-				permission.Name,
-				Name
+				permissionID
 			));
 		}
 
-		public void AddRevoke(Operator currentUser, Permission permission)
+		public void AddRevoke(Operator currentUser, Guid permissionID)
 		{
-			if (_revokes.Contains(permission.ID))
+			if (_revokes.Contains(permissionID))
 				return;
 
-			if (_includes.Contains(permission.ID))
-				ApplyEvent(new IncludeRemovedFromUserEvent(currentUser, permission.ID, permission.Name, Name));
+			if (_includes.Contains(permissionID))
+				ApplyEvent(new IncludeRemovedFromUserEvent(currentUser, permissionID));
 
-			ApplyEvent(new RevokeAddedToUserEvent(currentUser, permission.ID, permission.Name, Name));
+			ApplyEvent(new RevokeAddedToUserEvent(currentUser, permissionID));
 		}
 
-		public void RemoveRevoke(Operator currentUser, Permission permission)
+		public void RemoveRevoke(Operator currentUser, Guid permissionID)
 		{
-			if (_revokes.Contains(permission.ID) == false)
+			if (_revokes.Contains(permissionID) == false)
 				return;
 
 			ApplyEvent(new RevokeRemovedFromUserEvent
 			(
 				currentUser,
-				permission.ID,
-				permission.Name,
-				Name
+				permissionID
 			));
 		}
 
