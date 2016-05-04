@@ -5,13 +5,13 @@ namespace Magistrate.Domain.Commands
 {
 	public class ChangeRoleNameCommand : INotification
 	{
-		public Operator User { get; }
+		public Operator Operator { get; }
 		public Guid RoleID { get; }
 		public string NewName { get; }
 
-		public ChangeRoleNameCommand(Operator user, Guid id, string newName)
+		public ChangeRoleNameCommand(Operator @operator, Guid id, string newName)
 		{
-			User = user;
+			Operator = @operator;
 			RoleID = id;
 			NewName = newName;
 		}

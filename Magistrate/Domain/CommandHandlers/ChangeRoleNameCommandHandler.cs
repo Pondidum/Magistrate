@@ -18,7 +18,7 @@ namespace Magistrate.Domain.CommandHandlers
 		{
 			var role = _store.Load(MagistrateSystem.MagistrateStream, notification.RoleID, Role.Blank);
 
-			role.ChangeName(notification.User, notification.NewName);
+			role.ChangeName(notification.Operator, notification.NewName);
 
 			_store.Save(MagistrateSystem.MagistrateStream, role);
 		}
