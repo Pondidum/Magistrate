@@ -28,10 +28,10 @@ namespace Sample.Host
 
 				Directory.CreateDirectory("store");
 
-				app.UseMagistrateApi(config =>
+				var config = new MagistrateConfiguration
 				{
-					config.EventStore = new FileEventStore("store");
-					config.User = () =>
+					EventStore = new FileEventStore("store"),
+					User = () =>
 					{
 						//e.g. take user from ClaimsPrincipal:
 
@@ -42,7 +42,7 @@ namespace Sample.Host
 						//	Key = current.Identity.Name.ToLower().Replace(" ", "")
 						//};
 
-						return new MagistrateUser
+						return new Operator
 						{
 							Name = "Andy Dote",
 							Key = "andy-dote",
@@ -50,8 +50,12 @@ namespace Sample.Host
 							CanCreateRoles = true,
 							CanCreateUsers = true,
 						};
-					};
-				});
+					}
+				};
+
+
+				var sys = new MagistrateSystem(config);
+				sys.Configure(app);
 
 				var ui = new MagistrateWebInterface();
 				ui.Configure(app);

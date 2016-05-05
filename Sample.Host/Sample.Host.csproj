@@ -56,12 +56,12 @@
       <HintPath>..\packages\JSPool.0.3.1\lib\net40-Client\JSPool.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Ledger, Version=9.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ledger.9.0.0\lib\net45\Ledger.dll</HintPath>
+    <Reference Include="Ledger, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ledger.10.0.0\lib\net45\Ledger.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Ledger.Stores.Fs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ledger.Stores.Fs.6.2.0\lib\net45\Ledger.Stores.Fs.dll</HintPath>
+      <HintPath>..\packages\Ledger.Stores.Fs.7.0.0\lib\net45\Ledger.Stores.Fs.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
