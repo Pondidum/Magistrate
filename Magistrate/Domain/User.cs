@@ -121,25 +121,21 @@ namespace Magistrate.Domain
 			));
 		}
 
-		public void AddRole(Operator currentUser, Role role)
+		public void AddRole(Operator currentUser, Guid roleID)
 		{
 			ApplyEvent(new RoleAddedToUserEvent
 			(
 				currentUser,
-				role.ID,
-				role.Name,
-				Name
+				roleID
 			));
 		}
 
-		public void RemoveRole(Operator currentUser, Role role)
+		public void RemoveRole(Operator currentUser, Guid roleID)
 		{
 			ApplyEvent(new RoleRemovedFromUserEvent
 			(
 				currentUser,
-				role.ID,
-				role.Name,
-				Name
+				roleID
 			));
 		}
 

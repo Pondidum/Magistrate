@@ -103,7 +103,7 @@ namespace Magistrate.Tests.Domain
 			var role = Role.Create(new RoleService(), _cu, new RoleKey("role-one"), "role one", "");
 			role.AddPermission(_cu, _permissionOne.ID);
 
-			_user.AddRole(_cu, role);
+			_user.AddRole(_cu, role.ID);
 
 			_user.ShouldSatisfyAllConditions(
 				() => _user.Includes.ShouldBeEmpty(),
@@ -121,7 +121,7 @@ namespace Magistrate.Tests.Domain
 			var role = Role.Create(new RoleService(), _cu, new RoleKey("role-one"), "role one", "");
 			role.AddPermission(_cu, _permissionOne.ID);
 
-			_user.AddRole(_cu, role);
+			_user.AddRole(_cu, role.ID);
 			_user.AddRevoke(_cu, _permissionOne.ID);
 
 			_user.ShouldSatisfyAllConditions(
