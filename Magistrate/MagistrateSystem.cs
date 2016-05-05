@@ -30,6 +30,7 @@ namespace Magistrate
 
 			_container.GetInstance<PermissionsController>().Configure(app);
 			_container.GetInstance<RolesController>().Configure(app);
+			_container.GetInstance<UsersController>().Configure(app);
 		}
 	}
 }

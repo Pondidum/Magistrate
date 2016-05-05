@@ -12,7 +12,7 @@ namespace Magistrate.Tests.ApiTests
 		[Fact]
 		public async void When_listing_all_users()
 		{
-			var response = await GetJson("/api/users/all");
+			var response = await GetJson("/api/users");
 
 			var expected = JToken.Parse(@"
 [
@@ -57,24 +57,14 @@ namespace Magistrate.Tests.ApiTests
 		[Fact]
 		public async void When_creating_a_user()
 		{
-			var response = await PutJson("/api/users", @"
+			var response = await Put("/api/users", @"
 {
   ""key"":""user-two"",
   ""name"": ""second"",
 }
 ");
 
-			var expected = JToken.Parse(@"
-{
-  ""key"":""user-two"",
-  ""name"": ""second"",
-  ""includes"": [],
-  ""revokes"": [],
-  ""roles"": []
-}");
-
-
-			ShouldBeTheSame(response, expected);
+			response.ShouldBe(HttpStatusCode.OK);
 		}
 
 		[Fact]
@@ -209,26 +199,6 @@ namespace Magistrate.Tests.ApiTests
 			var response = await Get("/api/users/user-one");
 
 			response.ShouldBe(HttpStatusCode.NotFound);
-		}
-
-		[Fact]
-		public async void When_getting_history()
-		{
-			var response = await GetJson("/api/users/user-one/history");
-			var entry = response.First();
-
-			entry.ShouldSatisfyAllConditions(
-				() => entry.SelectToken("action").Value<string>().ShouldBe("User Created"),
-				() => entry.SelectToken("onAggregate").ShouldBe(null),
-				() => entry.SelectToken("at").Value<DateTime>().ShouldBeGreaterThan(DateTime.MinValue),
-				() => entry.SelectToken("by").SelectToken("name").Value<string>().ShouldBe("Andy Dote"),
-				() => entry.SelectToken("by").SelectToken("key").Value<string>().ShouldBe("andy-dote")
-			);
-
-			response
-				.Select(t => t.SelectToken("action")
-				.Value<string>())
-				.ShouldBe(new[] { "User Created", "Role Added To User", "Include Added To User", "Revoke Added To User" });
 		}
 	}
 }

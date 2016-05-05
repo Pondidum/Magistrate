@@ -28,6 +28,7 @@ namespace Magistrate
 
 			Policies.Add<ServicePolicy>();
 			For<AllCollections>().Singleton();
+			For<AuthorizationModel>().Singleton();
 
 			For<Projectionist>().Singleton();
 			For<IEventStore>()

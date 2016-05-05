@@ -12,7 +12,7 @@ namespace Magistrate
 		private readonly Projectionist _projectionist;
 		private readonly AggregateStore<Guid> _store;
 
-		public Boot(Projectionist projectionist, AggregateStore<Guid> store, UserService users, RoleService roles, PermissionService permissions, AllCollections collections)
+		public Boot(Projectionist projectionist, AggregateStore<Guid> store, UserService users, RoleService roles, PermissionService permissions, AllCollections collections, AuthorizationModel authorization)
 		{
 			_projectionist = projectionist;
 			_store = store;
@@ -20,7 +20,8 @@ namespace Magistrate
 				.Add(users)
 				.Add(roles)
 				.Add(permissions)
-				.Add(collections.Project);
+				.Add(collections.Project)
+				.Add(authorization.Project);
 		}
 
 		public void Load()
