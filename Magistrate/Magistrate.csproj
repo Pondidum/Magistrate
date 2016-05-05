@@ -123,6 +123,7 @@
     <Compile Include="Domain\CommandHandlers\AddIncludesToUserCommandHandler.cs" />
     <Compile Include="Domain\CommandHandlers\AddPermissionsToRoleCommandHandler.cs" />
     <Compile Include="Domain\CommandHandlers\AddRevokesToUserCommandHandler.cs" />
+    <Compile Include="Domain\CommandHandlers\AddRolesToUserCommandHandler.cs" />
     <Compile Include="Domain\CommandHandlers\ChangePermissionDescriptionCommandHandler.cs" />
     <Compile Include="Domain\CommandHandlers\ChangePermissionNameCommandHandler.cs" />
     <Compile Include="Domain\CommandHandlers\ChangeRoleDescriptionCommandHandler.cs" />
@@ -135,9 +136,11 @@
     <Compile Include="Domain\CommandHandlers\RemoveIncludesFromUserCommandHandler.cs" />
     <Compile Include="Domain\CommandHandlers\RemovePermissionsFromRoleCommandHandler.cs" />
     <Compile Include="Domain\CommandHandlers\RemoveRevokesFromUserCommandHandler.cs" />
+    <Compile Include="Domain\CommandHandlers\RemoveRolesFromUserCommandHandler.cs" />
     <Compile Include="Domain\Commands\AddIncludesToUserCommand.cs" />
     <Compile Include="Domain\Commands\AddPermissionsToRoleCommand.cs" />
     <Compile Include="Domain\Commands\AddRevokesToUserCommand.cs" />
+    <Compile Include="Domain\Commands\AddRolesToUserCommand.cs" />
     <Compile Include="Domain\Commands\ChangePermissionDescriptionCommand.cs" />
     <Compile Include="Domain\Commands\ChangePermissionNameCommand.cs" />
     <Compile Include="Domain\CommandHandlers\CreatePermissionCommandHandler.cs" />
@@ -154,6 +157,7 @@
     <Compile Include="Domain\Commands\RemoveIncludesFromUserCommand.cs" />
     <Compile Include="Domain\Commands\RemovePermissionsFromRoleCommand.cs" />
     <Compile Include="Domain\Commands\RemoveRevokesFromUserCommand.cs" />
+    <Compile Include="Domain\Commands\RemoveRolesFromUserCommand.cs" />
     <Compile Include="Domain\Events\PermissionEvents\PermissionDeletedEvent.cs" />
     <Compile Include="Domain\Events\PermissionEvents\PermissionDescriptionChangedEvent.cs" />
     <Compile Include="Domain\Events\RoleEvents\RoleDeletedEvent.cs" />
