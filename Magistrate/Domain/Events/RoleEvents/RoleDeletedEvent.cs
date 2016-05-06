@@ -2,7 +2,7 @@
 {
 	public class RoleDeletedEvent : UserLoggedEvent
 	{
-		public RoleDeletedEvent(Operator user, string roleName) : base(user)
+		public RoleDeletedEvent(Operator @operator, string roleName) : base(@operator)
 		{
 			RoleName = roleName;
 		}

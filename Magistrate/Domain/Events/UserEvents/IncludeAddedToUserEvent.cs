@@ -4,7 +4,7 @@ namespace Magistrate.Domain.Events.UserEvents
 {
 	public class IncludeAddedToUserEvent : UserLoggedEvent
 	{
-		public IncludeAddedToUserEvent(Operator user, Guid permissionID) : base(user)
+		public IncludeAddedToUserEvent(Operator @operator, Guid permissionID) : base(@operator)
 		{
 			PermissionID = permissionID;
 		}

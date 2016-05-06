@@ -5,12 +5,12 @@ namespace Magistrate.Domain.Commands
 {
 	public class DeletePermissionCommand : INotification
 	{
-		public Operator User { get; }
+		public Operator Operator { get; }
 		public Guid PermissionID { get; }
 
-		public DeletePermissionCommand(Operator user, Guid permissionID)
+		public DeletePermissionCommand(Operator @operator, Guid permissionID)
 		{
-			User = user;
+			Operator = @operator;
 			PermissionID = permissionID;
 		}
 	}

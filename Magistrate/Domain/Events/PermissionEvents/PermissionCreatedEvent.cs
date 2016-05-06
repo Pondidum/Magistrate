@@ -9,8 +9,8 @@ namespace Magistrate.Domain.Events.PermissionEvents
 		public string Name { get; }
 		public string Description { get; }
 
-		public PermissionCreatedEvent(Operator user, Guid id, PermissionKey key, string name, string description)
-			: base(user)
+		public PermissionCreatedEvent(Operator @operator, Guid id, PermissionKey key, string name, string description)
+			: base(@operator)
 		{
 			ID = id;
 			Key = key;

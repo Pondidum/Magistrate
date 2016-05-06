@@ -18,7 +18,7 @@ namespace Magistrate.Domain.CommandHandlers
 		{
 			var permission = _store.Load(MagistrateSystem.MagistrateStream, notification.PermissionID, Permission.Blank);
 
-			permission.Delete(notification.User);
+			permission.Delete(notification.Operator);
 
 			_store.Save(MagistrateSystem.MagistrateStream, permission);
 		}

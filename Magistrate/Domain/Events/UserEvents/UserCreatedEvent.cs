@@ -4,7 +4,7 @@ namespace Magistrate.Domain.Events.UserEvents
 {
 	public class UserCreatedEvent : UserLoggedEvent
 	{
-		public UserCreatedEvent(Operator user, Guid id, UserKey key, string name) : base(user)
+		public UserCreatedEvent(Operator @operator, Guid id, UserKey key, string name) : base(@operator)
 		{
 			ID = id;
 			Key = key;

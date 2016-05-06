@@ -4,7 +4,7 @@
 	{
 		public string PermissionName { get; }
 
-		public PermissionDeletedEvent(Operator user, string permissionName) : base(user)
+		public PermissionDeletedEvent(Operator @operator, string permissionName) : base(@operator)
 		{
 			PermissionName = permissionName;
 		}

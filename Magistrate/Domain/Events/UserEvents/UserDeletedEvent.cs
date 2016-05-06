@@ -2,7 +2,7 @@
 {
 	public class UserDeletedEvent : UserLoggedEvent
 	{
-		public UserDeletedEvent(Operator user, string userName) : base(user)
+		public UserDeletedEvent(Operator @operator, string userName) : base(@operator)
 		{
 			UserName = userName;
 		}

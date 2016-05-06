@@ -18,7 +18,7 @@ namespace Magistrate.Domain.CommandHandlers
 		{
 			var permission = _store.Load(MagistrateSystem.MagistrateStream, notification.PermissionID, Permission.Blank);
 
-			permission.ChangeName(notification.User, notification.NewName);
+			permission.ChangeName(notification.Operator, notification.NewName);
 
 			_store.Save(MagistrateSystem.MagistrateStream, permission);
 		}

@@ -4,7 +4,7 @@ namespace Magistrate.Domain.Events.RoleEvents
 {
 	public class PermissionRemovedFromRoleEvent : UserLoggedEvent
 	{
-		public PermissionRemovedFromRoleEvent(Operator user, Guid permissionID) : base(user)
+		public PermissionRemovedFromRoleEvent(Operator @operator, Guid permissionID) : base(@operator)
 		{
 			PermissionID = permissionID;
 		}

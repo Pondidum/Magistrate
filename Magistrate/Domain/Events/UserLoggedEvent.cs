@@ -5,12 +5,12 @@ namespace Magistrate.Domain.Events
 {
 	public class UserLoggedEvent : DomainEvent<Guid>
 	{
-		public Operator User { get; }
+		public Operator Operator { get; }
 		public virtual string EventDescription { get { return ""; } }
 
-		public UserLoggedEvent(Operator user)
+		public UserLoggedEvent(Operator @operator)
 		{
-			User = user;
+			Operator = @operator;
 		}
 	}
 }

@@ -2,7 +2,7 @@
 {
 	public class PermissionDescriptionChangedEvent : UserLoggedEvent
 	{
-		public PermissionDescriptionChangedEvent(Operator user, string permissionName, string newDescription) : base(user)
+		public PermissionDescriptionChangedEvent(Operator @operator, string permissionName, string newDescription) : base(@operator)
 		{
 			PermissionName = permissionName;
 			NewDescription = newDescription;
