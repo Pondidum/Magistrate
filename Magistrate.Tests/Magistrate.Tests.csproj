@@ -108,6 +108,7 @@
     <Compile Include="Domain\UserKeyTests.cs" />
     <Compile Include="Domain\UserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadModels\HistoryReadModelTests.cs" />
     <Compile Include="Scratchpad.cs" />
   </ItemGroup>
   <ItemGroup>
