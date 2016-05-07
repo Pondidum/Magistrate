@@ -14,7 +14,7 @@ namespace Magistrate.Tests.Domain.Services
 		{
 			var projector = new Projector();
 
-			Should.NotThrow(() => projector.Apply(new UserDeletedEvent(new Operator(), "Test")));
+			Should.NotThrow(() => projector.Apply(new UserDeletedEvent(new Operator())));
 		}
 
 		[Fact]
@@ -24,7 +24,7 @@ namespace Magistrate.Tests.Domain.Services
 			var projector = new Projector();
 			projector.Register<UserDeletedEvent>(e => count++);
 
-			projector.Apply(new UserDeletedEvent(new Operator(), "Test"));
+			projector.Apply(new UserDeletedEvent(new Operator()));
 
 			count.ShouldBe(1);
 		}
@@ -39,7 +39,7 @@ namespace Magistrate.Tests.Domain.Services
 			projector.Register<UserDeletedEvent>(e => first++);
 			projector.Register<UserDeletedEvent>(e => second++);
 
-			projector.Apply(new UserDeletedEvent(new Operator(), "Test"));
+			projector.Apply(new UserDeletedEvent(new Operator()));
 
 			first.ShouldBe(1);
 			second.ShouldBe(1);
@@ -55,7 +55,7 @@ namespace Magistrate.Tests.Domain.Services
 			projector.Register<UserDeletedEvent>(e => direct++);
 			projector.Register<UserLoggedEvent>(e => inherited++);
 
-			projector.Apply(new UserDeletedEvent(new Operator(), "Test"));
+			projector.Apply(new UserDeletedEvent(new Operator()));
 
 			direct.ShouldBe(1);
 			inherited.ShouldBe(1);

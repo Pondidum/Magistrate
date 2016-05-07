@@ -2,13 +2,8 @@
 {
 	public class PermissionDeletedEvent : UserLoggedEvent
 	{
-		public string PermissionName { get; }
-
-		public PermissionDeletedEvent(Operator @operator, string permissionName) : base(@operator)
+		public PermissionDeletedEvent(Operator @operator) : base(@operator)
 		{
-			PermissionName = permissionName;
 		}
-
-		public override string EventDescription => $"Disabled Permission {PermissionName}";
 	}
 }

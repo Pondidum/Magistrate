@@ -61,7 +61,6 @@ namespace Magistrate.Domain
 			ApplyEvent(new UserNameChangedEvent
 			(
 				currentUser,
-				Name,
 				newName
 			));
 		}
@@ -70,8 +69,7 @@ namespace Magistrate.Domain
 		{
 			ApplyEvent(new UserDeletedEvent
 			(
-				currentUser,
-				Name
+				currentUser
 			));
 		}
 

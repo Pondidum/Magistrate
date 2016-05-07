@@ -10,7 +10,5 @@ namespace Magistrate.Domain.Events.RoleEvents
 		}
 
 		public Guid PermissionID { get; }
-
-		public override string EventDescription => $"Added Permission to Role";
 	}
 }

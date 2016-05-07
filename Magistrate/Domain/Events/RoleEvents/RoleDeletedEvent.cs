@@ -2,12 +2,8 @@
 {
 	public class RoleDeletedEvent : UserLoggedEvent
 	{
-		public RoleDeletedEvent(Operator @operator, string roleName) : base(@operator)
+		public RoleDeletedEvent(Operator @operator) : base(@operator)
 		{
-			RoleName = roleName;
 		}
-
-		public string RoleName { get; }
-		public override string EventDescription => $"Disabled Role {RoleName}";
 	}
 }

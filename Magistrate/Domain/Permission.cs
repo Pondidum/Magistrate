@@ -57,7 +57,6 @@ namespace Magistrate.Domain
 			ApplyEvent(new PermissionNameChangedEvent
 			(
 				user,
-				Name,
 				newName
 			));
 		}
@@ -70,7 +69,6 @@ namespace Magistrate.Domain
 			ApplyEvent(new PermissionDescriptionChangedEvent
 			(
 				user,
-				Name,
 				newDescription
 			));
 		}
@@ -79,8 +77,7 @@ namespace Magistrate.Domain
 		{
 			ApplyEvent(new PermissionDeletedEvent
 			(
-				user,
-				Name
+				user
 			));
 		}
 
