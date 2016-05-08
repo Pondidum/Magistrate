@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Ledger;
 using Magistrate.Domain.Events.PermissionEvents;
 using Magistrate.Domain.Events.RoleEvents;
+using Magistrate.Domain.Events.UserEvents;
 using Magistrate.Infrastructure;
 
 namespace Magistrate.ReadModels
@@ -20,6 +21,7 @@ namespace Magistrate.ReadModels
 
 			var permissions = new Dictionary<Guid, PermissionDto>();
 			var roles = new Dictionary<Guid, RoleDto>();
+			var users = new Dictionary<Guid, UserDto>();
 
 			_entries = new List<string>();
 
@@ -42,7 +44,7 @@ namespace Magistrate.ReadModels
 			_projections.Register<RoleCreatedEvent>(e =>
 			{
 				roles[e.ID] = new RoleDto { Name = e.Name, Description = e.Description };
-				_entries.Add($"Role '{e.Name} created by {e.Operator.Name}");
+				_entries.Add($"Role '{e.Name}' created by {e.Operator.Name}");
 			});
 
 			_projections.Register<RoleNameChangedEvent>(e =>
@@ -53,6 +55,17 @@ namespace Magistrate.ReadModels
 			_projections.Register<RoleDescriptionChangedEvent>(e =>
 			{
 				_entries.Add($"Role Description changed from '{roles[e.AggregateID].Description}' to '{e.NewDescription}' by {e.Operator.Name}");
+			});
+
+			_projections.Register<UserCreatedEvent>(e =>
+			{
+				users[e.ID] = new UserDto { Name = e.Name };
+				_entries.Add($"User '{e.Name}' created by {e.Operator.Name}");
+			});
+
+			_projections.Register<UserNameChangedEvent>(e =>
+			{
+				_entries.Add($"User Name changed from '{users[e.AggregateID].Name}' to '{e.NewName}' by {e.Operator.Name}");
 			});
 		}
 
@@ -72,6 +85,11 @@ namespace Magistrate.ReadModels
 		{
 			public string Name { get; set; }
 			public string Description { get; set; }
+		}
+
+		public class UserDto
+		{
+			public string Name { get; set; }
 		}
 	}
 }
