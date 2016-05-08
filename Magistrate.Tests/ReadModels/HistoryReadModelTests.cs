@@ -27,7 +27,7 @@ namespace Magistrate.Tests.ReadModels
 		{
 			_model.Project(new PermissionCreatedEvent(_user1, Guid.NewGuid(), new PermissionKey("p1"), "First Perm", "Does something"));
 
-			_model.Entries.Single().ShouldBe($"Permission 'First Perm' created by ${_user1.Name}");
+			_model.Entries.Single().ShouldBe($"Permission 'First Perm' created by {_user1.Name}");
 		}
 
 		[Fact]
@@ -39,7 +39,7 @@ namespace Magistrate.Tests.ReadModels
 
 			var entries = _model.Entries.ToList();
 
-			entries[0].ShouldBe($"Permission 'First Perm' created by ${_user1.Name}");
+			entries[0].ShouldBe($"Permission 'First Perm' created by {_user1.Name}");
 			entries[1].ShouldBe($"Permission Name changed from 'First Perm' to 'First Permission' by {_user2.Name}");
 		}
 
@@ -52,7 +52,7 @@ namespace Magistrate.Tests.ReadModels
 
 			var entries = _model.Entries.ToList();
 
-			entries[0].ShouldBe($"Permission 'First Perm' created by ${_user1.Name}");
+			entries[0].ShouldBe($"Permission 'First Perm' created by {_user1.Name}");
 			entries[1].ShouldBe($"Permission Description changed from 'Does something' to 'Does things' by {_user2.Name}");
 		}
 	}
