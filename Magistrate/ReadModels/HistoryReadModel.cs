@@ -11,7 +11,7 @@ namespace Magistrate.ReadModels
 	public class HistoryReadModel
 	{
 		public IEnumerable<string> Entries => _entries;
-		 
+
 		private readonly Projector _projections;
 		private readonly List<string> _entries;
 
@@ -66,6 +66,16 @@ namespace Magistrate.ReadModels
 			_projections.Register<UserNameChangedEvent>(e =>
 			{
 				_entries.Add($"User Name changed from '{users[e.AggregateID].Name}' to '{e.NewName}' by {e.Operator.Name}");
+			});
+
+			_projections.Register<PermissionAddedToRoleEvent>(e =>
+			{
+				_entries.Add($"Permission '{permissions[e.PermissionID].Name}' added to Role '{roles[e.AggregateID].Name}' by {e.Operator.Name}'");
+			});
+
+			_projections.Register<PermissionRemovedFromRoleEvent>(e =>
+			{
+				_entries.Add($"Permission '{permissions[e.PermissionID].Name}' removed from Role '{roles[e.AggregateID].Name}' by {e.Operator.Name}'");
 			});
 		}
 

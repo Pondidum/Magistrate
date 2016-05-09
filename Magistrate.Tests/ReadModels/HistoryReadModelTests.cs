@@ -112,5 +112,35 @@ namespace Magistrate.Tests.ReadModels
 			entries[0].ShouldBe($"User 'First User' created by {_user1.Name}");
 			entries[1].ShouldBe($"User Name changed from 'First User' to 'First User' by {_user2.Name}");
 		}
+
+		[Fact]
+		public void When_a_permission_is_added_to_a_role()
+		{
+			var permID = Guid.NewGuid();
+			var roleID = Guid.NewGuid();
+
+			_model.Project(new PermissionCreatedEvent(_user1, permID, new PermissionKey("1"), "Perm One", "1 Desc"));
+			_model.Project(new RoleCreatedEvent(_user1, roleID, new RoleKey("1"), "Role One", "1 Desc"));
+			_model.Project(new PermissionAddedToRoleEvent(_user1, permID) { AggregateID = roleID });
+
+			_model.Entries.Last().ShouldBe(
+				"Permission 'Perm One' added to Role 'Role One' by Andy Dote'"
+			);
+		}
+
+		[Fact]
+		public void When_a_permission_is_removed_from_a_role()
+		{
+			var permID = Guid.NewGuid();
+			var roleID = Guid.NewGuid();
+
+			_model.Project(new PermissionCreatedEvent(_user1, permID, new PermissionKey("1"), "Perm One", "1 Desc"));
+			_model.Project(new RoleCreatedEvent(_user1, roleID, new RoleKey("1"), "Role One", "1 Desc"));
+			_model.Project(new PermissionRemovedFromRoleEvent(_user1, permID) { AggregateID = roleID });
+
+			_model.Entries.Last().ShouldBe(
+				"Permission 'Perm One' removed from Role 'Role One' by Andy Dote'"
+			);
+		}
 	}
 }
