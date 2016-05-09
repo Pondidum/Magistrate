@@ -24,7 +24,7 @@ var config = {
   output: "./build/deploy"
 }
 
-gulp.task("default", [ "restore", "version", "compile", "test", "pack" ]);
+gulp.task("default", [ "restore", "version", "compile", "compile:test", "pack" ]);
 
 gulp.task('restore', function() {
   return gulp
@@ -64,7 +64,7 @@ gulp.task('compile', [ "transform", "restore", "version" ], function() {
     }));
 });
 
-gulp.task('test', [ "compile" ], function() {
+var test = function() {
   return gulp
     .src(['**/bin/*/*.Tests.dll'], { read: false })
     .pipe(xunit({
@@ -74,9 +74,12 @@ gulp.task('test', [ "compile" ], function() {
         nologo: true,
       }
     }));
-});
+};
 
-gulp.task('pack', [ 'test' ], function () {
+gulp.task('compile:test', [ "compile" ], test);
+gulp.task('test', test);
+
+gulp.task('pack', [ 'compile:test' ], function () {
   return gulp
     .src('**/*.nuspec', { read: false })
     .pipe(rename({ extname: ".csproj" }))
