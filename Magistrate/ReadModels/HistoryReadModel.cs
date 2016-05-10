@@ -97,6 +97,16 @@ namespace Magistrate.ReadModels
 			{
 				_entries.Add($"Permission '{permissions[e.PermissionID].Name}' removed from '{users[e.AggregateID].Name}''s Revokes by {e.Operator.Name}'");
 			});
+
+			_projections.Register<RoleAddedToUserEvent>(e =>
+			{
+				_entries.Add($"Role '{roles[e.RoleID].Name}' added to '{users[e.AggregateID].Name}' by {e.Operator.Name}'");
+			});
+
+			_projections.Register<RoleRemovedFromUserEvent>(e =>
+			{
+				_entries.Add($"Role '{roles[e.RoleID].Name}' removed from '{users[e.AggregateID].Name}' by {e.Operator.Name}'");
+			});
 		}
 
 		public void Project(DomainEvent<Guid> e)
