@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Ledger;
 using Magistrate.Domain;
 using Magistrate.Domain.Events.PermissionEvents;
 using Magistrate.Domain.Events.RoleEvents;
@@ -22,6 +24,28 @@ namespace Magistrate.Tests.ReadModels
 
 			_user1 = new Operator { Name = "Andy Dote" };
 			_user2 = new Operator { Name = "John Wick" };
+		}
+
+		public static IEnumerable<object[]> AllEvents
+		{
+			get
+			{
+				var eventBase = typeof(DomainEvent<Guid>);
+
+				return typeof(HistoryReadModel)
+					.Assembly
+					.GetTypes()
+					.Where(t => t.IsAbstract == false)
+					.Where(t => eventBase.IsAssignableFrom(t))
+					.Select(t => new[] { t });
+			}
+		}
+
+		[Theory]
+		[MemberData("AllEvents")]
+		public void It_should_subscribe_to_all_events(Type eventType)
+		{
+			_model.HasRegistration(eventType).ShouldBe(true, $"{eventType.Name} is not registered.");
 		}
 
 		[Fact]

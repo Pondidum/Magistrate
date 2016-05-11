@@ -3,7 +3,7 @@ using Ledger;
 
 namespace Magistrate.Domain.Events
 {
-	public class UserLoggedEvent : DomainEvent<Guid>
+	public abstract class UserLoggedEvent : DomainEvent<Guid>
 	{
 		public Operator Operator { get; }
 

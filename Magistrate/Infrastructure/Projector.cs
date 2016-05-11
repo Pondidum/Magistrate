@@ -27,6 +27,11 @@ namespace Magistrate.Infrastructure
 			handlers.Add(e => projection((TEvent)e));
 		}
 
+		public bool HasRegistration(Type type)
+		{
+			return _projections.ContainsKey(type);
+		}
+
 		public void Apply(DomainEvent<Guid> @event)
 		{
 			var handlers = _projections

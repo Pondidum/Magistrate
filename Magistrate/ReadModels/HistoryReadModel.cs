@@ -109,6 +109,11 @@ namespace Magistrate.ReadModels
 			});
 		}
 
+		public bool HasRegistration(Type eventType)
+		{
+			return _projections.HasRegistration(eventType);
+		}
+
 		public void Project(DomainEvent<Guid> e)
 		{
 			_projections.Apply(e);
