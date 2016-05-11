@@ -31,6 +31,11 @@ namespace Magistrate.ReadModels
 				_entries.Add($"Permission '{e.Name}' created by {e.Operator.Name}");
 			});
 
+			_projections.Register<PermissionDeletedEvent>(e =>
+			{
+				_entries.Add($"Permission '{permissions[e.AggregateID].Name} deleted by {e.Operator.Name}");
+			});
+
 			_projections.Register<PermissionNameChangedEvent>(e =>
 			{
 				_entries.Add($"Permission Name changed from '{permissions[e.AggregateID].Name}' to '{e.NewName}' by {e.Operator.Name}");
@@ -47,6 +52,11 @@ namespace Magistrate.ReadModels
 				_entries.Add($"Role '{e.Name}' created by {e.Operator.Name}");
 			});
 
+			_projections.Register<RoleDeletedEvent>(e =>
+			{
+				_entries.Add($"Role '{roles[e.AggregateID].Name}' deleted by {e.Operator.Name}");
+			});
+
 			_projections.Register<RoleNameChangedEvent>(e =>
 			{
 				_entries.Add($"Role Name changed from '{roles[e.AggregateID].Name}' to '{e.NewName}' by {e.Operator.Name}");
@@ -61,6 +71,11 @@ namespace Magistrate.ReadModels
 			{
 				users[e.ID] = new UserDto { Name = e.Name };
 				_entries.Add($"User '{e.Name}' created by {e.Operator.Name}");
+			});
+
+			_projections.Register<UserDeletedEvent>(e =>
+			{
+				_entries.Add($"User '{users[e.AggregateID].Name}' deleted by {e.Operator.Name}");
 			});
 
 			_projections.Register<UserNameChangedEvent>(e =>
