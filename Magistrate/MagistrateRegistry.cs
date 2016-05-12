@@ -27,7 +27,9 @@ namespace Magistrate
 			For<IMediator>().Use<Mediator>();
 
 			Policies.Add<ServicePolicy>();
+
 			For<AllCollections>().Singleton();
+			For<HistoryReadModel>().Singleton();
 			For<AuthorizationModel>().Singleton();
 
 			For<Projectionist>().Singleton();
