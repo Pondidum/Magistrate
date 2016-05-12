@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ApiExtensions.cs" />
+    <Compile Include="Api\HistoryController.cs" />
     <Compile Include="Api\MagistrateOperatorMiddleware.cs" />
     <Compile Include="Api\PermissionsController.cs" />
     <Compile Include="Api\RolesController.cs" />

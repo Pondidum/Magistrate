@@ -78,6 +78,7 @@ namespace Magistrate.Tests.ApiTests
 				container.GetInstance<PermissionsController>().Configure(app);
 				container.GetInstance<RolesController>().Configure(app);
 				container.GetInstance<UsersController>().Configure(app);
+				container.GetInstance<HistoryController>().Configure(app);
 			});
 		}
 

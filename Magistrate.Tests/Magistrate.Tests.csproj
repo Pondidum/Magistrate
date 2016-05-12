@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="Acceptance\SystemTests.cs" />
     <Compile Include="ApiTests\ApiAcceptanceTests.cs" />
+    <Compile Include="ApiTests\HistoryControllerTests.cs" />
     <Compile Include="ApiTests\PermissionControllerTests.cs" />
     <Compile Include="ApiTests\RoleControllerTests.cs" />
     <Compile Include="ApiTests\UserControllerTests.cs" />
