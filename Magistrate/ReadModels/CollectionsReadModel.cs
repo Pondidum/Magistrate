@@ -9,7 +9,7 @@ using Magistrate.Infrastructure;
 
 namespace Magistrate.ReadModels
 {
-	public class AllCollections
+	public class CollectionsReadModel
 	{
 		public IEnumerable<PermissionModel> Permissions => _permissions.Values;
 		public IEnumerable<RoleModel> Roles => _roles.Values;
@@ -21,7 +21,7 @@ namespace Magistrate.ReadModels
 
 		private readonly Projector _projections;
 
-		public AllCollections()
+		public CollectionsReadModel()
 		{
 			_projections = new Projector();
 			_users = new Dictionary<Guid, UserModel>();

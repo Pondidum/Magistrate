@@ -14,13 +14,13 @@ namespace Magistrate.Api
 {
 	public class PermissionsController
 	{
-		private readonly AllCollections _allCollections;
+		private readonly CollectionsReadModel _collectionsReadModel;
 		private readonly JsonSerializerSettings _settings;
 		private readonly IMediator _mediator;
 
-		public PermissionsController(AllCollections allCollections, JsonSerializerSettings settings, IMediator mediator)
+		public PermissionsController(CollectionsReadModel collectionsReadModel, JsonSerializerSettings settings, IMediator mediator)
 		{
-			_allCollections = allCollections;
+			_collectionsReadModel = collectionsReadModel;
 			_settings = settings;
 			_mediator = mediator;
 		}
@@ -37,7 +37,7 @@ namespace Magistrate.Api
 
 		private async Task GetAll(IOwinContext context)
 		{
-			await context.WriteJson(_allCollections.Permissions, _settings);
+			await context.WriteJson(_collectionsReadModel.Permissions, _settings);
 		}
 
 		private async Task CreatePermission(IOwinContext context)
@@ -57,7 +57,7 @@ namespace Magistrate.Api
 		private async Task GetPermissionDetails(IOwinContext context)
 		{
 			var key = new PermissionKey(context.GetRouteValue("key"));
-			var permission = _allCollections.Permissions.Single(p => p.Key == key);
+			var permission = _collectionsReadModel.Permissions.Single(p => p.Key == key);
 
 			await context.WriteJson(permission, _settings);
 		}
@@ -68,7 +68,7 @@ namespace Magistrate.Api
 
 			context
 				.ReadJson<PermissionKey[]>()
-				.Select(key => _allCollections.Permissions.Single(p => p.Key == key))
+				.Select(key => _collectionsReadModel.Permissions.Single(p => p.Key == key))
 				.ForEach(p => _mediator.Publish(new DeletePermissionCommand(user, p.ID)));
 
 			await Task.Yield();
@@ -79,7 +79,7 @@ namespace Magistrate.Api
 			var key = new PermissionKey(context.GetRouteValue("key"));
 			var dto = context.ReadJson<EditPermissionDto>();
 
-			var permission = _allCollections.Permissions.Single(p => p.Key == key);
+			var permission = _collectionsReadModel.Permissions.Single(p => p.Key == key);
 
 			_mediator.Publish(new ChangePermissionNameCommand(
 				context.GetOperator(),
@@ -95,7 +95,7 @@ namespace Magistrate.Api
 			var key = new PermissionKey(context.GetRouteValue("key"));
 			var dto = context.ReadJson<EditPermissionDto>();
 
-			var permission = _allCollections.Permissions.Single(p => p.Key == key);
+			var permission = _collectionsReadModel.Permissions.Single(p => p.Key == key);
 
 			_mediator.Publish(new ChangePermissionDescriptionCommand(
 				context.GetOperator(),

@@ -15,14 +15,14 @@ namespace Magistrate.Api
 {
 	public class UsersController
 	{
-		private readonly AllCollections _allCollections;
+		private readonly CollectionsReadModel _collectionsReadModel;
 		private readonly AuthorizationReadModel _authReadModel;
 		private readonly JsonSerializerSettings _settings;
 		private readonly IMediator _mediator;
 
-		public UsersController(AllCollections allCollections, AuthorizationReadModel authReadModel, JsonSerializerSettings settings, IMediator mediator)
+		public UsersController(CollectionsReadModel collectionsReadModel, AuthorizationReadModel authReadModel, JsonSerializerSettings settings, IMediator mediator)
 		{
-			_allCollections = allCollections;
+			_collectionsReadModel = collectionsReadModel;
 			_authReadModel = authReadModel;
 			_settings = settings;
 			_mediator = mediator;
@@ -51,13 +51,13 @@ namespace Magistrate.Api
 
 		private async Task GetAll(IOwinContext context)
 		{
-			await context.WriteJson(_allCollections.Users, _settings);
+			await context.WriteJson(_collectionsReadModel.Users, _settings);
 		}
 
 		private async Task GetUserDetails(IOwinContext context)
 		{
 			var key = new UserKey(context.GetRouteValue("key"));
-			var user = _allCollections.Users.Single(r => r.Key == key);
+			var user = _collectionsReadModel.Users.Single(r => r.Key == key);
 
 			await context.WriteJson(user, _settings);
 		}
@@ -81,7 +81,7 @@ namespace Magistrate.Api
 
 			context
 				.ReadJson<UserKey[]>()
-				.Select(key => _allCollections.Users.Single(p => p.Key == key))
+				.Select(key => _collectionsReadModel.Users.Single(p => p.Key == key))
 				.ForEach(u => _mediator.Publish(new DeleteUserCommand(op, u.ID)));
 
 			await Task.Yield();
@@ -92,7 +92,7 @@ namespace Magistrate.Api
 			var key = new UserKey(context.GetRouteValue("key"));
 			var dto = context.ReadJson<EditUserDto>();
 
-			var user = _allCollections.Users.Single(r => r.Key == key);
+			var user = _collectionsReadModel.Users.Single(r => r.Key == key);
 
 			_mediator.Publish(new ChangeUserNameCommand(
 				context.GetOperator(),
@@ -107,11 +107,11 @@ namespace Magistrate.Api
 		private async Task AddInclude(IOwinContext context)
 		{
 			var key = new UserKey(context.GetRouteValue("key"));
-			var user = _allCollections.Users.Single(r => r.Key == key);
+			var user = _collectionsReadModel.Users.Single(r => r.Key == key);
 
 			var permissions = context
 				.ReadJson<PermissionKey[]>()
-				.Select(pk => _allCollections.Permissions.Single(p => p.Key == pk))
+				.Select(pk => _collectionsReadModel.Permissions.Single(p => p.Key == pk))
 				.Select(p => p.ID);
 
 			_mediator.Publish(new AddIncludesToUserCommand(
@@ -126,11 +126,11 @@ namespace Magistrate.Api
 		private async Task RemoveInclude(IOwinContext context)
 		{
 			var key = new UserKey(context.GetRouteValue("key"));
-			var user = _allCollections.Users.Single(r => r.Key == key);
+			var user = _collectionsReadModel.Users.Single(r => r.Key == key);
 
 			var permissions = context
 				.ReadJson<PermissionKey[]>()
-				.Select(pk => _allCollections.Permissions.Single(p => p.Key == pk))
+				.Select(pk => _collectionsReadModel.Permissions.Single(p => p.Key == pk))
 				.Select(p => p.ID);
 
 			_mediator.Publish(new RemoveIncludesFromUserCommand(
@@ -145,11 +145,11 @@ namespace Magistrate.Api
 		private async Task AddRevoke(IOwinContext context)
 		{
 			var key = new UserKey(context.GetRouteValue("key"));
-			var user = _allCollections.Users.Single(r => r.Key == key);
+			var user = _collectionsReadModel.Users.Single(r => r.Key == key);
 
 			var permissions = context
 				.ReadJson<PermissionKey[]>()
-				.Select(pk => _allCollections.Permissions.Single(p => p.Key == pk))
+				.Select(pk => _collectionsReadModel.Permissions.Single(p => p.Key == pk))
 				.Select(p => p.ID);
 
 			_mediator.Publish(new AddRevokesToUserCommand(
@@ -164,11 +164,11 @@ namespace Magistrate.Api
 		private async Task RemoveRevoke(IOwinContext context)
 		{
 			var key = new UserKey(context.GetRouteValue("key"));
-			var user = _allCollections.Users.Single(r => r.Key == key);
+			var user = _collectionsReadModel.Users.Single(r => r.Key == key);
 
 			var permissions = context
 				.ReadJson<PermissionKey[]>()
-				.Select(pk => _allCollections.Permissions.Single(p => p.Key == pk))
+				.Select(pk => _collectionsReadModel.Permissions.Single(p => p.Key == pk))
 				.Select(p => p.ID);
 
 			_mediator.Publish(new RemoveRevokesFromUserCommand(
@@ -183,11 +183,11 @@ namespace Magistrate.Api
 		private async Task AddRole(IOwinContext context)
 		{
 			var key = new UserKey(context.GetRouteValue("key"));
-			var user = _allCollections.Users.Single(r => r.Key == key);
+			var user = _collectionsReadModel.Users.Single(r => r.Key == key);
 
 			var permissions = context
 				.ReadJson<RoleKey[]>()
-				.Select(rk => _allCollections.Roles.Single(p => p.Key == rk))
+				.Select(rk => _collectionsReadModel.Roles.Single(p => p.Key == rk))
 				.Select(r => r.ID);
 
 			_mediator.Publish(new AddRolesToUserCommand(
@@ -202,11 +202,11 @@ namespace Magistrate.Api
 		private async Task RemoveRole(IOwinContext context)
 		{
 			var key = new UserKey(context.GetRouteValue("key"));
-			var user = _allCollections.Users.Single(r => r.Key == key);
+			var user = _collectionsReadModel.Users.Single(r => r.Key == key);
 
 			var permissions = context
 				.ReadJson<RoleKey[]>()
-				.Select(rk => _allCollections.Roles.Single(p => p.Key == rk))
+				.Select(rk => _collectionsReadModel.Roles.Single(p => p.Key == rk))
 				.Select(r => r.ID);
 
 			_mediator.Publish(new RemoveRolesFromUserCommand(
@@ -223,8 +223,8 @@ namespace Magistrate.Api
 			var userKey = new UserKey(context.GetRouteValue("user-key"));
 			var permissionKey = new PermissionKey(context.GetRouteValue("permission-key"));
 
-			var user = _allCollections.Users.Single(u => u.Key == userKey);
-			var permission = _allCollections.Permissions.Single(p => p.Key == permissionKey);
+			var user = _collectionsReadModel.Users.Single(u => u.Key == userKey);
+			var permission = _collectionsReadModel.Permissions.Single(p => p.Key == permissionKey);
 
 			var result = new
 			{

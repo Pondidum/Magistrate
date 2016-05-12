@@ -18,7 +18,7 @@ namespace Magistrate
 			UserService users,
 			RoleService roles,
 			PermissionService permissions,
-			AllCollections collections,
+			CollectionsReadModel collectionsReadModel,
 			HistoryReadModel history,
 			AuthorizationReadModel authorizationRead)
 		{
@@ -28,7 +28,7 @@ namespace Magistrate
 				.Add(users)
 				.Add(roles)
 				.Add(permissions)
-				.Add(collections.Project)
+				.Add(collectionsReadModel.Project)
 				.Add(history.Project)
 				.Add(authorizationRead.Project);
 		}

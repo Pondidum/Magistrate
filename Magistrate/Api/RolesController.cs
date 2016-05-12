@@ -16,13 +16,13 @@ namespace Magistrate.Api
 {
 	public class RolesController
 	{
-		private readonly AllCollections _allCollections;
+		private readonly CollectionsReadModel _collectionsReadModel;
 		private readonly JsonSerializerSettings _settings;
 		private readonly IMediator _mediator;
 
-		public RolesController(AllCollections allCollections, JsonSerializerSettings settings, IMediator mediator)
+		public RolesController(CollectionsReadModel collectionsReadModel, JsonSerializerSettings settings, IMediator mediator)
 		{
-			_allCollections = allCollections;
+			_collectionsReadModel = collectionsReadModel;
 			_settings = settings;
 			_mediator = mediator;
 		}
@@ -41,13 +41,13 @@ namespace Magistrate.Api
 
 		private async Task GetAll(IOwinContext context)
 		{
-			await context.WriteJson(_allCollections.Roles, _settings);
+			await context.WriteJson(_collectionsReadModel.Roles, _settings);
 		}
 
 		private async Task GetRoleDetails(IOwinContext context)
 		{
 			var key = new RoleKey(context.GetRouteValue("key"));
-			var role = _allCollections.Roles.Single(r => r.Key == key);
+			var role = _collectionsReadModel.Roles.Single(r => r.Key == key);
 
 			await context.WriteJson(role, _settings);
 		}
@@ -72,7 +72,7 @@ namespace Magistrate.Api
 
 			context
 				.ReadJson<RoleKey[]>()
-				.Select(key => _allCollections.Roles.Single(p => p.Key == key))
+				.Select(key => _collectionsReadModel.Roles.Single(p => p.Key == key))
 				.ForEach(p => _mediator.Publish(new DeleteRoleCommand(user, p.ID)));
 
 			await Task.Yield();
@@ -83,7 +83,7 @@ namespace Magistrate.Api
 			var key = new RoleKey(context.GetRouteValue("key"));
 			var dto = context.ReadJson<EditRoleDto>();
 
-			var role = _allCollections.Roles.Single(r => r.Key == key);
+			var role = _collectionsReadModel.Roles.Single(r => r.Key == key);
 
 			_mediator.Publish(new ChangeRoleNameCommand(
 				context.GetOperator(),
@@ -99,7 +99,7 @@ namespace Magistrate.Api
 			var key = new RoleKey(context.GetRouteValue("key"));
 			var dto = context.ReadJson<EditRoleDto>();
 
-			var role = _allCollections.Roles.Single(r => r.Key == key);
+			var role = _collectionsReadModel.Roles.Single(r => r.Key == key);
 
 			_mediator.Publish(new ChangeRoleDescriptionCommand(
 				context.GetOperator(),
@@ -113,11 +113,11 @@ namespace Magistrate.Api
 		private async Task AddPermissions(IOwinContext context)
 		{
 			var key = new RoleKey(context.GetRouteValue("key"));
-			var role = _allCollections.Roles.Single(r => r.Key == key);
+			var role = _collectionsReadModel.Roles.Single(r => r.Key == key);
 
 			var permissions = context
 				.ReadJson<PermissionKey[]>()
-				.Select(pk => _allCollections.Permissions.Single(p => p.Key == pk))
+				.Select(pk => _collectionsReadModel.Permissions.Single(p => p.Key == pk))
 				.Select(p => p.ID);
 
 			_mediator.Publish(new AddPermissionsToRoleCommand(
@@ -132,11 +132,11 @@ namespace Magistrate.Api
 		private async Task RemovePermissions(IOwinContext context)
 		{
 			var key = new RoleKey(context.GetRouteValue("key"));
-			var role = _allCollections.Roles.Single(r => r.Key == key);
+			var role = _collectionsReadModel.Roles.Single(r => r.Key == key);
 
 			var permissions = context
 				.ReadJson<PermissionKey[]>()
-				.Select(pk => _allCollections.Permissions.Single(p => p.Key == pk))
+				.Select(pk => _collectionsReadModel.Permissions.Single(p => p.Key == pk))
 				.Select(p => p.ID);
 
 			_mediator.Publish(new RemovePermissionsFromRoleCommand(

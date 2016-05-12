@@ -28,7 +28,7 @@ namespace Magistrate
 
 			Policies.Add<ServicePolicy>();
 
-			For<AllCollections>().Singleton();
+			For<CollectionsReadModel>().Singleton();
 			For<HistoryReadModel>().Singleton();
 			For<AuthorizationReadModel>().Singleton();
 
