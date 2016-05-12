@@ -20,7 +20,7 @@ namespace Magistrate
 			PermissionService permissions,
 			AllCollections collections,
 			HistoryReadModel history,
-			AuthorizationModel authorization)
+			AuthorizationReadModel authorizationRead)
 		{
 			_projectionist = projectionist;
 			_store = store;
@@ -30,7 +30,7 @@ namespace Magistrate
 				.Add(permissions)
 				.Add(collections.Project)
 				.Add(history.Project)
-				.Add(authorization.Project);
+				.Add(authorizationRead.Project);
 		}
 
 		public void Load()

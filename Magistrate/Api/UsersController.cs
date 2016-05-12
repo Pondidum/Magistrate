@@ -16,14 +16,14 @@ namespace Magistrate.Api
 	public class UsersController
 	{
 		private readonly AllCollections _allCollections;
-		private readonly AuthorizationModel _authModel;
+		private readonly AuthorizationReadModel _authReadModel;
 		private readonly JsonSerializerSettings _settings;
 		private readonly IMediator _mediator;
 
-		public UsersController(AllCollections allCollections, AuthorizationModel authModel, JsonSerializerSettings settings, IMediator mediator)
+		public UsersController(AllCollections allCollections, AuthorizationReadModel authReadModel, JsonSerializerSettings settings, IMediator mediator)
 		{
 			_allCollections = allCollections;
-			_authModel = authModel;
+			_authReadModel = authReadModel;
 			_settings = settings;
 			_mediator = mediator;
 		}
@@ -228,7 +228,7 @@ namespace Magistrate.Api
 
 			var result = new
 			{
-				Allowed = _authModel.CanUserPerformAction(user.ID, permission.ID)
+				Allowed = _authReadModel.CanUserPerformAction(user.ID, permission.ID)
 			};
 
 			await context.WriteJson(result, _settings);

@@ -8,12 +8,12 @@ using Magistrate.Infrastructure;
 
 namespace Magistrate.ReadModels
 {
-	public class AuthorizationModel
+	public class AuthorizationReadModel
 	{
 		private readonly Projector _projections;
 		private readonly Dictionary<Guid, UserAuthModel> _users;
 
-		public AuthorizationModel()
+		public AuthorizationReadModel()
 		{
 			_projections = new Projector();
 			_users = new Dictionary<Guid, UserAuthModel>();

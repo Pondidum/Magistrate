@@ -204,7 +204,7 @@
     <Compile Include="Domain\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadModels\AllCollections.cs" />
-    <Compile Include="ReadModels\AuthorizationModel.cs" />
+    <Compile Include="ReadModels\AuthorizationReadModel.cs" />
     <Compile Include="ReadModels\HistoryReadModel.cs" />
     <Compile Include="ReadModels\PermissionModel.cs" />
     <Compile Include="ReadModels\RoleModel.cs" />

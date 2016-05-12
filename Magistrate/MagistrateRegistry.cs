@@ -30,7 +30,7 @@ namespace Magistrate
 
 			For<AllCollections>().Singleton();
 			For<HistoryReadModel>().Singleton();
-			For<AuthorizationModel>().Singleton();
+			For<AuthorizationReadModel>().Singleton();
 
 			For<Projectionist>().Singleton();
 			For<IEventStore>()
