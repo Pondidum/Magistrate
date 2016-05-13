@@ -203,6 +203,7 @@
     <Compile Include="Domain\Role.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadModelPolicy.cs" />
     <Compile Include="ReadModels\CollectionsReadModel.cs" />
     <Compile Include="ReadModels\AuthorizationReadModel.cs" />
     <Compile Include="ReadModels\HistoryReadModel.cs" />
