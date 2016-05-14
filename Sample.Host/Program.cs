@@ -21,8 +21,6 @@ namespace Sample.Host
 					.WriteTo.ColoredConsole()
 					.CreateLogger();
 
-				app.Use(typeof(SerilogMiddleware));
-
 				//add a login provider here
 				//app.Use<WindowsAuthentication>();
 
