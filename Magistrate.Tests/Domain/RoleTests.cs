@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using Ledger.Infrastructure;
 using Magistrate.Domain;
+using Magistrate.Domain.Events.RoleEvents;
 using Magistrate.Domain.Services;
 using Shouldly;
 using Xunit;
@@ -116,6 +118,22 @@ namespace Magistrate.Tests.Domain
 			r1.GetUncommittedEvents().ForEach(service.Project);
 
 			Should.Throw<ArgumentException>(() => Role.Create(service, _currentUser, new RoleKey("1"), "new", "newer"));
+		}
+
+		[Fact]
+		public void Adding_the_same_permission_multiple_times_to_a_role_does_nothing()
+		{
+			var role = Role.Create(_roleService, _currentUser, new RoleKey("role"), "the role", "");
+			var permission = Permission.Create(_permissionService, _currentUser, new PermissionKey("permission"), "the permission", "");
+
+			role.AddPermission(_currentUser, permission.ID);
+			role.AddPermission(_currentUser, permission.ID);
+
+			role.GetUncommittedEvents().Select(e => e.GetType()).ShouldBe(new[]
+			{
+				typeof(RoleCreatedEvent),
+				typeof(PermissionAddedToRoleEvent)
+			});
 		}
 	}
 }

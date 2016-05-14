@@ -87,6 +87,9 @@ namespace Magistrate.Domain
 
 		public void AddPermission(Operator user, Guid permissionID)
 		{
+			if (_permissions.Contains(permissionID))
+				return;
+
 			ApplyEvent(new PermissionAddedToRoleEvent
 			(
 				user,
