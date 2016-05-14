@@ -133,6 +133,9 @@ namespace Magistrate.Domain
 
 		public void RemoveRole(Operator currentUser, Guid roleID)
 		{
+			if (_roles.Contains(roleID) == false)
+				return;
+
 			ApplyEvent(new RoleRemovedFromUserEvent
 			(
 				currentUser,

@@ -226,5 +226,26 @@ namespace Magistrate.Tests.Domain
 				typeof(RoleAddedToUserEvent)
 			});
 		}
+
+		[Fact]
+		public void Removing_the_same_role_from_a_user_multiple_times_does_nothing()
+		{
+			var userService = new UserService();
+			var user = User.Create(userService, _cu, new UserKey("theuser"), "the user");
+
+			var roleService = new RoleService();
+			var role = Role.Create(roleService, _cu, new RoleKey("role"), "the-role", "");
+
+			user.AddRole(_cu, role.ID);
+			user.RemoveRole(_cu, role.ID);
+			user.RemoveRole(_cu, role.ID);
+
+			user.GetUncommittedEvents().Select(e => e.GetType()).ShouldBe(new[]
+			{
+				typeof(UserCreatedEvent),
+				typeof(RoleAddedToUserEvent),
+				typeof(RoleRemovedFromUserEvent)
+			});
+		}
 	}
 }
