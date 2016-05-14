@@ -121,6 +121,9 @@ namespace Magistrate.Domain
 
 		public void AddRole(Operator currentUser, Guid roleID)
 		{
+			if (_roles.Contains(roleID))
+				return;
+
 			ApplyEvent(new RoleAddedToUserEvent
 			(
 				currentUser,

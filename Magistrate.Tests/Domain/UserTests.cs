@@ -207,5 +207,24 @@ namespace Magistrate.Tests.Domain
 
 			Should.Throw<ArgumentException>(() => User.Create(service, _cu, new UserKey("1"), "new"));
 		}
+
+		[Fact]
+		public void Adding_the_same_role_to_a_user_multiple_times_does_nothing()
+		{
+			var userService = new UserService();
+			var user = User.Create(userService, _cu, new UserKey("theuser"), "the user");
+
+			var roleService = new RoleService();
+			var role = Role.Create(roleService, _cu, new RoleKey("role"), "the-role", "");
+
+			user.AddRole(_cu, role.ID);
+			user.AddRole(_cu, role.ID);
+
+			user.GetUncommittedEvents().Select(e => e.GetType()).ShouldBe(new[]
+			{
+				typeof(UserCreatedEvent),
+				typeof(RoleAddedToUserEvent)
+			});
+		}
 	}
 }
