@@ -1,4 +1,5 @@
-﻿using Magistrate.Api;
+﻿using Ledger.Infrastructure;
+using Magistrate.Api;
 using Newtonsoft.Json;
 using Owin;
 using StructureMap;
@@ -30,11 +31,10 @@ namespace Magistrate
 			app.Use<SerilogMiddleware>();
 			app.Use<ExceptionHandlerMiddleware>(_container.GetInstance<JsonSerializerSettings>());
 			app.Use<MagistrateOperatorMiddleware>(_config);
-
-			_container.GetInstance<PermissionsController>().Configure(app);
-			_container.GetInstance<RolesController>().Configure(app);
-			_container.GetInstance<UsersController>().Configure(app);
-			_container.GetInstance<HistoryController>().Configure(app);
+			
+			_container
+				.GetAllInstances<IController>()
+				.ForEach(controller => controller.Configure(app));
 		}
 	}
 }

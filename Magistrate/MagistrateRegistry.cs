@@ -1,5 +1,6 @@
 using System;
 using Ledger;
+using Magistrate.Api;
 using Magistrate.Infrastructure;
 using Magistrate.ReadModels;
 using MediatR;
@@ -21,6 +22,7 @@ namespace Magistrate
 
 				a.AddAllTypesOf(typeof(IRequestHandler<,>));
 				a.AddAllTypesOf(typeof(INotificationHandler<>));
+				a.AddAllTypesOf(typeof(IController));
 			});
 
 			For<SingleInstanceFactory>().Use<SingleInstanceFactory>(ctx => t => ctx.GetInstance(t));

@@ -7,7 +7,7 @@ using Owin.Routing;
 
 namespace Magistrate.Api
 {
-	public class HistoryController
+	public class HistoryController : IController
 	{
 		private readonly HistoryReadModel _history;
 		private readonly JsonSerializerSettings _settings;

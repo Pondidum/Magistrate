@@ -12,7 +12,7 @@ using Owin.Routing;
 
 namespace Magistrate.Api
 {
-	public class PermissionsController
+	public class PermissionsController : IController
 	{
 		private readonly CollectionsReadModel _collectionsReadModel;
 		private readonly JsonSerializerSettings _settings;

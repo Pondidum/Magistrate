@@ -13,7 +13,7 @@ using Owin.Routing;
 
 namespace Magistrate.Api
 {
-	public class UsersController
+	public class UsersController : IController
 	{
 		private readonly CollectionsReadModel _collectionsReadModel;
 		private readonly AuthorizationReadModel _authReadModel;

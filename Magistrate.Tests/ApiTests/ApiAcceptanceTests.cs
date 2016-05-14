@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Ledger;
+using Ledger.Infrastructure;
 using Ledger.Stores;
 using Magistrate.Api;
 using Magistrate.Domain;
@@ -75,10 +76,10 @@ namespace Magistrate.Tests.ApiTests
 			_server = TestServer.Create(app =>
 			{
 				app.Use<MagistrateOperatorMiddleware>(config);
-				container.GetInstance<PermissionsController>().Configure(app);
-				container.GetInstance<RolesController>().Configure(app);
-				container.GetInstance<UsersController>().Configure(app);
-				container.GetInstance<HistoryController>().Configure(app);
+
+				container
+					.GetAllInstances<IController>()
+					.ForEach(controller => controller.Configure(app));
 			});
 		}
 
