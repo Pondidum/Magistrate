@@ -1,3 +1,4 @@
+using System;
 using Ledger;
 using Magistrate.Infrastructure;
 using Magistrate.ReadModels;
@@ -32,6 +33,7 @@ namespace Magistrate
 			For<Projectionist>().Singleton();
 			For<IEventStore>()
 				.Use(context => new ProjectionStore(store, context.GetInstance<Projectionist>().Apply));
+			For<AggregateStore<Guid>>().Use(ctx => new AggregateStore<Guid>(ctx.GetInstance<IEventStore>()));
 
 			For<JsonSerializerSettings>().Use(new JsonSerializerSettings
 			{
