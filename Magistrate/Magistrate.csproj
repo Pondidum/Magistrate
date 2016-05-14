@@ -160,6 +160,7 @@
     <Compile Include="Domain\Commands\RemovePermissionsFromRoleCommand.cs" />
     <Compile Include="Domain\Commands\RemoveRevokesFromUserCommand.cs" />
     <Compile Include="Domain\Commands\RemoveRolesFromUserCommand.cs" />
+    <Compile Include="Domain\DuplicatePermissionException.cs" />
     <Compile Include="Domain\Events\PermissionEvents\PermissionDeletedEvent.cs" />
     <Compile Include="Domain\Events\PermissionEvents\PermissionDescriptionChangedEvent.cs" />
     <Compile Include="Domain\Events\RoleEvents\RoleDeletedEvent.cs" />

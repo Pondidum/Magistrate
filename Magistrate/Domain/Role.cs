@@ -34,7 +34,7 @@ namespace Magistrate.Domain
 			if (user.CanCreateRoles == false) throw new SecurityException($"{user.Name} cannot create roles.");
 
 			if (service.CanCreateRole(key) == false)
-				throw new ArgumentException($"There is already a Role with the Key '{key}'", nameof(key));
+				throw new DuplicateRoleException(key);
 
 			ValidateName(name);
 

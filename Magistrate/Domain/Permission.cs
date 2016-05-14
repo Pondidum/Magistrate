@@ -29,7 +29,7 @@ namespace Magistrate.Domain
 			if (user.CanCreatePermissions== false) throw new SecurityException($"{user.Name} cannot create permissions.");
 
 			if (service.CanCreatePermission(key) == false)
-				throw new ArgumentException($"There is already a Permission with the Key '{key}'", nameof(key));
+				throw new DuplicatePermissionException(key);
 
 			ValidateName(name);
 

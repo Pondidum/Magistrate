@@ -205,7 +205,10 @@ namespace Magistrate.Tests.Domain
 			//simulate saving to the eventstore
 			u1.GetUncommittedEvents().ForEach(service.Project);
 
-			Should.Throw<ArgumentException>(() => User.Create(service, _cu, new UserKey("1"), "new"));
+			Should
+				.Throw<DuplicateUserException>(() => User.Create(service, _cu, new UserKey("1"), "new"))
+				.Message
+				.ShouldBe("There is already a User with the key '1'");
 		}
 
 		[Fact]

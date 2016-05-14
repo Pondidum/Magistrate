@@ -114,7 +114,10 @@ namespace Magistrate.Tests.Domain
 			//simulate saving to the eventstore
 			p1.GetUncommittedEvents().ForEach(service.Project);
 
-			Should.Throw<ArgumentException>(() => Permission.Create(service, _currentUser, new PermissionKey("1"), "new", "newer"));
+			Should
+				.Throw<DuplicatePermissionException>(() => Permission.Create(service, _currentUser, new PermissionKey("1"), "new", "newer"))
+				.Message
+				.ShouldBe("There is already a Permission with the key '1'");
 		}
 
 		private Permission Clone(Permission permission)

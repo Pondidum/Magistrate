@@ -117,7 +117,10 @@ namespace Magistrate.Tests.Domain
 			//simulate saving to the eventstore
 			r1.GetUncommittedEvents().ForEach(service.Project);
 
-			Should.Throw<ArgumentException>(() => Role.Create(service, _currentUser, new RoleKey("1"), "new", "newer"));
+			Should
+				.Throw<DuplicateRoleException>(() => Role.Create(service, _currentUser, new RoleKey("1"), "new", "newer"))
+				.Message
+				.ShouldBe("There is already a Role with the key '1'");
 		}
 
 		[Fact]
