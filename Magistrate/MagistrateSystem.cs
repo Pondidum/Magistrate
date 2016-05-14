@@ -1,4 +1,5 @@
 ﻿using Magistrate.Api;
+using Newtonsoft.Json;
 using Owin;
 using StructureMap;
 
@@ -27,6 +28,7 @@ namespace Magistrate
 		public void Configure(IAppBuilder app)
 		{
 			app.Use<SerilogMiddleware>();
+			app.Use<ExceptionHandlerMiddleware>(_container.GetInstance<JsonSerializerSettings>());
 			app.Use<MagistrateOperatorMiddleware>(_config);
 
 			_container.GetInstance<PermissionsController>().Configure(app);
