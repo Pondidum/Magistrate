@@ -135,5 +135,23 @@ namespace Magistrate.Tests.Domain
 				typeof(PermissionAddedToRoleEvent)
 			});
 		}
+
+		[Fact]
+		public void Removing_the_same_permission_multiple_times_from_a_role_does_nothing()
+		{
+			var role = Role.Create(_roleService, _currentUser, new RoleKey("role"), "the role", "");
+			var permission = Permission.Create(_permissionService, _currentUser, new PermissionKey("permission"), "the permission", "");
+
+			role.AddPermission(_currentUser, permission.ID);
+			role.RemovePermission(_currentUser, permission.ID);
+			role.RemovePermission(_currentUser, permission.ID);
+
+			role.GetUncommittedEvents().Select(e => e.GetType()).ShouldBe(new[]
+			{
+				typeof(RoleCreatedEvent),
+				typeof(PermissionAddedToRoleEvent),
+				typeof(PermissionRemovedFromRoleEvent)
+			});
+		}
 	}
 }

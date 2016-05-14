@@ -99,6 +99,9 @@ namespace Magistrate.Domain
 
 		public void RemovePermission(Operator user, Guid permissionID)
 		{
+			if (_permissions.Contains(permissionID) == false)
+				return;
+
 			ApplyEvent(new PermissionRemovedFromRoleEvent
 			(
 				user,
