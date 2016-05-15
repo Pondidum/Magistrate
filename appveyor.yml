@@ -1,7 +1,7 @@
 version: '{build}'
 build_script:
 - npm install -g gulp
-- npm install
+- npm install --force
 - gulp --mode Release
 test: off
 # artifacts:
