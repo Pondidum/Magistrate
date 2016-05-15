@@ -28,6 +28,18 @@ namespace Magistrate.Api
 				context.Response.StatusCode = 409; // 409:Conflict
 				await context.WriteJson(new { Message = ex.Message }, _jsonSettings);
 			});
+
+			Register<DuplicateRoleException>(async (context, ex) =>
+			{
+				context.Response.StatusCode = 409; // 409:Conflict
+				await context.WriteJson(new { Message = ex.Message }, _jsonSettings);
+			});
+
+			Register<DuplicateUserException>(async (context, ex) =>
+			{
+				context.Response.StatusCode = 409; // 409:Conflict
+				await context.WriteJson(new { Message = ex.Message }, _jsonSettings);
+			});
 		}
 
 		private void Register<TException>(Func<IOwinContext, TException, Task> apply)
