@@ -1,6 +1,5 @@
 var webpack = require('webpack')
 var webpackDevMiddleware = require('webpack-dev-middleware')
-var webpackHotMiddleware = require('webpack-hot-middleware')
 var config = require('./webpack.config')
 var express = require('express')
 
@@ -11,7 +10,6 @@ var compiler = webpack(config)
 var root = __dirname + '/Magistrate/client/';
 
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: '/static/' }))
-app.use(webpackHotMiddleware(compiler))
 
 app.use("/css", express.static(root + 'css'));
 app.use("/js", express.static(root + 'js'));
