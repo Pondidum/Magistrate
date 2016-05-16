@@ -24,8 +24,8 @@ const  users = (state = [], action) => {
     case "CREATE_USER":
       return state.concat([ user(null, action) ]);
 
-    case "COLLECTIONS_CHANGED":
-      return  action.users;
+    case "UPDATE_USERS":
+      return action.users;
 
     case "DELETE_USER":
       return state.filter(u => u.key != action.key);

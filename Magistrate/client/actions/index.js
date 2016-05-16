@@ -67,3 +67,39 @@ export const deletePermission = (key) => {
     key
   }
 }
+
+export const updateUsers = () => {
+  return {
+    meta: {
+      remote: true,
+      url: "/api/users",
+      success: (store, data) =>
+        store.dispatch({ type: "UPDATE_USERS", users: data })
+    },
+    type: "UPDATE_USERS_REQUEST"
+  }
+}
+
+export const updateRoles = () => {
+  return {
+    meta: {
+      remote: true,
+      url: "/api/roles",
+      success: (store, data) =>
+        store.dispatch({ type: "UPDATE_ROLES", roles: data })
+    },
+    type: "UPDATE_ROLES_REQUEST"
+  }
+}
+
+export const updatePermissions = () => {
+  return {
+    meta: {
+      remote: true,
+      url: "/api/permissions",
+      success: (store, data) =>
+        store.dispatch({ type: "UPDATE_PERMISSIONS", permissions: data })
+    },
+    type: "UPDATE_PERMISSIONS_REQUEST"
+  }
+}

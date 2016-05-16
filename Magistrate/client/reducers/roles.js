@@ -2,7 +2,7 @@ const roles = (state = [], action) => {
 
   switch (action.type) {
 
-    case "COLLECTIONS_CHANGED":
+    case "UPDATE_ROLES":
       return action.roles;
 
     case "DELETE_ROLE":

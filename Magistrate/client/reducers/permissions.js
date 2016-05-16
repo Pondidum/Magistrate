@@ -1,7 +1,7 @@
 const permissions = (state = [], action) => {
 
   switch (action.type) {
-    case "COLLECTIONS_CHANGED":
+    case "UPDATE_PERMISSIONS":
       return action.permissions;
 
     case "DELETE_PERMISSION":
