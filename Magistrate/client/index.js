@@ -6,7 +6,7 @@ import { render } from 'react-dom'
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux'
 import remoteMiddleware from './infrastructure/remoteMiddleware'
-import { Router, Route, hashHistory } from 'react-router'
+import { Router, Route, Redirect, hashHistory } from 'react-router'
 import { syncHistory, routerReducer } from 'react-router-redux'
 
 import { updateUsers, updateRoles, updatePermissions, setTileSize } from './actions'
@@ -32,6 +32,7 @@ store.dispatch(updatePermissions())
 render(
   <Provider store={store}>
     <Router history={hashHistory}>
+      <Redirect from="/" to="users" />
       <Route path="/" component={App}>
         <Route path="users" component={UserOverview}/>
         <Route path="users/:key" component={SingleUserView} />
