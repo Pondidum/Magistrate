@@ -185,6 +185,7 @@
     <Compile Include="ReadModelPolicy.cs" />
     <Compile Include="ReadModels\CollectionsReadModel.cs" />
     <Compile Include="ReadModels\AuthorizationReadModel.cs" />
+    <Compile Include="ReadModels\HistoryEntry.cs" />
     <Compile Include="ReadModels\HistoryReadModel.cs" />
     <Compile Include="ReadModels\PermissionModel.cs" />
     <Compile Include="ReadModels\RoleModel.cs" />

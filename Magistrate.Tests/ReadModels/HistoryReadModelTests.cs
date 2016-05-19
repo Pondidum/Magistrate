@@ -53,7 +53,7 @@ namespace Magistrate.Tests.ReadModels
 		{
 			_model.Project(new PermissionCreatedEvent(_user1, Guid.NewGuid(), new PermissionKey("p1"), "First Perm", "Does something"));
 
-			_model.Entries.Single().ShouldBe($"Permission 'First Perm' created by {_user1.Name}");
+			_model.Entries.Single().Description.ShouldBe($"Permission 'First Perm' created by {_user1.Name}");
 		}
 
 		[Fact]
@@ -65,8 +65,8 @@ namespace Magistrate.Tests.ReadModels
 
 			var entries = _model.Entries.ToList();
 
-			entries[0].ShouldBe($"Permission 'First Perm' created by {_user1.Name}");
-			entries[1].ShouldBe($"Permission Name changed from 'First Perm' to 'First Permission' by {_user2.Name}");
+			entries[0].Description.ShouldBe($"Permission 'First Perm' created by {_user1.Name}");
+			entries[1].Description.ShouldBe($"Permission Name changed from 'First Perm' to 'First Permission' by {_user2.Name}");
 		}
 
 		[Fact]
@@ -78,8 +78,8 @@ namespace Magistrate.Tests.ReadModels
 
 			var entries = _model.Entries.ToList();
 
-			entries[0].ShouldBe($"Permission 'First Perm' created by {_user1.Name}");
-			entries[1].ShouldBe($"Permission Description changed from 'Does something' to 'Does things' by {_user2.Name}");
+			entries[0].Description.ShouldBe($"Permission 'First Perm' created by {_user1.Name}");
+			entries[1].Description.ShouldBe($"Permission Description changed from 'Does something' to 'Does things' by {_user2.Name}");
 		}
 
 		[Fact]
@@ -87,7 +87,7 @@ namespace Magistrate.Tests.ReadModels
 		{
 			_model.Project(new RoleCreatedEvent(_user1, Guid.NewGuid(), new RoleKey("p1"), "First Role", "Does something"));
 
-			_model.Entries.Single().ShouldBe($"Role 'First Role' created by {_user1.Name}");
+			_model.Entries.Single().Description.ShouldBe($"Role 'First Role' created by {_user1.Name}");
 		}
 
 		[Fact]
@@ -99,8 +99,8 @@ namespace Magistrate.Tests.ReadModels
 
 			var entries = _model.Entries.ToList();
 
-			entries[0].ShouldBe($"Role 'First Role' created by {_user1.Name}");
-			entries[1].ShouldBe($"Role Name changed from 'First Role' to 'First Role' by {_user2.Name}");
+			entries[0].Description.ShouldBe($"Role 'First Role' created by {_user1.Name}");
+			entries[1].Description.ShouldBe($"Role Name changed from 'First Role' to 'First Role' by {_user2.Name}");
 		}
 
 		[Fact]
@@ -112,8 +112,8 @@ namespace Magistrate.Tests.ReadModels
 
 			var entries = _model.Entries.ToList();
 
-			entries[0].ShouldBe($"Role 'First Role' created by {_user1.Name}");
-			entries[1].ShouldBe($"Role Description changed from 'Does something' to 'Does things' by {_user2.Name}");
+			entries[0].Description.ShouldBe($"Role 'First Role' created by {_user1.Name}");
+			entries[1].Description.ShouldBe($"Role Description changed from 'Does something' to 'Does things' by {_user2.Name}");
 		}
 
 		[Fact]
@@ -121,7 +121,7 @@ namespace Magistrate.Tests.ReadModels
 		{
 			_model.Project(new UserCreatedEvent(_user1, Guid.NewGuid(), new UserKey("p1"), "First User"));
 
-			_model.Entries.Single().ShouldBe($"User 'First User' created by {_user1.Name}");
+			_model.Entries.Single().Description.ShouldBe($"User 'First User' created by {_user1.Name}");
 		}
 
 		[Fact]
@@ -133,8 +133,8 @@ namespace Magistrate.Tests.ReadModels
 
 			var entries = _model.Entries.ToList();
 
-			entries[0].ShouldBe($"User 'First User' created by {_user1.Name}");
-			entries[1].ShouldBe($"User Name changed from 'First User' to 'First User' by {_user2.Name}");
+			entries[0].Description.ShouldBe($"User 'First User' created by {_user1.Name}");
+			entries[1].Description.ShouldBe($"User Name changed from 'First User' to 'First User' by {_user2.Name}");
 		}
 
 		[Fact]
@@ -147,7 +147,7 @@ namespace Magistrate.Tests.ReadModels
 			_model.Project(new RoleCreatedEvent(_user1, roleID, new RoleKey("1"), "Role One", "1 Desc"));
 			_model.Project(new PermissionAddedToRoleEvent(_user1, permID) { AggregateID = roleID });
 
-			_model.Entries.Last().ShouldBe(
+			_model.Entries.Last().Description.ShouldBe(
 				"Permission 'Perm One' added to Role 'Role One' by Andy Dote'"
 			);
 		}
@@ -162,7 +162,7 @@ namespace Magistrate.Tests.ReadModels
 			_model.Project(new RoleCreatedEvent(_user1, roleID, new RoleKey("1"), "Role One", "1 Desc"));
 			_model.Project(new PermissionRemovedFromRoleEvent(_user1, permID) { AggregateID = roleID });
 
-			_model.Entries.Last().ShouldBe(
+			_model.Entries.Last().Description.ShouldBe(
 				"Permission 'Perm One' removed from Role 'Role One' by Andy Dote'"
 			);
 		}
