@@ -103,3 +103,15 @@ export const updatePermissions = () => {
     type: "UPDATE_PERMISSIONS_REQUEST"
   }
 }
+
+export const updateHistory = () => {
+  return {
+    meta: {
+      remote: true,
+      url: "/api/history",
+      success: (store, data) =>
+        store.dispatch({ type: "UPDATE_HISTORY", history: data })
+    },
+    type: "UPDATE_HISTORY_REQUEST"
+  }
+}

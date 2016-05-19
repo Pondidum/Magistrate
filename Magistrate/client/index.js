@@ -9,7 +9,7 @@ import remoteMiddleware from './infrastructure/remoteMiddleware'
 import { hashHistory } from 'react-router'
 import { syncHistory, routerReducer } from 'react-router-redux'
 
-import { updateUsers, updateRoles, updatePermissions, setTileSize } from './actions'
+import { updateUsers, updateRoles, updatePermissions, setTileSize, updateHistory } from './actions'
 import rootReducer from './reducers'
 import AppRouter from './components/AppRouter'
 
@@ -22,6 +22,7 @@ store.dispatch(setTileSize(tileSize));
 store.dispatch(updateUsers())
 store.dispatch(updateRoles())
 store.dispatch(updatePermissions())
+store.dispatch(updateHistory())
 
 render(
   <Provider store={store}>
