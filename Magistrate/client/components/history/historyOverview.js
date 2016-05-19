@@ -1,16 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
+
 import FilterBar from '../filterbar'
+import HistoryRow from './HistoryRow'
 
 const mapStateToProps = (state) => {
   return {
-    history: state.history;
+    history: state.history
   }
 }
 const HistoryOverview = ({ history }) => {
 
-  var rows = history.map(function(item, index) {
+  const current = moment();
+  const rows = history.map(function(item, index) {
     return (<HistoryRow key={index} history={item} current={current} index={index}/>);
   });//.slice(start, end);
 

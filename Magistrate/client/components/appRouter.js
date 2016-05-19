@@ -7,6 +7,7 @@ import SingleUserView from './users/SingleUserView'
 import RoleOverview from './roles/RoleOverview'
 import SingleRoleView from './roles/SingleRoleView'
 import PermissionOverview from './permissions/PermissionOverview'
+import HistoryOverview from './history/HistoryOverview'
 
 const AppRouter = ({ history }) => (
   <Router history={history}>
@@ -17,6 +18,7 @@ const AppRouter = ({ history }) => (
       <Route path="roles" component={RoleOverview} />
       <Route path="roles/:key" component={SingleRoleView} />
       <Route path="permissions" component={PermissionOverview} />
+      <Route path="history" component={HistoryOverview} />
     </Route>
   </Router>
 )
