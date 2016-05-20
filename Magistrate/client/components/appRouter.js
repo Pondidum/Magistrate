@@ -18,7 +18,7 @@ const AppRouter = ({ history }) => (
       <Route path="roles" component={RoleOverview} />
       <Route path="roles/:key" component={SingleRoleView} />
       <Route path="permissions" component={PermissionOverview} />
-      <Route path="history" component={HistoryOverview} />
+      <Route path="history(/:page)" component={HistoryOverview} />
     </Route>
   </Router>
 )

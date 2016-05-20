@@ -5,17 +5,25 @@ import moment from 'moment'
 import FilterBar from '../filterbar'
 import HistoryRow from './HistoryRow'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    history: state.history
+    history: state.history,
+    page: parseInt(ownProps.params.page) || 0
   }
 }
-const HistoryOverview = ({ history }) => {
 
+const HistoryOverview = ({ history, page }) => {
+
+  const pageSize = 10;
   const current = moment();
+
+  const totalPages = Math.floor(history.length / pageSize);
+  const start = page * pageSize;
+  const end = start + pageSize;
+
   const rows = history.map(function(item, index) {
     return (<HistoryRow key={index} history={item} current={current} index={index}/>);
-  });//.slice(start, end);
+  }).slice(start, end);
 
   var links = [];
 
