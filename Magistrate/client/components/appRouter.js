@@ -12,6 +12,7 @@ import HistoryOverview from './history/HistoryOverview'
 const AppRouter = ({ history }) => (
   <Router history={history}>
     <Redirect from="/" to="users" />
+    <Redirect from="/history" to="/history/0" />
     <Route path="/" component={App}>
       <Route path="users" component={UserOverview}/>
       <Route path="users/:key" component={SingleUserView} />
