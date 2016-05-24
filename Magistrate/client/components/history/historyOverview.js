@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component} from 'react'
 import { connect } from 'react-redux'
 
 import FilterBar from '../filterbar'
@@ -12,27 +12,37 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const HistoryOverview = ({ history, page }) => {
+class HistoryOverview extends Component {
 
-  const pageSize = 10;
+  constructor(props) {
+    super(props);
+    this.state = { filter: "" }
+  }
 
-  return (
-    <div>
+  render() {
+    const pageSize = 10;
+    const exp = new RegExp(this.state.filter, "i")
+
+    const history = this.props.history.filter(item => item.description.search(exp) != -1);
+
+    return (
       <div>
-        <div className="row">
-          <FilterBar filterChanged={() => { }} />
-        </div>
-        <div className="row">
-          <HistoryRows history={history} pageSize={pageSize} page={page} />
-        </div>
-        <div className="row">
-          <div className="col-sm-12 text-center">
-            <HistoryPageLinks historyLength={history.length} pageSize={pageSize} />
+        <div>
+          <div className="row">
+            <FilterBar filterChanged={value => this.setState({ filter: value })} />
+          </div>
+          <div className="row">
+            <HistoryRows history={history} pageSize={pageSize} page={this.props.page} />
+          </div>
+          <div className="row">
+            <div className="col-sm-12 text-center">
+              <HistoryPageLinks historyLength={history.length} pageSize={pageSize} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 export default connect(mapStateToProps)(HistoryOverview)
